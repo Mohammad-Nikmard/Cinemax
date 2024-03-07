@@ -14,6 +14,31 @@ class IntroDashboard extends StatefulWidget {
 
 class _IntroDashboardState extends State<IntroDashboard> {
   final PageController controller = PageController();
+
+  int pageIndex = 0;
+
+  List<String> titles = [
+    "The biggest international and local film streaming",
+    "Offers ad-free viewing of high quality",
+    "Our service brings together your favorite series",
+  ];
+
+  List<String> subs = [
+    "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient. ",
+    "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient. ",
+    "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient. ",
+  ];
+
+  List<Widget> pages = const [
+    FirstIntroPage(),
+    SecondIntroPage(),
+    ThirdIntroPage(),
+  ];
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +46,17 @@ class _IntroDashboardState extends State<IntroDashboard> {
       body: Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
-          PageView(
+          PageView.builder(
             controller: controller,
-            children: const [
-              FirstIntroPage(),
-              SecondIntroPage(),
-              ThirdIntroPage(),
-            ],
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return pages[index];
+            },
+            onPageChanged: (value) {
+              setState(() {
+                pageIndex = value;
+              });
+            },
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
@@ -46,23 +75,26 @@ class _IntroDashboardState extends State<IntroDashboard> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
+                    Column(
                       children: [
-                        Text(
-                          "Our service brings together your favorite series",
-                          style: TextStyle(
+                        AnimatedDefaultTextStyle(
+                          style: const TextStyle(
                             fontFamily: "MSB",
                             fontSize: 18,
                             color: TextColors.whiteText,
                           ),
-                          textAlign: TextAlign.center,
+                          duration: const Duration(milliseconds: 300),
+                          child: Text(
+                            titles[pageIndex],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Text(
-                          "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient. ",
-                          style: TextStyle(
+                          subs[pageIndex],
+                          style: const TextStyle(
                             fontSize: 14,
                             fontFamily: "MM",
                             color: TextColors.greyText,
