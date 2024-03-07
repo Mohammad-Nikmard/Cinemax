@@ -13,6 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
   pinput: ^4.0.0
+  smooth_page_indicator: ^1.1.0
+  dotted_border: ^2.1.0
 
   cupertino_icons: ^1.0.6
 
