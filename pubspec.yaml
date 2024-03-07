@@ -12,15 +12,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  pinput: ^4.0.0
 
   cupertino_icons: ^1.0.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
 
   flutter_lints: ^3.0.0
-  pinput: ^4.0.0
+ 
 
 flutter:
 

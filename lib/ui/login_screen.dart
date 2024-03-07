@@ -1,7 +1,11 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/onboarding_screen.dart';
+import 'package:cinemax/ui/reset_password_screen.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -33,11 +37,21 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 30,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BackLabel(),
-                  Text(
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OnBoardingScreen(),
+                        ),
+                      );
+                    },
+                    child: const BackLabel(),
+                  ),
+                  const Text(
                     "Login",
                     style: TextStyle(
                       fontFamily: "SBM",
@@ -45,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: TextColors.whiteText,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 32,
                   ),
                 ],
@@ -87,17 +101,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: "Password",
                 controller: pwController,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: 12,
-                        color: PrimaryColors.blueAccentColor,
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          fontFamily: "MM",
+                          fontSize: 12,
+                          color: PrimaryColors.blueAccentColor,
+                        ),
                       ),
                     ),
                   ),

@@ -145,7 +145,7 @@ packages:
     source: hosted
     version: "1.9.0"
   pinput:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: pinput
       sha256: "6d571e38a484f7515a52e89024ef416f11fa6171ac6f32303701374ab9890efa"

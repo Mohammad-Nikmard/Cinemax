@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/password_verification_screen.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,14 @@ class ResetPasswordScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Row(
+            Row(
               children: [
-                BackLabel(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const BackLabel(),
+                ),
               ],
             ),
             const SizedBox(
@@ -57,7 +63,14 @@ class ResetPasswordScreen extends StatelessWidget {
               height: 56,
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PasswordVerificationScreen(),
+                    ),
+                  );
+                },
                 child: const Text(
                   "Next",
                   style: TextStyle(

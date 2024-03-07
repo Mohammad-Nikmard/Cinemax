@@ -1,5 +1,8 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/login_screen.dart';
+import 'package:cinemax/ui/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -52,7 +55,14 @@ class OnBoardingScreen extends StatelessWidget {
                 height: 56,
                 width: userScreenSize.width,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterScreen(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Sign Up",
                     style: TextStyle(
@@ -78,12 +88,22 @@ class OnBoardingScreen extends StatelessWidget {
                     color: TextColors.greyText,
                   ),
                 ),
-                Text(
-                  "Login",
-                  style: TextStyle(
-                    color: PrimaryColors.blueAccentColor,
-                    fontFamily: "MM",
-                    fontSize: (userScreenSize.width < 325) ? 12 : 16,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: PrimaryColors.blueAccentColor,
+                      fontFamily: "MM",
+                      fontSize: (userScreenSize.width < 325) ? 12 : 16,
+                    ),
                   ),
                 ),
               ],

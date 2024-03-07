@@ -1,7 +1,9 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -36,11 +38,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 30,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BackLabel(),
-                  Text(
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OnBoardingScreen(),
+                        ),
+                      );
+                    },
+                    child: const BackLabel(),
+                  ),
+                  const Text(
                     "Sign Up",
                     style: TextStyle(
                       fontFamily: "SBM",
@@ -48,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: TextColors.whiteText,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 32,
                   ),
                 ],
