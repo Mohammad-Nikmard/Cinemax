@@ -20,6 +20,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+  pinput: ^4.0.0
 
 flutter:
 
