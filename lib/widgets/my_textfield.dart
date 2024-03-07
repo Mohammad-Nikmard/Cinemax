@@ -23,7 +23,7 @@ class _MyTextFieldState extends State<MyTextField> {
       controller: widget.controller,
       decoration: InputDecoration(
         labelText: widget.text,
-        labelStyle: const TextStyle(color: TextColors.greyText),
+        labelStyle: const TextStyle(color: TextColors.greyText, fontSize: 15),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             width: 1,
