@@ -2,6 +2,16 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 ThemeData mainTheme = ThemeData(
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: PrimaryColors.blueAccentColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(27),
+        ),
+      ),
+    ),
+  ),
   colorScheme: const ColorScheme.dark(
     background: PrimaryColors.darkColor,
   ),
