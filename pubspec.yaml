@@ -33,12 +33,12 @@ flutter:
   fonts:
     - family: MR
       fonts:
-        - asset: fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Regular.ttf
 
     - family: MM
       fonts:
-        - asset: fonts/Montserrat-Medium.ttf
+        - asset: assets/fonts/Montserrat-Medium.ttf
 
     - family: MSB
       fonts:
-        - asset: fonts/Montserrat-SemiBold.ttf
+        - asset: assets/fonts/Montserrat-SemiBold.ttf

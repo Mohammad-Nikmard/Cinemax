@@ -1,3 +1,5 @@
+import 'package:cinemax/theme/main_theme.dart';
+import 'package:cinemax/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,8 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: mainTheme,
+      home: const SplashScreen(),
     );
   }
 }

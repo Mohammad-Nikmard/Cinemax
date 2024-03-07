@@ -2,6 +2,9 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 ThemeData mainTheme = ThemeData(
+  colorScheme: const ColorScheme.dark(
+    background: PrimaryColors.darkColor,
+  ),
   textTheme: const TextTheme(
     bodySmall: TextStyle(
       fontSize: 12,
