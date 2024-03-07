@@ -3,9 +3,7 @@ import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  bool _obsecureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +96,63 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 30,
               ),
-              MyTextField(
-                text: "Password",
-                controller: pwController,
+              Stack(
+                alignment: AlignmentDirectional.centerEnd,
+                children: [
+                  TextFormField(
+                    controller: pwController,
+                    style: const TextStyle(
+                        color: TextColors.greyText,
+                        fontFamily: "MM",
+                        fontSize: 14),
+                    obscureText: _obsecureText,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 10, right: 40),
+                      labelText: "Password",
+                      labelStyle:
+                          TextStyle(color: TextColors.greyText, fontSize: 15),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(27),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(27),
+                        ),
+                      ),
+                    ),
+                    validator: (value) =>
+                        value!.length < 8 ? "Password is too short" : null,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obsecureText = !_obsecureText;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: _obsecureText
+                          ? Image.asset(
+                              'assets/images/icon_eye_off.png',
+                              color: TextColors.greyText,
+                            )
+                          : const Icon(
+                              Icons.remove_red_eye,
+                              color: TextColors.greyText,
+                            ),
+                    ),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
