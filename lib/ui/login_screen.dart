@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text(
                     "Login",
                     style: TextStyle(
-                      fontFamily: "SBM",
+                      fontFamily: "MSB",
                       fontSize: 16,
                       color: TextColors.whiteText,
                     ),
