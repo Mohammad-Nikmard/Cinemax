@@ -57,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const Text(
                     "Sign Up",
                     style: TextStyle(
-                      fontFamily: "SBM",
+                      fontFamily: "MSB",
                       fontSize: 16,
                       color: TextColors.whiteText,
                     ),
