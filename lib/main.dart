@@ -1,5 +1,5 @@
 import 'package:cinemax/theme/main_theme.dart';
-import 'package:cinemax/ui/intro%20screens/intro_dashboard.dart';
+import 'package:cinemax/ui/notifications_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
-      home: const IntroDashboard(),
+      home: const NotificationsScreen(),
     );
   }
 }

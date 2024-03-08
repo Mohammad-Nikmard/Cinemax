@@ -9,9 +9,13 @@ class BackLabel extends StatelessWidget {
     return Container(
       height: 32,
       width: 32,
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(40),
+          ),
+        ),
         color: PrimaryColors.softColor,
-        shape: BoxShape.circle,
       ),
       child: Center(
         child: Image.asset('assets/images/icon_arrow_back.png'),
