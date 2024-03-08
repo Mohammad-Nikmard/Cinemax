@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -50,13 +53,9 @@ class ProfileScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 56,
                   child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(
-                        width: 1.3,
-                        color: PrimaryColors.blueAccentColor,
-                      ),
-                    ),
-                    onPressed: () {},
+                    onPressed: () {
+                      signoutDialog(context);
+                    },
                     child: const Text(
                       "Log Out",
                       style: TextStyle(
@@ -74,6 +73,100 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> signoutDialog(BuildContext context) async {
+  return await showDialog(
+    context: context,
+    builder: (context) {
+      return ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Image.asset(
+                  'assets/images/question_image.png',
+                  height: 125,
+                  width: 125,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Text(
+                  "Are you sure?",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 18,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "you will be signing out if click on logout",
+                  style: TextStyle(
+                    fontFamily: "MR",
+                    fontSize: 12,
+                    color: TextColors.greyText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 60,
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            "Log Out",
+                            style: TextStyle(
+                              color: PrimaryColors.blueAccentColor,
+                              fontSize: 16,
+                              fontFamily: "MR",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 60,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Cancel",
+                            style: TextStyle(
+                              fontFamily: "MR",
+                              fontSize: 16,
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
 
 class _OptionChip extends StatelessWidget {

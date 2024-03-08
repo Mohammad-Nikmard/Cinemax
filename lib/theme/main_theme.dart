@@ -2,6 +2,14 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 ThemeData mainTheme = ThemeData(
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      side: const BorderSide(
+        width: 1.3,
+        color: PrimaryColors.blueAccentColor,
+      ),
+    ),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: PrimaryColors.blueAccentColor,
