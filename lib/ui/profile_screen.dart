@@ -1,6 +1,12 @@
 import 'dart:ui';
 
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/language_screen.dart';
+import 'package:cinemax/ui/notifications_screen.dart';
+import 'package:cinemax/ui/privacy_screen.dart';
+import 'package:cinemax/ui/profile_edit_screen.dart';
+import 'package:cinemax/ui/reset_password_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -232,12 +238,12 @@ class _GeneralChip extends StatelessWidget {
             Radius.circular(15),
           ),
         ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "General",
                 style: TextStyle(
                   fontFamily: "MSB",
@@ -245,55 +251,75 @@ class _GeneralChip extends StatelessWidget {
                   color: TextColors.whiteText,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              _OptionChip(
-                title: "Notification",
-                image: "assets/images/icon_bell.png",
-                color: TextColors.greyText,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationsScreen(),
+                    ),
+                  );
+                },
+                child: const _OptionChip(
+                  title: "Notification",
+                  image: "assets/images/icon_bell.png",
+                  color: TextColors.greyText,
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 thickness: 1.3,
                 color: Color(0xff252836),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
-                title: "Language",
-                image: "assets/images/icon_globe.png",
-                color: TextColors.greyText,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LanguageScreen(),
+                    ),
+                  );
+                },
+                child: const _OptionChip(
+                  title: "Language",
+                  image: "assets/images/icon_globe.png",
+                  color: TextColors.greyText,
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 thickness: 1.3,
                 color: Color(0xff252836),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
+              const _OptionChip(
                 title: "Country",
                 image: "assets/images/icon_flag.png",
                 color: TextColors.greyText,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 thickness: 1.3,
                 color: Color(0xff252836),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
+              const _OptionChip(
                 title: "Clear Cache",
                 image: "assets/images/icon_bin.png",
                 color: TextColors.greyText,
@@ -324,12 +350,12 @@ class _MoreChip extends StatelessWidget {
             Radius.circular(15),
           ),
         ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "More",
                 style: TextStyle(
                   fontFamily: "MSB",
@@ -337,38 +363,48 @@ class _MoreChip extends StatelessWidget {
                   color: TextColors.whiteText,
                 ),
               ),
-              SizedBox(height: 15),
-              _OptionChip(
-                title: "Legal and Policies",
-                image: "assets/images/icon_shield.png",
-                color: TextColors.greyText,
+              const SizedBox(height: 15),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyScreen(),
+                    ),
+                  );
+                },
+                child: const _OptionChip(
+                  title: "Legal and Policies",
+                  image: "assets/images/icon_shield.png",
+                  color: TextColors.greyText,
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 thickness: 1.3,
                 color: Color(0xff252836),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
+              const _OptionChip(
                 title: "Help & Feedback",
                 image: "assets/images/icon_question.png",
                 color: TextColors.greyText,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 thickness: 1.3,
                 color: Color(0xff252836),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
+              const _OptionChip(
                 title: "About Us",
                 image: "assets/images/icon_alert.png",
                 color: TextColors.greyText,
@@ -399,12 +435,12 @@ class _AccountChip extends StatelessWidget {
             Radius.circular(15),
           ),
         ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Account",
                 style: TextStyle(
                   fontFamily: "MSB",
@@ -412,28 +448,38 @@ class _AccountChip extends StatelessWidget {
                   color: TextColors.whiteText,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              _OptionChip(
+              const _OptionChip(
                 title: "Member",
                 image: "assets/images/icon_profile.png",
                 color: PrimaryColors.blueAccentColor,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 thickness: 1.3,
                 color: Color(0xff252836),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
-                title: "Change Password",
-                image: "assets/images/icon_lock.png",
-                color: TextColors.greyText,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResetPasswordScreen(),
+                    ),
+                  );
+                },
+                child: const _OptionChip(
+                  title: "Change Password",
+                  image: "assets/images/icon_lock.png",
+                  color: TextColors.greyText,
+                ),
               ),
             ],
           ),
@@ -449,57 +495,67 @@ class _ProfileChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 86,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1.2,
-            color: const Color(0xff252836),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProfileEditScreen(),
+            ),
+          );
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 86,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.2,
+              color: const Color(0xff252836),
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(15),
+            ),
           ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              const CircleAvatar(
-                radius: 25,
-                backgroundColor: PrimaryColors.blueAccentColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Mohammad",
-                    style: TextStyle(
-                      fontFamily: "MSB",
-                      fontSize: 16,
-                      color: TextColors.whiteText,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                const CircleAvatar(
+                  radius: 25,
+                  backgroundColor: PrimaryColors.blueAccentColor,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Mohammad",
+                      style: TextStyle(
+                        fontFamily: "MSB",
+                        fontSize: 16,
+                        color: TextColors.whiteText,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "mnikmard1344@gmail.com",
-                    style: TextStyle(
-                      fontFamily: "MM",
-                      fontSize: 14,
-                      color: TextColors.greyText,
+                    Text(
+                      "mnikmard1344@gmail.com",
+                      style: TextStyle(
+                        fontFamily: "MM",
+                        fontSize: 14,
+                        color: TextColors.greyText,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Image.asset(
-                'assets/images/icon_edit_light.png',
-                color: PrimaryColors.blueAccentColor,
-              ),
-            ],
+                  ],
+                ),
+                const Spacer(),
+                Image.asset(
+                  'assets/images/icon_edit_light.png',
+                  color: PrimaryColors.blueAccentColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),

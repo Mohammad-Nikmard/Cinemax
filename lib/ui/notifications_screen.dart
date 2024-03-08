@@ -2,7 +2,6 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -29,13 +28,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: const BackLabel(),
                   ),
                   const Text(
                     "Notification",
                     style: TextStyle(
-                      fontFamily: "SBM",
+                      fontFamily: "MSB",
                       fontSize: 16,
                       color: TextColors.whiteText,
                     ),

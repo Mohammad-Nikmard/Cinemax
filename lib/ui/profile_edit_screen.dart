@@ -42,7 +42,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                       child: const BackLabel(),
                     ),
                     const Text(
@@ -237,6 +239,7 @@ class _UserDetail extends StatelessWidget {
               child: Container(
                 height: 32,
                 width: 32,
+                padding: const EdgeInsets.all(7.0),
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: PrimaryColors.softColor,

@@ -22,13 +22,15 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: const BackLabel(),
                   ),
                   const Text(
                     "Notification",
                     style: TextStyle(
-                      fontFamily: "SBM",
+                      fontFamily: "MSB",
                       fontSize: 16,
                       color: TextColors.whiteText,
                     ),
