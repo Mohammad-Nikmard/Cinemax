@@ -10,49 +10,38 @@ class MovieDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: CustomScrollView(
+      body: const CustomScrollView(
         slivers: [
-          const _MovieDetailHeader(),
+          _MovieDetailHeader(),
           SliverToBoxAdapter(
-            child: Container(
-              height: 310,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 0,
-                  color: PrimaryColors.darkColor,
-                ),
-                color: PrimaryColors.darkColor,
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _StoryLine(),
-                    CastAndCrewWidget(),
-                    Padding(
-                      padding: EdgeInsets.only(right: 20.0, top: 20.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Gallery",
-                            style: TextStyle(
-                              fontFamily: "MSB",
-                              fontSize: 16,
-                              color: TextColors.whiteText,
-                            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _StoryLine(),
+                  CastAndCrewWidget(),
+                  Padding(
+                    padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Gallery",
+                          style: TextStyle(
+                            fontFamily: "MSB",
+                            fontSize: 16,
+                            color: TextColors.whiteText,
                           ),
-                          SizedBox(height: 10.0),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 10.0),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-          const _Gallery(),
+          _Gallery(),
         ],
       ),
     );
@@ -97,18 +86,19 @@ class _StoryLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final screenSize = MediaQuery.of(context).size;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Story Line",
           style: TextStyle(
             fontFamily: "MSB",
-            fontSize: 16,
+            fontSize: (screenSize.width < 350) ? 14 : 16,
             color: TextColors.whiteText,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -117,7 +107,7 @@ class _StoryLine extends StatelessWidget {
                 "For the first time in the cinematic history of Spider-Man, our friendly neighborhood hero's identity is revealed, bringing his Super Hero responsibilities into conflict with his normal life and putting those he cares about most at risk.",
                 style: TextStyle(
                   fontFamily: "MR",
-                  fontSize: 14,
+                  fontSize: (screenSize.width < 350) ? 12 : 14,
                   color: TextColors.whiteText,
                 ),
               ),
@@ -126,7 +116,7 @@ class _StoryLine extends StatelessWidget {
               "More",
               style: TextStyle(
                 fontFamily: "MSB",
-                fontSize: 14,
+                fontSize: (screenSize.width < 350) ? 12 : 14,
                 color: PrimaryColors.blueAccentColor,
               ),
             ),
@@ -138,7 +128,7 @@ class _StoryLine extends StatelessWidget {
 }
 
 class _MovieDetailHeader extends StatelessWidget {
-  const _MovieDetailHeader({super.key});
+  const _MovieDetailHeader();
 
   @override
   Widget build(BuildContext context) {
@@ -185,6 +175,7 @@ class _MovieHeaderContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -201,21 +192,21 @@ class _MovieHeaderContent extends StatelessWidget {
                 },
                 child: Image.asset('assets/images/icon_arrow_back.png'),
               ),
-              const SizedBox(
+              SizedBox(
                 width: 170,
                 child: Text(
                   "Spider-man No way home bruh",
                   style: TextStyle(
                     fontFamily: "MSB",
-                    fontSize: 16,
+                    fontSize: (screenSize.width < 350) ? 14 : 16,
                     color: TextColors.whiteText,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Container(
-                height: 32,
-                width: 32,
+                height: (screenSize.width < 350) ? 28 : 32,
+                width: (screenSize.width < 350) ? 28 : 32,
                 decoration: const ShapeDecoration(
                   shape: ContinuousRectangleBorder(
                     borderRadius: BorderRadius.all(
@@ -228,6 +219,8 @@ class _MovieHeaderContent extends StatelessWidget {
                   child: Image.asset(
                     'assets/images/icon_heart.png',
                     color: SecondaryColors.redColor,
+                    height: (screenSize.width < 350) ? 18 : 24,
+                    width: (screenSize.width < 350) ? 18 : 24,
                   ),
                 ),
               ),
@@ -235,8 +228,8 @@ class _MovieHeaderContent extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Container(
-            height: 287,
-            width: 205,
+            height: (screenSize.width < 350) ? 243 : 287,
+            width: (screenSize.width < 350) ? 165 : 205,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(
                 Radius.circular(12),
@@ -256,15 +249,15 @@ class _MovieHeaderContent extends StatelessWidget {
                 Image.asset(
                   'assets/images/icon_calendar.png',
                   color: TextColors.greyText,
-                  height: 16,
-                  width: 16,
+                  height: (screenSize.width < 350) ? 12 : 16,
+                  width: (screenSize.width < 350) ? 12 : 16,
                 ),
                 const SizedBox(width: 3.0),
-                const Text(
+                Text(
                   "2021",
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: 12,
+                    fontSize: (screenSize.width < 350) ? 10 : 12,
                     color: TextColors.greyText,
                   ),
                 ),
@@ -277,15 +270,15 @@ class _MovieHeaderContent extends StatelessWidget {
                 Image.asset(
                   'assets/images/icon_clock.png',
                   color: TextColors.greyText,
-                  height: 16,
-                  width: 16,
+                  height: (screenSize.width < 350) ? 12 : 16,
+                  width: (screenSize.width < 350) ? 12 : 16,
                 ),
                 const SizedBox(width: 3.0),
-                const Text(
+                Text(
                   "148 Minutes",
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: 12,
+                    fontSize: (screenSize.width < 350) ? 10 : 12,
                     color: TextColors.greyText,
                   ),
                 ),
@@ -298,15 +291,15 @@ class _MovieHeaderContent extends StatelessWidget {
                 Image.asset(
                   'assets/images/icon_film.png',
                   color: TextColors.greyText,
-                  height: 16,
-                  width: 16,
+                  height: (screenSize.width < 350) ? 12 : 16,
+                  width: (screenSize.width < 350) ? 12 : 16,
                 ),
                 const SizedBox(width: 3.0),
-                const Text(
+                Text(
                   "Action",
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: 12,
+                    fontSize: (screenSize.width < 350) ? 10 : 12,
                     color: TextColors.greyText,
                   ),
                 ),
@@ -349,8 +342,8 @@ class _MovieHeaderContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 48,
-                width: 115,
+                height: (screenSize.width < 350) ? 32 : 48,
+                width: (screenSize.width < 350) ? 100 : 115,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(32),
@@ -364,16 +357,16 @@ class _MovieHeaderContent extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 20),
                         child: Image.asset(
                           'assets/images/icon_play.png',
-                          height: 24,
-                          width: 24,
+                          height: (screenSize.width < 350) ? 18 : 24,
+                          width: (screenSize.width < 350) ? 18 : 24,
                         ),
                       ),
                       const SizedBox(width: 5),
-                      const Text(
+                      Text(
                         "Play",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: 16,
+                          fontSize: (screenSize.width < 350) ? 12 : 16,
                           color: TextColors.whiteText,
                         ),
                       ),
@@ -383,8 +376,8 @@ class _MovieHeaderContent extends StatelessWidget {
               ),
               const SizedBox(width: 15.0),
               Container(
-                height: 48,
-                width: 48,
+                height: (screenSize.width < 350) ? 32 : 48,
+                width: (screenSize.width < 350) ? 32 : 48,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: PrimaryColors.softColor,
@@ -393,8 +386,8 @@ class _MovieHeaderContent extends StatelessWidget {
                   child: Image.asset(
                     'assets/images/icon_download.png',
                     color: SecondaryColors.orangeColor,
-                    height: 24,
-                    width: 24,
+                    height: (screenSize.width < 350) ? 18 : 24,
+                    width: (screenSize.width < 350) ? 18 : 24,
                   ),
                 ),
               ),
@@ -404,8 +397,8 @@ class _MovieHeaderContent extends StatelessWidget {
                   shareDialog(context);
                 },
                 child: Container(
-                  height: 48,
-                  width: 48,
+                  height: (screenSize.width < 350) ? 32 : 48,
+                  width: (screenSize.width < 350) ? 32 : 48,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: PrimaryColors.softColor,
@@ -414,8 +407,8 @@ class _MovieHeaderContent extends StatelessWidget {
                     child: Image.asset(
                       'assets/images/icon_share.png',
                       color: PrimaryColors.blueAccentColor,
-                      height: 24,
-                      width: 24,
+                      height: (screenSize.width < 350) ? 18 : 24,
+                      width: (screenSize.width < 350) ? 18 : 24,
                     ),
                   ),
                 ),

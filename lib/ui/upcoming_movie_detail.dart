@@ -1,7 +1,6 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UpcomingMovieDetail extends StatelessWidget {
@@ -9,6 +8,7 @@ class UpcomingMovieDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(
@@ -22,50 +22,61 @@ class UpcomingMovieDetail extends StatelessWidget {
               child: CastAndCrewWidget(),
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+              padding:
+                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Gallery",
                     style: TextStyle(
                       fontFamily: "MSB",
-                      fontSize: 16,
+                      fontSize: (screenSize.width < 350) ? 14 : 16,
                       color: TextColors.whiteText,
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                 ],
               ),
             ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            sliver: SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Container(
-                    height: 100,
-                    width: 100,
-                    decoration: const BoxDecoration(
-                      color: SecondaryColors.greenColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                  );
-                },
-                childCount: 30,
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-            ),
-          ),
+          const _Gallery(),
         ],
+      ),
+    );
+  }
+}
+
+class _Gallery extends StatelessWidget {
+  const _Gallery();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      sliver: SliverGrid(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return Container(
+              height: 100,
+              width: 100,
+              decoration: const BoxDecoration(
+                color: SecondaryColors.greenColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            );
+          },
+          childCount: 30,
+        ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
       ),
     );
   }
@@ -76,9 +87,10 @@ class _Synopsis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
+    final screenSize = MediaQuery.of(context).size;
+    return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -86,11 +98,11 @@ class _Synopsis extends StatelessWidget {
               "Synopsis",
               style: TextStyle(
                 fontFamily: "MSB",
-                fontSize: 16,
+                fontSize: (screenSize.width < 350) ? 14 : 16,
                 color: TextColors.whiteText,
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -100,7 +112,7 @@ class _Synopsis extends StatelessWidget {
 THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early years, struggling to balance rage with righteousness as he investigates a disturbing mystery that has terrorized Gotham. Robert Pattinson delivers a raw, intense portrayal of Batman as a disillusioned, desperate vigilante awakened by the realization""",
                     style: TextStyle(
                       fontFamily: "MR",
-                      fontSize: 14,
+                      fontSize: (screenSize.width < 350) ? 12 : 14,
                       color: TextColors.whiteText,
                     ),
                   ),
@@ -109,7 +121,7 @@ THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early y
                   "More",
                   style: TextStyle(
                     fontFamily: "MSB",
-                    fontSize: 14,
+                    fontSize: (screenSize.width < 350) ? 12 : 14,
                     color: PrimaryColors.blueAccentColor,
                   ),
                 ),
@@ -127,6 +139,7 @@ class MovieHeadDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 40.0, left: 20, right: 20),
@@ -146,11 +159,11 @@ class MovieHeadDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 15),
-                const Text(
+                Text(
                   "The Batman",
                   style: TextStyle(
                     fontFamily: "MSB",
-                    fontSize: 16,
+                    fontSize: (screenSize.width < 350) ? 14 : 16,
                     color: TextColors.whiteText,
                   ),
                 ),
@@ -161,24 +174,24 @@ class MovieHeadDetail extends StatelessWidget {
                     children: [
                       Image.asset(
                         'assets/images/icon_calendar.png',
-                        height: 16,
-                        width: 16,
+                        height: (screenSize.width < 350) ? 12 : 16,
+                        width: (screenSize.width < 350) ? 12 : 16,
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),
-                      const Text(
+                      Text(
                         "Relase Date: ",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: 12,
+                          fontSize: (screenSize.width < 350) ? 10 : 12,
                           color: TextColors.greyText,
                         ),
                       ),
-                      const Text(
+                      Text(
                         "March 2, 2022",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: 12,
+                          fontSize: (screenSize.width < 350) ? 10 : 12,
                           color: TextColors.whiteText,
                         ),
                       ),
@@ -190,16 +203,16 @@ class MovieHeadDetail extends StatelessWidget {
                       const SizedBox(width: 5),
                       Image.asset(
                         'assets/images/icon_film.png',
-                        height: 16,
-                        width: 16,
+                        height: (screenSize.width < 350) ? 12 : 16,
+                        width: (screenSize.width < 350) ? 12 : 16,
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),
-                      const Text(
+                      Text(
                         "Action",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: 12,
+                          fontSize: (screenSize.width < 350) ? 10 : 12,
                           color: TextColors.greyText,
                         ),
                       ),

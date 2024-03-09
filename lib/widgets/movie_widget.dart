@@ -11,6 +11,7 @@ class MovieWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
@@ -21,12 +22,12 @@ class MovieWidget extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: 231,
+        height: (screenSize.width < 350) ? 185 : 231,
         child: Column(
           children: [
             Container(
-              width: 145,
-              height: 178,
+              width: (screenSize.width < 350) ? 115 : 145,
+              height: (screenSize.width < 350) ? 142 : 178,
               decoration: const BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.only(
@@ -45,34 +46,37 @@ class MovieWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                          child: Container(
-                            height: 24,
-                            width: 55,
-                            decoration: BoxDecoration(
-                              color: const Color(0xff252836).withOpacity(0.3),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          child: Transform.scale(
+                            scale: (screenSize.width < 350) ? 0.8 : 1,
+                            child: Container(
+                              height: 24,
+                              width: 55,
+                              decoration: BoxDecoration(
+                                color: const Color(0xff252836).withOpacity(0.3),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/icon_star.png',
-                                  color: SecondaryColors.orangeColor,
-                                  height: 16,
-                                  width: 16,
-                                ),
-                                const SizedBox(width: 5),
-                                const Text(
-                                  "4.5",
-                                  style: TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize: 12,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/icon_star.png',
                                     color: SecondaryColors.orangeColor,
+                                    height: 16,
+                                    width: 16,
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: 5),
+                                  const Text(
+                                    "4.5",
+                                    style: TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 12,
+                                      color: SecondaryColors.orangeColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -83,8 +87,8 @@ class MovieWidget extends StatelessWidget {
               ),
             ),
             Container(
-              width: 145,
-              height: 53,
+              width: (screenSize.width < 350) ? 115 : 145,
+              height: (screenSize.width < 350) ? 48 : 53,
               decoration: const BoxDecoration(
                 color: PrimaryColors.softColor,
                 borderRadius: BorderRadius.only(
@@ -92,19 +96,19 @@ class MovieWidget extends StatelessWidget {
                   bottomRight: Radius.circular(12),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.only(left: 10),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       "Life of PI whatever bro",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: 14,
+                        fontSize: (screenSize.width < 350) ? 12 : 14,
                         color: TextColors.whiteText,
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -113,7 +117,7 @@ class MovieWidget extends StatelessWidget {
                       "Action",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: 10,
+                        fontSize: (screenSize.width < 350) ? 8 : 10,
                         color: TextColors.greyText,
                       ),
                     ),

@@ -12,8 +12,10 @@ class NotificationsScreen extends StatefulWidget {
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
   bool notifSwitch = false;
+
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -55,7 +57,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 1.2,
-                    color: Color(0xff252836),
+                    color: const Color(0xff252836),
                   ),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(15),
@@ -81,16 +83,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             "Show Notifications",
                             style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: 16,
+                              fontSize: (screenSize.width < 350) ? 12 : 16,
                               color: TextColors.whiteText,
                             ),
                           ),
                           Transform.scale(
-                            scale: 0.8,
+                            scale: (screenSize.width < 350) ? 0.6 : 0.8,
                             child: CupertinoSwitch(
                               activeColor: PrimaryColors.blueAccentColor,
                               value: notifSwitch,
@@ -110,11 +112,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      const Text(
+                      Text(
                         "Exceptions",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: 16,
+                          fontSize: (screenSize.width < 350) ? 12 : 16,
                           color: TextColors.whiteText,
                         ),
                       ),

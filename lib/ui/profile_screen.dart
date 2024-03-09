@@ -495,6 +495,7 @@ class _ProfileChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size.width;
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
@@ -521,14 +522,14 @@ class _ProfileChip extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-                const CircleAvatar(
-                  radius: 25,
+                CircleAvatar(
+                  radius: (screenSize < 350) ? 15 : 25,
                   backgroundColor: PrimaryColors.blueAccentColor,
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -536,7 +537,7 @@ class _ProfileChip extends StatelessWidget {
                       "Mohammad",
                       style: TextStyle(
                         fontFamily: "MSB",
-                        fontSize: 16,
+                        fontSize: (screenSize < 350) ? 12 : 16,
                         color: TextColors.whiteText,
                       ),
                     ),
@@ -544,7 +545,7 @@ class _ProfileChip extends StatelessWidget {
                       "mnikmard1344@gmail.com",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: 14,
+                        fontSize: (screenSize < 350) ? 10 : 14,
                         color: TextColors.greyText,
                       ),
                     ),
@@ -554,6 +555,8 @@ class _ProfileChip extends StatelessWidget {
                 Image.asset(
                   'assets/images/icon_edit_light.png',
                   color: PrimaryColors.blueAccentColor,
+                  height: (screenSize < 350) ? 14 : 20,
+                  width: (screenSize < 350) ? 14 : 20,
                 ),
               ],
             ),

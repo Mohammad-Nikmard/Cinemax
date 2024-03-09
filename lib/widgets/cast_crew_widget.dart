@@ -6,15 +6,16 @@ class CastAndCrewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 30),
-        const Text(
+        Text(
           "Cast and Crew",
           style: TextStyle(
             fontFamily: "MSB",
-            fontSize: 16,
+            fontSize: (screenSize.width < 350) ? 14 : 16,
             color: TextColors.whiteText,
           ),
         ),
@@ -25,16 +26,16 @@ class CastAndCrewWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 5,
             itemBuilder: (context, index) {
-              return const Padding(
-                padding: EdgeInsets.only(right: 15),
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 20,
                       backgroundColor: PrimaryColors.blueAccentColor,
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +44,7 @@ class CastAndCrewWidget extends StatelessWidget {
                           "John Watts",
                           style: TextStyle(
                             fontFamily: "MSB",
-                            fontSize: 14,
+                            fontSize: (screenSize.width < 350) ? 12 : 14,
                             color: TextColors.whiteText,
                           ),
                         ),
@@ -51,7 +52,7 @@ class CastAndCrewWidget extends StatelessWidget {
                           "Actor",
                           style: TextStyle(
                             fontFamily: "MM",
-                            fontSize: 10,
+                            fontSize: (screenSize.width < 350) ? 8 : 10,
                             color: TextColors.greyText,
                           ),
                         ),

@@ -8,6 +8,7 @@ class RelatedSeachWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size.width;
     return SizedBox(
       height: 147,
       width: MediaQuery.of(context).size.width,
@@ -76,11 +77,11 @@ class RelatedSeachWidget extends StatelessWidget {
               const SizedBox(height: 15),
               SizedBox(
                 width: MediaQuery.of(context).size.width - 170,
-                child: const Text(
+                child: Text(
                   "Spider-man No Way Home bruh",
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: 16,
+                    fontSize: (screenSize < 350) ? 12 : 16,
                     color: TextColors.whiteText,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -91,16 +92,16 @@ class RelatedSeachWidget extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/icon_calendar.png',
-                    height: 16,
-                    width: 16,
+                    height: (screenSize < 350) ? 12 : 16,
+                    width: (screenSize < 350) ? 12 : 16,
                     color: TextColors.greyText,
                   ),
                   const SizedBox(width: 3),
-                  const Text(
+                  Text(
                     "2021",
                     style: TextStyle(
                       fontFamily: "MM",
-                      fontSize: 12,
+                      fontSize: (screenSize < 350) ? 10 : 12,
                       color: TextColors.greyText,
                     ),
                   ),
@@ -111,23 +112,25 @@ class RelatedSeachWidget extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/icon_clock.png',
-                    height: 16,
-                    width: 16,
+                    height: (screenSize < 350) ? 12 : 16,
+                    width: (screenSize < 350) ? 12 : 16,
                     color: TextColors.greyText,
                   ),
                   const SizedBox(width: 3),
-                  const Text(
+                  Text(
                     "148 Minutes",
                     style: TextStyle(
                       fontFamily: "MM",
-                      fontSize: 12,
+                      fontSize: (screenSize < 350) ? 10 : 12,
                       color: TextColors.greyText,
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  SizedBox(
+                    width: (screenSize < 350) ? 3 : 15,
+                  ),
                   Container(
-                    height: 20,
-                    width: 43,
+                    height: (screenSize < 350) ? 15 : 20,
+                    width: (screenSize < 350) ? 21 : 43,
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: PrimaryColors.blueAccentColor,
@@ -137,12 +140,12 @@ class RelatedSeachWidget extends StatelessWidget {
                         Radius.circular(3),
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         "PG-13",
                         style: TextStyle(
                           color: PrimaryColors.blueAccentColor,
-                          fontSize: 12,
+                          fontSize: (screenSize < 350) ? 6 : 12,
                           fontFamily: "MM",
                         ),
                       ),
@@ -157,16 +160,16 @@ class RelatedSeachWidget extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/icon_film.png',
-                      height: 16,
-                      width: 16,
+                      height: (screenSize < 350) ? 12 : 16,
+                      width: (screenSize < 350) ? 12 : 16,
                       color: TextColors.greyText,
                     ),
                     const SizedBox(width: 3),
-                    const Text(
+                    Text(
                       "Action",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: 12,
+                        fontSize: (screenSize < 350) ? 10 : 12,
                         color: TextColors.greyText,
                       ),
                     ),
@@ -176,11 +179,11 @@ class RelatedSeachWidget extends StatelessWidget {
                       color: TextColors.greyText,
                     ),
                     const SizedBox(width: 3),
-                    const Text(
+                    Text(
                       "Movie",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: 12,
+                        fontSize: (screenSize < 350) ? 10 : 12,
                         color: TextColors.whiteText,
                       ),
                     ),

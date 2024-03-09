@@ -8,6 +8,7 @@ class CategorySearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
@@ -29,11 +30,11 @@ class CategorySearchScreen extends StatelessWidget {
                         },
                         child: const BackLabel(),
                       ),
-                      const Text(
+                      Text(
                         "Most Popular Movies",
                         style: TextStyle(
                           fontFamily: "MSB",
-                          fontSize: 16,
+                          fontSize: (screenSize.width < 350) ? 12 : 16,
                           color: TextColors.whiteText,
                         ),
                       ),
