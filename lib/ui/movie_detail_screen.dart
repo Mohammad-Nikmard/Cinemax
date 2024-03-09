@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -415,19 +413,24 @@ class _MovieHeaderContent extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 15.0),
-              Container(
-                height: 48,
-                width: 48,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: PrimaryColors.softColor,
-                ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/icon_share.png',
-                    color: PrimaryColors.blueAccentColor,
-                    height: 24,
-                    width: 24,
+              GestureDetector(
+                onTap: () {
+                  shareDialog(context);
+                },
+                child: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: PrimaryColors.softColor,
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/icon_share.png',
+                      color: PrimaryColors.blueAccentColor,
+                      height: 24,
+                      width: 24,
+                    ),
                   ),
                 ),
               ),
@@ -437,4 +440,88 @@ class _MovieHeaderContent extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> shareDialog(BuildContext context) async {
+  await showDialog(
+    context: context,
+    builder: (context) {
+      return ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: AlertDialog(
+            backgroundColor: PrimaryColors.softColor,
+            content: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 32,
+                        width: 32,
+                        decoration: const BoxDecoration(
+                          color: Color(0xff252836),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          'assets/images/icon_close.png',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Center(
+                      child: Text(
+                        "Share to",
+                        style: TextStyle(
+                          fontFamily: "MSB",
+                          fontSize: 18,
+                          color: TextColors.whiteText,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    const Divider(
+                      thickness: 1.33,
+                      color: PrimaryColors.darkColor,
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/Apple.png',
+                          height: 49,
+                          width: 49,
+                        ),
+                        const SizedBox(width: 15),
+                        Image.asset(
+                          'assets/images/Facebook.png',
+                          height: 49,
+                          width: 49,
+                        ),
+                        const SizedBox(width: 15),
+                        Image.asset(
+                          'assets/images/Google.png',
+                          height: 49,
+                          width: 49,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
