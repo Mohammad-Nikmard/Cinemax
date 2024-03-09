@@ -6,9 +6,8 @@ import 'package:cinemax/ui/notifications_screen.dart';
 import 'package:cinemax/ui/privacy_screen.dart';
 import 'package:cinemax/ui/profile_edit_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -495,7 +494,6 @@ class _ProfileChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size.width;
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
@@ -523,7 +521,8 @@ class _ProfileChip extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: (screenSize < 350) ? 15 : 25,
+                  radius:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 15 : 25,
                   backgroundColor: PrimaryColors.blueAccentColor,
                 ),
                 const SizedBox(
@@ -537,7 +536,9 @@ class _ProfileChip extends StatelessWidget {
                       "Mohammad",
                       style: TextStyle(
                         fontFamily: "MSB",
-                        fontSize: (screenSize < 350) ? 12 : 16,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
                         color: TextColors.whiteText,
                       ),
                     ),
@@ -545,7 +546,9 @@ class _ProfileChip extends StatelessWidget {
                       "mnikmard1344@gmail.com",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: (screenSize < 350) ? 10 : 14,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 10
+                            : 14,
                         color: TextColors.greyText,
                       ),
                     ),
@@ -555,8 +558,10 @@ class _ProfileChip extends StatelessWidget {
                 Image.asset(
                   'assets/images/icon_edit_light.png',
                   color: PrimaryColors.blueAccentColor,
-                  height: (screenSize < 350) ? 14 : 24,
-                  width: (screenSize < 350) ? 14 : 24,
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
+                  width:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
                 ),
               ],
             ),

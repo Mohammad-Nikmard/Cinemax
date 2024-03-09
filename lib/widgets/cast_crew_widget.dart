@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 
 class CastAndCrewWidget extends StatelessWidget {
@@ -6,7 +7,6 @@ class CastAndCrewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -15,7 +15,7 @@ class CastAndCrewWidget extends StatelessWidget {
           "Cast and Crew",
           style: TextStyle(
             fontFamily: "MSB",
-            fontSize: (screenSize.width < 350) ? 14 : 16,
+            fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
             color: TextColors.whiteText,
           ),
         ),
@@ -44,7 +44,10 @@ class CastAndCrewWidget extends StatelessWidget {
                           "John Watts",
                           style: TextStyle(
                             fontFamily: "MSB",
-                            fontSize: (screenSize.width < 350) ? 12 : 14,
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 12
+                                    : 14,
                             color: TextColors.whiteText,
                           ),
                         ),
@@ -52,7 +55,10 @@ class CastAndCrewWidget extends StatelessWidget {
                           "Actor",
                           style: TextStyle(
                             fontFamily: "MM",
-                            fontSize: (screenSize.width < 350) ? 8 : 10,
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 8
+                                    : 10,
                             color: TextColors.greyText,
                           ),
                         ),

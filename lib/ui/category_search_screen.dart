@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ class CategorySearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
@@ -34,7 +34,10 @@ class CategorySearchScreen extends StatelessWidget {
                         "Most Popular Movies",
                         style: TextStyle(
                           fontFamily: "MSB",
-                          fontSize: (screenSize.width < 350) ? 12 : 16,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 12
+                                  : 16,
                           color: TextColors.whiteText,
                         ),
                       ),

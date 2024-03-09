@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -11,7 +12,6 @@ class MovieWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
@@ -22,12 +22,13 @@ class MovieWidget extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: (screenSize.width < 350) ? 185 : 231,
+        height: (MediaQueryHandler.screenWidth(context) < 350) ? 185 : 231,
         child: Column(
           children: [
             Container(
-              width: (screenSize.width < 350) ? 115 : 145,
-              height: (screenSize.width < 350) ? 142 : 178,
+              width: (MediaQueryHandler.screenWidth(context) < 350) ? 115 : 145,
+              height:
+                  (MediaQueryHandler.screenWidth(context) < 350) ? 142 : 178,
               decoration: const BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.only(
@@ -47,7 +48,10 @@ class MovieWidget extends StatelessWidget {
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                           child: Transform.scale(
-                            scale: (screenSize.width < 350) ? 0.8 : 1,
+                            scale:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 0.8
+                                    : 1,
                             child: Container(
                               height: 24,
                               width: 55,
@@ -87,8 +91,8 @@ class MovieWidget extends StatelessWidget {
               ),
             ),
             Container(
-              width: (screenSize.width < 350) ? 115 : 145,
-              height: (screenSize.width < 350) ? 48 : 53,
+              width: (MediaQueryHandler.screenWidth(context) < 350) ? 115 : 145,
+              height: (MediaQueryHandler.screenWidth(context) < 350) ? 48 : 53,
               decoration: const BoxDecoration(
                 color: PrimaryColors.softColor,
                 borderRadius: BorderRadius.only(
@@ -108,7 +112,9 @@ class MovieWidget extends StatelessWidget {
                       "Life of PI whatever bro",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: (screenSize.width < 350) ? 12 : 14,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 14,
                         color: TextColors.whiteText,
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -117,7 +123,9 @@ class MovieWidget extends StatelessWidget {
                       "Action",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: (screenSize.width < 350) ? 8 : 10,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 8
+                            : 10,
                         color: TextColors.greyText,
                       ),
                     ),

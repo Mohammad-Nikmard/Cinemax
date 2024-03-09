@@ -1,13 +1,12 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class WishlistWidget extends StatelessWidget {
   const WishlistWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 107,
@@ -23,7 +22,7 @@ class WishlistWidget extends StatelessWidget {
           children: [
             Container(
               height: 83,
-              width: (screenSize.width < 350) ? 100 : 121,
+              width: (MediaQueryHandler.screenWidth(context) < 350) ? 100 : 121,
               decoration: const BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.all(
@@ -41,7 +40,9 @@ class WishlistWidget extends StatelessWidget {
                     "Action",
                     style: TextStyle(
                       fontFamily: "MM",
-                      fontSize: (screenSize.width < 380) ? 10 : 12,
+                      fontSize: (MediaQueryHandler.screenWidth(context) < 380)
+                          ? 10
+                          : 12,
                       color: TextColors.wihteGreyText,
                     ),
                   ),
@@ -53,7 +54,9 @@ class WishlistWidget extends StatelessWidget {
                       "Spider-man Felan Bisar shode",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: (screenSize.width < 380) ? 12 : 14,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 380)
+                            ? 12
+                            : 14,
                         color: TextColors.whiteText,
                       ),
                     ),
@@ -67,7 +70,10 @@ class WishlistWidget extends StatelessWidget {
                             "Movie",
                             style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: (screenSize.width < 380) ? 10 : 12,
+                              fontSize:
+                                  (MediaQueryHandler.screenWidth(context) < 380)
+                                      ? 10
+                                      : 12,
                               color: TextColors.greyText,
                             ),
                           ),

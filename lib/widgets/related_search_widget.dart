@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -10,7 +11,6 @@ class RelatedSeachWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
@@ -92,7 +92,9 @@ class RelatedSeachWidget extends StatelessWidget {
                     "Spider-man No Way Home bruh",
                     style: TextStyle(
                       fontFamily: "MM",
-                      fontSize: (screenSize < 350) ? 12 : 16,
+                      fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 12
+                          : 16,
                       color: TextColors.whiteText,
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -103,8 +105,12 @@ class RelatedSeachWidget extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/icon_calendar.png',
-                      height: (screenSize < 350) ? 12 : 16,
-                      width: (screenSize < 350) ? 12 : 16,
+                      height: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 12
+                          : 16,
+                      width: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 12
+                          : 16,
                       color: TextColors.greyText,
                     ),
                     const SizedBox(width: 3),
@@ -112,7 +118,9 @@ class RelatedSeachWidget extends StatelessWidget {
                       "2021",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: (screenSize < 350) ? 10 : 12,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 10
+                            : 12,
                         color: TextColors.greyText,
                       ),
                     ),
@@ -123,8 +131,12 @@ class RelatedSeachWidget extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/icon_clock.png',
-                      height: (screenSize < 350) ? 12 : 16,
-                      width: (screenSize < 350) ? 12 : 16,
+                      height: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 12
+                          : 16,
+                      width: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 12
+                          : 16,
                       color: TextColors.greyText,
                     ),
                     const SizedBox(width: 3),
@@ -132,16 +144,24 @@ class RelatedSeachWidget extends StatelessWidget {
                       "148 Minutes",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: (screenSize < 350) ? 10 : 12,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 10
+                            : 12,
                         color: TextColors.greyText,
                       ),
                     ),
                     SizedBox(
-                      width: (screenSize < 350) ? 3 : 15,
+                      width: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 3
+                          : 15,
                     ),
                     Container(
-                      height: (screenSize < 350) ? 15 : 20,
-                      width: (screenSize < 350) ? 21 : 43,
+                      height: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 15
+                          : 20,
+                      width: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 21
+                          : 43,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: PrimaryColors.blueAccentColor,
@@ -156,7 +176,10 @@ class RelatedSeachWidget extends StatelessWidget {
                           "PG-13",
                           style: TextStyle(
                             color: PrimaryColors.blueAccentColor,
-                            fontSize: (screenSize < 350) ? 6 : 12,
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 6
+                                    : 12,
                             fontFamily: "MM",
                           ),
                         ),
@@ -171,8 +194,12 @@ class RelatedSeachWidget extends StatelessWidget {
                     children: [
                       Image.asset(
                         'assets/images/icon_film.png',
-                        height: (screenSize < 350) ? 12 : 16,
-                        width: (screenSize < 350) ? 12 : 16,
+                        height: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
+                        width: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),
@@ -180,7 +207,10 @@ class RelatedSeachWidget extends StatelessWidget {
                         "Action",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: (screenSize < 350) ? 10 : 12,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 10
+                                  : 12,
                           color: TextColors.greyText,
                         ),
                       ),
@@ -194,7 +224,10 @@ class RelatedSeachWidget extends StatelessWidget {
                         "Movie",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: (screenSize < 350) ? 10 : 12,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 10
+                                  : 12,
                           color: TextColors.whiteText,
                         ),
                       ),

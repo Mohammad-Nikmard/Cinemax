@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -87,12 +87,18 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             "Show Notifications",
                             style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: (screenSize.width < 350) ? 12 : 16,
+                              fontSize:
+                                  (MediaQueryHandler.screenWidth(context) < 350)
+                                      ? 12
+                                      : 16,
                               color: TextColors.whiteText,
                             ),
                           ),
                           Transform.scale(
-                            scale: (screenSize.width < 350) ? 0.6 : 0.8,
+                            scale:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 0.6
+                                    : 0.8,
                             child: CupertinoSwitch(
                               activeColor: PrimaryColors.blueAccentColor,
                               value: notifSwitch,
@@ -116,7 +122,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "Exceptions",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: (screenSize.width < 350) ? 12 : 16,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 12
+                                  : 16,
                           color: TextColors.whiteText,
                         ),
                       ),

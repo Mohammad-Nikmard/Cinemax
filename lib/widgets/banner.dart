@@ -1,8 +1,7 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -19,7 +18,6 @@ class _BannerContainerState extends State<BannerContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
@@ -60,12 +58,19 @@ class _BannerContainerState extends State<BannerContainer> {
                           bottom: 40,
                           left: 20,
                           child: SizedBox(
-                            width: (screenSize.width < 350) ? 154 : 214,
+                            width:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 154
+                                    : 214,
                             child: Text(
                               "Black Panther: Wakanda Forever",
                               style: TextStyle(
                                 fontFamily: "MM",
-                                fontSize: (screenSize.width < 350) ? 12 : 16,
+                                fontSize:
+                                    (MediaQueryHandler.screenWidth(context) <
+                                            350)
+                                        ? 12
+                                        : 16,
                                 color: TextColors.whiteText,
                               ),
                             ),
@@ -78,7 +83,10 @@ class _BannerContainerState extends State<BannerContainer> {
                             "On March 2, 2022",
                             style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: (screenSize.width < 350) ? 8 : 12,
+                              fontSize:
+                                  (MediaQueryHandler.screenWidth(context) < 350)
+                                      ? 8
+                                      : 12,
                               color: TextColors.whiteText,
                             ),
                           ),

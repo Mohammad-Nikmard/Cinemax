@@ -1,8 +1,8 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 
 class UpcomingMovieDetail extends StatelessWidget {
@@ -10,7 +10,6 @@ class UpcomingMovieDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(
@@ -35,7 +34,9 @@ class UpcomingMovieDetail extends StatelessWidget {
                     "Gallery",
                     style: TextStyle(
                       fontFamily: "MSB",
-                      fontSize: (screenSize.width < 350) ? 14 : 16,
+                      fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 14
+                          : 16,
                       color: TextColors.whiteText,
                     ),
                   ),
@@ -89,7 +90,6 @@ class _Synopsis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30.0),
@@ -100,7 +100,8 @@ class _Synopsis extends StatelessWidget {
               "Synopsis",
               style: TextStyle(
                 fontFamily: "MSB",
-                fontSize: (screenSize.width < 350) ? 14 : 16,
+                fontSize:
+                    (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
                 color: TextColors.whiteText,
               ),
             ),
@@ -114,7 +115,9 @@ class _Synopsis extends StatelessWidget {
 THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early years, struggling to balance rage with righteousness as he investigates a disturbing mystery that has terrorized Gotham. Robert Pattinson delivers a raw, intense portrayal of Batman as a disillusioned, desperate vigilante awakened by the realization""",
                     style: TextStyle(
                       fontFamily: "MR",
-                      fontSize: (screenSize.width < 350) ? 12 : 14,
+                      fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 12
+                          : 14,
                       color: TextColors.whiteText,
                     ),
                   ),
@@ -123,7 +126,9 @@ THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early y
                   "More",
                   style: TextStyle(
                     fontFamily: "MSB",
-                    fontSize: (screenSize.width < 350) ? 12 : 14,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 12
+                        : 14,
                     color: PrimaryColors.blueAccentColor,
                   ),
                 ),
@@ -141,7 +146,6 @@ class MovieHeadDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 40.0, left: 20, right: 20),
@@ -165,7 +169,9 @@ class MovieHeadDetail extends StatelessWidget {
                   "The Batman",
                   style: TextStyle(
                     fontFamily: "MSB",
-                    fontSize: (screenSize.width < 350) ? 14 : 16,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 14
+                        : 16,
                     color: TextColors.whiteText,
                   ),
                 ),
@@ -176,8 +182,12 @@ class MovieHeadDetail extends StatelessWidget {
                     children: [
                       Image.asset(
                         'assets/images/icon_calendar.png',
-                        height: (screenSize.width < 350) ? 12 : 16,
-                        width: (screenSize.width < 350) ? 12 : 16,
+                        height: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
+                        width: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),
@@ -185,7 +195,10 @@ class MovieHeadDetail extends StatelessWidget {
                         "Relase Date: ",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: (screenSize.width < 350) ? 10 : 12,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 10
+                                  : 12,
                           color: TextColors.greyText,
                         ),
                       ),
@@ -193,7 +206,10 @@ class MovieHeadDetail extends StatelessWidget {
                         "March 2, 2022",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: (screenSize.width < 350) ? 10 : 12,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 10
+                                  : 12,
                           color: TextColors.whiteText,
                         ),
                       ),
@@ -205,8 +221,12 @@ class MovieHeadDetail extends StatelessWidget {
                       const SizedBox(width: 5),
                       Image.asset(
                         'assets/images/icon_film.png',
-                        height: (screenSize.width < 350) ? 12 : 16,
-                        width: (screenSize.width < 350) ? 12 : 16,
+                        height: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
+                        width: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),
@@ -214,7 +234,10 @@ class MovieHeadDetail extends StatelessWidget {
                         "Action",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: (screenSize.width < 350) ? 10 : 12,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 10
+                                  : 12,
                           color: TextColors.greyText,
                         ),
                       ),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -333,7 +334,6 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -356,7 +356,9 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   "Spider-man No way home bruh",
                   style: TextStyle(
                     fontFamily: "MSB",
-                    fontSize: (screenSize.width < 350) ? 14 : 16,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 14
+                        : 16,
                     color: TextColors.whiteText,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -375,8 +377,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   });
                 },
                 child: Container(
-                  height: (screenSize.width < 350) ? 28 : 32,
-                  width: (screenSize.width < 350) ? 28 : 32,
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 28 : 32,
+                  width:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 28 : 32,
                   decoration: const ShapeDecoration(
                     shape: ContinuousRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -398,8 +402,8 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
           ),
           const SizedBox(height: 20),
           Container(
-            height: (screenSize.width < 350) ? 243 : 287,
-            width: (screenSize.width < 350) ? 165 : 205,
+            height: (MediaQueryHandler.screenWidth(context) < 350) ? 243 : 287,
+            width: (MediaQueryHandler.screenWidth(context) < 350) ? 165 : 205,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(
                 Radius.circular(12),
@@ -419,15 +423,19 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 Image.asset(
                   'assets/images/icon_calendar.png',
                   color: TextColors.greyText,
-                  height: (screenSize.width < 350) ? 12 : 16,
-                  width: (screenSize.width < 350) ? 12 : 16,
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
+                  width:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                 ),
                 const SizedBox(width: 3.0),
                 Text(
                   "2021",
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: (screenSize.width < 350) ? 10 : 12,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 10
+                        : 12,
                     color: TextColors.greyText,
                   ),
                 ),
@@ -440,15 +448,19 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 Image.asset(
                   'assets/images/icon_clock.png',
                   color: TextColors.greyText,
-                  height: (screenSize.width < 350) ? 12 : 16,
-                  width: (screenSize.width < 350) ? 12 : 16,
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
+                  width:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                 ),
                 const SizedBox(width: 3.0),
                 Text(
                   "148 Minutes",
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: (screenSize.width < 350) ? 10 : 12,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 10
+                        : 12,
                     color: TextColors.greyText,
                   ),
                 ),
@@ -461,15 +473,19 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 Image.asset(
                   'assets/images/icon_film.png',
                   color: TextColors.greyText,
-                  height: (screenSize.width < 350) ? 12 : 16,
-                  width: (screenSize.width < 350) ? 12 : 16,
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
+                  width:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                 ),
                 const SizedBox(width: 3.0),
                 Text(
                   "Action",
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: (screenSize.width < 350) ? 10 : 12,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 10
+                        : 12,
                     color: TextColors.greyText,
                   ),
                 ),
@@ -512,8 +528,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: (screenSize.width < 350) ? 32 : 48,
-                width: (screenSize.width < 350) ? 100 : 115,
+                height:
+                    (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
+                width:
+                    (MediaQueryHandler.screenWidth(context) < 350) ? 100 : 115,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(32),
@@ -527,8 +545,12 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                         padding: const EdgeInsets.only(left: 20),
                         child: Image.asset(
                           'assets/images/icon_play.png',
-                          height: (screenSize.width < 350) ? 18 : 24,
-                          width: (screenSize.width < 350) ? 18 : 24,
+                          height: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 18
+                              : 24,
+                          width: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 18
+                              : 24,
                         ),
                       ),
                       const SizedBox(width: 5),
@@ -536,7 +558,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                         "Play",
                         style: TextStyle(
                           fontFamily: "MM",
-                          fontSize: (screenSize.width < 350) ? 12 : 16,
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 12
+                                  : 16,
                           color: TextColors.whiteText,
                         ),
                       ),
@@ -546,8 +571,9 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               ),
               const SizedBox(width: 15.0),
               Container(
-                height: (screenSize.width < 350) ? 32 : 48,
-                width: (screenSize.width < 350) ? 32 : 48,
+                height:
+                    (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
+                width: (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: PrimaryColors.softColor,
@@ -556,8 +582,12 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   child: Image.asset(
                     'assets/images/icon_download.png',
                     color: PrimaryColors.blueAccentColor,
-                    height: (screenSize.width < 350) ? 18 : 24,
-                    width: (screenSize.width < 350) ? 18 : 24,
+                    height: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 18
+                        : 24,
+                    width: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 18
+                        : 24,
                   ),
                 ),
               ),
@@ -567,8 +597,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   shareDialog(context);
                 },
                 child: Container(
-                  height: (screenSize.width < 350) ? 32 : 48,
-                  width: (screenSize.width < 350) ? 32 : 48,
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
+                  width:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: PrimaryColors.softColor,
@@ -577,8 +609,12 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     child: Image.asset(
                       'assets/images/icon_share.png',
                       color: PrimaryColors.blueAccentColor,
-                      height: (screenSize.width < 350) ? 18 : 24,
-                      width: (screenSize.width < 350) ? 18 : 24,
+                      height: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 18
+                          : 24,
+                      width: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 18
+                          : 24,
                     ),
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/ui/upcomings_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +127,6 @@ class _HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -147,7 +147,9 @@ class _HomeHeader extends StatelessWidget {
                       "Hello, $name",
                       style: TextStyle(
                         fontFamily: "MSB",
-                        fontSize: (screenSize.width < 350) ? 12 : 16,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
                         color: TextColors.whiteText,
                       ),
                     ),
@@ -155,7 +157,9 @@ class _HomeHeader extends StatelessWidget {
                       "Let's find a movie for you",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: (screenSize.width < 350) ? 8 : 12,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 8
+                            : 12,
                         color: TextColors.greyText,
                       ),
                     ),
