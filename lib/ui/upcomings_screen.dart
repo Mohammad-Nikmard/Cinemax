@@ -1,6 +1,8 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class UpcomingsScreen extends StatelessWidget {
   const UpcomingsScreen({super.key});
@@ -14,7 +16,7 @@ class UpcomingsScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             const _Header(),
-            CategoryList(),
+            const CategoryList(),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
@@ -38,80 +40,90 @@ class _UpcomingChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 224,
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 168,
-            decoration: const BoxDecoration(
-              color: SecondaryColors.greenColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(16),
+    return GestureDetector(
+      onTap: () {
+        PersistentNavBarNavigator.pushNewScreen(
+          context,
+          screen: const UpcomingMovieDetail(),
+          withNavBar: true, // OPTIONAL VALUE. True by default.
+          pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        );
+      },
+      child: SizedBox(
+        height: 224,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 168,
+              decoration: const BoxDecoration(
+                color: SecondaryColors.greenColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16),
+                ),
               ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              const Text(
-                "The Batman",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 16,
-                  color: TextColors.whiteText,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
+                const Text(
+                  "The Batman",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 16,
+                    color: TextColors.whiteText,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 7),
-              SizedBox(
-                height: 16,
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/icon_calendar.png',
-                      height: 16,
-                      width: 16,
-                      color: TextColors.greyText,
-                    ),
-                    const SizedBox(width: 3),
-                    const Text(
-                      "March 2, 2022",
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: 12,
-                        color: TextColors.whiteText,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    const VerticalDivider(
-                      thickness: 1.3,
-                      color: TextColors.greyText,
-                    ),
-                    const SizedBox(width: 5),
-                    Image.asset(
-                      'assets/images/icon_film.png',
-                      height: 16,
-                      width: 16,
-                      color: TextColors.greyText,
-                    ),
-                    const SizedBox(width: 3),
-                    const Text(
-                      "Action",
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: 12,
+                const SizedBox(height: 7),
+                SizedBox(
+                  height: 16,
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/icon_calendar.png',
+                        height: 16,
+                        width: 16,
                         color: TextColors.greyText,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 3),
+                      const Text(
+                        "March 2, 2022",
+                        style: TextStyle(
+                          fontFamily: "MM",
+                          fontSize: 12,
+                          color: TextColors.whiteText,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      const VerticalDivider(
+                        thickness: 1.3,
+                        color: TextColors.greyText,
+                      ),
+                      const SizedBox(width: 5),
+                      Image.asset(
+                        'assets/images/icon_film.png',
+                        height: 16,
+                        width: 16,
+                        color: TextColors.greyText,
+                      ),
+                      const SizedBox(width: 3),
+                      const Text(
+                        "Action",
+                        style: TextStyle(
+                          fontFamily: "MM",
+                          fontSize: 12,
+                          color: TextColors.greyText,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -200,7 +212,9 @@ class _Header extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: const BackLabel(),
                 ),
                 const Text(

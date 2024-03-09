@@ -1,6 +1,7 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
+import 'package:cinemax/ui/upcomings_screen.dart';
 import 'package:cinemax/widgets/banner.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,45 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const MostPopList(),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Upcomings",
+                    style: TextStyle(
+                      fontFamily: "MM",
+                      fontSize: 16,
+                      color: TextColors.whiteText,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: const UpcomingsScreen(),
+                        withNavBar: false, // OPTIONAL VALUE. True by default.
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.cupertino,
+                      );
+                    },
+                    child: const Text(
+                      "See All",
+                      style: TextStyle(
+                        fontFamily: "MM",
+                        fontSize: 14,
+                        color: PrimaryColors.blueAccentColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const UpcomingList(),
         ],
       ),
     );
@@ -308,7 +348,37 @@ class MostPopList extends StatelessWidget {
             itemBuilder: (context, index) {
               return const Padding(
                 padding: EdgeInsets.only(right: 15),
-                child: MovieWidget(),
+                child: MovieWidget(
+                  showRate: true,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class UpcomingList extends StatelessWidget {
+  const UpcomingList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25, left: 20, bottom: 35),
+        child: SizedBox(
+          height: 231,
+          child: ListView.builder(
+            itemCount: 10,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return const Padding(
+                padding: EdgeInsets.only(right: 15),
+                child: MovieWidget(
+                  showRate: false,
+                ),
               );
             },
           ),

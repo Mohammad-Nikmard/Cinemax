@@ -14,115 +14,122 @@ class SearchScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 25, bottom: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          color: PrimaryColors.softColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(24),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/images/icon_search.png',
-                                height: 16,
-                                width: 16,
-                                color: TextColors.greyText,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25, bottom: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              color: PrimaryColors.softColor,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(24),
                               ),
-                              const SizedBox(width: 10.0),
-                              Expanded(
-                                child: TextField(
-                                  readOnly: true,
-                                  onTap: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                      context,
-                                      screen: const SearchResultScreen(),
-                                      withNavBar:
-                                          false, // OPTIONAL VALUE. True by default.
-                                      pageTransitionAnimation:
-                                          PageTransitionAnimation.cupertino,
-                                    );
-                                  },
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize: 14,
-                                    color: TextColors.whiteText,
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/icon_search.png',
+                                    height: 16,
+                                    width: 16,
+                                    color: TextColors.greyText,
                                   ),
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.only(bottom: 10),
-                                    border: InputBorder.none,
-                                    hintText: "Type Something...",
-                                    hintStyle: TextStyle(
-                                      fontFamily: "MM",
-                                      fontSize: 14,
-                                      color: TextColors.greyText,
+                                  const SizedBox(width: 10.0),
+                                  Expanded(
+                                    child: TextField(
+                                      readOnly: true,
+                                      onTap: () {
+                                        PersistentNavBarNavigator.pushNewScreen(
+                                          context,
+                                          screen: const SearchResultScreen(),
+                                          withNavBar:
+                                              false, // OPTIONAL VALUE. True by default.
+                                          pageTransitionAnimation:
+                                              PageTransitionAnimation.cupertino,
+                                        );
+                                      },
+                                      style: const TextStyle(
+                                        fontFamily: "MM",
+                                        fontSize: 14,
+                                        color: TextColors.whiteText,
+                                      ),
+                                      decoration: const InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.only(bottom: 10),
+                                        border: InputBorder.none,
+                                        hintText: "Type Something...",
+                                        hintStyle: TextStyle(
+                                          fontFamily: "MM",
+                                          fontSize: 14,
+                                          color: TextColors.greyText,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 90),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Today",
-                      style: TextStyle(
-                        fontFamily: "MSB",
-                        fontSize: 16,
-                        color: TextColors.whiteText,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    RelatedSeachWidget(),
-                  ],
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: RecommendHeader(),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 30),
-                child: SizedBox(
-                  height: 231,
-                  child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return const Padding(
-                        padding: EdgeInsets.only(right: 15),
-                        child: MovieWidget(),
-                      );
-                    },
                   ),
-                ),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 90),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Today",
+                          style: TextStyle(
+                            fontFamily: "MSB",
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        RelatedSeachWidget(),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+              Column(
+                children: [
+                  const RecommendHeader(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5, bottom: 30),
+                    child: SizedBox(
+                      height: 231,
+                      child: ListView.builder(
+                        itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return const Padding(
+                            padding: EdgeInsets.only(right: 15),
+                            child: MovieWidget(
+                              showRate: true,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

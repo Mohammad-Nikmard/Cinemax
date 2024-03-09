@@ -15,7 +15,7 @@ class MovieDetailScreen extends StatelessWidget {
           const _MovieDetailHeader(),
           SliverToBoxAdapter(
             child: Container(
-              height: 700,
+              height: 310,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 border: Border.all(
@@ -31,12 +31,62 @@ class MovieDetailScreen extends StatelessWidget {
                   children: [
                     _StoryLine(),
                     CastAndCrewWidget(),
+                    Padding(
+                      padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Gallery",
+                            style: TextStyle(
+                              fontFamily: "MSB",
+                              fontSize: 16,
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
+          const _Gallery(),
         ],
+      ),
+    );
+  }
+}
+
+class _Gallery extends StatelessWidget {
+  const _Gallery();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      sliver: SliverGrid(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return Container(
+              height: 100,
+              width: 100,
+              decoration: const BoxDecoration(
+                color: SecondaryColors.greenColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            );
+          },
+          childCount: 30,
+        ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
       ),
     );
   }
