@@ -2,6 +2,8 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 
 class UpcomingMovieDetail extends StatelessWidget {
   const UpcomingMovieDetail({super.key});
@@ -228,8 +230,31 @@ class MovieHeadDetail extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
+class _Header extends StatefulWidget {
   const _Header();
+
+  @override
+  State<_Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<_Header> with TickerProviderStateMixin {
+  late final AnimationController controller;
+  bool isLiked = false;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -258,21 +283,35 @@ class _Header extends StatelessWidget {
                     color: TextColors.whiteText,
                   ),
                 ),
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: const ShapeDecoration(
-                    shape: ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(40),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (isLiked) {
+                        controller.reverse();
+                        isLiked = false;
+                      } else if (!isLiked) {
+                        controller.forward();
+                        isLiked = true;
+                      }
+                    });
+                  },
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: const ShapeDecoration(
+                      shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(40),
+                        ),
                       ),
+                      color: PrimaryColors.softColor,
                     ),
-                    color: PrimaryColors.softColor,
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/icon_heart.png',
-                      color: SecondaryColors.redColor,
+                    child: Transform.scale(
+                      scale: 1.3,
+                      child: Lottie.asset(
+                        'assets/Animation - 1710000521327.json',
+                        controller: controller,
+                      ),
                     ),
                   ),
                 ),

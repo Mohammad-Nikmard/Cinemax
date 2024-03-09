@@ -16,6 +16,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   dotted_border: ^2.1.0
   persistent_bottom_nav_bar: ^5.0.2
+  lottie: ^3.1.0
 
 
   cupertino_icons: ^1.0.6
@@ -35,8 +36,7 @@ flutter:
 
   assets:
     - assets/images/
-  #   - images/a_dot_ham.jpeg
-
+    - assets/
   fonts:
     - family: MR
       fonts:

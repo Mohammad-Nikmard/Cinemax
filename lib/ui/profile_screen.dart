@@ -555,8 +555,8 @@ class _ProfileChip extends StatelessWidget {
                 Image.asset(
                   'assets/images/icon_edit_light.png',
                   color: PrimaryColors.blueAccentColor,
-                  height: (screenSize < 350) ? 14 : 20,
-                  width: (screenSize < 350) ? 14 : 20,
+                  height: (screenSize < 350) ? 14 : 24,
+                  width: (screenSize < 350) ? 14 : 24,
                 ),
               ],
             ),

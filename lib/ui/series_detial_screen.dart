@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class SeriesDetailScreen extends StatelessWidget {
   const SeriesDetailScreen({super.key});
@@ -261,7 +262,7 @@ class _StoryLine extends StatelessWidget {
 }
 
 class _MovieDetailHeader extends StatelessWidget {
-  const _MovieDetailHeader({super.key});
+  const _MovieDetailHeader();
 
   @override
   Widget build(BuildContext context) {
@@ -303,8 +304,32 @@ class _MovieDetailHeader extends StatelessWidget {
   }
 }
 
-class _MovieHeaderContent extends StatelessWidget {
+class _MovieHeaderContent extends StatefulWidget {
   const _MovieHeaderContent();
+
+  @override
+  State<_MovieHeaderContent> createState() => _MovieHeaderContentState();
+}
+
+class _MovieHeaderContentState extends State<_MovieHeaderContent>
+    with TickerProviderStateMixin {
+  late final AnimationController controller;
+  bool isLiked = false;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -337,23 +362,35 @@ class _MovieHeaderContent extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              Container(
-                height: (screenSize.width < 350) ? 28 : 32,
-                width: (screenSize.width < 350) ? 28 : 32,
-                decoration: const ShapeDecoration(
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(40),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (isLiked) {
+                      controller.reverse();
+                      isLiked = false;
+                    } else if (!isLiked) {
+                      controller.forward();
+                      isLiked = true;
+                    }
+                  });
+                },
+                child: Container(
+                  height: (screenSize.width < 350) ? 28 : 32,
+                  width: (screenSize.width < 350) ? 28 : 32,
+                  decoration: const ShapeDecoration(
+                    shape: ContinuousRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(40),
+                      ),
                     ),
+                    color: PrimaryColors.softColor,
                   ),
-                  color: PrimaryColors.softColor,
-                ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/icon_heart.png',
-                    color: SecondaryColors.redColor,
-                    height: (screenSize.width < 350) ? 18 : 24,
-                    width: (screenSize.width < 350) ? 18 : 24,
+                  child: Transform.scale(
+                    scale: 1.3,
+                    child: Lottie.asset(
+                      'assets/Animation - 1710000521327.json',
+                      controller: controller,
+                    ),
                   ),
                 ),
               ),

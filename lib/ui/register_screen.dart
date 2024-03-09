@@ -1,9 +1,11 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
+import 'package:cinemax/ui/privacy_screen.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -30,6 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isTermsChecked = false;
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -198,21 +201,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             "I agree to the ",
                             style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: 12,
+                              fontSize: (screenSize.width < 350) ? 10 : 12,
                               color: TextColors.greyText,
                             ),
                           ),
                           GestureDetector(
                             onTap: () {},
-                            child: const Text(
+                            child: Text(
                               "Terms and Services",
                               style: TextStyle(
                                 fontFamily: "MM",
-                                fontSize: 12,
+                                fontSize: (screenSize.width < 350) ? 10 : 12,
                                 color: PrimaryColors.blueAccentColor,
                               ),
                             ),
@@ -221,21 +224,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             "and ",
                             style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: 12,
+                              fontSize: (screenSize.width < 350) ? 10 : 12,
                               color: TextColors.greyText,
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {},
-                            child: const Text(
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: const PrivacyPolicyScreen(),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
+                            child: Text(
                               "Privacy Policy",
                               style: TextStyle(
                                 fontFamily: "MM",
-                                fontSize: 12,
+                                fontSize: (screenSize.width < 350) ? 10 : 12,
                                 color: PrimaryColors.blueAccentColor,
                               ),
                             ),
