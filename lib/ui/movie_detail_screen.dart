@@ -145,7 +145,12 @@ class _MovieHeaderContent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset('assets/images/icon_arrow_back.png'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Image.asset('assets/images/icon_arrow_back.png'),
+              ),
               const SizedBox(
                 width: 170,
                 child: Text(

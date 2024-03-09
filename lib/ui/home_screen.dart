@@ -1,7 +1,10 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/category_search_screen.dart';
+import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/widgets/banner.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,14 +13,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: const CustomScrollView(
+      body: CustomScrollView(
         slivers: [
-          _HomeHeader(name: "Mohammad"),
-          SearchBox(),
-          SliverToBoxAdapter(
+          const _HomeHeader(name: "Mohammad"),
+          const SearchBox(),
+          const SliverToBoxAdapter(
             child: BannerContainer(),
           ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.only(top: 25, left: 20),
               child: Text(
@@ -31,22 +34,46 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          CategoryList(),
+          const CategoryList(),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.only(top: 30, left: 20),
-              child: Text(
-                "Most Popular",
-                style: TextStyle(
-                  fontFamily: "MM",
-                  fontSize: 16,
-                  color: TextColors.whiteText,
-                ),
-                textAlign: TextAlign.start,
+              padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Most Popular",
+                    style: TextStyle(
+                      fontFamily: "MM",
+                      fontSize: 16,
+                      color: TextColors.whiteText,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: const CategorySearchScreen(),
+                        withNavBar: false, // OPTIONAL VALUE. True by default.
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.cupertino,
+                      );
+                    },
+                    child: const Text(
+                      "See All",
+                      style: TextStyle(
+                        fontFamily: "MM",
+                        fontSize: 14,
+                        color: PrimaryColors.blueAccentColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          MostPopList(),
+          const MostPopList(),
         ],
       ),
     );
@@ -129,58 +156,68 @@ class SearchBox extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 25),
-        child: Container(
-          height: 41,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            color: PrimaryColors.softColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(24),
+        child: GestureDetector(
+          onTap: () {
+            PersistentNavBarNavigator.pushNewScreen(
+              context,
+              screen: const SearchScreen(),
+              withNavBar: true, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
+          child: Container(
+            height: 41,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              color: PrimaryColors.softColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(24),
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/icon_search.png',
-                      color: TextColors.greyText,
-                      height: 16,
-                      width: 16,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Text(
-                      "Search a title...",
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: 14,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/icon_search.png',
                         color: TextColors.greyText,
+                        height: 16,
+                        width: 16,
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      child: VerticalDivider(
-                        color: TextColors.greyText,
-                        thickness: 1.3,
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    Image.asset(
-                      'assets/images/icon_setters.png',
-                      height: 16,
-                      width: 16,
-                    ),
-                  ],
-                ),
-              ],
+                      const Text(
+                        "Search a title...",
+                        style: TextStyle(
+                          fontFamily: "MM",
+                          fontSize: 14,
+                          color: TextColors.greyText,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: VerticalDivider(
+                          color: TextColors.greyText,
+                          thickness: 1.3,
+                        ),
+                      ),
+                      Image.asset(
+                        'assets/images/icon_setters.png',
+                        height: 16,
+                        width: 16,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

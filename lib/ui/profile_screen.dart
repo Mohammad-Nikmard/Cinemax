@@ -9,6 +9,7 @@ import 'package:cinemax/ui/reset_password_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -256,11 +257,11 @@ class _GeneralChip extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const NotificationsScreen(),
-                    ),
+                    screen: const NotificationsScreen(),
+                    withNavBar: false, // OPTIONAL VALUE. True by default.
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
                 child: const _OptionChip(
@@ -281,11 +282,11 @@ class _GeneralChip extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const LanguageScreen(),
-                    ),
+                    screen: const LanguageScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
                 child: const _OptionChip(
@@ -366,11 +367,11 @@ class _MoreChip extends StatelessWidget {
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const PrivacyPolicyScreen(),
-                    ),
+                    screen: const PrivacyPolicyScreen(),
+                    withNavBar: false, // OPTIONAL VALUE. True by default.
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
                 child: const _OptionChip(
@@ -497,11 +498,11 @@ class _ProfileChip extends StatelessWidget {
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
+          PersistentNavBarNavigator.pushNewScreen(
             context,
-            MaterialPageRoute(
-              builder: (context) => const ProfileEditScreen(),
-            ),
+            screen: const ProfileEditScreen(),
+            withNavBar: true, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
         },
         child: Container(

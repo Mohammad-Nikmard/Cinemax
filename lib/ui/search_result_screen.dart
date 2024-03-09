@@ -1,12 +1,9 @@
 import 'package:cinemax/constants/color_constants.dart';
-import 'package:cinemax/ui/search_result_screen.dart';
-import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class SearchResultScreen extends StatelessWidget {
+  const SearchResultScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,25 +39,14 @@ class SearchScreen extends StatelessWidget {
                                 color: TextColors.greyText,
                               ),
                               const SizedBox(width: 10.0),
-                              Expanded(
+                              const Expanded(
                                 child: TextField(
-                                  readOnly: true,
-                                  onTap: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                      context,
-                                      screen: const SearchResultScreen(),
-                                      withNavBar:
-                                          false, // OPTIONAL VALUE. True by default.
-                                      pageTransitionAnimation:
-                                          PageTransitionAnimation.cupertino,
-                                    );
-                                  },
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontFamily: "MM",
                                     fontSize: 14,
                                     color: TextColors.whiteText,
                                   ),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(bottom: 10),
                                     border: InputBorder.none,
                                     hintText: "Type Something...",
@@ -77,49 +63,41 @@ class SearchScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 90),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Today",
-                      style: TextStyle(
-                        fontFamily: "MSB",
-                        fontSize: 16,
-                        color: TextColors.whiteText,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "Cancel",
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize: 12,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    RelatedSeachWidget(),
                   ],
                 ),
               ),
             ),
             const SliverToBoxAdapter(
-              child: RecommendHeader(),
+              child: RelatedActorList(),
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 30),
-                child: SizedBox(
-                  height: 231,
-                  child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return const Padding(
-                        padding: EdgeInsets.only(right: 15),
-                        child: MovieWidget(),
-                      );
-                    },
-                  ),
-                ),
+            const SliverToBoxAdapter(
+              child: MovieRelatedHeader(),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return const Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: RelatedSeachWidget(),
+                  );
+                },
+                childCount: 10,
               ),
             ),
           ],
@@ -129,8 +107,8 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-class RecommendHeader extends StatelessWidget {
-  const RecommendHeader({super.key});
+class MovieRelatedHeader extends StatelessWidget {
+  const MovieRelatedHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +121,7 @@ class RecommendHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Recommend for you",
+                "Movie Related",
                 style: TextStyle(
                   fontFamily: "MSB",
                   fontSize: 16,
@@ -163,6 +141,66 @@ class RecommendHeader extends StatelessWidget {
           SizedBox(height: 20.0),
         ],
       ),
+    );
+  }
+}
+
+class RelatedActorList extends StatelessWidget {
+  const RelatedActorList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Actors",
+          style: TextStyle(
+            fontFamily: "MSB",
+            fontSize: 16,
+            color: TextColors.whiteText,
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        SizedBox(
+          height: 110,
+          child: ListView.builder(
+            itemCount: 10,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, inde) {
+              return const Padding(
+                padding: EdgeInsets.only(right: 15.0),
+                child: RelatedActor(),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class RelatedActor extends StatelessWidget {
+  const RelatedActor({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: PrimaryColors.blueAccentColor,
+        ),
+        SizedBox(height: 10),
+        Text(
+          "John Cena",
+          style: TextStyle(
+            fontFamily: "MSB",
+            fontSize: 12,
+            color: TextColors.whiteText,
+          ),
+        ),
+      ],
     );
   }
 }

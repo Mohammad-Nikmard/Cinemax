@@ -28,7 +28,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     child: const BackLabel(),
                   ),
                   const Text(
-                    "Notification",
+                    "Legal & Policies",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 16,
