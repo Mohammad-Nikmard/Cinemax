@@ -52,8 +52,11 @@ class _SeasonChip extends StatefulWidget {
 
 class __SeasonChipState extends State<_SeasonChip> {
   int selectedIndex = 0;
+  int seasonNumbers = 5;
+
   @override
   Widget build(BuildContext context) {
+    double maxHeight = 44.0 * seasonNumbers;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -105,9 +108,9 @@ class __SeasonChipState extends State<_SeasonChip> {
                               ),
                               const SizedBox(height: 20),
                               SizedBox(
-                                height: 220,
+                                height: maxHeight,
                                 child: ListView.builder(
-                                  itemCount: 5,
+                                  itemCount: seasonNumbers,
                                   itemBuilder: (context, index) {
                                     return Center(
                                       child: Padding(
