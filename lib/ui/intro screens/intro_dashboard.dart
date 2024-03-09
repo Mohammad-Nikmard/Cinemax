@@ -24,9 +24,9 @@ class _IntroDashboardState extends State<IntroDashboard> {
   ];
 
   List<String> subs = [
-    "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient. ",
-    "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient. ",
-    "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient. ",
+    "checkout what movies-series-animations are upcoming to stay updated.",
+    "search your favorite movie-series-animation to see all the details of it ad free!",
+    "use comment section to interact with people to find the best suited for you.",
   ];
 
   List<Widget> pages = const [
