@@ -1,5 +1,5 @@
 import 'package:cinemax/theme/main_theme.dart';
-import 'package:cinemax/ui/movie_detail_screen.dart';
+import 'package:cinemax/ui/series_detial_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
-      home: const MovieDetailScreen(),
+      home: const SeriesDetailScreen(),
     );
   }
 }
