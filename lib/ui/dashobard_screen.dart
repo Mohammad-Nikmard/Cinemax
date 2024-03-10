@@ -1,8 +1,12 @@
+import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/home/home_event.dart';
+import 'package:cinemax/bloc/home/homebloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/home_screen.dart';
 import 'package:cinemax/ui/profile_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -45,10 +49,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   List<Widget> _buildScreens() {
-    return const [
-      HomeScreen(),
-      SearchScreen(),
-      ProfileScreen(),
+    return [
+      BlocProvider(
+        create: (context) {
+          var bloc = HomeBloc(locator.get());
+          bloc.add(HomeDataRequestEvent());
+          return bloc;
+        },
+        child: const HomeScreen(),
+      ),
+      const SearchScreen(),
+      const ProfileScreen(),
     ];
   }
 

@@ -1,8 +1,10 @@
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/theme/main_theme.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  await initServiceLoactor();
   runApp(const MyApp());
 }
 

@@ -1,11 +1,15 @@
+import 'package:cinemax/bloc/home/home_state.dart';
+import 'package:cinemax/bloc/home/homebloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/ui/upcomings_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,107 +19,130 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: CustomScrollView(
-        slivers: [
-          const _HomeHeader(name: "Mohammad"),
-          const SearchBox(),
-          const SliverToBoxAdapter(
-            child: BannerContainer(),
-          ),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(top: 25, left: 20),
-              child: Text(
-                "Categories",
-                style: TextStyle(
-                  fontFamily: "MM",
-                  fontSize: 16,
-                  color: TextColors.whiteText,
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is HomeLoadingState) {
+            return const AppLoadingIndicator();
+          }
+          if (state is HomeResponseState) {
+            return CustomScrollView(
+              slivers: [
+                const _HomeHeader(name: "Mohammad"),
+                const SearchBox(),
+                state.getBanners.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (bannerList) {
+                    return SliverToBoxAdapter(
+                      child: BannerContainer(
+                        bannerList: bannerList,
+                      ),
+                    );
+                  },
                 ),
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-          const CategoryList(),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Most Popular",
-                    style: TextStyle(
-                      fontFamily: "MM",
-                      fontSize: 16,
-                      color: TextColors.whiteText,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      PersistentNavBarNavigator.pushNewScreen(
-                        context,
-                        screen: const CategorySearchScreen(),
-                        withNavBar: false, // OPTIONAL VALUE. True by default.
-                        pageTransitionAnimation:
-                            PageTransitionAnimation.cupertino,
-                      );
-                    },
-                    child: const Text(
-                      "See All",
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 25, left: 20),
+                    child: Text(
+                      "Categories",
                       style: TextStyle(
                         fontFamily: "MM",
-                        fontSize: 14,
-                        color: PrimaryColors.blueAccentColor,
+                        fontSize: 16,
+                        color: TextColors.whiteText,
                       ),
+                      textAlign: TextAlign.start,
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          const MostPopList(),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Upcomings",
-                    style: TextStyle(
-                      fontFamily: "MM",
-                      fontSize: 16,
-                      color: TextColors.whiteText,
+                ),
+                const CategoryList(),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30, left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Most Popular",
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: const CategorySearchScreen(),
+                              withNavBar:
+                                  false, // OPTIONAL VALUE. True by default.
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                          },
+                          child: const Text(
+                            "See All",
+                            style: TextStyle(
+                              fontFamily: "MM",
+                              fontSize: 14,
+                              color: PrimaryColors.blueAccentColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    textAlign: TextAlign.start,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      PersistentNavBarNavigator.pushNewScreen(
-                        context,
-                        screen: const UpcomingsScreen(),
-                        withNavBar: false, // OPTIONAL VALUE. True by default.
-                        pageTransitionAnimation:
-                            PageTransitionAnimation.cupertino,
-                      );
-                    },
-                    child: const Text(
-                      "See All",
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: 14,
-                        color: PrimaryColors.blueAccentColor,
-                      ),
+                ),
+                const MostPopList(),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30, left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Upcomings",
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: const UpcomingsScreen(),
+                              withNavBar:
+                                  false, // OPTIONAL VALUE. True by default.
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                          },
+                          child: const Text(
+                            "See All",
+                            style: TextStyle(
+                              fontFamily: "MM",
+                              fontSize: 14,
+                              color: PrimaryColors.blueAccentColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          const UpcomingList(),
-        ],
+                ),
+                const UpcomingList(),
+              ],
+            );
+          }
+          return Text("There seem to be errors Getting data");
+        },
       ),
     );
   }
