@@ -33,12 +33,12 @@ class _BannerContainerState extends State<BannerContainer> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  PersistentNavBarNavigator.pushNewScreen(
-                    context,
-                    screen: const UpcomingMovieDetail(),
-                    withNavBar: true, // OPTIONAL VALUE. True by default.
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
+                  // PersistentNavBarNavigator.pushNewScreen(
+                  //   context,
+                  //   screen: const UpcomingMovieDetail(),
+                  //   withNavBar: true, // OPTIONAL VALUE. True by default.
+                  //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  // );
                 },
                 child: SizedBox(
                   height: 154,

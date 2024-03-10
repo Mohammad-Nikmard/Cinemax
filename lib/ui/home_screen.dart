@@ -1,5 +1,8 @@
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
@@ -125,9 +128,15 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             PersistentNavBarNavigator.pushNewScreen(
                               context,
-                              screen: const UpcomingsScreen(),
-                              withNavBar:
-                                  false, // OPTIONAL VALUE. True by default.
+                              screen: BlocProvider(
+                                create: (context) {
+                                  var bloc = UpcomingsBloc(locator.get());
+                                  bloc.add(UpcomingsDataRequestEvent());
+                                  return bloc;
+                                },
+                                child: const UpcomingsScreen(),
+                              ),
+                              withNavBar: false,
                               pageTransitionAnimation:
                                   PageTransitionAnimation.cupertino,
                             );

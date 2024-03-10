@@ -1,7 +1,15 @@
+import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/widgets/back_label.dart';
+import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class UpcomingsScreen extends StatelessWidget {
@@ -11,32 +19,63 @@ class UpcomingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: CustomScrollView(
-          slivers: [
-            const _Header(),
-            const CategoryList(),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: _UpcomingChip(),
-                  );
-                },
-                childCount: 10,
+      body: BlocBuilder<UpcomingsBloc, UpcomingsState>(
+        builder: (context, state) {
+          if (state is UpcomingsLoadingState) {
+            return const AppLoadingIndicator();
+          } else if (state is UpcomingsResponseState) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: CustomScrollView(
+                slivers: [
+                  const _Header(),
+                  const CategoryList(),
+                  state.getUpcomingsList.fold(
+                    (exceptionMessage) {
+                      return Text("exceptionMessage");
+                    },
+                    (upList) {
+                      return _UpcomingsList(
+                        upList: upList,
+                      );
+                    },
+                  ),
+                ],
               ),
+            );
+          }
+          return Text("There seem to be errors Getting data");
+        },
+      ),
+    );
+  }
+}
+
+class _UpcomingsList extends StatelessWidget {
+  const _UpcomingsList({required this.upList});
+  final List<Upcomings> upList;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: _UpcomingChip(
+              upcomingsItem: upList[index],
             ),
-          ],
-        ),
+          );
+        },
+        childCount: upList.length,
       ),
     );
   }
 }
 
 class _UpcomingChip extends StatelessWidget {
-  const _UpcomingChip();
+  const _UpcomingChip({required this.upcomingsItem});
+  final Upcomings upcomingsItem;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +83,10 @@ class _UpcomingChip extends StatelessWidget {
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen: const UpcomingMovieDetail(),
-          withNavBar: true, // OPTIONAL VALUE. True by default.
+          screen: UpcomingMovieDetail(
+            upcomingItem: upcomingsItem,
+          ),
+          withNavBar: true,
           pageTransitionAnimation: PageTransitionAnimation.cupertino,
         );
       },
@@ -54,13 +95,19 @@ class _UpcomingChip extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 168,
-              decoration: const BoxDecoration(
-                color: SecondaryColors.greenColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16),
+            ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(16),
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 168,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: CachedImage(
+                    imageUrl: upcomingsItem.thumbnail,
+                    radius: 16,
+                  ),
                 ),
               ),
             ),
@@ -68,9 +115,9 @@ class _UpcomingChip extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                const Text(
-                  "The Batman",
-                  style: TextStyle(
+                Text(
+                  upcomingsItem.name,
+                  style: const TextStyle(
                     fontFamily: "MSB",
                     fontSize: 16,
                     color: TextColors.whiteText,
@@ -88,9 +135,9 @@ class _UpcomingChip extends StatelessWidget {
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),
-                      const Text(
-                        "March 2, 2022",
-                        style: TextStyle(
+                      Text(
+                        "${upcomingsItem.releaseMonth} ${upcomingsItem.releaseDate}, ${upcomingsItem.releaseYear}",
+                        style: const TextStyle(
                           fontFamily: "MM",
                           fontSize: 12,
                           color: TextColors.whiteText,
@@ -109,9 +156,9 @@ class _UpcomingChip extends StatelessWidget {
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),
-                      const Text(
-                        "Action",
-                        style: TextStyle(
+                      Text(
+                        upcomingsItem.genre,
+                        style: const TextStyle(
                           fontFamily: "MM",
                           fontSize: 12,
                           color: TextColors.greyText,

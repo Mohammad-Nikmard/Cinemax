@@ -1,12 +1,15 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class UpcomingMovieDetail extends StatelessWidget {
-  const UpcomingMovieDetail({super.key});
+  const UpcomingMovieDetail({super.key, required this.upcomingItem});
+  final Upcomings upcomingItem;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +17,15 @@ class UpcomingMovieDetail extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(
         slivers: [
-          const _Header(),
-          const MovieHeadDetail(),
-          const _Synopsis(),
+          _Header(
+            upcomingtitle: upcomingItem.name,
+          ),
+          MovieHeadDetail(
+            upcomingItem: upcomingItem,
+          ),
+          _Synopsis(
+            synopsis: upcomingItem.synopsis,
+          ),
           const SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.only(left: 20.0),
@@ -86,7 +95,8 @@ class _Gallery extends StatelessWidget {
 }
 
 class _Synopsis extends StatelessWidget {
-  const _Synopsis();
+  const _Synopsis({required this.synopsis});
+  final String synopsis;
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +121,7 @@ class _Synopsis extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    """
-THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early years, struggling to balance rage with righteousness as he investigates a disturbing mystery that has terrorized Gotham. Robert Pattinson delivers a raw, intense portrayal of Batman as a disillusioned, desperate vigilante awakened by the realization""",
+                    synopsis,
                     style: TextStyle(
                       fontFamily: "MR",
                       fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -142,7 +151,8 @@ THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early y
 }
 
 class MovieHeadDetail extends StatelessWidget {
-  const MovieHeadDetail({super.key});
+  const MovieHeadDetail({super.key, required this.upcomingItem});
+  final Upcomings upcomingItem;
 
   @override
   Widget build(BuildContext context) {
@@ -151,13 +161,19 @@ class MovieHeadDetail extends StatelessWidget {
         padding: const EdgeInsets.only(top: 40.0, left: 20, right: 20),
         child: Column(
           children: [
-            Container(
-              height: 180,
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                color: SecondaryColors.greenColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+            ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(20),
+              ),
+              child: SizedBox(
+                height: 180,
+                width: MediaQuery.of(context).size.width,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: CachedImage(
+                    imageUrl: upcomingItem.thumbnail,
+                    radius: 20,
+                  ),
                 ),
               ),
             ),
@@ -166,7 +182,7 @@ class MovieHeadDetail extends StatelessWidget {
               children: [
                 const SizedBox(height: 15),
                 Text(
-                  "The Batman",
+                  upcomingItem.name,
                   style: TextStyle(
                     fontFamily: "MSB",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -203,7 +219,7 @@ class MovieHeadDetail extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "March 2, 2022",
+                        "${upcomingItem.releaseMonth} ${upcomingItem.releaseDate}, ${upcomingItem.releaseYear}",
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:
@@ -231,7 +247,7 @@ class MovieHeadDetail extends StatelessWidget {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        "Action",
+                        upcomingItem.genre,
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:
@@ -254,7 +270,8 @@ class MovieHeadDetail extends StatelessWidget {
 }
 
 class _Header extends StatefulWidget {
-  const _Header();
+  const _Header({required this.upcomingtitle});
+  final String upcomingtitle;
 
   @override
   State<_Header> createState() => _HeaderState();
@@ -298,9 +315,9 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                   },
                   child: const BackLabel(),
                 ),
-                const Text(
-                  "Title",
-                  style: TextStyle(
+                Text(
+                  widget.upcomingtitle,
+                  style: const TextStyle(
                     fontFamily: "MSB",
                     fontSize: 16,
                     color: TextColors.whiteText,
