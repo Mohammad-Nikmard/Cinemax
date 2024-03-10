@@ -1,94 +1,119 @@
 import 'dart:ui';
 
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
+import 'package:cinemax/ui/series_detial_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MovieWidget extends StatelessWidget {
-  const MovieWidget({super.key, required this.showRate});
+  const MovieWidget({super.key, required this.showRate, required this.movie});
   final bool showRate;
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        PersistentNavBarNavigator.pushNewScreen(
-          context,
-          screen: const MovieDetailScreen(),
-          withNavBar: true, // OPTIONAL VALUE. True by default.
-          pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        );
+        if (movie.category == "movie") {
+          PersistentNavBarNavigator.pushNewScreen(
+            context,
+            screen: MovieDetailScreen(
+              movie: movie,
+            ),
+            withNavBar: true,
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        } else if (movie.category == "series") {
+          PersistentNavBarNavigator.pushNewScreen(
+            context,
+            screen: SeriesDetailScreen(
+              series: movie,
+            ),
+            withNavBar: true,
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        }
       },
       child: SizedBox(
         height: (MediaQueryHandler.screenWidth(context) < 350) ? 185 : 231,
         child: Column(
           children: [
-            Container(
-              width: (MediaQueryHandler.screenWidth(context) < 350) ? 115 : 145,
-              height:
-                  (MediaQueryHandler.screenWidth(context) < 350) ? 142 : 178,
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                  ),
+                  child: SizedBox(
+                    width: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 115
+                        : 145,
+                    height: (MediaQueryHandler.screenWidth(context) < 350)
+                        ? 142
+                        : 178,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: CachedImage(
+                        imageUrl: movie.thumbnail,
+                        radius: 0,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, right: 10),
-                    child: Visibility(
-                      visible: showRate,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                          child: Transform.scale(
-                            scale:
-                                (MediaQueryHandler.screenWidth(context) < 350)
-                                    ? 0.8
-                                    : 1,
-                            child: Container(
-                              height: 24,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                color: const Color(0xff252836).withOpacity(0.3),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Visibility(
+                    visible: showRate,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                        child: Container(
+                          height: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 19.2
+                              : 24,
+                          width: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 44
+                              : 55,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff252836).withOpacity(0.3),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon_star.png',
+                                color: SecondaryColors.orangeColor,
+                                height: 16,
+                                width: 16,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                movie.rate,
+                                style: const TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 12,
+                                  color: SecondaryColors.orangeColor,
                                 ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/icon_star.png',
-                                    color: SecondaryColors.orangeColor,
-                                    height: 16,
-                                    width: 16,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  const Text(
-                                    "4.5",
-                                    style: TextStyle(
-                                      fontFamily: "MM",
-                                      fontSize: 12,
-                                      color: SecondaryColors.orangeColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Container(
               width: (MediaQueryHandler.screenWidth(context) < 350) ? 115 : 145,
@@ -109,7 +134,7 @@ class MovieWidget extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      "Life of PI whatever bro",
+                      movie.name,
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -120,7 +145,7 @@ class MovieWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "Action",
+                      movie.genre,
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)

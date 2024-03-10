@@ -1,29 +1,36 @@
 import 'dart:ui';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class MovieDetailScreen extends StatelessWidget {
-  const MovieDetailScreen({super.key});
+  const MovieDetailScreen({super.key, required this.movie});
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: const CustomScrollView(
+      body: CustomScrollView(
         slivers: [
-          _MovieDetailHeader(),
+          _MovieDetailHeader(
+            movie: movie,
+          ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _StoryLine(),
-                  CastAndCrewWidget(),
-                  Padding(
+                  _StoryLine(
+                    storyLine: movie.storyline,
+                  ),
+                  const CastAndCrewWidget(),
+                  const Padding(
                     padding: EdgeInsets.only(right: 20.0, top: 20.0),
                     child: Column(
                       children: [
@@ -43,7 +50,7 @@ class MovieDetailScreen extends StatelessWidget {
               ),
             ),
           ),
-          _Gallery(),
+          const _Gallery(),
         ],
       ),
     );
@@ -84,7 +91,8 @@ class _Gallery extends StatelessWidget {
 }
 
 class _StoryLine extends StatelessWidget {
-  const _StoryLine();
+  const _StoryLine({required this.storyLine});
+  final String storyLine;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +113,7 @@ class _StoryLine extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                "For the first time in the cinematic history of Spider-Man, our friendly neighborhood hero's identity is revealed, bringing his Super Hero responsibilities into conflict with his normal life and putting those he cares about most at risk.",
+                storyLine,
                 style: TextStyle(
                   fontFamily: "MR",
                   fontSize:
@@ -131,25 +139,27 @@ class _StoryLine extends StatelessWidget {
 }
 
 class _MovieDetailHeader extends StatelessWidget {
-  const _MovieDetailHeader();
+  const _MovieDetailHeader({required this.movie});
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 552,
             width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage("assets/images/Bg.png"),
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: CachedImage(
+                imageUrl: movie.thumbnail,
+                radius: 0,
               ),
             ),
           ),
           Container(
-            height: 552,
+            height: 600,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               border: Border.all(
@@ -160,13 +170,15 @@ class _MovieDetailHeader extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  PrimaryColors.darkColor.withOpacity(0.6),
+                  PrimaryColors.darkColor.withOpacity(0.7),
                   PrimaryColors.darkColor,
                 ],
               ),
             ),
           ),
-          const _MovieHeaderContent(),
+          _MovieHeaderContent(
+            movie: movie,
+          ),
         ],
       ),
     );
@@ -174,7 +186,8 @@ class _MovieDetailHeader extends StatelessWidget {
 }
 
 class _MovieHeaderContent extends StatefulWidget {
-  const _MovieHeaderContent();
+  const _MovieHeaderContent({required this.movie});
+  final Movie movie;
 
   @override
   State<_MovieHeaderContent> createState() => _MovieHeaderContentState();
@@ -221,7 +234,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               SizedBox(
                 width: 170,
                 child: Text(
-                  "Spider-man No way home bruh",
+                  widget.movie.name,
                   style: TextStyle(
                     fontFamily: "MSB",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -268,17 +281,21 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          Container(
-            height: (MediaQueryHandler.screenWidth(context) < 350) ? 243 : 287,
-            width: (MediaQueryHandler.screenWidth(context) < 350) ? 165 : 205,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(12),
-              ),
-              image: DecorationImage(
+          const SizedBox(height: 50),
+          ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(12),
+            ),
+            child: SizedBox(
+              height:
+                  (MediaQueryHandler.screenWidth(context) < 350) ? 243 : 287,
+              width: (MediaQueryHandler.screenWidth(context) < 350) ? 165 : 205,
+              child: FittedBox(
                 fit: BoxFit.cover,
-                image: AssetImage("assets/images/Bg.png"),
+                child: CachedImage(
+                  imageUrl: widget.movie.thumbnail,
+                  radius: 12,
+                ),
               ),
             ),
           ),
@@ -298,7 +315,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 ),
                 const SizedBox(width: 3.0),
                 Text(
-                  "2021",
+                  widget.movie.year,
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -323,7 +340,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 ),
                 const SizedBox(width: 3.0),
                 Text(
-                  "148 Minutes",
+                  widget.movie.timeLength,
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -348,7 +365,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 ),
                 const SizedBox(width: 3.0),
                 Text(
-                  "Action",
+                  widget.movie.genre,
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -380,9 +397,9 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   width: 16,
                 ),
                 const SizedBox(width: 5),
-                const Text(
-                  "4.5",
-                  style: TextStyle(
+                Text(
+                  widget.movie.rate,
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 12,
                     color: SecondaryColors.orangeColor,

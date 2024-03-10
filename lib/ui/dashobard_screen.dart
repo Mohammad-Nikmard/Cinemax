@@ -52,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return [
       BlocProvider(
         create: (context) {
-          var bloc = HomeBloc(locator.get());
+          var bloc = HomeBloc(locator.get(), locator.get());
           bloc.add(HomeDataRequestEvent());
           return bloc;
         },

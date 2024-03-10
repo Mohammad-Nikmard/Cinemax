@@ -118,9 +118,9 @@ class SearchScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return const Padding(
                             padding: EdgeInsets.only(right: 15),
-                            child: MovieWidget(
-                              showRate: true,
-                            ),
+                            // child: MovieWidget(
+                            //   showRate: true,
+                            // ),
                           );
                         },
                       ),

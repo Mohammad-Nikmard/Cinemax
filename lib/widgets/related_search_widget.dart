@@ -13,12 +13,12 @@ class RelatedSeachWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        PersistentNavBarNavigator.pushNewScreen(
-          context,
-          screen: const MovieDetailScreen(),
-          withNavBar: true, // OPTIONAL VALUE. True by default.
-          pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        );
+        // PersistentNavBarNavigator.pushNewScreen(
+        //   context,
+        //   screen: const MovieDetailScreen(),
+        //   withNavBar: true, // OPTIONAL VALUE. True by default.
+        //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        // );
       },
       child: SizedBox(
         height: 147,

@@ -1,6 +1,7 @@
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/ui/upcomings_screen.dart';
@@ -64,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Most Popular",
+                          "Most Popular Movies",
                           style: TextStyle(
                             fontFamily: "MM",
                             fontSize: 16,
@@ -96,7 +97,14 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const MostPopList(),
+                state.getMovies.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (movieList) {
+                    return MostPopList(movieList: movieList);
+                  },
+                ),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding:
@@ -138,6 +146,54 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const UpcomingList(),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30, left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Most Popular Series",
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: const CategorySearchScreen(),
+                              withNavBar:
+                                  false, // OPTIONAL VALUE. True by default.
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                          },
+                          child: const Text(
+                            "See All",
+                            style: TextStyle(
+                              fontFamily: "MM",
+                              fontSize: 14,
+                              color: PrimaryColors.blueAccentColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                state.getSeries.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (seriesList) {
+                    return SeriesList(movieList: seriesList);
+                  },
+                ),
               ],
             );
           }
@@ -364,7 +420,8 @@ class _CategoryListState extends State<CategoryList> {
 }
 
 class MostPopList extends StatelessWidget {
-  const MostPopList({super.key});
+  const MostPopList({super.key, required this.movieList});
+  final List<Movie> movieList;
 
   @override
   Widget build(BuildContext context) {
@@ -377,10 +434,11 @@ class MostPopList extends StatelessWidget {
             itemCount: 10,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return const Padding(
-                padding: EdgeInsets.only(right: 15),
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
                 child: MovieWidget(
                   showRate: true,
+                  movie: movieList[index],
                 ),
               );
             },
@@ -407,8 +465,38 @@ class UpcomingList extends StatelessWidget {
             itemBuilder: (context, index) {
               return const Padding(
                 padding: EdgeInsets.only(right: 15),
+                // child: MovieWidget(
+                //   showRate: false,
+                // ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SeriesList extends StatelessWidget {
+  const SeriesList({super.key, required this.movieList});
+  final List<Movie> movieList;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25, left: 20, bottom: 35),
+        child: SizedBox(
+          height: 231,
+          child: ListView.builder(
+            itemCount: movieList.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
                 child: MovieWidget(
-                  showRate: false,
+                  showRate: true,
+                  movie: movieList[index],
                 ),
               );
             },
