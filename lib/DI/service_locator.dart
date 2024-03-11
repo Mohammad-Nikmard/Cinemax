@@ -16,10 +16,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 var locator = GetIt.instance;
 
 Future<void> initServiceLoactor() async {
-  locator.registerSingleton<Dio>(DioHandler.dioWithoutHeader());
-
   locator.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());
+
+  locator.registerSingleton<Dio>(DioHandler.dioWithoutHeader());
 
   getDatasources();
 

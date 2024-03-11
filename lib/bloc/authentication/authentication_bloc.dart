@@ -12,7 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoadingState());
         var response = await _authenticationRepository.register(
             event.email, event.username, event.password, event.passwordConfirm);
-        emit(AuthResponseState(response));
+        emit(AuthRegisterResponseState(response));
       },
     );
     on<AuthLoginEvent>(
@@ -20,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoadingState());
         var response =
             await _authenticationRepository.login(event.password, event.email);
-        emit(AuthResponseState(response));
+        emit(AuthLoginResponseState(response));
       },
     );
   }

@@ -61,7 +61,8 @@ class ProfileScreen extends StatelessWidget {
                   height: 56,
                   child: OutlinedButton(
                     onPressed: () {
-                      signoutDialog(context);
+                      // signoutDialog(context);
+                      AuthManager.logOut();
                     },
                     child: const Text(
                       "Log Out",

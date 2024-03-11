@@ -6,7 +6,10 @@ import 'package:cinemax/util/auth_manager.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await initServiceLoactor();
+
   runApp(const MyApp());
 }
 
@@ -18,9 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
-      home: (AuthManager.readToken() == "")
-          ? const OnBoardingScreen()
-          : const DashboardScreen(),
+      home: DashboardScreen(),
     );
   }
 }

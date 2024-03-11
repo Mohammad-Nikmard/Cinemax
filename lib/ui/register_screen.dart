@@ -370,7 +370,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (state is AuthLoadingState) {
             return const AppLoadingIndicator();
           }
-          if (state is AuthResponseState) {
+          if (state is AuthRegisterResponseState) {
             return SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -707,12 +707,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           return Text("");
         },
         listener: (context, state) {
-          if (state is AuthResponseState) {
+          if (state is AuthRegisterResponseState) {
             nameController.text = "";
             pwConfirmController.text = "";
             pwController.text = "";
             emailController.text = "";
-            state.response.fold(
+            return state.response.fold(
               (l) {},
               (r) {
                 Navigator.pushReplacement(

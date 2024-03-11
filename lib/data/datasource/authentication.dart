@@ -48,9 +48,11 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
         },
       );
       if (response.statusCode == 200) {
-        AuthManager.saveToken(response.data["token"]);
-        AuthManager.saveId(response.data["record"]["username"]);
-        return response.data["token"];
+        var token = response.data["token"];
+        var username = response.data["record"]["username"];
+        AuthManager.saveToken(token);
+        AuthManager.saveId(username);
+        return token;
       }
     } on DioException catch (ex) {
       throw ApiException(ex.message!, ex.response?.statusCode);

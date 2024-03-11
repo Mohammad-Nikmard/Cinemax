@@ -6,8 +6,14 @@ class AuthInitState extends AuthState {}
 
 class AuthLoadingState extends AuthState {}
 
-class AuthResponseState extends AuthState {
+class AuthRegisterResponseState extends AuthState {
   Either<String, String> response;
 
-  AuthResponseState(this.response);
+  AuthRegisterResponseState(this.response);
+}
+
+class AuthLoginResponseState extends AuthState {
+  Either<String, String> response;
+
+  AuthLoginResponseState(this.response);
 }
