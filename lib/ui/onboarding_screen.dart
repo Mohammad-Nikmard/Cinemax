@@ -1,8 +1,10 @@
+import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/authentication/authentication_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/login_screen.dart';
 import 'package:cinemax/ui/register_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -59,7 +61,10 @@ class OnBoardingScreen extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
+                        builder: (context) => BlocProvider(
+                          create: (context) => AuthBloc(locator.get()),
+                          child: const RegisterScreen(),
+                        ),
                       ),
                     );
                   },
@@ -93,7 +98,10 @@ class OnBoardingScreen extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => BlocProvider(
+                          create: (context) => AuthBloc(locator.get()),
+                          child: const LoginScreen(),
+                        ),
                       ),
                     );
                   },

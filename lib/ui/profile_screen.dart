@@ -6,6 +6,7 @@ import 'package:cinemax/ui/notifications_screen.dart';
 import 'package:cinemax/ui/privacy_screen.dart';
 import 'package:cinemax/ui/profile_edit_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
+import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -131,7 +132,9 @@ Future<void> signoutDialog(BuildContext context) async {
                       child: SizedBox(
                         height: 60,
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            AuthManager.logOut();
+                          },
                           child: const Text(
                             "Log Out",
                             style: TextStyle(

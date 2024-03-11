@@ -4,6 +4,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
+import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           if (state is HomeResponseState) {
             return CustomScrollView(
               slivers: [
-                const _HomeHeader(name: "Mohammad"),
+                _HomeHeader(name: AuthManager.readId()),
                 const SearchBox(),
                 state.getBanners.fold(
                   (exceptionMessage) {
