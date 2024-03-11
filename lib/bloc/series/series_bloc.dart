@@ -10,7 +10,8 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
       (event, emit) async {
         emit(SeriesLoadingState());
         var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
-        emit(SeriesResponseState(getSeasons));
+        var casts = await _seriesRepository.getSeriesCast(event.seriesId);
+        emit(SeriesResponseState(getSeasons, casts));
       },
     );
   }

@@ -1,3 +1,4 @@
+import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:dartz/dartz.dart';
 
@@ -9,6 +10,7 @@ class SeriesLoadingState extends SeriesState {}
 
 class SeriesResponseState extends SeriesState {
   Either<String, List<SeriesSeasons>> getSeasons;
+  Either<String, List<SeriesCasts>> getCasts;
 
-  SeriesResponseState(this.getSeasons);
+  SeriesResponseState(this.getSeasons, this.getCasts);
 }

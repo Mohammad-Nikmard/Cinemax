@@ -1,5 +1,5 @@
 import 'package:cinemax/data/datasource/movie_datasource.dart';
-import 'package:cinemax/data/model/casts.dart';
+import 'package:cinemax/data/model/movie_casts.dart';
 import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/api_exception.dart';
@@ -10,7 +10,7 @@ abstract class MovieRepository {
   Future<Either<String, List<Movie>>> getMovies();
   Future<Either<String, List<Movie>>> getSeries();
   Future<Either<String, List<Moviesgallery>>> getPhotos(String movieId);
-  Future<Either<String, List<Casts>>> getCastList(String movieId);
+  Future<Either<String, List<MovieCasts>>> getCastList(String movieId);
 }
 
 class MovieRemoteRpository extends MovieRepository {
@@ -58,7 +58,7 @@ class MovieRemoteRpository extends MovieRepository {
   }
 
   @override
-  Future<Either<String, List<Casts>>> getCastList(String movieId) async {
+  Future<Either<String, List<MovieCasts>>> getCastList(String movieId) async {
     try {
       var response = await _datasource.getCasts(movieId);
       return right(response);
