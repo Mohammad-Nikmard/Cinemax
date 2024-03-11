@@ -1,5 +1,8 @@
 import 'dart:ui';
 
+import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/movies/movies_bloc.dart';
+import 'package:cinemax/bloc/movies/movies_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
@@ -8,6 +11,7 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MovieWidget extends StatelessWidget {
@@ -22,8 +26,15 @@ class MovieWidget extends StatelessWidget {
         if (movie.category == "movie") {
           PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: MovieDetailScreen(
-              movie: movie,
+            screen: BlocProvider(
+              create: (context) {
+                var bloc = MovieBloc(locator.get());
+                bloc.add(MoviesDataRequestEvent(movie.id));
+                return bloc;
+              },
+              child: MovieDetailScreen(
+                movie: movie,
+              ),
             ),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,

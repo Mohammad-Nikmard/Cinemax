@@ -1,10 +1,15 @@
 import 'dart:ui';
+import 'package:cinemax/bloc/movies/movies_bloc.dart';
+import 'package:cinemax/bloc/movies/movies_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/gallery.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -15,50 +20,71 @@ class MovieDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: CustomScrollView(
-        slivers: [
-          _MovieDetailHeader(
-            movie: movie,
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _StoryLine(
-                    storyLine: movie.storyline,
-                  ),
-                  const CastAndCrewWidget(),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 20.0, top: 20.0),
+      body: BlocBuilder<MovieBloc, MoviesState>(
+        builder: (context, state) {
+          if (state is MoviesLoadingState) {
+            return const AppLoadingIndicator();
+          } else if (state is MoviesresponseState) {
+            return CustomScrollView(
+              slivers: [
+                _MovieDetailHeader(
+                  movie: movie,
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Gallery",
-                          style: TextStyle(
-                            fontFamily: "MSB",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
+                        _StoryLine(
+                          storyLine: movie.storyline,
+                        ),
+                        const CastAndCrewWidget(),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Gallery",
+                                style: TextStyle(
+                                  fontFamily: "MSB",
+                                  fontSize: 16,
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                              SizedBox(height: 10.0),
+                            ],
                           ),
                         ),
-                        SizedBox(height: 10.0),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          const _Gallery(),
-        ],
+                ),
+                state.getPhotos.fold(
+                  (exceptionMessage) {
+                    return SliverToBoxAdapter(
+                      child: Text("exceptionMessage"),
+                    );
+                  },
+                  (photoList) {
+                    return _Gallery(
+                      photoList: photoList,
+                    );
+                  },
+                )
+              ],
+            );
+          }
+          return Text("There seem to be errors Getting data");
+        },
       ),
     );
   }
 }
 
 class _Gallery extends StatelessWidget {
-  const _Gallery();
+  const _Gallery({required this.photoList});
+  final List<Moviesgallery> photoList;
 
   @override
   Widget build(BuildContext context) {
@@ -67,18 +93,24 @@ class _Gallery extends StatelessWidget {
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return Container(
-              height: 100,
-              width: 100,
-              decoration: const BoxDecoration(
-                color: SecondaryColors.greenColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
+            return ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
+              child: SizedBox(
+                height: 100,
+                width: 100,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: CachedImage(
+                    imageUrl: photoList[index].thumbnail,
+                    radius: 15,
+                  ),
                 ),
               ),
             );
           },
-          childCount: 30,
+          childCount: photoList.length,
         ),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,

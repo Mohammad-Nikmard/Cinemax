@@ -1,3 +1,4 @@
+import 'package:cinemax/data/model/gallery.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:dio/dio.dart';
@@ -6,6 +7,7 @@ abstract class MovieDatasource {
   Future<List<Movie>> getAllMovies();
   Future<List<Movie>> getMovies();
   Future<List<Movie>> getSeries();
+  Future<List<Moviesgallery>> getPhotos(String movieId);
 }
 
 class MovieRemoteDatasource extends MovieDatasource {
@@ -59,6 +61,25 @@ class MovieRemoteDatasource extends MovieDatasource {
       throw ApiException(ex.message!, ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 3);
+    }
+  }
+
+  @override
+  Future<List<Moviesgallery>> getPhotos(String movieId) async {
+    Map<String, dynamic> qparams = {
+      'filter': 'movie_id="$movieId"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/movies_gallery/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Moviesgallery>(
+              (jsonMapObject) => Moviesgallery.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.message!, ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 5);
     }
   }
 }
