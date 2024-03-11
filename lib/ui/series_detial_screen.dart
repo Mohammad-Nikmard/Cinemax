@@ -40,7 +40,7 @@ class SeriesDetailScreen extends StatelessWidget {
                         _StoryLine(
                           storyLine: series.storyline,
                         ),
-                        const CastAndCrewWidget(),
+                        // const CastAndCrewWidget(),
                         state.getSeasons.fold(
                           (exceptionMessage) {
                             return Text("exceptionMessage");

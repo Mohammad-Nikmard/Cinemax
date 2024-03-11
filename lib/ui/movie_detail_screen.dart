@@ -39,7 +39,18 @@ class MovieDetailScreen extends StatelessWidget {
                         _StoryLine(
                           storyLine: movie.storyline,
                         ),
-                        const CastAndCrewWidget(),
+                        state.castList.fold(
+                          (l) {
+                            return SliverToBoxAdapter(
+                              child: Text("exceptionMessage"),
+                            );
+                          },
+                          (castList) {
+                            return CastAndCrewWidget(
+                              casts: castList,
+                            );
+                          },
+                        ),
                         const Padding(
                           padding: EdgeInsets.only(right: 20.0, top: 20.0),
                           child: Column(
@@ -275,6 +286,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     color: TextColors.whiteText,
                   ),
                   overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
               ),
               GestureDetector(

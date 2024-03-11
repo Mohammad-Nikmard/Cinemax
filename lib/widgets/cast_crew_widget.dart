@@ -1,9 +1,13 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/casts.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CastAndCrewWidget extends StatelessWidget {
-  const CastAndCrewWidget({super.key});
+  const CastAndCrewWidget({super.key, required this.casts});
+  final List<Casts> casts;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +28,28 @@ class CastAndCrewWidget extends StatelessWidget {
           height: 50,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
+            itemCount: casts.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const CircleAvatar(
-                      radius: 20,
-                      backgroundColor: PrimaryColors.blueAccentColor,
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(100),
+                      ),
+                      child: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: CachedImage(
+                            imageUrl: casts[index].thumbnail,
+                            radius: 100,
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Column(
@@ -41,7 +57,7 @@ class CastAndCrewWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "John Watts",
+                          casts[index].name,
                           style: TextStyle(
                             fontFamily: "MSB",
                             fontSize:
@@ -52,7 +68,7 @@ class CastAndCrewWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Actor",
+                          casts[index].role,
                           style: TextStyle(
                             fontFamily: "MM",
                             fontSize:

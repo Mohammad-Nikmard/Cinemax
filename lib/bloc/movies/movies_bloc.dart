@@ -11,7 +11,8 @@ class MovieBloc extends Bloc<MoviesEvent, MoviesState> {
       (event, emit) async {
         emit(MoviesLoadingState());
         var photoList = await _movieRepository.getPhotos(event.movieId);
-        emit(MoviesresponseState(photoList));
+        var casts = await _movieRepository.getCastList(event.movieId);
+        emit(MoviesresponseState(photoList, casts));
       },
     );
   }

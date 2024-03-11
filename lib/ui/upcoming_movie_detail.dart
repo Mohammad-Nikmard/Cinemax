@@ -36,12 +36,12 @@ class UpcomingMovieDetail extends StatelessWidget {
                   _Synopsis(
                     synopsis: upcomingItem.synopsis,
                   ),
-                  const SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: CastAndCrewWidget(),
-                    ),
-                  ),
+                  // const SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(left: 20.0),
+                  //     child: CastAndCrewWidget(),
+                  //   ),
+                  // ),
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(

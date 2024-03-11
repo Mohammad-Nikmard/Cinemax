@@ -35,7 +35,9 @@ class HomeScreen extends StatelessWidget {
                 const SearchBox(),
                 state.getBanners.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return SliverToBoxAdapter(
+                      child: Text("exceptionMessage"),
+                    );
                   },
                   (bannerList) {
                     return SliverToBoxAdapter(
@@ -440,7 +442,7 @@ class MostPopList extends StatelessWidget {
         child: SizedBox(
           height: 231,
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: movieList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
