@@ -11,7 +11,8 @@ class UpDetailBloc extends Bloc<UpDetailEvent, UpDetailState> {
       (event, emit) async {
         emit(UpDetailLoadingState());
         var getphotos = await _upcomingsRepository.getPhotos(event.upId);
-        emit(UpDetailResponseState(getphotos));
+        var casts = await _upcomingsRepository.getCasts(event.upId);
+        emit(UpDetailResponseState(getphotos, casts));
       },
     );
   }
