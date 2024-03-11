@@ -10,6 +10,7 @@ import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -168,9 +169,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Container(
                             padding: const EdgeInsets.only(right: 10),
                             child: _obsecureText
-                                ? Image.asset(
-                                    'assets/images/icon_eye_off.png',
-                                    color: TextColors.greyText,
+                                ? SvgPicture.asset(
+                                    "assets/images/icon_eye_off.svg",
                                   )
                                 : const Icon(
                                     Icons.remove_red_eye,
@@ -231,9 +231,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Container(
                             padding: const EdgeInsets.only(right: 10),
                             child: _obsecureText
-                                ? Image.asset(
-                                    'assets/images/icon_eye_off.png',
-                                    color: TextColors.greyText,
+                                ? SvgPicture.asset(
+                                    "assets/images/icon_eye_off.svg",
                                   )
                                 : const Icon(
                                     Icons.remove_red_eye,
@@ -494,9 +493,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Container(
                             padding: const EdgeInsets.only(right: 10),
                             child: _obsecureText
-                                ? Image.asset(
-                                    'assets/images/icon_eye_off.png',
-                                    color: TextColors.greyText,
+                                ? SvgPicture.asset(
+                                    "assets/images/icon_eye_off.svg",
                                   )
                                 : const Icon(
                                     Icons.remove_red_eye,
@@ -557,9 +555,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Container(
                             padding: const EdgeInsets.only(right: 10),
                             child: _obsecureText
-                                ? Image.asset(
-                                    'assets/images/icon_eye_off.png',
-                                    color: TextColors.greyText,
+                                ? SvgPicture.asset(
+                                    "assets/images/icon_eye_off.svg",
                                   )
                                 : const Icon(
                                     Icons.remove_red_eye,

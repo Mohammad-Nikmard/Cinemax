@@ -4,6 +4,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class RelatedSeachWidget extends StatelessWidget {
@@ -57,11 +58,11 @@ class RelatedSeachWidget extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                'assets/images/icon_star.png',
-                                color: SecondaryColors.orangeColor,
+                              SvgPicture.asset(
+                                'assets/images/icon_star.svg',
                                 height: 16,
                                 width: 16,
+                                color: SecondaryColors.orangeColor,
                               ),
                               const SizedBox(width: 5),
                               const Text(
@@ -103,8 +104,8 @@ class RelatedSeachWidget extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    Image.asset(
-                      'assets/images/icon_calendar.png',
+                    SvgPicture.asset(
+                      'assets/images/icon_calendar.svg',
                       height: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 12
                           : 16,
@@ -129,8 +130,8 @@ class RelatedSeachWidget extends StatelessWidget {
                 const SizedBox(height: 15),
                 Row(
                   children: [
-                    Image.asset(
-                      'assets/images/icon_clock.png',
+                    SvgPicture.asset(
+                      'assets/images/icon_clock.svg',
                       height: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 12
                           : 16,
@@ -192,8 +193,8 @@ class RelatedSeachWidget extends StatelessWidget {
                   height: 16,
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/icon_film.png',
+                      SvgPicture.asset(
+                        'assets/images/icon_film.svg',
                         height: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,

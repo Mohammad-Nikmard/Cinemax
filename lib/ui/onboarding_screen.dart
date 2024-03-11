@@ -5,6 +5,7 @@ import 'package:cinemax/ui/login_screen.dart';
 import 'package:cinemax/ui/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -18,8 +19,8 @@ class OnBoardingScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(
-              image: AssetImage("assets/images/app_logo.png"),
+            SvgPicture.asset(
+              "assets/images/splash_logo.svg",
             ),
             const SizedBox(
               height: 20,
@@ -158,23 +159,23 @@ class OnBoardingScreen extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(
-                  image: AssetImage("assets/images/Google.png"),
+                SvgPicture.asset(
+                  "assets/images/Google.svg",
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
-                Image(
-                  image: AssetImage("assets/images/Apple.png"),
+                SvgPicture.asset(
+                  "assets/images/Apple.svg",
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
-                Image(
-                  image: AssetImage("assets/images/Facebook.png"),
+                SvgPicture.asset(
+                  "assets/images/Facebook.svg",
                 ),
               ],
             ),

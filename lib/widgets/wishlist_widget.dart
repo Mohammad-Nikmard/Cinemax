@@ -1,6 +1,7 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class WishlistWidget extends StatelessWidget {
   const WishlistWidget({super.key});
@@ -78,8 +79,8 @@ class WishlistWidget extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Image.asset(
-                            'assets/images/icon_star.png',
+                          SvgPicture.asset(
+                            'assets/images/icon_star.svg',
                             color: SecondaryColors.orangeColor,
                             height: 16,
                             width: 16,
@@ -95,8 +96,8 @@ class WishlistWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Image.asset(
-                        'assets/images/icon_heart.png',
+                      SvgPicture.asset(
+                        'assets/images/icon_heart.svg',
                         color: SecondaryColors.redColor,
                       ),
                     ],

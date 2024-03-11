@@ -10,6 +10,7 @@ import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -148,9 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       padding: const EdgeInsets.only(right: 10),
                       child: _obsecureText
-                          ? Image.asset(
-                              'assets/images/icon_eye_off.png',
-                              color: TextColors.greyText,
+                          ? SvgPicture.asset(
+                              "assets/images/icon_eye_off.svg",
                             )
                           : const Icon(
                               Icons.remove_red_eye,

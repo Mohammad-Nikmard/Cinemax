@@ -11,6 +11,7 @@ import 'package:cinemax/ui/upcomings_screen.dart';
 import 'package:cinemax/ui/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -79,12 +80,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        inactiveIcon: Image.asset(
-          'assets/images/icon_home.png',
+        inactiveIcon: SvgPicture.asset(
+          "assets/images/icon_home.svg",
           color: TextColors.greyText,
         ),
-        icon: Image.asset(
-          'assets/images/icon_home.png',
+        icon: SvgPicture.asset(
+          "assets/images/icon_home.svg",
           color: PrimaryColors.blueAccentColor,
         ),
         title: ("Home"),
@@ -93,12 +94,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
-        inactiveIcon: Image.asset(
-          'assets/images/icon_film.png',
+        inactiveIcon: SvgPicture.asset(
+          "assets/images/icon_film.svg",
           color: TextColors.greyText,
         ),
-        icon: Image.asset(
-          'assets/images/icon_film.png',
+        icon: SvgPicture.asset(
+          "assets/images/icon_film.svg",
           color: PrimaryColors.blueAccentColor,
         ),
         title: ("Upcomings"),
@@ -107,12 +108,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
-        inactiveIcon: Image.asset(
-          'assets/images/icon_search.png',
+        inactiveIcon: SvgPicture.asset(
+          "assets/images/icon_search.svg",
           color: TextColors.greyText,
         ),
-        icon: Image.asset(
-          'assets/images/icon_search.png',
+        icon: SvgPicture.asset(
+          "assets/images/icon_search.svg",
           color: PrimaryColors.blueAccentColor,
         ),
         title: ("Search"),
@@ -121,12 +122,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
-        inactiveIcon: Image.asset(
-          'assets/images/icon_save_star.png',
+        inactiveIcon: SvgPicture.asset(
+          "assets/images/icon_save_star.svg",
           color: TextColors.greyText,
         ),
-        icon: Image.asset(
-          'assets/images/icon_save_star.png',
+        icon: SvgPicture.asset(
+          "assets/images/icon_save_star.svg",
           color: PrimaryColors.blueAccentColor,
         ),
         title: ("Wishlist"),
@@ -135,12 +136,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
-        inactiveIcon: Image.asset(
-          'assets/images/icon_profile.png',
+        inactiveIcon: SvgPicture.asset(
+          "assets/images/icon_profile.svg",
           color: TextColors.greyText,
         ),
-        icon: Image.asset(
-          'assets/images/icon_profile.png',
+        icon: SvgPicture.asset(
+          "assets/images/icon_profile.svg",
           color: PrimaryColors.blueAccentColor,
         ),
         title: ("Profile"),

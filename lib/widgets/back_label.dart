@@ -1,5 +1,6 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class BackLabel extends StatelessWidget {
   const BackLabel({super.key});
@@ -18,7 +19,9 @@ class BackLabel extends StatelessWidget {
         color: PrimaryColors.softColor,
       ),
       child: Center(
-        child: Image.asset('assets/images/icon_arrow_back.png'),
+        child: SvgPicture.asset(
+          'assets/images/icon_arrow_back.svg',
+        ),
       ),
     );
   }

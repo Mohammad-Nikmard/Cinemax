@@ -6,11 +6,13 @@ import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class UpcomingsScreen extends StatelessWidget {
@@ -136,8 +138,8 @@ class _UpcomingChip extends StatelessWidget {
                   height: 16,
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/icon_calendar.png',
+                      SvgPicture.asset(
+                        'assets/images/icon_calendar.svg',
                         height: 16,
                         width: 16,
                         color: TextColors.greyText,
@@ -157,10 +159,14 @@ class _UpcomingChip extends StatelessWidget {
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 5),
-                      Image.asset(
-                        'assets/images/icon_film.png',
-                        height: 16,
-                        width: 16,
+                      SvgPicture.asset(
+                        'assets/images/icon_film.svg',
+                        height: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
+                        width: (MediaQueryHandler.screenWidth(context) < 350)
+                            ? 12
+                            : 16,
                         color: TextColors.greyText,
                       ),
                       const SizedBox(width: 3),

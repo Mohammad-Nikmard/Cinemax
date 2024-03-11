@@ -14,6 +14,7 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MovieWidget extends StatelessWidget {
@@ -111,11 +112,11 @@ class MovieWidget extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                'assets/images/icon_star.png',
-                                color: SecondaryColors.orangeColor,
+                              SvgPicture.asset(
+                                'assets/images/icon_star.svg',
                                 height: 16,
                                 width: 16,
+                                color: SecondaryColors.orangeColor,
                               ),
                               const SizedBox(width: 5),
                               Text(

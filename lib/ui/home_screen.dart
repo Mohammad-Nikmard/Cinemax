@@ -11,6 +11,7 @@ import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -224,8 +225,8 @@ class _HomeHeader extends StatelessWidget {
                 color: PrimaryColors.softColor,
               ),
               child: Center(
-                child: Image.asset(
-                  'assets/images/icon_heart.png',
+                child: SvgPicture.asset(
+                  'assets/images/icon_heart.svg',
                   color: SecondaryColors.redColor,
                 ),
               ),
@@ -270,11 +271,11 @@ class SearchBox extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.asset(
-                        'assets/images/icon_search.png',
-                        color: TextColors.greyText,
+                      SvgPicture.asset(
+                        'assets/images/icon_search.svg',
                         height: 16,
                         width: 16,
+                        color: TextColors.greyText,
                       ),
                       const SizedBox(
                         width: 10,
@@ -298,8 +299,8 @@ class SearchBox extends StatelessWidget {
                           thickness: 1.3,
                         ),
                       ),
-                      Image.asset(
-                        'assets/images/icon_setters.png',
+                      SvgPicture.asset(
+                        'assets/images/icon_setters.svg',
                         height: 16,
                         width: 16,
                       ),

@@ -9,6 +9,7 @@ import 'package:cinemax/ui/reset_password_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -61,8 +62,8 @@ class ProfileScreen extends StatelessWidget {
                   height: 56,
                   child: OutlinedButton(
                     onPressed: () {
-                      // signoutDialog(context);
-                      AuthManager.logOut();
+                      signoutDialog(context);
+                      // AuthManager.logOut();
                     },
                     child: const Text(
                       "Log Out",
@@ -97,8 +98,8 @@ Future<void> signoutDialog(BuildContext context) async {
                 const SizedBox(
                   height: 30,
                 ),
-                Image.asset(
-                  'assets/images/question_image.png',
+                SvgPicture.asset(
+                  'assets/images/question_image.svg',
                   height: 125,
                   width: 125,
                 ),
@@ -197,11 +198,11 @@ class _OptionChip extends StatelessWidget {
             color: PrimaryColors.softColor,
           ),
           child: Center(
-            child: Image.asset(
+            child: SvgPicture.asset(
               image,
-              color: color,
               height: 20,
               width: 20,
+              color: color,
             ),
           ),
         ),
@@ -215,8 +216,8 @@ class _OptionChip extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        Image.asset(
-          'assets/images/icon_arrow_right.png',
+        SvgPicture.asset(
+          'assets/images/icon_arrow_right.svg',
           color: PrimaryColors.blueAccentColor,
         ),
       ],
@@ -269,7 +270,7 @@ class _GeneralChip extends StatelessWidget {
                 },
                 child: const _OptionChip(
                   title: "Notification",
-                  image: "assets/images/icon_bell.png",
+                  image: "assets/images/icon_bell.svg",
                   color: TextColors.greyText,
                 ),
               ),
@@ -294,7 +295,7 @@ class _GeneralChip extends StatelessWidget {
                 },
                 child: const _OptionChip(
                   title: "Language",
-                  image: "assets/images/icon_globe.png",
+                  image: "assets/images/icon_globe.svg",
                   color: TextColors.greyText,
                 ),
               ),
@@ -310,7 +311,7 @@ class _GeneralChip extends StatelessWidget {
               ),
               const _OptionChip(
                 title: "Country",
-                image: "assets/images/icon_flag.png",
+                image: "assets/images/icon_flag.svg",
                 color: TextColors.greyText,
               ),
               const SizedBox(
@@ -325,7 +326,7 @@ class _GeneralChip extends StatelessWidget {
               ),
               const _OptionChip(
                 title: "Clear Cache",
-                image: "assets/images/icon_bin.png",
+                image: "assets/images/icon_bin.svg",
                 color: TextColors.greyText,
               ),
             ],
@@ -379,7 +380,7 @@ class _MoreChip extends StatelessWidget {
                 },
                 child: const _OptionChip(
                   title: "Legal and Policies",
-                  image: "assets/images/icon_shield.png",
+                  image: "assets/images/icon_shield.svg",
                   color: TextColors.greyText,
                 ),
               ),
@@ -395,7 +396,7 @@ class _MoreChip extends StatelessWidget {
               ),
               const _OptionChip(
                 title: "Help & Feedback",
-                image: "assets/images/icon_question.png",
+                image: "assets/images/icon_question.svg",
                 color: TextColors.greyText,
               ),
               const SizedBox(
@@ -410,7 +411,7 @@ class _MoreChip extends StatelessWidget {
               ),
               const _OptionChip(
                 title: "About Us",
-                image: "assets/images/icon_alert.png",
+                image: "assets/images/icon_alert.svg",
                 color: TextColors.greyText,
               ),
             ],
@@ -457,7 +458,7 @@ class _AccountChip extends StatelessWidget {
               ),
               const _OptionChip(
                 title: "Member",
-                image: "assets/images/icon_profile.png",
+                image: "assets/images/icon_profile.svg",
                 color: PrimaryColors.blueAccentColor,
               ),
               const SizedBox(
@@ -481,7 +482,7 @@ class _AccountChip extends StatelessWidget {
                 },
                 child: const _OptionChip(
                   title: "Change Password",
-                  image: "assets/images/icon_lock.png",
+                  image: "assets/images/icon_lock.svg",
                   color: TextColors.greyText,
                 ),
               ),
@@ -559,13 +560,13 @@ class _ProfileChip extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                Image.asset(
-                  'assets/images/icon_edit_light.png',
-                  color: PrimaryColors.blueAccentColor,
+                SvgPicture.asset(
+                  'assets/images/icon_edit_light.svg',
                   height:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
+                  color: PrimaryColors.blueAccentColor,
                 ),
               ],
             ),

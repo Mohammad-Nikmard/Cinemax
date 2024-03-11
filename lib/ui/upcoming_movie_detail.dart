@@ -13,6 +13,7 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 
 class UpcomingMovieDetail extends StatelessWidget {
@@ -267,8 +268,8 @@ class MovieHeadDetail extends StatelessWidget {
                   height: 16,
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/icon_calendar.png',
+                      SvgPicture.asset(
+                        'assets/images/icon_calendar.svg',
                         height: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
@@ -300,14 +301,12 @@ class MovieHeadDetail extends StatelessWidget {
                           color: TextColors.whiteText,
                         ),
                       ),
-                      const SizedBox(width: 5),
                       const VerticalDivider(
                         thickness: 1.3,
                         color: TextColors.greyText,
                       ),
-                      const SizedBox(width: 5),
-                      Image.asset(
-                        'assets/images/icon_film.png',
+                      SvgPicture.asset(
+                        'assets/images/icon_film.svg',
                         height: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
@@ -323,8 +322,8 @@ class MovieHeadDetail extends StatelessWidget {
                           fontFamily: "MM",
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 350)
-                                  ? 10
-                                  : 12,
+                                  ? 8
+                                  : 10,
                           color: TextColors.greyText,
                         ),
                       ),

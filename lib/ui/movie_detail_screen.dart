@@ -12,6 +12,7 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -282,7 +283,9 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Image.asset('assets/images/icon_arrow_back.png'),
+                child: SvgPicture.asset(
+                  'assets/images/icon_arrow_back.svg',
+                ),
               ),
               SizedBox(
                 width: 170,
@@ -359,13 +362,13 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/images/icon_calendar.png',
-                  color: TextColors.greyText,
+                SvgPicture.asset(
+                  'assets/images/icon_calendar.svg',
                   height:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
+                  color: TextColors.greyText,
                 ),
                 const SizedBox(width: 3.0),
                 Text(
@@ -384,17 +387,17 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   color: TextColors.greyText,
                 ),
                 const SizedBox(width: 3.0),
-                Image.asset(
-                  'assets/images/icon_clock.png',
-                  color: TextColors.greyText,
+                SvgPicture.asset(
+                  'assets/images/icon_clock.svg',
                   height:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
+                  color: TextColors.greyText,
                 ),
                 const SizedBox(width: 3.0),
                 Text(
-                  widget.movie.timeLength,
+                  "${widget.movie.timeLength} Minutes",
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -409,13 +412,13 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   color: TextColors.greyText,
                 ),
                 const SizedBox(width: 3.0),
-                Image.asset(
-                  'assets/images/icon_film.png',
-                  color: TextColors.greyText,
+                SvgPicture.asset(
+                  'assets/images/icon_film.svg',
                   height:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
+                  color: TextColors.greyText,
                 ),
                 const SizedBox(width: 3.0),
                 Text(
@@ -444,11 +447,11 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/images/icon_star.png',
-                  color: SecondaryColors.orangeColor,
+                SvgPicture.asset(
+                  'assets/images/icon_star.svg',
                   height: 16,
                   width: 16,
+                  color: SecondaryColors.orangeColor,
                 ),
                 const SizedBox(width: 5),
                 Text(
@@ -481,18 +484,18 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Image.asset(
-                          'assets/images/icon_play.png',
+                        padding: const EdgeInsets.only(left: 25),
+                        child: SvgPicture.asset(
+                          'assets/images/icon_play.svg',
                           height: (MediaQueryHandler.screenWidth(context) < 350)
                               ? 18
-                              : 24,
+                              : 20,
                           width: (MediaQueryHandler.screenWidth(context) < 350)
                               ? 18
-                              : 24,
+                              : 20,
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(width: 10),
                       Text(
                         "Play",
                         style: TextStyle(
@@ -518,9 +521,8 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   color: PrimaryColors.softColor,
                 ),
                 child: Center(
-                  child: Image.asset(
-                    'assets/images/icon_download.png',
-                    color: SecondaryColors.orangeColor,
+                  child: SvgPicture.asset(
+                    'assets/images/icon_download.svg',
                     height: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 18
                         : 24,
@@ -545,9 +547,8 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     color: PrimaryColors.softColor,
                   ),
                   child: Center(
-                    child: Image.asset(
-                      'assets/images/icon_share.png',
-                      color: PrimaryColors.blueAccentColor,
+                    child: SvgPicture.asset(
+                      'assets/images/icon_share.svg',
                       height: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 18
                           : 24,
@@ -620,22 +621,16 @@ Future<void> shareDialog(BuildContext context) async {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/images/Apple.png',
-                          height: 49,
-                          width: 49,
+                        SvgPicture.asset(
+                          "assets/images/Apple.svg",
                         ),
                         const SizedBox(width: 15),
-                        Image.asset(
-                          'assets/images/Facebook.png',
-                          height: 49,
-                          width: 49,
+                        SvgPicture.asset(
+                          "assets/images/Facebook.svg",
                         ),
                         const SizedBox(width: 15),
-                        Image.asset(
-                          'assets/images/Google.png',
-                          height: 49,
-                          width: 49,
+                        SvgPicture.asset(
+                          "assets/images/Google.svg",
                         ),
                       ],
                     ),

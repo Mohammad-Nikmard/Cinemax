@@ -3,6 +3,7 @@ import 'package:cinemax/ui/search_result_screen.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -39,8 +40,8 @@ class SearchScreen extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 15),
                               child: Row(
                                 children: [
-                                  Image.asset(
-                                    'assets/images/icon_search.png',
+                                  SvgPicture.asset(
+                                    'assets/images/icon_search.svg',
                                     height: 16,
                                     width: 16,
                                     color: TextColors.greyText,
