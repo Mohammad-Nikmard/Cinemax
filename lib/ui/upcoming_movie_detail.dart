@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/upcoming_cast.dart';
 import 'package:cinemax/data/model/upcoming_gallery.dart';
 import 'package:cinemax/data/model/upcomings.dart';
+import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -97,6 +100,26 @@ class UpcomingMovieDetail extends StatelessWidget {
   }
 }
 
+Future<void> showFullScreenGallery(BuildContext context, String photo) async {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: AlertDialog(
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            content: GalleryFullScreen(
+              imageURL: photo,
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
 class _Gallery extends StatelessWidget {
   const _Gallery({required this.photoList});
   final List<UpcomingGallery> photoList;
@@ -108,18 +131,23 @@ class _Gallery extends StatelessWidget {
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(15),
-              ),
-              child: SizedBox(
-                height: 100,
-                width: 100,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: CachedImage(
-                    imageUrl: photoList[index].thumbnail,
-                    radius: 15,
+            return GestureDetector(
+              onTap: () {
+                showFullScreenGallery(context, photoList[index].thumbnail);
+              },
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+                child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: CachedImage(
+                      imageUrl: photoList[index].thumbnail,
+                      radius: 15,
+                    ),
                   ),
                 ),
               ),

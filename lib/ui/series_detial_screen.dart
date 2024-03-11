@@ -6,6 +6,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
+import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -89,6 +90,26 @@ class SeriesDetailScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> showFullScreenGallery(BuildContext context, String photo) async {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: AlertDialog(
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            content: GalleryFullScreen(
+              imageURL: photo,
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
 
 class _Gallery extends StatelessWidget {
@@ -274,30 +295,13 @@ class _StoryLine extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Flexible(
-              child: Text(
-                storyLine,
-                style: TextStyle(
-                  fontFamily: "MR",
-                  fontSize:
-                      (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
-                  color: TextColors.whiteText,
-                ),
-              ),
-            ),
-            Text(
-              "More",
-              style: TextStyle(
-                fontFamily: "MSB",
-                fontSize:
-                    (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
-                color: PrimaryColors.blueAccentColor,
-              ),
-            ),
-          ],
+        Text(
+          storyLine,
+          style: TextStyle(
+            fontFamily: "MR",
+            fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
+            color: TextColors.whiteText,
+          ),
         ),
       ],
     );

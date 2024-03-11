@@ -1,13 +1,9 @@
-import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
-import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
-import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
-import 'package:cinemax/ui/upcomings_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -109,52 +105,6 @@ class HomeScreen extends StatelessWidget {
                   (movieList) {
                     return MostPopList(movieList: movieList);
                   },
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Upcomings",
-                          style: TextStyle(
-                            fontFamily: "MM",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
-                              context,
-                              screen: BlocProvider(
-                                create: (context) {
-                                  var bloc = UpcomingsBloc(locator.get());
-                                  bloc.add(UpcomingsDataRequestEvent());
-                                  return bloc;
-                                },
-                                child: const UpcomingsScreen(),
-                              ),
-                              withNavBar: false,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.cupertino,
-                            );
-                          },
-                          child: const Text(
-                            "See All",
-                            style: TextStyle(
-                              fontFamily: "MM",
-                              fontSize: 14,
-                              color: PrimaryColors.blueAccentColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(

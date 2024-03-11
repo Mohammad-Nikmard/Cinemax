@@ -1,10 +1,14 @@
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_event.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/home_screen.dart';
 import 'package:cinemax/ui/profile_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
+import 'package:cinemax/ui/upcomings_screen.dart';
+import 'package:cinemax/ui/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -58,7 +62,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
         child: const HomeScreen(),
       ),
+      BlocProvider(
+        create: (context) {
+          var bloc = UpcomingsBloc(locator.get());
+          bloc.add(UpcomingsDataRequestEvent());
+          return bloc;
+        },
+        child: const UpcomingsScreen(),
+      ),
       const SearchScreen(),
+      const WishlistScreen(),
       const ProfileScreen(),
     ];
   }
@@ -81,6 +94,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       PersistentBottomNavBarItem(
         inactiveIcon: Image.asset(
+          'assets/images/icon_film.png',
+          color: TextColors.greyText,
+        ),
+        icon: Image.asset(
+          'assets/images/icon_film.png',
+          color: PrimaryColors.blueAccentColor,
+        ),
+        title: ("Upcomings"),
+        textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
+        activeColorPrimary: PrimaryColors.blueAccentColor,
+        inactiveColorPrimary: TextColors.greyText,
+      ),
+      PersistentBottomNavBarItem(
+        inactiveIcon: Image.asset(
           'assets/images/icon_search.png',
           color: TextColors.greyText,
         ),
@@ -89,6 +116,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
           color: PrimaryColors.blueAccentColor,
         ),
         title: ("Search"),
+        textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
+        activeColorPrimary: PrimaryColors.blueAccentColor,
+        inactiveColorPrimary: TextColors.greyText,
+      ),
+      PersistentBottomNavBarItem(
+        inactiveIcon: Image.asset(
+          'assets/images/icon_save_star.png',
+          color: TextColors.greyText,
+        ),
+        icon: Image.asset(
+          'assets/images/icon_save_star.png',
+          color: PrimaryColors.blueAccentColor,
+        ),
+        title: ("Wishlist"),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
