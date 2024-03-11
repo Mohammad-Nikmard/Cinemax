@@ -154,7 +154,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const UpcomingList(),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding:
@@ -449,34 +448,6 @@ class MostPopList extends StatelessWidget {
                   showRate: true,
                   movie: movieList[index],
                 ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class UpcomingList extends StatelessWidget {
-  const UpcomingList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 25, left: 20, bottom: 35),
-        child: SizedBox(
-          height: 231,
-          child: ListView.builder(
-            itemCount: 10,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return const Padding(
-                padding: EdgeInsets.only(right: 15),
-                // child: MovieWidget(
-                //   showRate: false,
-                // ),
               );
             },
           ),

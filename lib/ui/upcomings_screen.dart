@@ -1,3 +1,6 @@
+import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_bloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
@@ -6,9 +9,7 @@ import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -83,8 +84,15 @@ class _UpcomingChip extends StatelessWidget {
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen: UpcomingMovieDetail(
-            upcomingItem: upcomingsItem,
+          screen: BlocProvider(
+            create: (context) {
+              var bloc = UpDetailBloc(locator.get());
+              bloc.add(UpDetailDataRequestEvent(upcomingsItem.id));
+              return bloc;
+            },
+            child: UpcomingMovieDetail(
+              upcomingItem: upcomingsItem,
+            ),
           ),
           withNavBar: true,
           pageTransitionAnimation: PageTransitionAnimation.cupertino,

@@ -1,10 +1,15 @@
+import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_bloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/upcoming_gallery.dart';
 import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class UpcomingMovieDetail extends StatelessWidget {
@@ -14,55 +19,74 @@ class UpcomingMovieDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: CustomScrollView(
-        slivers: [
-          _Header(
-            upcomingtitle: upcomingItem.name,
-          ),
-          MovieHeadDetail(
-            upcomingItem: upcomingItem,
-          ),
-          _Synopsis(
-            synopsis: upcomingItem.synopsis,
-          ),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: CastAndCrewWidget(),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Gallery",
-                    style: TextStyle(
-                      fontFamily: "MSB",
-                      fontSize: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 14
-                          : 16,
-                      color: TextColors.whiteText,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: BlocBuilder<UpDetailBloc, UpDetailState>(
+          builder: (context, state) {
+            if (state is UpDetailLoadingState) {
+              return const AppLoadingIndicator();
+            } else if (state is UpDetailResponseState) {
+              return CustomScrollView(
+                slivers: [
+                  _Header(
+                    upcomingtitle: upcomingItem.name,
+                  ),
+                  MovieHeadDetail(
+                    upcomingItem: upcomingItem,
+                  ),
+                  _Synopsis(
+                    synopsis: upcomingItem.synopsis,
+                  ),
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: CastAndCrewWidget(),
                     ),
                   ),
-                  const SizedBox(height: 10.0),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, right: 20.0, top: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Gallery",
+                            style: TextStyle(
+                              fontFamily: "MSB",
+                              fontSize:
+                                  (MediaQueryHandler.screenWidth(context) < 350)
+                                      ? 14
+                                      : 16,
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                          const SizedBox(height: 10.0),
+                        ],
+                      ),
+                    ),
+                  ),
+                  state.getphotos.fold(
+                    (exceptionMessage) {
+                      return Text("exceptionMessage");
+                    },
+                    (gallery) {
+                      return _Gallery(
+                        photoList: gallery,
+                      );
+                    },
+                  ),
                 ],
-              ),
-            ),
-          ),
-          const _Gallery(),
-        ],
-      ),
-    );
+              );
+            }
+            return Text("There seem to be errors Getting data");
+          },
+        ));
   }
 }
 
 class _Gallery extends StatelessWidget {
-  const _Gallery();
+  const _Gallery({required this.photoList});
+  final List<UpcomingGallery> photoList;
 
   @override
   Widget build(BuildContext context) {
@@ -71,18 +95,24 @@ class _Gallery extends StatelessWidget {
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return Container(
-              height: 100,
-              width: 100,
-              decoration: const BoxDecoration(
-                color: SecondaryColors.greenColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
+            return ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
+              child: SizedBox(
+                height: 100,
+                width: 100,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: CachedImage(
+                    imageUrl: photoList[index].thumbnail,
+                    radius: 15,
+                  ),
                 ),
               ),
             );
           },
-          childCount: 30,
+          childCount: photoList.length,
         ),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,

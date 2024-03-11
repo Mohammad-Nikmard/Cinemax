@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:cinemax/bloc/movies/movies_bloc.dart';
 import 'package:cinemax/bloc/movies/movies_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
-import 'package:cinemax/data/model/gallery.dart';
+import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';

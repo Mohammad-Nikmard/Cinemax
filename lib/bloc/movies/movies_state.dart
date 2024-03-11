@@ -1,4 +1,4 @@
-import 'package:cinemax/data/model/gallery.dart';
+import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class MoviesState {}

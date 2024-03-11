@@ -1,5 +1,5 @@
 import 'package:cinemax/data/datasource/movie_datasource.dart';
-import 'package:cinemax/data/model/gallery.dart';
+import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:dartz/dartz.dart';
