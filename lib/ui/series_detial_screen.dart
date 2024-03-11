@@ -1,11 +1,16 @@
 import 'dart:ui';
 
+import 'package:cinemax/bloc/series/series_bloc.dart';
+import 'package:cinemax/bloc/series/series_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
+import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/cast_crew_widget.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class SeriesDetailScreen extends StatelessWidget {
@@ -16,44 +21,62 @@ class SeriesDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: CustomScrollView(
-        slivers: [
-          _MovieDetailHeader(
-            series: series,
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _StoryLine(
-                    storyLine: series.storyline,
-                  ),
-                  const CastAndCrewWidget(),
-                  const _SeasonChip(),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 20.0, top: 20.0),
+      body: BlocBuilder<SeriesBloc, SeriesState>(
+        builder: (context, state) {
+          if (state is SeriesLoadingState) {
+            return const AppLoadingIndicator();
+          } else if (state is SeriesResponseState) {
+            return CustomScrollView(
+              slivers: [
+                _MovieDetailHeader(
+                  series: series,
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Gallery",
-                          style: TextStyle(
-                            fontFamily: "MSB",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
+                        _StoryLine(
+                          storyLine: series.storyline,
+                        ),
+                        const CastAndCrewWidget(),
+                        state.getSeasons.fold(
+                          (exceptionMessage) {
+                            return Text("exceptionMessage");
+                          },
+                          (seasonList) {
+                            return _SeasonChip(
+                              getSeasonList: seasonList,
+                            );
+                          },
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Gallery",
+                                style: TextStyle(
+                                  fontFamily: "MSB",
+                                  fontSize: 16,
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                              SizedBox(height: 10.0),
+                            ],
                           ),
                         ),
-                        SizedBox(height: 10.0),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          const _Gallery(),
-        ],
+                ),
+                const _Gallery(),
+              ],
+            );
+          }
+          return Text("There seem to be errors Getting data");
+        },
       ),
     );
   }
@@ -93,7 +116,8 @@ class _Gallery extends StatelessWidget {
 }
 
 class _SeasonChip extends StatefulWidget {
-  const _SeasonChip();
+  const _SeasonChip({required this.getSeasonList});
+  final List<SeriesSeasons> getSeasonList;
 
   @override
   State<_SeasonChip> createState() => __SeasonChipState();
@@ -101,10 +125,10 @@ class _SeasonChip extends StatefulWidget {
 
 class __SeasonChipState extends State<_SeasonChip> {
   int selectedIndex = 0;
-  int seasonNumbers = 5;
 
   @override
   Widget build(BuildContext context) {
+    int seasonNumbers = widget.getSeasonList.length;
     double maxHeight = 44.0 * seasonNumbers;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +197,7 @@ class __SeasonChipState extends State<_SeasonChip> {
                                             Navigator.pop(context);
                                           },
                                           child: Text(
-                                            "Season ${index + 1}",
+                                            "Season ${widget.getSeasonList[index].season}",
                                             style: TextStyle(
                                               fontFamily: "MSB",
                                               fontSize: (selectedIndex == index)

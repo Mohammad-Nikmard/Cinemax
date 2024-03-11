@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/movies/movies_bloc.dart';
 import 'package:cinemax/bloc/movies/movies_event.dart';
+import 'package:cinemax/bloc/series/series_bloc.dart';
+import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
@@ -42,8 +44,15 @@ class MovieWidget extends StatelessWidget {
         } else if (movie.category == "series") {
           PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: SeriesDetailScreen(
-              series: movie,
+            screen: BlocProvider(
+              create: (context) {
+                var bloc = SeriesBloc(locator.get());
+                bloc.add(SeriesDataRequestEvent(movie.id));
+                return bloc;
+              },
+              child: SeriesDetailScreen(
+                series: movie,
+              ),
             ),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,

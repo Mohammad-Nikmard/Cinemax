@@ -1,8 +1,10 @@
 import 'package:cinemax/data/datasource/banner_datasource.dart';
 import 'package:cinemax/data/datasource/movie_datasource.dart';
+import 'package:cinemax/data/datasource/series_datasource.dart';
 import 'package:cinemax/data/datasource/upcomings_datasource.dart';
 import 'package:cinemax/data/repository/banner_repository.dart';
 import 'package:cinemax/data/repository/movie_repository.dart';
+import 'package:cinemax/data/repository/series_repository.dart';
 import 'package:cinemax/data/repository/upcomings_repository.dart';
 import 'package:cinemax/util/dio_handler.dart';
 import 'package:dio/dio.dart';
@@ -27,6 +29,9 @@ void getDatasources() {
 
   locator.registerSingleton<UpcomingsDatasource>(
       UpcomingsRemoteDatasource(locator.get()));
+
+  locator.registerSingleton<SeriesDatasource>(
+      SeriesRemoteDatasource(locator.get()));
 }
 
 void getRepositories() {
@@ -38,4 +43,7 @@ void getRepositories() {
 
   locator.registerSingleton<UpcomingsRepository>(
       UpcomingsRemoteRepository(locator.get()));
+
+  locator.registerSingleton<SeriesRepository>(
+      SeriesRemoteRepository(locator.get()));
 }

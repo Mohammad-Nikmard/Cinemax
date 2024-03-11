@@ -228,7 +228,8 @@ class _HomeHeader extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 20,
-                  backgroundColor: PrimaryColors.blueAccentColor,
+                  backgroundImage: AssetImage("assets/images/icon_user.png"),
+                  backgroundColor: SecondaryColors.redColor,
                 ),
                 const SizedBox(width: 10),
                 Column(
