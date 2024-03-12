@@ -7,7 +7,6 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/util/query_handler.dart';
-import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -261,33 +260,24 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0),
+        padding: EdgeInsets.only(bottom: 20.0),
         child: Column(
           children: [
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const BackLabel(),
-                ),
-                const Text(
+                Text(
                   "Upcomings",
                   style: TextStyle(
                     fontFamily: "MSB",
                     fontSize: 16,
                     color: TextColors.whiteText,
                   ),
-                ),
-                const SizedBox(
-                  width: 32,
                 ),
               ],
             ),

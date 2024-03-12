@@ -1,5 +1,8 @@
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
+import 'package:cinemax/bloc/search/search_bloc.dart';
+import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
@@ -268,7 +271,14 @@ class SearchBox extends StatelessWidget {
           onTap: () {
             PersistentNavBarNavigator.pushNewScreen(
               context,
-              screen: const SearchScreen(),
+              screen: BlocProvider(
+                create: (context) {
+                  var bloc = SearhcBloc(locator.get());
+                  bloc.add(SearchFetchDataEvent());
+                  return bloc;
+                },
+                child: const SearchScreen(),
+              ),
               withNavBar: true, // OPTIONAL VALUE. True by default.
               pageTransitionAnimation: PageTransitionAnimation.cupertino,
             );

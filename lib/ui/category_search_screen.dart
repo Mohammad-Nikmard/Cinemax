@@ -65,7 +65,7 @@ class CategorySearchScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  childCount: 10,
+                  childCount: movieList.length,
                 ),
               ),
             ),

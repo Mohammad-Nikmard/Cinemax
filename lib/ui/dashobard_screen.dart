@@ -1,6 +1,8 @@
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_event.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
+import 'package:cinemax/bloc/search/search_bloc.dart';
+import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
@@ -71,7 +73,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
         child: const UpcomingsScreen(),
       ),
-      const SearchScreen(),
+      BlocProvider(
+        create: (context) {
+          var bloc = SearhcBloc(locator.get());
+          bloc.add(SearchFetchDataEvent());
+          return bloc;
+        },
+        child: const SearchScreen(),
+      ),
       const WishlistScreen(),
       const ProfileScreen(),
     ];
