@@ -70,6 +70,7 @@ class SearchScreen extends StatelessWidget {
                                                 screen: BlocProvider(
                                                   create: (context) {
                                                     var bloc = SearhcBloc(
+                                                        locator.get(),
                                                         locator.get());
                                                     bloc.add(
                                                         SearchAllMoviesEvent());

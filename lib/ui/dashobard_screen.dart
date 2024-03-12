@@ -75,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       BlocProvider(
         create: (context) {
-          var bloc = SearhcBloc(locator.get());
+          var bloc = SearhcBloc(locator.get(), locator.get());
           bloc.add(SearchFetchDataEvent());
           return bloc;
         },

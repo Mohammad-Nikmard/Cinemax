@@ -1,3 +1,4 @@
+import 'package:cinemax/data/model/actors.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:dartz/dartz.dart';
 
@@ -15,12 +16,16 @@ class SearchResponseState extends SearchState {
 
 class SearchAllMoviesResponse extends SearchState {
   Either<String, List<Movie>> getAllMovies;
+  Either<String, List<Actors>> getActors;
 
-  SearchAllMoviesResponse(this.getAllMovies);
+  SearchAllMoviesResponse(this.getAllMovies, this.getActors);
 }
 
 class SearchResultState extends SearchState {
   List<Movie> moviesearch;
+  List<Actors> getActors;
 
-  SearchResultState(this.moviesearch);
+  SearchResultState(this.moviesearch, this.getActors);
 }
+
+class EmptySearchState extends SearchState {}

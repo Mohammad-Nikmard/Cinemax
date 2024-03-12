@@ -1,11 +1,13 @@
 import 'package:cinemax/data/datasource/authentication.dart';
 import 'package:cinemax/data/datasource/banner_datasource.dart';
 import 'package:cinemax/data/datasource/movie_datasource.dart';
+import 'package:cinemax/data/datasource/search_datasource.dart';
 import 'package:cinemax/data/datasource/series_datasource.dart';
 import 'package:cinemax/data/datasource/upcomings_datasource.dart';
 import 'package:cinemax/data/repository/authentication_repository.dart';
 import 'package:cinemax/data/repository/banner_repository.dart';
 import 'package:cinemax/data/repository/movie_repository.dart';
+import 'package:cinemax/data/repository/search_repository.dart';
 import 'package:cinemax/data/repository/series_repository.dart';
 import 'package:cinemax/data/repository/upcomings_repository.dart';
 import 'package:cinemax/util/dio_handler.dart';
@@ -41,6 +43,9 @@ void getDatasources() {
 
   locator.registerSingleton<AuthenticationDatasource>(
       AuthenticationRemoteDatasource(locator.get()));
+
+  locator.registerSingleton<SearchDatasource>(
+      SearchRemoteDatasource(locator.get()));
 }
 
 void getRepositories() {
@@ -58,4 +63,7 @@ void getRepositories() {
 
   locator.registerSingleton<AuthenticationRepository>(
       AuthenticationRemoteRepo(locator.get()));
+
+  locator.registerSingleton<SearchRepository>(
+      SearchRemoteRepository(locator.get()));
 }

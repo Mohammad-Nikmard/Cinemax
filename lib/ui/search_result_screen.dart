@@ -2,8 +2,10 @@ import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/search/search_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/actors.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
 import 'package:flutter/material.dart';
@@ -201,9 +203,11 @@ class SearchResultScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // const SliverToBoxAdapter(
-                  //   child: RelatedActorList(),
-                  // ),
+                  SliverToBoxAdapter(
+                    child: RelatedActorList(
+                      actorsList: state.getActors,
+                    ),
+                  ),
                   SliverToBoxAdapter(
                     child: MovieRelatedHeader(
                       movies: state.moviesearch,
@@ -222,6 +226,99 @@ class SearchResultScreen extends StatelessWidget {
                       childCount: state.moviesearch.length,
                     ),
                   ),
+                ],
+              ),
+            );
+          }
+          if (state is EmptySearchState) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 25, bottom: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 40,
+                              decoration: const BoxDecoration(
+                                color: PrimaryColors.softColor,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/icon_search.svg',
+                                      height: 16,
+                                      width: 16,
+                                      color: TextColors.greyText,
+                                    ),
+                                    const SizedBox(width: 10.0),
+                                    Expanded(
+                                      child: TextField(
+                                        onChanged: (value) {
+                                          if (value.isNotEmpty) {
+                                            context
+                                                .read<SearhcBloc>()
+                                                .add(SearchQueryEvent(value));
+                                          } else if (value.isEmpty) {
+                                            context
+                                                .read<SearhcBloc>()
+                                                .add(SearchAllMoviesEvent());
+                                          }
+                                        },
+                                        style: const TextStyle(
+                                          fontFamily: "MM",
+                                          fontSize: 14,
+                                          color: TextColors.whiteText,
+                                        ),
+                                        decoration: const InputDecoration(
+                                          contentPadding:
+                                              EdgeInsets.only(bottom: 10),
+                                          border: InputBorder.none,
+                                          hintText: "Type Something...",
+                                          hintStyle: TextStyle(
+                                            fontFamily: "MM",
+                                            fontSize: 14,
+                                            color: TextColors.greyText,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "Cancel",
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 12,
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const _EmptySearch(),
                 ],
               ),
             );
@@ -286,7 +383,8 @@ class MovieRelatedHeader extends StatelessWidget {
 }
 
 class RelatedActorList extends StatelessWidget {
-  const RelatedActorList({super.key});
+  const RelatedActorList({super.key, required this.actorsList});
+  final List<Actors> actorsList;
 
   @override
   Widget build(BuildContext context) {
@@ -305,12 +403,14 @@ class RelatedActorList extends StatelessWidget {
         SizedBox(
           height: 110,
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: actorsList.length,
             scrollDirection: Axis.horizontal,
-            itemBuilder: (context, inde) {
-              return const Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: RelatedActor(),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: RelatedActor(
+                  actors: actorsList[index],
+                ),
               );
             },
           ),
@@ -321,20 +421,32 @@ class RelatedActorList extends StatelessWidget {
 }
 
 class RelatedActor extends StatelessWidget {
-  const RelatedActor({super.key});
+  const RelatedActor({super.key, required this.actors});
+  final Actors actors;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: PrimaryColors.blueAccentColor,
+        ClipRRect(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(100),
+          ),
+          child: SizedBox(
+            height: 50,
+            width: 50,
+            child: FittedBox(
+              child: CachedImage(
+                imageUrl: actors.thumbnail,
+                radius: 100,
+              ),
+            ),
+          ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
-          "John Cena",
-          style: TextStyle(
+          actors.name,
+          style: const TextStyle(
             fontFamily: "MSB",
             fontSize: 12,
             color: TextColors.whiteText,
@@ -351,37 +463,38 @@ class _EmptySearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Center(
-        child: Column(
-          children: [
-            Image.asset('assets/images/search_image.png'),
-            const SizedBox(height: 10),
-            const SizedBox(
-              width: 200,
-              child: Text(
-                "We Are Sorry, We Can Not Find The Movie :(",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 16,
-                  color: TextColors.whiteText,
-                ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/images/search_image.svg',
+          ),
+          const SizedBox(height: 10),
+          const SizedBox(
+            width: 200,
+            child: Text(
+              "We Are Sorry, We Can Not Find The Movie :(",
+              style: TextStyle(
+                fontFamily: "MSB",
+                fontSize: 16,
+                color: TextColors.whiteText,
               ),
             ),
-            const SizedBox(height: 10),
-            const SizedBox(
-              width: 210,
-              child: Text(
-                "Find your movie by Type title, Categories, Years, etc",
-                style: TextStyle(
-                  fontFamily: "MM",
-                  fontSize: 12,
-                  color: TextColors.greyText,
-                ),
-                textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 10),
+          const SizedBox(
+            width: 210,
+            child: Text(
+              "Find your movie by Type title, Categories, Years, etc",
+              style: TextStyle(
+                fontFamily: "MM",
+                fontSize: 12,
+                color: TextColors.greyText,
               ),
+              textAlign: TextAlign.center,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

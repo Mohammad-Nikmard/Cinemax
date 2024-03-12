@@ -1,12 +1,16 @@
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/search/search_state.dart';
+import 'package:cinemax/data/model/actors.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/repository/movie_repository.dart';
+import 'package:cinemax/data/repository/search_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearhcBloc extends Bloc<SearchEvent, SearchState> {
   final MovieRepository _movieRemoteRpository;
-  SearhcBloc(this._movieRemoteRpository) : super(SearchInitState()) {
+  final SearchRepository _searchRepository;
+  SearhcBloc(this._movieRemoteRpository, this._searchRepository)
+      : super(SearchInitState()) {
     on<SearchFetchDataEvent>(
       (event, emit) async {
         emit(SearchLoadingState());
@@ -19,14 +23,27 @@ class SearhcBloc extends Bloc<SearchEvent, SearchState> {
       (event, emit) async {
         emit(SearchLoadingState());
         var allMovies = await _movieRemoteRpository.getAllMovies();
-        emit(SearchAllMoviesResponse(allMovies));
+        var actors = await _searchRepository.getActors();
+        emit(SearchAllMoviesResponse(allMovies, actors));
       },
     );
 
     on<SearchQueryEvent>(
       (event, emit) async {
         List<Movie> searchResult = [];
+        List<Actors> searchActors = [];
         var allMovies = await _movieRemoteRpository.getAllMovies();
+        var actors = await _searchRepository.getActors();
+        actors.fold(
+          (l) {},
+          (actorsList) {
+            searchActors = actorsList
+                .where((element) => element.name
+                    .toLowerCase()
+                    .contains(event.query.toLowerCase()))
+                .toList();
+          },
+        );
         allMovies.fold(
           (l) {},
           (movieList) {
@@ -39,7 +56,11 @@ class SearhcBloc extends Bloc<SearchEvent, SearchState> {
                 .toList();
           },
         );
-        emit(SearchResultState(searchResult));
+        if (searchActors.isEmpty && searchResult.isEmpty) {
+          emit(EmptySearchState());
+        } else if (searchActors.isNotEmpty && searchResult.isNotEmpty) {
+          emit(SearchResultState(searchResult, searchActors));
+        }
       },
     );
   }
