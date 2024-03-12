@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/series/series_bloc.dart';
+import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/bloc/series/series_state.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/series_cast.dart';
@@ -11,6 +15,7 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -21,73 +26,80 @@ class SeriesDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: BlocBuilder<SeriesBloc, SeriesState>(
-        builder: (context, state) {
-          if (state is SeriesLoadingState) {
-            return const AppLoadingIndicator();
-          } else if (state is SeriesResponseState) {
-            return CustomScrollView(
-              slivers: [
-                _MovieDetailHeader(
-                  series: series,
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _StoryLine(
-                          storyLine: series.storyline,
-                        ),
-                        state.getCasts.fold(
-                          (exceptionMessage) {
-                            return Text(exceptionMessage);
-                          },
-                          (casts) {
-                            return SeriesCastAndCrew(
-                              casts: casts,
-                            );
-                          },
-                        ),
-                        state.getSeasons.fold(
-                          (exceptionMessage) {
-                            return Text("exceptionMessage");
-                          },
-                          (seasonList) {
-                            return _SeasonChip(
-                              getSeasonList: seasonList,
-                            );
-                          },
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 20.0, top: 20.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                "Gallery",
-                                style: TextStyle(
-                                  fontFamily: "MSB",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                              ),
-                              SizedBox(height: 10.0),
-                            ],
+    return BlocProvider(
+      create: (context) {
+        var bloc = SeriesBloc(locator.get(), locator.get());
+        bloc.add(SeriesDataRequestEvent(series.id));
+        return bloc;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: BlocBuilder<SeriesBloc, SeriesState>(
+          builder: (context, state) {
+            if (state is SeriesLoadingState) {
+              return const AppLoadingIndicator();
+            } else if (state is SeriesResponseState) {
+              return CustomScrollView(
+                slivers: [
+                  _MovieDetailHeader(
+                    series: series,
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _StoryLine(
+                            storyLine: series.storyline,
                           ),
-                        ),
-                      ],
+                          state.getCasts.fold(
+                            (exceptionMessage) {
+                              return Text(exceptionMessage);
+                            },
+                            (casts) {
+                              return SeriesCastAndCrew(
+                                casts: casts,
+                              );
+                            },
+                          ),
+                          state.getSeasons.fold(
+                            (exceptionMessage) {
+                              return Text("exceptionMessage");
+                            },
+                            (seasonList) {
+                              return _SeasonChip(
+                                getSeasonList: seasonList,
+                              );
+                            },
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Gallery",
+                                  style: TextStyle(
+                                    fontFamily: "MSB",
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                ),
+                                SizedBox(height: 10.0),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const _Gallery(),
-              ],
-            );
-          }
-          return Text("There seem to be errors Getting data");
-        },
+                  const _Gallery(),
+                ],
+              );
+            }
+            return Text("There seem to be errors Getting data");
+          },
+        ),
       ),
     );
   }
@@ -426,8 +438,23 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       controller.reverse();
                       isLiked = false;
                     } else if (!isLiked) {
+                      context.read<SeriesBloc>().add(
+                            WishlistAddToCartEvent(widget.series),
+                          );
+                      context
+                          .read<WishlistBloc>()
+                          .add(WishlistFetchCartsEvent());
                       controller.forward();
                       isLiked = true;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          elevation: 0,
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          backgroundColor: Colors.transparent,
+                          content: _SnackBarMessage(),
+                          duration: Duration(seconds: 5),
+                        ),
+                      );
                     }
                   });
                 },
@@ -845,6 +872,40 @@ class SeriesCastAndCrew extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SnackBarMessage extends StatelessWidget {
+  const _SnackBarMessage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQueryHandler.screenWidth(context),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: PrimaryColors.softColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.only(right: 15, left: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "Item is added to wishlist",
+              style: TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 16,
+                fontFamily: "MSB",
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

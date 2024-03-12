@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/movies/movies_bloc.dart';
+import 'package:cinemax/bloc/movies/movies_event.dart';
 import 'package:cinemax/bloc/movies/movies_state.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie_casts.dart';
 import 'package:cinemax/data/model/moviegallery.dart';
@@ -21,76 +25,83 @@ class MovieDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: BlocBuilder<MovieBloc, MoviesState>(
-        builder: (context, state) {
-          if (state is MoviesLoadingState) {
-            return const AppLoadingIndicator();
-          } else if (state is MoviesresponseState) {
-            return CustomScrollView(
-              slivers: [
-                _MovieDetailHeader(
-                  movie: movie,
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _StoryLine(
-                          storyLine: movie.storyline,
-                        ),
-                        state.castList.fold(
-                          (l) {
-                            return SliverToBoxAdapter(
-                              child: Text("exceptionMessage"),
-                            );
-                          },
-                          (castList) {
-                            return MovieCastAndCrew(
-                              casts: castList,
-                            );
-                          },
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 20.0, top: 20.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                "Gallery",
-                                style: TextStyle(
-                                  fontFamily: "MSB",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                              ),
-                              SizedBox(height: 10.0),
-                            ],
+    return BlocProvider(
+      create: (context) {
+        var bloc = MovieBloc(locator.get(), locator.get());
+        bloc.add(MoviesDataRequestEvent(movie.id));
+        return bloc;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: BlocBuilder<MovieBloc, MoviesState>(
+          builder: (context, state) {
+            if (state is MoviesLoadingState) {
+              return const AppLoadingIndicator();
+            } else if (state is MoviesresponseState) {
+              return CustomScrollView(
+                slivers: [
+                  _MovieDetailHeader(
+                    movie: movie,
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _StoryLine(
+                            storyLine: movie.storyline,
                           ),
-                        ),
-                      ],
+                          state.castList.fold(
+                            (l) {
+                              return SliverToBoxAdapter(
+                                child: Text("exceptionMessage"),
+                              );
+                            },
+                            (castList) {
+                              return MovieCastAndCrew(
+                                casts: castList,
+                              );
+                            },
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Gallery",
+                                  style: TextStyle(
+                                    fontFamily: "MSB",
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                ),
+                                SizedBox(height: 10.0),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                state.getPhotos.fold(
-                  (exceptionMessage) {
-                    return SliverToBoxAdapter(
-                      child: Text("exceptionMessage"),
-                    );
-                  },
-                  (photoList) {
-                    return _Gallery(
-                      photoList: photoList,
-                    );
-                  },
-                )
-              ],
-            );
-          }
-          return Text("There seem to be errors Getting data");
-        },
+                  state.getPhotos.fold(
+                    (exceptionMessage) {
+                      return SliverToBoxAdapter(
+                        child: Text("exceptionMessage"),
+                      );
+                    },
+                    (photoList) {
+                      return _Gallery(
+                        photoList: photoList,
+                      );
+                    },
+                  )
+                ],
+              );
+            }
+            return Text("There seem to be errors Getting data");
+          },
+        ),
       ),
     );
   }
@@ -309,8 +320,23 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       controller.reverse();
                       isLiked = false;
                     } else if (!isLiked) {
+                      context.read<MovieBloc>().add(
+                            WishlistAddToCartEvent(widget.movie),
+                          );
+                      context
+                          .read<WishlistBloc>()
+                          .add(WishlistFetchCartsEvent());
                       controller.forward();
                       isLiked = true;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          elevation: 0,
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          backgroundColor: Colors.transparent,
+                          content: _SnackBarMessage(),
+                          duration: Duration(seconds: 5),
+                        ),
+                      );
                     }
                   });
                 },
@@ -727,6 +753,40 @@ class MovieCastAndCrew extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SnackBarMessage extends StatelessWidget {
+  const _SnackBarMessage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQueryHandler.screenWidth(context),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: PrimaryColors.softColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.only(right: 15, left: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "Item is added to wishlist",
+              style: TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 16,
+                fontFamily: "MSB",
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

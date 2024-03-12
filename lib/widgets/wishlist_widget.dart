@@ -1,10 +1,19 @@
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class WishlistWidget extends StatelessWidget {
-  const WishlistWidget({super.key});
+  const WishlistWidget({super.key, required this.cart, required this.index});
+  final WishlistCart cart;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +30,20 @@ class WishlistWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: [
-            Container(
-              height: 83,
-              width: (MediaQueryHandler.screenWidth(context) < 350) ? 100 : 121,
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+            ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              child: SizedBox(
+                height: 83,
+                width:
+                    (MediaQueryHandler.screenWidth(context) < 350) ? 100 : 121,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: CachedImage(
+                    imageUrl: cart.thumbnail,
+                    radius: 10,
+                  ),
                 ),
               ),
             ),
@@ -38,7 +54,7 @@ class WishlistWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Action",
+                    cart.genre,
                     style: TextStyle(
                       fontFamily: "MM",
                       fontSize: (MediaQueryHandler.screenWidth(context) < 380)
@@ -52,7 +68,7 @@ class WishlistWidget extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      "Spider-man Felan Bisar shode",
+                      cart.name,
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 380)
@@ -68,7 +84,7 @@ class WishlistWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "Movie",
+                            cart.category,
                             style: TextStyle(
                               fontFamily: "MM",
                               fontSize:
@@ -86,9 +102,9 @@ class WishlistWidget extends StatelessWidget {
                             width: 16,
                           ),
                           const SizedBox(width: 5),
-                          const Text(
-                            "4.5",
-                            style: TextStyle(
+                          Text(
+                            cart.rate,
+                            style: const TextStyle(
                               fontFamily: "MM",
                               fontSize: 12,
                               color: SecondaryColors.orangeColor,
@@ -96,9 +112,16 @@ class WishlistWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SvgPicture.asset(
-                        'assets/images/icon_heart.svg',
-                        color: SecondaryColors.redColor,
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .read<WishlistBloc>()
+                              .add(WishlistCardDelete(index));
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/icon_heart.svg',
+                          color: SecondaryColors.redColor,
+                        ),
                       ),
                     ],
                   ),

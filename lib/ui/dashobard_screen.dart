@@ -5,6 +5,7 @@ import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/home_screen.dart';
 import 'package:cinemax/ui/profile_screen.dart';
@@ -81,7 +82,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
         child: const SearchScreen(),
       ),
-      const WishlistScreen(),
+      BlocProvider<WishlistBloc>(
+        create: (context) => locator.get(),
+        child: const WishlistScreen(),
+      ),
       const ProfileScreen(),
     ];
   }

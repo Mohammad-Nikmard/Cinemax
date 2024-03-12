@@ -1,15 +1,18 @@
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/data/datasource/authentication.dart';
 import 'package:cinemax/data/datasource/banner_datasource.dart';
 import 'package:cinemax/data/datasource/movie_datasource.dart';
 import 'package:cinemax/data/datasource/search_datasource.dart';
 import 'package:cinemax/data/datasource/series_datasource.dart';
 import 'package:cinemax/data/datasource/upcomings_datasource.dart';
+import 'package:cinemax/data/datasource/wishlist_datasource.dart';
 import 'package:cinemax/data/repository/authentication_repository.dart';
 import 'package:cinemax/data/repository/banner_repository.dart';
 import 'package:cinemax/data/repository/movie_repository.dart';
 import 'package:cinemax/data/repository/search_repository.dart';
 import 'package:cinemax/data/repository/series_repository.dart';
 import 'package:cinemax/data/repository/upcomings_repository.dart';
+import 'package:cinemax/data/repository/wishlist_repository.dart';
 import 'package:cinemax/util/dio_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -26,6 +29,8 @@ Future<void> initServiceLoactor() async {
   getDatasources();
 
   getRepositories();
+
+  locator.registerSingleton<WishlistBloc>(WishlistBloc(locator.get()));
 }
 
 void getDatasources() {
@@ -46,6 +51,8 @@ void getDatasources() {
 
   locator.registerSingleton<SearchDatasource>(
       SearchRemoteDatasource(locator.get()));
+
+  locator.registerSingleton<WishlistDatasource>(WishlistLocalDatasource());
 }
 
 void getRepositories() {
@@ -66,4 +73,7 @@ void getRepositories() {
 
   locator.registerSingleton<SearchRepository>(
       SearchRemoteRepository(locator.get()));
+
+  locator.registerSingleton<WishlistRepository>(
+      WishlistLocalRepository(locator.get()));
 }

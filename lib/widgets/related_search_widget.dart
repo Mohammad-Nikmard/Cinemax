@@ -4,6 +4,7 @@ import 'package:cinemax/bloc/movies/movies_bloc.dart';
 import 'package:cinemax/bloc/movies/movies_event.dart';
 import 'package:cinemax/bloc/series/series_bloc.dart';
 import 'package:cinemax/bloc/series/series_event.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
@@ -26,15 +27,9 @@ class RelatedSeachWidget extends StatelessWidget {
         if (movie.category == "movie") {
           PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: BlocProvider(
-              create: (context) {
-                var bloc = MovieBloc(locator.get());
-                bloc.add(MoviesDataRequestEvent(movie.id));
-                return bloc;
-              },
-              child: MovieDetailScreen(
-                movie: movie,
-              ),
+            screen: BlocProvider<WishlistBloc>.value(
+              value: locator.get<WishlistBloc>(),
+              child: MovieDetailScreen(movie: movie),
             ),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
@@ -42,15 +37,9 @@ class RelatedSeachWidget extends StatelessWidget {
         } else if (movie.category == "series") {
           PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: BlocProvider(
-              create: (context) {
-                var bloc = SeriesBloc(locator.get());
-                bloc.add(SeriesDataRequestEvent(movie.id));
-                return bloc;
-              },
-              child: SeriesDetailScreen(
-                series: movie,
-              ),
+            screen: BlocProvider<WishlistBloc>.value(
+              value: locator.get<WishlistBloc>(),
+              child: SeriesDetailScreen(series: movie),
             ),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
