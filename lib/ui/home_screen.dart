@@ -60,45 +60,54 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const CategoryList(),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Most Popular Movies",
-                          style: TextStyle(
-                            fontFamily: "MM",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
-                              context,
-                              screen: const CategorySearchScreen(),
-                              withNavBar:
-                                  false, // OPTIONAL VALUE. True by default.
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.cupertino,
-                            );
-                          },
-                          child: const Text(
-                            "See All",
-                            style: TextStyle(
-                              fontFamily: "MM",
-                              fontSize: 14,
-                              color: PrimaryColors.blueAccentColor,
+                state.getMovies.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (movieList) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 30, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Most Popular Movies",
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                              textAlign: TextAlign.start,
                             ),
-                          ),
+                            GestureDetector(
+                              onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: CategorySearchScreen(
+                                    title: "Most Popular Movies",
+                                    movieList: movieList,
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: const Text(
+                                "See All",
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 14,
+                                  color: PrimaryColors.blueAccentColor,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
                 state.getMovies.fold(
                   (exceptionMessage) {
@@ -108,45 +117,54 @@ class HomeScreen extends StatelessWidget {
                     return MostPopList(movieList: movieList);
                   },
                 ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Most Popular Series",
-                          style: TextStyle(
-                            fontFamily: "MM",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
-                              context,
-                              screen: const CategorySearchScreen(),
-                              withNavBar:
-                                  false, // OPTIONAL VALUE. True by default.
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.cupertino,
-                            );
-                          },
-                          child: const Text(
-                            "See All",
-                            style: TextStyle(
-                              fontFamily: "MM",
-                              fontSize: 14,
-                              color: PrimaryColors.blueAccentColor,
+                state.getSeries.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (seriesList) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 30, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Most Popular Series",
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                              textAlign: TextAlign.start,
                             ),
-                          ),
+                            GestureDetector(
+                              onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: CategorySearchScreen(
+                                    title: "Most Popular Series",
+                                    movieList: seriesList,
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: const Text(
+                                "See All",
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 14,
+                                  color: PrimaryColors.blueAccentColor,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
                 state.getSeries.fold(
                   (exceptionMessage) {

@@ -100,7 +100,7 @@ class SearchScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20),
-                        RelatedSeachWidget(),
+                        // RelatedSeachWidget(),
                       ],
                     ),
                   ),

@@ -89,17 +89,17 @@ class SearchResultScreen extends StatelessWidget {
             const SliverToBoxAdapter(
               child: MovieRelatedHeader(),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: RelatedSeachWidget(),
-                  );
-                },
-                childCount: 10,
-              ),
-            ),
+            // SliverList(
+            //   delegate: SliverChildBuilderDelegate(
+            //     (context, index) {
+            //       return const Padding(
+            //         padding: EdgeInsets.only(bottom: 20),
+            //         child: RelatedSeachWidget(),
+            //       );
+            //     },
+            //     childCount: 10,
+            //   ),
+            // ),
           ],
         ),
       ),

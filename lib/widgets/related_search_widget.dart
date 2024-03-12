@@ -1,86 +1,131 @@
 import 'dart:ui';
-
+import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/movies/movies_bloc.dart';
+import 'package:cinemax/bloc/movies/movies_event.dart';
+import 'package:cinemax/bloc/series/series_bloc.dart';
+import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
+import 'package:cinemax/ui/series_detial_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class RelatedSeachWidget extends StatelessWidget {
-  const RelatedSeachWidget({super.key});
+  const RelatedSeachWidget({super.key, required this.movie});
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // PersistentNavBarNavigator.pushNewScreen(
-        //   context,
-        //   screen: const MovieDetailScreen(),
-        //   withNavBar: true, // OPTIONAL VALUE. True by default.
-        //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        // );
+        if (movie.category == "movie") {
+          PersistentNavBarNavigator.pushNewScreen(
+            context,
+            screen: BlocProvider(
+              create: (context) {
+                var bloc = MovieBloc(locator.get());
+                bloc.add(MoviesDataRequestEvent(movie.id));
+                return bloc;
+              },
+              child: MovieDetailScreen(
+                movie: movie,
+              ),
+            ),
+            withNavBar: true,
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        } else if (movie.category == "series") {
+          PersistentNavBarNavigator.pushNewScreen(
+            context,
+            screen: BlocProvider(
+              create: (context) {
+                var bloc = SeriesBloc(locator.get());
+                bloc.add(SeriesDataRequestEvent(movie.id));
+                return bloc;
+              },
+              child: SeriesDetailScreen(
+                series: movie,
+              ),
+            ),
+            withNavBar: true,
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        }
       },
       child: SizedBox(
         height: 147,
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
-            Container(
-              height: 147,
-              width: 112,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/Bg.png'),
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 7, right: 45),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                        child: Container(
-                          height: 24,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff252836).withOpacity(0.3),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/icon_star.svg',
-                                height: 16,
-                                width: 16,
-                                color: SecondaryColors.orangeColor,
-                              ),
-                              const SizedBox(width: 5),
-                              const Text(
-                                "4.5",
-                                style: TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 12,
-                                  color: SecondaryColors.orangeColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                  child: SizedBox(
+                    height: 147,
+                    width: 112,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: CachedImage(
+                        imageUrl: movie.thumbnail,
+                        radius: 8,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Container(
+                            height: 24,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff252836).withOpacity(0.3),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/icon_star.svg',
+                                  height: 16,
+                                  width: 16,
+                                  color: SecondaryColors.orangeColor,
+                                ),
+                                const SizedBox(width: 5),
+                                const Text(
+                                  "4.5",
+                                  style: TextStyle(
+                                    fontFamily: "MM",
+                                    fontSize: 12,
+                                    color: SecondaryColors.orangeColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const SizedBox(width: 10),
             Column(
@@ -90,7 +135,7 @@ class RelatedSeachWidget extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 170,
                   child: Text(
-                    "Spider-man No Way Home bruh",
+                    movie.name,
                     style: TextStyle(
                       fontFamily: "MM",
                       fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -116,7 +161,7 @@ class RelatedSeachWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      "2021",
+                      movie.year,
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -142,7 +187,7 @@ class RelatedSeachWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      "148 Minutes",
+                      "${movie.timeLength} Minutes",
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -174,7 +219,7 @@ class RelatedSeachWidget extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "PG-13",
+                          "PG-${movie.pg}",
                           style: TextStyle(
                             color: PrimaryColors.blueAccentColor,
                             fontSize:
@@ -205,7 +250,7 @@ class RelatedSeachWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        "Action",
+                        movie.genre,
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:
@@ -222,7 +267,7 @@ class RelatedSeachWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        "Movie",
+                        movie.category,
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:

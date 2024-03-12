@@ -1,11 +1,15 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategorySearchScreen extends StatelessWidget {
-  const CategorySearchScreen({super.key});
+  const CategorySearchScreen(
+      {super.key, required this.title, required this.movieList});
+  final String title;
+  final List<Movie> movieList;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class CategorySearchScreen extends StatelessWidget {
                         child: const BackLabel(),
                       ),
                       Text(
-                        "Most Popular Movies",
+                        title,
                         style: TextStyle(
                           fontFamily: "MSB",
                           fontSize:
@@ -54,9 +58,11 @@ class CategorySearchScreen extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: RelatedSeachWidget(),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: RelatedSeachWidget(
+                        movie: movieList[index],
+                      ),
                     );
                   },
                   childCount: 10,
