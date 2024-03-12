@@ -5,6 +5,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/actors.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
@@ -463,38 +464,43 @@ class _EmptySearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            'assets/images/search_image.svg',
-          ),
-          const SizedBox(height: 10),
-          const SizedBox(
-            width: 200,
-            child: Text(
-              "We Are Sorry, We Can Not Find The Movie :(",
-              style: TextStyle(
-                fontFamily: "MSB",
-                fontSize: 16,
-                color: TextColors.whiteText,
+      child: SizedBox(
+        height: MediaQueryHandler.screenHeight(context) - 100,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/images/search_image.svg',
               ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const SizedBox(
-            width: 210,
-            child: Text(
-              "Find your movie by Type title, Categories, Years, etc",
-              style: TextStyle(
-                fontFamily: "MM",
-                fontSize: 12,
-                color: TextColors.greyText,
+              const SizedBox(height: 10),
+              const SizedBox(
+                width: 200,
+                child: Text(
+                  "We Are Sorry, We Can Not Find The Movie :(",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 16,
+                    color: TextColors.whiteText,
+                  ),
+                ),
               ),
-              textAlign: TextAlign.center,
-            ),
+              const SizedBox(height: 10),
+              const SizedBox(
+                width: 210,
+                child: Text(
+                  "Find your movie by Type title, Categories, Years, etc",
+                  style: TextStyle(
+                    fontFamily: "MM",
+                    fontSize: 12,
+                    color: TextColors.greyText,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

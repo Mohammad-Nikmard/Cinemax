@@ -205,8 +205,8 @@ class __SeasonChipState extends State<_SeasonChip> {
                                     color: Color(0xff252836),
                                     shape: BoxShape.circle,
                                   ),
-                                  child: Image.asset(
-                                    'assets/images/icon_close.png',
+                                  child: SvgPicture.asset(
+                                    'assets/images/icon_close.svg',
                                   ),
                                 ),
                               ),
@@ -601,7 +601,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: const EdgeInsets.only(left: 25),
                         child: SvgPicture.asset(
                           'assets/images/icon_play.svg',
                           height: (MediaQueryHandler.screenWidth(context) < 350)
@@ -612,7 +612,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                               : 20,
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(width: 10),
                       Text(
                         "Play",
                         style: TextStyle(
@@ -714,8 +714,8 @@ Future<void> shareDialog(BuildContext context) async {
                           color: Color(0xff252836),
                           shape: BoxShape.circle,
                         ),
-                        child: Image.asset(
-                          'assets/images/icon_close.png',
+                        child: SvgPicture.asset(
+                          'assets/images/icon_close.svg',
                         ),
                       ),
                     ),

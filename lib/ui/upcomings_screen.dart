@@ -31,7 +31,7 @@ class UpcomingsScreen extends StatelessWidget {
               child: CustomScrollView(
                 slivers: [
                   const _Header(),
-                  const CategoryList(),
+                  // const CategoryList(),
                   state.getUpcomingsList.fold(
                     (exceptionMessage) {
                       return Text("exceptionMessage");
@@ -269,7 +269,7 @@ class _Header extends StatelessWidget {
               height: 30,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Upcomings",
