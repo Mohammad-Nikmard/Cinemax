@@ -326,12 +326,14 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       controller.reverse();
                       isLiked = false;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           elevation: 0,
-                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackBarUnlikeMessage(),
-                          duration: Duration(seconds: 5),
+                          content: _SnackBarUnlikeMessage(
+                            movieName: widget.movie.name,
+                          ),
+                          duration: const Duration(seconds: 5),
                         ),
                       );
                     } else if (!isLiked) {
@@ -344,12 +346,14 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       controller.forward();
                       isLiked = true;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           elevation: 0,
-                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackBarLikedMessage(),
-                          duration: Duration(seconds: 5),
+                          content: _SnackBarLikedMessage(
+                            movieName: widget.movie.name,
+                          ),
+                          duration: const Duration(seconds: 5),
                         ),
                       );
                     }
@@ -773,7 +777,8 @@ class MovieCastAndCrew extends StatelessWidget {
 }
 
 class _SnackBarLikedMessage extends StatelessWidget {
-  const _SnackBarLikedMessage();
+  const _SnackBarLikedMessage({required this.movieName});
+  final String movieName;
 
   @override
   Widget build(BuildContext context) {
@@ -781,21 +786,21 @@ class _SnackBarLikedMessage extends StatelessWidget {
       width: MediaQueryHandler.screenWidth(context),
       height: 60,
       decoration: const BoxDecoration(
-        color: PrimaryColors.softColor,
+        color: SecondaryColors.greenColor,
         borderRadius: BorderRadius.all(
           Radius.circular(15),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.only(right: 15, left: 15),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "Item is added to wishlist",
-              style: TextStyle(
+              "$movieName is added to wishlist",
+              style: const TextStyle(
                 color: TextColors.whiteText,
-                fontSize: 16,
+                fontSize: 12,
                 fontFamily: "MSB",
               ),
             ),
@@ -807,7 +812,8 @@ class _SnackBarLikedMessage extends StatelessWidget {
 }
 
 class _SnackBarUnlikeMessage extends StatelessWidget {
-  const _SnackBarUnlikeMessage();
+  const _SnackBarUnlikeMessage({required this.movieName});
+  final String movieName;
 
   @override
   Widget build(BuildContext context) {
@@ -815,21 +821,21 @@ class _SnackBarUnlikeMessage extends StatelessWidget {
       width: MediaQueryHandler.screenWidth(context),
       height: 60,
       decoration: const BoxDecoration(
-        color: PrimaryColors.softColor,
+        color: SecondaryColors.redColor,
         borderRadius: BorderRadius.all(
           Radius.circular(15),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.only(right: 15, left: 15),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "Item is removed from wishlist",
-              style: TextStyle(
+              "$movieName is removed from wishlist",
+              style: const TextStyle(
                 color: TextColors.whiteText,
-                fontSize: 16,
+                fontSize: 12,
                 fontFamily: "MSB",
               ),
             ),
