@@ -1,9 +1,5 @@
 import 'dart:ui';
 import 'package:cinemax/DI/service_locator.dart';
-import 'package:cinemax/bloc/movies/movies_bloc.dart';
-import 'package:cinemax/bloc/movies/movies_event.dart';
-import 'package:cinemax/bloc/series/series_bloc.dart';
-import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
@@ -98,9 +94,9 @@ class RelatedSeachWidget extends StatelessWidget {
                                   color: SecondaryColors.orangeColor,
                                 ),
                                 const SizedBox(width: 5),
-                                const Text(
-                                  "4.5",
-                                  style: TextStyle(
+                                Text(
+                                  movie.rate,
+                                  style: const TextStyle(
                                     fontFamily: "MM",
                                     fontSize: 12,
                                     color: SecondaryColors.orangeColor,

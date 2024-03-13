@@ -13,3 +13,9 @@ class WishlistAddToCartEvent extends SeriesEvent {
 
   WishlistAddToCartEvent(this.movie);
 }
+
+class WishlistDeleteItemEvent extends SeriesEvent {
+  final String movieName;
+
+  WishlistDeleteItemEvent(this.movieName);
+}

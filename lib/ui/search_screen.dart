@@ -111,23 +111,32 @@ class SearchScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 90),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Today",
-                                style: TextStyle(
-                                  fontFamily: "MSB",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
+                        state.getMovies.fold(
+                          (exceptionMessage) {
+                            return Text("exceptionMessage");
+                          },
+                          (movieList) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 90),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Today",
+                                    style: TextStyle(
+                                      fontFamily: "MSB",
+                                      fontSize: 16,
+                                      color: TextColors.whiteText,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  RelatedSeachWidget(
+                                    movie: movieList[5],
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 20),
-                              // RelatedSeachWidget(),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ],
                     ),

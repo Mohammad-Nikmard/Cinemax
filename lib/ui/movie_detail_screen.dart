@@ -317,8 +317,23 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 onTap: () {
                   setState(() {
                     if (isLiked) {
+                      context
+                          .read<MovieBloc>()
+                          .add(WishlistDeleteItemEvent(widget.movie.name));
+                      context
+                          .read<WishlistBloc>()
+                          .add(WishlistFetchCartsEvent());
                       controller.reverse();
                       isLiked = false;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          elevation: 0,
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          backgroundColor: Colors.transparent,
+                          content: _SnackBarUnlikeMessage(),
+                          duration: Duration(seconds: 5),
+                        ),
+                      );
                     } else if (!isLiked) {
                       context.read<MovieBloc>().add(
                             WishlistAddToCartEvent(widget.movie),
@@ -333,7 +348,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           elevation: 0,
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackBarMessage(),
+                          content: _SnackBarLikedMessage(),
                           duration: Duration(seconds: 5),
                         ),
                       );
@@ -757,8 +772,8 @@ class MovieCastAndCrew extends StatelessWidget {
   }
 }
 
-class _SnackBarMessage extends StatelessWidget {
-  const _SnackBarMessage();
+class _SnackBarLikedMessage extends StatelessWidget {
+  const _SnackBarLikedMessage();
 
   @override
   Widget build(BuildContext context) {
@@ -778,6 +793,40 @@ class _SnackBarMessage extends StatelessWidget {
           children: [
             Text(
               "Item is added to wishlist",
+              style: TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 16,
+                fontFamily: "MSB",
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SnackBarUnlikeMessage extends StatelessWidget {
+  const _SnackBarUnlikeMessage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQueryHandler.screenWidth(context),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: PrimaryColors.softColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.only(right: 15, left: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "Item is removed from wishlist",
               style: TextStyle(
                 color: TextColors.whiteText,
                 fontSize: 16,

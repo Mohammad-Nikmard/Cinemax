@@ -5,6 +5,7 @@ abstract class WishlistDatasource {
   Future<void> addToWishlist(WishlistCart cart);
   Future<List<WishlistCart>> showList();
   Future<void> deleteCart(int index);
+  Future<void> deleteSelectedItem(String name);
 }
 
 class WishlistLocalDatasource extends WishlistDatasource {
@@ -23,5 +24,14 @@ class WishlistLocalDatasource extends WishlistDatasource {
   @override
   Future<void> deleteCart(int index) async {
     await box.deleteAt(index);
+  }
+
+  @override
+  Future<void> deleteSelectedItem(String name) async {
+    var list = box.values.toList();
+
+    var item = list.indexWhere((element) => element.name.contains(name));
+
+    box.deleteAt(item);
   }
 }

@@ -30,5 +30,10 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         await _wishlistRepository.addToCart(cart);
       },
     );
+    on<WishlistDeleteItemEvent>(
+      (event, emit) async {
+        await _wishlistRepository.deleteSelectedItem(event.movieName);
+      },
+    );
   }
 }
