@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SeriesDetailScreen extends StatelessWidget {
   const SeriesDetailScreen({super.key, required this.series});
@@ -72,13 +73,14 @@ class SeriesDetailScreen extends StatelessWidget {
                               );
                             },
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 20.0, top: 20.0),
                             child: Column(
                               children: [
                                 Text(
-                                  "Gallery",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.gallery,
+                                  style: const TextStyle(
                                     fontFamily: "MSB",
                                     fontSize: 16,
                                     color: TextColors.whiteText,
@@ -176,9 +178,9 @@ class __SeasonChipState extends State<_SeasonChip> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 30),
-        const Text(
-          "Episods",
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context)!.episodes,
+          style: const TextStyle(
             fontFamily: "MSB",
             fontSize: 16,
             color: TextColors.whiteText,
@@ -218,6 +220,8 @@ class __SeasonChipState extends State<_SeasonChip> {
                                   ),
                                   child: SvgPicture.asset(
                                     'assets/images/icon_close.svg',
+                                    height: 16,
+                                    width: 16,
                                   ),
                                 ),
                               ),
@@ -239,7 +243,7 @@ class __SeasonChipState extends State<_SeasonChip> {
                                             Navigator.pop(context);
                                           },
                                           child: Text(
-                                            "Season ${widget.getSeasonList[index].season}",
+                                            "${AppLocalizations.of(context)!.season} ${widget.getSeasonList[index].season}",
                                             style: TextStyle(
                                               fontFamily: "MSB",
                                               fontSize: (selectedIndex == index)
@@ -269,7 +273,7 @@ class __SeasonChipState extends State<_SeasonChip> {
           child: Row(
             children: [
               Text(
-                "Season ${selectedIndex + 1}",
+                "${AppLocalizations.of(context)!.season} ${selectedIndex + 1}",
                 style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 14,
@@ -299,7 +303,7 @@ class _StoryLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Story Line",
+          AppLocalizations.of(context)!.storyLine,
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
@@ -560,7 +564,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 ),
                 const SizedBox(width: 3.0),
                 Text(
-                  "${widget.series.timeLength} Minutes",
+                  "${widget.series.timeLength} ${AppLocalizations.of(context)!.minutes}",
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -647,7 +651,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 25),
+                        padding: const EdgeInsets.only(left: 25, right: 10),
                         child: SvgPicture.asset(
                           'assets/images/icon_play.svg',
                           height: (MediaQueryHandler.screenWidth(context) < 350)
@@ -660,7 +664,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        "Play",
+                        AppLocalizations.of(context)!.play,
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:
@@ -762,14 +766,16 @@ Future<void> shareDialog(BuildContext context) async {
                         ),
                         child: SvgPicture.asset(
                           'assets/images/icon_close.svg',
+                          height: 16,
+                          width: 16,
                         ),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Center(
+                    Center(
                       child: Text(
-                        "Share to",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.share,
+                        style: const TextStyle(
                           fontFamily: "MSB",
                           fontSize: 18,
                           color: TextColors.whiteText,
@@ -820,7 +826,7 @@ class SeriesCastAndCrew extends StatelessWidget {
       children: [
         const SizedBox(height: 30),
         Text(
-          "Cast and Crew",
+          AppLocalizations.of(context)!.casts,
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
@@ -916,7 +922,7 @@ class _SnackBarLikedMessage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "$seriesName is added to wishlist",
+              "$seriesName ${AppLocalizations.of(context)!.isAddedToWishlist}",
               style: const TextStyle(
                 color: TextColors.whiteText,
                 fontSize: 12,
@@ -951,7 +957,7 @@ class _SnackBarUnlikeMessage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "$seriesName is removed from wishlist",
+              "$seriesName ${AppLocalizations.of(context)!.removeFromWishlist}",
               style: const TextStyle(
                 color: TextColors.whiteText,
                 fontSize: 12,

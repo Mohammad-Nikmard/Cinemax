@@ -3,6 +3,7 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -35,9 +36,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     },
                     child: const BackLabel(),
                   ),
-                  const Text(
-                    "Notification",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.notif,
+                    style: const TextStyle(
                       fontFamily: "MSB",
                       fontSize: 16,
                       color: TextColors.whiteText,
@@ -69,9 +70,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Messages Notifications",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.messageNotif,
+                        style: const TextStyle(
                           fontFamily: "MM",
                           fontSize: 12,
                           color: TextColors.greyText,
@@ -84,7 +85,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Show Notifications",
+                            AppLocalizations.of(context)!.showNotif,
                             style: TextStyle(
                               fontFamily: "MM",
                               fontSize:
@@ -119,7 +120,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         height: 10,
                       ),
                       Text(
-                        "Exceptions",
+                        AppLocalizations.of(context)!.exceptions,
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:

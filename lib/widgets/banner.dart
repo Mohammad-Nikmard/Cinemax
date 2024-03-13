@@ -1,12 +1,10 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/banner.dart';
-import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BannerContainer extends StatefulWidget {
@@ -31,89 +29,77 @@ class _BannerContainerState extends State<BannerContainer> {
             itemCount: widget.bannerList.length,
             controller: controller,
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  // PersistentNavBarNavigator.pushNewScreen(
-                  //   context,
-                  //   screen: const UpcomingMovieDetail(),
-                  //   withNavBar: true, // OPTIONAL VALUE. True by default.
-                  //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  // );
-                },
-                child: SizedBox(
-                  height: 154,
-                  width: 315,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      alignment: AlignmentDirectional.bottomStart,
-                      children: [
-                        ClipRRect(
+              return SizedBox(
+                height: 154,
+                width: 315,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: AlignmentDirectional.bottomStart,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(16),
+                        ),
+                        child: SizedBox(
+                          height: 154,
+                          width: 305,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: CachedImage(
+                              imageUrl: widget.bannerList[index].thumbnail,
+                              radius: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 154,
+                        width: 305,
+                        decoration: BoxDecoration(
+                          color: PrimaryColors.darkColor.withOpacity(0.3),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(16),
                           ),
-                          child: SizedBox(
-                            height: 154,
-                            width: 305,
-                            child: FittedBox(
-                              fit: BoxFit.cover,
-                              child: CachedImage(
-                                imageUrl: widget.bannerList[index].thumbnail,
-                                radius: 16,
-                              ),
-                            ),
-                          ),
                         ),
-                        Container(
-                          height: 154,
-                          width: 305,
-                          decoration: BoxDecoration(
-                            color: PrimaryColors.darkColor.withOpacity(0.3),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(16),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 40,
-                          left: 20,
-                          child: SizedBox(
-                            width:
-                                (MediaQueryHandler.screenWidth(context) < 350)
-                                    ? 154
-                                    : 214,
-                            child: Text(
-                              widget.bannerList[index].title,
-                              style: TextStyle(
-                                fontFamily: "MSB",
-                                fontSize:
-                                    (MediaQueryHandler.screenWidth(context) <
-                                            350)
-                                        ? 12
-                                        : 16,
-                                color: TextColors.whiteText,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 20,
-                          left: 20,
+                      ),
+                      Positioned(
+                        bottom: 40,
+                        left: 20,
+                        child: SizedBox(
+                          width: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 154
+                              : 214,
                           child: Text(
-                            "On ${widget.bannerList[index].relaseMonth} ${widget.bannerList[index].releaseDate}, ${widget.bannerList[index].relaseYear}",
+                            widget.bannerList[index].title,
                             style: TextStyle(
-                              fontFamily: "MM",
+                              fontFamily: "MSB",
                               fontSize:
                                   (MediaQueryHandler.screenWidth(context) < 350)
-                                      ? 8
-                                      : 12,
+                                      ? 12
+                                      : 16,
                               color: TextColors.whiteText,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        bottom: 20,
+                        left: 20,
+                        child: Text(
+                          "On ${widget.bannerList[index].relaseMonth} ${widget.bannerList[index].releaseDate}, ${widget.bannerList[index].relaseYear}",
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 8
+                                    : 12,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );

@@ -8,6 +8,7 @@ import 'package:cinemax/widgets/wishlist_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
@@ -41,13 +42,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       height: 30,
                     ),
                   ),
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Wishlist",
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.wishlist,
+                          style: const TextStyle(
                             fontFamily: "MSB",
                             fontSize: 16,
                             color: TextColors.whiteText,
@@ -84,19 +85,19 @@ class _WishlistScreenState extends State<WishlistScreen> {
               ),
             );
           } else if (state is WishlistEmptyState) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Wishlist",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.wishlist,
+                        style: const TextStyle(
                           fontFamily: "MSB",
                           fontSize: 16,
                           color: TextColors.whiteText,
@@ -104,8 +105,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 35),
-                  _EmptyWishlist(),
+                  const SizedBox(height: 35),
+                  const _EmptyWishlist(),
                 ],
               ),
             );
@@ -131,20 +132,20 @@ class _EmptyWishlist extends StatelessWidget {
             'assets/images/box_image.svg',
           ),
           const SizedBox(height: 15),
-          const Text(
-            "There is No Movie Yet!",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.noMovie,
+            style: const TextStyle(
               fontFamily: "MSB",
               fontSize: 16,
               color: TextColors.whiteText,
             ),
           ),
           const SizedBox(height: 5),
-          const SizedBox(
+          SizedBox(
             width: 190,
             child: Text(
-              "Find your movie by Type title, categories, years, etc.",
-              style: TextStyle(
+              AppLocalizations.of(context)!.noMovieCap,
+              style: const TextStyle(
                 fontFamily: "MM",
                 fontSize: 12,
                 color: TextColors.greyText,

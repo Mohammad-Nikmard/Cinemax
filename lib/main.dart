@@ -1,9 +1,12 @@
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/language/language_bloc.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/theme/main_theme.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +17,12 @@ void main() async {
 
   await initServiceLoactor();
 
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => LanguageBloc()..add(GetLanguage()),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,10 +30,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: mainTheme,
-      home: const DashboardScreen(),
+    return BlocBuilder<LanguageBloc, LanguageState>(
+      builder: (context, state) {
+        return MaterialApp(
+          locale: state.selectedLanguage.value,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          debugShowCheckedModeBanner: false,
+          theme: mainTheme,
+          home: const DashboardScreen(),
+        );
+      },
     );
   }
 }

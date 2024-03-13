@@ -11,6 +11,7 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -65,9 +66,9 @@ class ProfileScreen extends StatelessWidget {
                       signoutDialog(context);
                       // AuthManager.logOut();
                     },
-                    child: const Text(
-                      "Log Out",
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.logout,
+                      style: const TextStyle(
                         color: PrimaryColors.blueAccentColor,
                         fontSize: 16,
                         fontFamily: "MSB",
@@ -248,9 +249,9 @@ class _GeneralChip extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "General",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.general,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 18,
                   color: TextColors.whiteText,
@@ -268,8 +269,8 @@ class _GeneralChip extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: const _OptionChip(
-                  title: "Notification",
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.notif,
                   image: "assets/images/icon_bell.svg",
                   color: TextColors.greyText,
                 ),
@@ -293,8 +294,8 @@ class _GeneralChip extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: const _OptionChip(
-                  title: "Language",
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.language,
                   image: "assets/images/icon_globe.svg",
                   color: TextColors.greyText,
                 ),
@@ -309,8 +310,8 @@ class _GeneralChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const _OptionChip(
-                title: "Country",
+              _OptionChip(
+                title: AppLocalizations.of(context)!.country,
                 image: "assets/images/icon_flag.svg",
                 color: TextColors.greyText,
               ),
@@ -324,8 +325,8 @@ class _GeneralChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const _OptionChip(
-                title: "Clear Cache",
+              _OptionChip(
+                title: AppLocalizations.of(context)!.clearCache,
                 image: "assets/images/icon_bin.svg",
                 color: TextColors.greyText,
               ),
@@ -360,9 +361,9 @@ class _MoreChip extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "More",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.more,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 18,
                   color: TextColors.whiteText,
@@ -378,8 +379,8 @@ class _MoreChip extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: const _OptionChip(
-                  title: "Legal and Policies",
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.legal,
                   image: "assets/images/icon_shield.svg",
                   color: TextColors.greyText,
                 ),
@@ -394,8 +395,8 @@ class _MoreChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const _OptionChip(
-                title: "Help & Feedback",
+              _OptionChip(
+                title: AppLocalizations.of(context)!.help,
                 image: "assets/images/icon_question.svg",
                 color: TextColors.greyText,
               ),
@@ -409,8 +410,8 @@ class _MoreChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const _OptionChip(
-                title: "About Us",
+              _OptionChip(
+                title: AppLocalizations.of(context)!.about,
                 image: "assets/images/icon_alert.svg",
                 color: TextColors.greyText,
               ),
@@ -445,9 +446,9 @@ class _AccountChip extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Account",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.account,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 18,
                   color: TextColors.whiteText,
@@ -456,8 +457,8 @@ class _AccountChip extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const _OptionChip(
-                title: "Member",
+              _OptionChip(
+                title: AppLocalizations.of(context)!.member,
                 image: "assets/images/icon_profile.svg",
                 color: PrimaryColors.blueAccentColor,
               ),
@@ -480,8 +481,8 @@ class _AccountChip extends StatelessWidget {
                     ),
                   );
                 },
-                child: const _OptionChip(
-                  title: "Change Password",
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.changePassword,
                   image: "assets/images/icon_lock.svg",
                   color: TextColors.greyText,
                 ),

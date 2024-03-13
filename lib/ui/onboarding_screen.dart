@@ -6,6 +6,7 @@ import 'package:cinemax/ui/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -36,12 +37,12 @@ class OnBoardingScreen extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            const SizedBox(
+            SizedBox(
               height: 40,
               width: 200,
               child: Text(
-                "Enter your registered Phone Number to Sign Up",
-                style: TextStyle(
+                AppLocalizations.of(context)!.enterNumber,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 14,
                   color: TextColors.greyText,
@@ -69,9 +70,9 @@ class OnBoardingScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.signUp,
+                    style: const TextStyle(
                       fontFamily: "MM",
                       fontSize: 16,
                       color: TextColors.whiteText,
@@ -87,7 +88,7 @@ class OnBoardingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "I already have an account? ",
+                  AppLocalizations.of(context)!.haveAccount,
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: (userScreenSize.width < 325) ? 12 : 16,
@@ -107,7 +108,7 @@ class OnBoardingScreen extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    "Login",
+                    AppLocalizations.of(context)!.login,
                     style: TextStyle(
                       color: PrimaryColors.blueAccentColor,
                       fontFamily: "MM",
@@ -133,11 +134,11 @@ class OnBoardingScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    "Or Sign up with",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.orSignupWith,
+                    style: const TextStyle(
                       fontFamily: "MM",
                       fontSize: 14,
                       color: TextColors.greyText,

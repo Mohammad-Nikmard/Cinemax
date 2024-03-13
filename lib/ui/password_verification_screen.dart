@@ -2,6 +2,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PasswordVerificationScreen extends StatelessWidget {
   const PasswordVerificationScreen({super.key});
@@ -30,9 +31,9 @@ class PasswordVerificationScreen extends StatelessWidget {
             const SizedBox(
               height: 35,
             ),
-            const Text(
-              "Verifying your Account",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.verifyTitle,
+              style: const TextStyle(
                 fontFamily: "MM",
                 fontSize: 24,
                 color: TextColors.whiteText,
@@ -41,26 +42,26 @@ class PasswordVerificationScreen extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              "We have just sent you 4 digit code via your",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.fourDigit,
+              style: const TextStyle(
                 fontFamily: "MM",
                 fontSize: 14,
                 color: TextColors.greyText,
               ),
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "email ",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.email,
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 14,
                     color: TextColors.greyText,
                   ),
                 ),
-                Text(
+                const Text(
                   "example@gmail.com",
                   style: TextStyle(
                     fontFamily: "MM",
@@ -131,9 +132,9 @@ class PasswordVerificationScreen extends StatelessWidget {
               height: 56,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text(
-                  "Continue",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.continuee,
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 16,
                     color: TextColors.whiteText,
@@ -144,20 +145,20 @@ class PasswordVerificationScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Didn't recieve code? ",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.didntRecieve,
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 16,
                     color: TextColors.greyText,
                   ),
                 ),
                 Text(
-                  "Resend",
-                  style: TextStyle(
+                  " ${AppLocalizations.of(context)!.resend}",
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 16,
                     color: PrimaryColors.blueAccentColor,

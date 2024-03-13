@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -60,9 +61,9 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Hottest Movies",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.hotMovie,
+                              style: const TextStyle(
                                 fontFamily: "MM",
                                 fontSize: 16,
                                 color: TextColors.whiteText,
@@ -74,7 +75,8 @@ class HomeScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: CategorySearchScreen(
-                                    title: "Hottest Movies",
+                                    title:
+                                        AppLocalizations.of(context)!.hotMovie,
                                     movieList: movieList,
                                   ),
                                   withNavBar: false,
@@ -82,9 +84,9 @@ class HomeScreen extends StatelessWidget {
                                       PageTransitionAnimation.cupertino,
                                 );
                               },
-                              child: const Text(
-                                "See All",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.seeAll,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 14,
                                   color: PrimaryColors.blueAccentColor,
@@ -117,9 +119,9 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Latest Movies Release",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.latestMovie,
+                              style: const TextStyle(
                                 fontFamily: "MM",
                                 fontSize: 16,
                                 color: TextColors.whiteText,
@@ -131,7 +133,8 @@ class HomeScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: CategorySearchScreen(
-                                    title: "Latest Movies Release",
+                                    title: AppLocalizations.of(context)!
+                                        .latestMovie,
                                     movieList: movieList,
                                   ),
                                   withNavBar: false,
@@ -139,9 +142,9 @@ class HomeScreen extends StatelessWidget {
                                       PageTransitionAnimation.cupertino,
                                 );
                               },
-                              child: const Text(
-                                "See All",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.seeAll,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 14,
                                   color: PrimaryColors.blueAccentColor,
@@ -174,9 +177,9 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Hottest Series",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.hotSeries,
+                              style: const TextStyle(
                                 fontFamily: "MM",
                                 fontSize: 16,
                                 color: TextColors.whiteText,
@@ -188,7 +191,8 @@ class HomeScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: CategorySearchScreen(
-                                    title: "Hottest Series",
+                                    title:
+                                        AppLocalizations.of(context)!.hotSeries,
                                     movieList: seriesList,
                                   ),
                                   withNavBar: false,
@@ -196,9 +200,9 @@ class HomeScreen extends StatelessWidget {
                                       PageTransitionAnimation.cupertino,
                                 );
                               },
-                              child: const Text(
-                                "See All",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.seeAll,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 14,
                                   color: PrimaryColors.blueAccentColor,
@@ -231,9 +235,9 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Series For You",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.seriesForYou,
+                              style: const TextStyle(
                                 fontFamily: "MM",
                                 fontSize: 16,
                                 color: TextColors.whiteText,
@@ -245,7 +249,8 @@ class HomeScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: CategorySearchScreen(
-                                    title: "Series For You",
+                                    title: AppLocalizations.of(context)!
+                                        .seriesForYou,
                                     movieList: seriesList,
                                   ),
                                   withNavBar: false,
@@ -253,9 +258,9 @@ class HomeScreen extends StatelessWidget {
                                       PageTransitionAnimation.cupertino,
                                 );
                               },
-                              child: const Text(
-                                "See All",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.seeAll,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 14,
                                   color: PrimaryColors.blueAccentColor,
@@ -288,9 +293,9 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Movies For You",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.movieForYOu,
+                              style: const TextStyle(
                                 fontFamily: "MM",
                                 fontSize: 16,
                                 color: TextColors.whiteText,
@@ -302,7 +307,8 @@ class HomeScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: CategorySearchScreen(
-                                    title: "Movies For You",
+                                    title: AppLocalizations.of(context)!
+                                        .movieForYOu,
                                     movieList: movieList,
                                   ),
                                   withNavBar: false,
@@ -310,9 +316,9 @@ class HomeScreen extends StatelessWidget {
                                       PageTransitionAnimation.cupertino,
                                 );
                               },
-                              child: const Text(
-                                "See All",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.seeAll,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 14,
                                   color: PrimaryColors.blueAccentColor,
@@ -367,7 +373,7 @@ class _HomeHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Hello, $name",
+                      "${AppLocalizations.of(context)!.hello}, $name",
                       style: TextStyle(
                         fontFamily: "MSB",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -377,7 +383,7 @@ class _HomeHeader extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Let's find a movie for you",
+                      AppLocalizations.of(context)!.findMovie,
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -464,9 +470,9 @@ class SearchBox extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text(
-                        "Search a title...",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.searchAtitle,
+                        style: const TextStyle(
                           fontFamily: "MM",
                           fontSize: 14,
                           color: TextColors.greyText,
