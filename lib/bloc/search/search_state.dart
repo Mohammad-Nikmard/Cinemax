@@ -10,8 +10,9 @@ class SearchLoadingState extends SearchState {}
 
 class SearchResponseState extends SearchState {
   Either<String, List<Movie>> getMovies;
+  Either<String, List<Movie>> getAllMovies;
 
-  SearchResponseState(this.getMovies);
+  SearchResponseState(this.getMovies, this.getAllMovies);
 }
 
 class SearchAllMoviesResponse extends SearchState {

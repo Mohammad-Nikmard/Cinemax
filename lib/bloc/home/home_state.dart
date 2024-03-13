@@ -10,8 +10,17 @@ class HomeLoadingState extends HomeState {}
 
 class HomeResponseState extends HomeState {
   Either<String, List<BannerModel>> getBanners;
-  Either<String, List<Movie>> getMovies;
-  Either<String, List<Movie>> getSeries;
+  Either<String, List<Movie>> getForYouSeries;
+  Either<String, List<Movie>> getHottestSeries;
+  Either<String, List<Movie>> getForYouMovies;
+  Either<String, List<Movie>> getLatestMovies;
+  Either<String, List<Movie>> getHottestMovies;
 
-  HomeResponseState(this.getBanners, this.getMovies, this.getSeries);
+  HomeResponseState(
+      this.getBanners,
+      this.getForYouSeries,
+      this.getHottestSeries,
+      this.getForYouMovies,
+      this.getHottestMovies,
+      this.getLatestMovies);
 }

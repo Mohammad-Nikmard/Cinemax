@@ -14,8 +14,9 @@ class SearhcBloc extends Bloc<SearchEvent, SearchState> {
     on<SearchFetchDataEvent>(
       (event, emit) async {
         emit(SearchLoadingState());
-        var movies = await _movieRemoteRpository.getMovies();
-        emit(SearchResponseState(movies));
+        var movies = await _searchRepository.getRecommendedMovies();
+        var allMovies = await _movieRemoteRpository.getAllMovies();
+        emit(SearchResponseState(movies, allMovies));
       },
     );
 

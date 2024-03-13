@@ -6,8 +6,11 @@ import 'package:dio/dio.dart';
 
 abstract class MovieDatasource {
   Future<List<Movie>> getAllMovies();
-  Future<List<Movie>> getMovies();
-  Future<List<Movie>> getSeries();
+  Future<List<Movie>> getLatestMovies();
+  Future<List<Movie>> getHottestMovies();
+  Future<List<Movie>> getForYouMovies();
+  Future<List<Movie>> getForYouSeries();
+  Future<List<Movie>> getHottestSeries();
   Future<List<Moviesgallery>> getPhotos(String movieId);
   Future<List<MovieCasts>> getCasts(String movieId);
 }
@@ -27,42 +30,6 @@ class MovieRemoteDatasource extends MovieDatasource {
       throw ApiException(ex.message!, ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 1);
-    }
-  }
-
-  @override
-  Future<List<Movie>> getMovies() async {
-    Map<String, dynamic> qparams = {
-      'filter': 'category= "movie"',
-    };
-    try {
-      var response = await _dio.get("/api/collections/movies/records",
-          queryParameters: qparams);
-      return response.data["items"]
-          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
-          .toList();
-    } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
-    } catch (ex) {
-      throw ApiException("$ex", 2);
-    }
-  }
-
-  @override
-  Future<List<Movie>> getSeries() async {
-    Map<String, dynamic> qparams = {
-      'filter': 'category= "series"',
-    };
-    try {
-      var response = await _dio.get("/api/collections/movies/records",
-          queryParameters: qparams);
-      return response.data["items"]
-          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
-          .toList();
-    } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
-    } catch (ex) {
-      throw ApiException("$ex", 3);
     }
   }
 
@@ -101,6 +68,96 @@ class MovieRemoteDatasource extends MovieDatasource {
       throw ApiException(ex.message!, ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 7);
+    }
+  }
+
+  @override
+  Future<List<Movie>> getForYouMovies() async {
+    Map<String, dynamic> qparams = {
+      'filter': 'query="for you"&&category="movie"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/movies/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.message!, ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 2);
+    }
+  }
+
+  @override
+  Future<List<Movie>> getHottestMovies() async {
+    Map<String, dynamic> qparams = {
+      'filter': 'query="hottest"&&category="movie"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/movies/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.message!, ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 2);
+    }
+  }
+
+  @override
+  Future<List<Movie>> getLatestMovies() async {
+    Map<String, dynamic> qparams = {
+      'filter': 'query="latest"&&category="movie"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/movies/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.message!, ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 2);
+    }
+  }
+
+  @override
+  Future<List<Movie>> getForYouSeries() async {
+    Map<String, dynamic> qparams = {
+      'filter': 'category="series"&&query="for you"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/movies/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.message!, ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 3);
+    }
+  }
+
+  @override
+  Future<List<Movie>> getHottestSeries() async {
+    Map<String, dynamic> qparams = {
+      'filter': 'category="series"&&query="hottest"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/movies/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.message!, ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 3);
     }
   }
 }

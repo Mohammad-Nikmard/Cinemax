@@ -111,7 +111,7 @@ class SearchScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        state.getMovies.fold(
+                        state.getAllMovies.fold(
                           (exceptionMessage) {
                             return Text("exceptionMessage");
                           },
@@ -156,7 +156,7 @@ class SearchScreen extends StatelessWidget {
                               child: SizedBox(
                                 height: 231,
                                 child: ListView.builder(
-                                  itemCount: 10,
+                                  itemCount: movieList.length,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return Padding(

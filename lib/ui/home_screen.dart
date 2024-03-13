@@ -48,22 +48,7 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 25, left: 20),
-                    child: Text(
-                      "Categories",
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: 16,
-                        color: TextColors.whiteText,
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ),
-                const CategoryList(),
-                state.getMovies.fold(
+                state.getHottestMovies.fold(
                   (exceptionMessage) {
                     return Text("exceptionMessage");
                   },
@@ -76,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              "Most Popular Movies",
+                              "Hottest Movies",
                               style: TextStyle(
                                 fontFamily: "MM",
                                 fontSize: 16,
@@ -89,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: CategorySearchScreen(
-                                    title: "Most Popular Movies",
+                                    title: "Hottest Movies",
                                     movieList: movieList,
                                   ),
                                   withNavBar: false,
@@ -112,19 +97,19 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-                state.getMovies.fold(
+                state.getHottestMovies.fold(
                   (exceptionMessage) {
                     return Text("exceptionMessage");
                   },
                   (movieList) {
-                    return MostPopList(movieList: movieList);
+                    return MovieListChip(movieList: movieList);
                   },
                 ),
-                state.getSeries.fold(
+                state.getLatestMovies.fold(
                   (exceptionMessage) {
                     return Text("exceptionMessage");
                   },
-                  (seriesList) {
+                  (movieList) {
                     return SliverToBoxAdapter(
                       child: Padding(
                         padding:
@@ -133,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              "Most Popular Series",
+                              "Latest Movies Release",
                               style: TextStyle(
                                 fontFamily: "MM",
                                 fontSize: 16,
@@ -146,7 +131,64 @@ class HomeScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: CategorySearchScreen(
-                                    title: "Most Popular Series",
+                                    title: "Latest Movies Release",
+                                    movieList: movieList,
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: const Text(
+                                "See All",
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 14,
+                                  color: PrimaryColors.blueAccentColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                state.getLatestMovies.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (movieList) {
+                    return MovieListChip(movieList: movieList);
+                  },
+                ),
+                state.getHottestSeries.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (seriesList) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 30, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Hottest Series",
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: CategorySearchScreen(
+                                    title: "Hottest Series",
                                     movieList: seriesList,
                                   ),
                                   withNavBar: false,
@@ -169,12 +211,126 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-                state.getSeries.fold(
+                state.getHottestSeries.fold(
                   (exceptionMessage) {
                     return Text("exceptionMessage");
                   },
                   (seriesList) {
                     return SeriesList(movieList: seriesList);
+                  },
+                ),
+                state.getForYouSeries.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (seriesList) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 30, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Series For You",
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: CategorySearchScreen(
+                                    title: "Series For You",
+                                    movieList: seriesList,
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: const Text(
+                                "See All",
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 14,
+                                  color: PrimaryColors.blueAccentColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                state.getForYouSeries.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (seriesList) {
+                    return SeriesList(movieList: seriesList);
+                  },
+                ),
+                state.getForYouMovies.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (movieList) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 30, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Movies For You",
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: CategorySearchScreen(
+                                    title: "Movies For You",
+                                    movieList: movieList,
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: const Text(
+                                "See All",
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 14,
+                                  color: PrimaryColors.blueAccentColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                state.getForYouMovies.fold(
+                  (exceptionMessage) {
+                    return Text("exceptionMessage");
+                  },
+                  (movieList) {
+                    return MovieListChip(movieList: movieList);
                   },
                 ),
               ],
@@ -344,74 +500,8 @@ class SearchBox extends StatelessWidget {
   }
 }
 
-class CategoryList extends StatefulWidget {
-  const CategoryList({super.key});
-
-  @override
-  State<CategoryList> createState() => _CategoryListState();
-}
-
-class _CategoryListState extends State<CategoryList> {
-  int selectedIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.only(left: 20, top: 20),
-      sliver: SliverToBoxAdapter(
-        child: SizedBox(
-          height: 33,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                  child: Container(
-                    height: 31,
-                    decoration: ShapeDecoration(
-                      color: (selectedIndex == index)
-                          ? PrimaryColors.softColor
-                          : Colors.transparent,
-                      shape: const ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(40),
-                        ),
-                      ),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Text(
-                          "All",
-                          style: TextStyle(
-                            fontFamily: "MM",
-                            fontSize: 12,
-                            color: (selectedIndex == index)
-                                ? PrimaryColors.blueAccentColor
-                                : TextColors.whiteText,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MostPopList extends StatelessWidget {
-  const MostPopList({super.key, required this.movieList});
+class MovieListChip extends StatelessWidget {
+  const MovieListChip({super.key, required this.movieList});
   final List<Movie> movieList;
 
   @override
