@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchResultScreen extends StatelessWidget {
   const SearchResultScreen({super.key});
@@ -99,9 +100,9 @@ class SearchResultScreen extends StatelessWidget {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text(
-                                "Cancel",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.cancel,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 12,
                                   color: TextColors.whiteText,
@@ -190,9 +191,9 @@ class SearchResultScreen extends StatelessWidget {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text(
-                                "Cancel",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.cancel,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 12,
                                   color: TextColors.whiteText,
@@ -305,9 +306,9 @@ class SearchResultScreen extends StatelessWidget {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text(
-                                "Cancel",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.cancel,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 12,
                                   color: TextColors.whiteText,
@@ -474,11 +475,11 @@ class _EmptySearch extends StatelessWidget {
                 'assets/images/search_image.svg',
               ),
               const SizedBox(height: 10),
-              const SizedBox(
+              SizedBox(
                 width: 200,
                 child: Text(
-                  "We Are Sorry, We Can Not Find The Movie :(",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.sorryForSearch,
+                  style: const TextStyle(
                     fontFamily: "MSB",
                     fontSize: 16,
                     color: TextColors.whiteText,
@@ -486,11 +487,11 @@ class _EmptySearch extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const SizedBox(
+              SizedBox(
                 width: 210,
                 child: Text(
-                  "Find your movie by Type title, Categories, Years, etc",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.noMovieCap,
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 12,
                     color: TextColors.greyText,

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -90,12 +91,15 @@ class SearchScreen extends StatelessWidget {
                                               fontSize: 14,
                                               color: TextColors.whiteText,
                                             ),
-                                            decoration: const InputDecoration(
+                                            decoration: InputDecoration(
                                               contentPadding:
-                                                  EdgeInsets.only(bottom: 10),
+                                                  const EdgeInsets.only(
+                                                      bottom: 10),
                                               border: InputBorder.none,
-                                              hintText: "Type Something...",
-                                              hintStyle: TextStyle(
+                                              hintText:
+                                                  AppLocalizations.of(context)!
+                                                      .recommendforYou,
+                                              hintStyle: const TextStyle(
                                                 fontFamily: "MM",
                                                 fontSize: 14,
                                                 color: TextColors.greyText,
@@ -121,9 +125,9 @@ class SearchScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    "Today",
-                                    style: TextStyle(
+                                  Text(
+                                    AppLocalizations.of(context)!.today,
+                                    style: const TextStyle(
                                       fontFamily: "MSB",
                                       fontSize: 16,
                                       color: TextColors.whiteText,
@@ -200,9 +204,9 @@ class RecommendHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Recommend for you",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.recommendforYou,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 16,
                   color: TextColors.whiteText,
@@ -220,9 +224,9 @@ class RecommendHeader extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: const Text(
-                  "See All",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.seeAll,
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 14,
                     color: PrimaryColors.blueAccentColor,
@@ -249,11 +253,11 @@ class _EmptySearch extends StatelessWidget {
           children: [
             Image.asset('assets/images/search_image.png'),
             const SizedBox(height: 10),
-            const SizedBox(
+            SizedBox(
               width: 200,
               child: Text(
-                "We Are Sorry, We Can Not Find The Movie :(",
-                style: TextStyle(
+                AppLocalizations.of(context)!.sorryForSearch,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 16,
                   color: TextColors.whiteText,
@@ -261,11 +265,11 @@ class _EmptySearch extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const SizedBox(
+            SizedBox(
               width: 210,
               child: Text(
-                "Find your movie by Type title, Categories, Years, etc",
-                style: TextStyle(
+                AppLocalizations.of(context)!.noMovieCap,
+                style: const TextStyle(
                   fontFamily: "MM",
                   fontSize: 12,
                   color: TextColors.greyText,

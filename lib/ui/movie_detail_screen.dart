@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   const MovieDetailScreen({super.key, required this.movie});
@@ -64,13 +65,14 @@ class MovieDetailScreen extends StatelessWidget {
                               );
                             },
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 20.0, top: 20.0),
                             child: Column(
                               children: [
                                 Text(
-                                  "Gallery",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.gallery,
+                                  style: const TextStyle(
                                     fontFamily: "MSB",
                                     fontSize: 16,
                                     color: TextColors.whiteText,
@@ -182,7 +184,7 @@ class _StoryLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Story Line",
+          AppLocalizations.of(context)!.storyLine,
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
@@ -442,7 +444,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 ),
                 const SizedBox(width: 3.0),
                 Text(
-                  "${widget.movie.timeLength} Minutes",
+                  "${widget.movie.timeLength} ${AppLocalizations.of(context)!.minutes}",
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -529,7 +531,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 25),
+                        padding: const EdgeInsets.only(left: 25, right: 10),
                         child: SvgPicture.asset(
                           'assets/images/icon_play.svg',
                           height: (MediaQueryHandler.screenWidth(context) < 350)
@@ -542,7 +544,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        "Play",
+                        AppLocalizations.of(context)!.play,
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:
@@ -641,16 +643,16 @@ Future<void> shareDialog(BuildContext context) async {
                           color: Color(0xff252836),
                           shape: BoxShape.circle,
                         ),
-                        child: Image.asset(
-                          'assets/images/icon_close.png',
+                        child: SvgPicture.asset(
+                          'assets/images/icon_close.svg',
                         ),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Center(
+                    Center(
                       child: Text(
-                        "Share to",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.share,
+                        style: const TextStyle(
                           fontFamily: "MSB",
                           fontSize: 18,
                           color: TextColors.whiteText,
@@ -701,7 +703,7 @@ class MovieCastAndCrew extends StatelessWidget {
       children: [
         const SizedBox(height: 30),
         Text(
-          "Cast and Crew",
+          AppLocalizations.of(context)!.casts,
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
@@ -797,7 +799,7 @@ class _SnackBarLikedMessage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "$movieName is added to wishlist",
+              "$movieName ${AppLocalizations.of(context)!.isAddedToWishlist}",
               style: const TextStyle(
                 color: TextColors.whiteText,
                 fontSize: 12,
@@ -832,7 +834,7 @@ class _SnackBarUnlikeMessage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "$movieName is removed from wishlist",
+              "$movieName ${AppLocalizations.of(context)!.removeFromWishlist}",
               style: const TextStyle(
                 color: TextColors.whiteText,
                 fontSize: 12,

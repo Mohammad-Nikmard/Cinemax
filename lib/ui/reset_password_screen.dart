@@ -3,6 +3,7 @@ import 'package:cinemax/ui/password_verification_screen.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});
@@ -33,17 +34,17 @@ class ResetPasswordScreen extends StatelessWidget {
             const SizedBox(
               height: 35,
             ),
-            const Text(
-              "Reset Password",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.resetPassword,
+              style: const TextStyle(
                 fontFamily: "MM",
                 fontSize: 28,
                 color: TextColors.whiteText,
               ),
             ),
-            const Text(
-              "recover your account password",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.recovePw,
+              style: const TextStyle(
                 fontFamily: "MM",
                 fontSize: 14,
                 color: TextColors.greyText,
@@ -53,7 +54,7 @@ class ResetPasswordScreen extends StatelessWidget {
               height: 50,
             ),
             MyTextField(
-              text: "Email Address",
+              text: AppLocalizations.of(context)!.emailAd,
               controller: emailController,
             ),
             const SizedBox(
@@ -71,9 +72,9 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text(
-                  "Next",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.next,
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 16,
                     color: TextColors.whiteText,

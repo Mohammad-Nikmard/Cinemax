@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
@@ -15,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpcomingMovieDetail extends StatelessWidget {
   const UpcomingMovieDetail({super.key, required this.upcomingItem});
@@ -65,7 +65,7 @@ class UpcomingMovieDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Gallery",
+                            AppLocalizations.of(context)!.gallery,
                             style: TextStyle(
                               fontFamily: "MSB",
                               fontSize:
@@ -179,7 +179,7 @@ class _Synopsis extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Synopsis",
+              AppLocalizations.of(context)!.synopsis,
               style: TextStyle(
                 fontFamily: "MSB",
                 fontSize:
@@ -280,7 +280,7 @@ class MovieHeadDetail extends StatelessWidget {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        "Relase Date: ",
+                        "${AppLocalizations.of(context)!.releaseDate}: ",
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:
@@ -445,7 +445,7 @@ class UpcomingCastAndCrew extends StatelessWidget {
       children: [
         const SizedBox(height: 30),
         Text(
-          "Cast and Crew",
+          AppLocalizations.of(context)!.casts,
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,

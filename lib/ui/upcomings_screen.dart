@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpcomingsScreen extends StatelessWidget {
   const UpcomingsScreen({super.key});
@@ -31,7 +32,6 @@ class UpcomingsScreen extends StatelessWidget {
               child: CustomScrollView(
                 slivers: [
                   const _Header(),
-                  // const CategoryList(),
                   state.getUpcomingsList.fold(
                     (exceptionMessage) {
                       return Text("exceptionMessage");
@@ -260,20 +260,20 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
+    return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.only(bottom: 20.0),
+        padding: const EdgeInsets.only(bottom: 20.0),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Upcomings",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.upcomings,
+                  style: const TextStyle(
                     fontFamily: "MSB",
                     fontSize: 16,
                     color: TextColors.whiteText,

@@ -1,6 +1,8 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileEditScreen extends StatefulWidget {
   const ProfileEditScreen({super.key});
@@ -48,9 +50,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         },
                         child: const BackLabel(),
                       ),
-                      const Text(
-                        "Edit Profile",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.editProf,
+                        style: const TextStyle(
                           fontFamily: "MSB",
                           fontSize: 16,
                           color: TextColors.whiteText,
@@ -72,11 +74,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         color: TextColors.greyText,
                         fontFamily: "MR",
                         fontSize: 14),
-                    decoration: const InputDecoration(
-                      labelText: "Full Name",
-                      labelStyle:
-                          TextStyle(color: TextColors.whiteText, fontSize: 15),
-                      enabledBorder: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.fullName,
+                      labelStyle: const TextStyle(
+                          color: TextColors.whiteText, fontSize: 15),
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -85,7 +87,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           Radius.circular(27),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -104,11 +106,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         color: TextColors.greyText,
                         fontFamily: "MR",
                         fontSize: 14),
-                    decoration: const InputDecoration(
-                      labelText: "Email",
-                      labelStyle:
-                          TextStyle(color: TextColors.whiteText, fontSize: 15),
-                      enabledBorder: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.email,
+                      labelStyle: const TextStyle(
+                          color: TextColors.whiteText, fontSize: 15),
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -117,7 +119,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           Radius.circular(27),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -137,11 +139,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         color: TextColors.greyText,
                         fontFamily: "MR",
                         fontSize: 14),
-                    decoration: const InputDecoration(
-                      labelText: "Password",
-                      labelStyle:
-                          TextStyle(color: TextColors.whiteText, fontSize: 15),
-                      enabledBorder: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.password,
+                      labelStyle: const TextStyle(
+                          color: TextColors.whiteText, fontSize: 15),
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -150,7 +152,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           Radius.circular(27),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -168,11 +170,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         color: TextColors.greyText,
                         fontFamily: "MR",
                         fontSize: 14),
-                    decoration: const InputDecoration(
-                      labelText: "Phone Number",
-                      labelStyle:
-                          TextStyle(color: TextColors.whiteText, fontSize: 15),
-                      enabledBorder: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.pwConfirm,
+                      labelStyle: const TextStyle(
+                          color: TextColors.whiteText, fontSize: 15),
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -181,7 +183,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           Radius.circular(27),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -201,9 +203,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: const Text(
-                      "Save Changes",
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.saveChanges,
+                      style: const TextStyle(
                         fontFamily: "MM",
                         fontSize: 16,
                         color: TextColors.whiteText,
@@ -246,8 +248,8 @@ class _UserDetail extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: PrimaryColors.softColor,
                 ),
-                child: Image.asset(
-                  'assets/images/icon_edit.png',
+                child: SvgPicture.asset(
+                  'assets/images/icon_edit_pen.svg',
                   color: PrimaryColors.blueAccentColor,
                 ),
               ),

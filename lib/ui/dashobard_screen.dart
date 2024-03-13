@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -101,7 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           "assets/images/icon_home.svg",
           color: PrimaryColors.blueAccentColor,
         ),
-        title: ("Home"),
+        title: (AppLocalizations.of(context)!.home),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
@@ -115,7 +116,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           "assets/images/icon_film.svg",
           color: PrimaryColors.blueAccentColor,
         ),
-        title: ("Upcomings"),
+        title: (AppLocalizations.of(context)!.upcomings),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
@@ -129,7 +130,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           "assets/images/icon_search.svg",
           color: PrimaryColors.blueAccentColor,
         ),
-        title: ("Search"),
+        title: (AppLocalizations.of(context)!.search),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
@@ -143,7 +144,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           "assets/images/icon_save_star.svg",
           color: PrimaryColors.blueAccentColor,
         ),
-        title: ("Wishlist"),
+        title: (AppLocalizations.of(context)!.wishlist),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
@@ -157,7 +158,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           "assets/images/icon_profile.svg",
           color: PrimaryColors.blueAccentColor,
         ),
-        title: ("Profile"),
+        title: (AppLocalizations.of(context)!.profile),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
