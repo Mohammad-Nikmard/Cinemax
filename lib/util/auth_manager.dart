@@ -20,8 +20,8 @@ class AuthManager {
     return token.isNotEmpty;
   }
 
-  static void logOut() async {
-    await _preferences.clear();
+  static void logOut() {
+    _preferences.clear();
     notifier.value = null;
   }
 

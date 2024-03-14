@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/language_screen.dart';
 import 'package:cinemax/ui/notifications_screen.dart';
+import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/ui/privacy_screen.dart';
 import 'package:cinemax/ui/profile_edit_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
@@ -135,8 +136,14 @@ Future<void> signoutDialog(BuildContext context) async {
                         height: 60,
                         child: OutlinedButton(
                           onPressed: () {
-                            AuthManager.logOut();
                             Navigator.pop(context);
+                            AuthManager.logOut();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const OnBoardingScreen(),
+                              ),
+                            );
                           },
                           child: const Text(
                             "Log Out",
