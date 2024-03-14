@@ -30,7 +30,7 @@ class AuthenticationRemoteRepo extends AuthenticationRepository {
     try {
       var token = await _datasource.login(password, identity);
       if (token.isNotEmpty) {
-        return left("You successfully logged in!");
+        return right("You successfully logged in!");
       } else {
         return left("Error in logging in");
       }

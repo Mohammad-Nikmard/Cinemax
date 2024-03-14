@@ -31,7 +31,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
         login(password, email);
       }
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 9);
     }
@@ -55,7 +55,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
         return token;
       }
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 9);
     }

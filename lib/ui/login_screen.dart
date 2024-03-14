@@ -252,9 +252,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     pwController.text = "";
                     emailController.text = "";
 
-                    return state.response.fold(
-                      (l) {},
-                      (r) {
+                    return state.loginResponse.fold(
+                      (exceptionMessage) {},
+                      (loginResponse) {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

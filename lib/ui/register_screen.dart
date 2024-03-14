@@ -661,7 +661,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    state.response.fold(
+                    state.registerRespnse.fold(
                       (exceptionMessage) {
                         return Text(exceptionMessage);
                       },
@@ -709,9 +709,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             pwConfirmController.text = "";
             pwController.text = "";
             emailController.text = "";
-            return state.response.fold(
-              (l) {},
-              (r) {
+            return state.registerRespnse.fold(
+              (exceptionMessage) {},
+              (registerResponse) {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

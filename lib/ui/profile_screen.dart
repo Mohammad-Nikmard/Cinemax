@@ -64,7 +64,6 @@ class ProfileScreen extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: () {
                       signoutDialog(context);
-                      // AuthManager.logOut();
                     },
                     child: Text(
                       AppLocalizations.of(context)!.logout,
@@ -137,6 +136,7 @@ Future<void> signoutDialog(BuildContext context) async {
                         child: OutlinedButton(
                           onPressed: () {
                             AuthManager.logOut();
+                            Navigator.pop(context);
                           },
                           child: const Text(
                             "Log Out",
