@@ -22,7 +22,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: BlocBuilder<SearhcBloc, SearchState>(
+      body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchLoadingState) {
             return const AppLoadingIndicator();
@@ -63,11 +63,11 @@ class SearchResultScreen extends StatelessWidget {
                                         onChanged: (value) {
                                           if (value.isNotEmpty) {
                                             context
-                                                .read<SearhcBloc>()
+                                                .read<SearchBloc>()
                                                 .add(SearchQueryEvent(value));
                                           } else if (value.isEmpty) {
                                             context
-                                                .read<SearhcBloc>()
+                                                .read<SearchBloc>()
                                                 .add(SearchAllMoviesEvent());
                                           }
                                         },
@@ -154,11 +154,11 @@ class SearchResultScreen extends StatelessWidget {
                                         onChanged: (value) {
                                           if (value.isNotEmpty) {
                                             context
-                                                .read<SearhcBloc>()
+                                                .read<SearchBloc>()
                                                 .add(SearchQueryEvent(value));
                                           } else if (value.isEmpty) {
                                             context
-                                                .read<SearhcBloc>()
+                                                .read<SearchBloc>()
                                                 .add(SearchAllMoviesEvent());
                                           }
                                         },
@@ -269,11 +269,11 @@ class SearchResultScreen extends StatelessWidget {
                                         onChanged: (value) {
                                           if (value.isNotEmpty) {
                                             context
-                                                .read<SearhcBloc>()
+                                                .read<SearchBloc>()
                                                 .add(SearchQueryEvent(value));
                                           } else if (value.isEmpty) {
                                             context
-                                                .read<SearhcBloc>()
+                                                .read<SearchBloc>()
                                                 .add(SearchAllMoviesEvent());
                                           }
                                         },

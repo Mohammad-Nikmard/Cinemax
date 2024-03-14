@@ -1,4 +1,6 @@
 import 'package:cinemax/bloc/language/language_bloc.dart';
+import 'package:cinemax/bloc/language/language_event.dart';
+import 'package:cinemax/bloc/language/language_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/language.dart';
 import 'package:cinemax/widgets/back_label.dart';

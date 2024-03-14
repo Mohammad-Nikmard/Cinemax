@@ -203,7 +203,10 @@ class _OptionChip extends StatelessWidget {
               image,
               height: 20,
               width: 20,
-              color: color,
+              colorFilter: ColorFilter.mode(
+                color!,
+                BlendMode.srcIn,
+              ),
             ),
           ),
         ),
@@ -219,7 +222,10 @@ class _OptionChip extends StatelessWidget {
         const Spacer(),
         SvgPicture.asset(
           'assets/images/icon_arrow_right.svg',
-          color: PrimaryColors.blueAccentColor,
+          colorFilter: const ColorFilter.mode(
+            PrimaryColors.blueAccentColor,
+            BlendMode.srcIn,
+          ),
         ),
       ],
     );
@@ -567,7 +573,10 @@ class _ProfileChip extends StatelessWidget {
                       (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
-                  color: PrimaryColors.blueAccentColor,
+                  colorFilter: const ColorFilter.mode(
+                    PrimaryColors.blueAccentColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ],
             ),

@@ -135,7 +135,7 @@ class OnBoardingScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     AppLocalizations.of(context)!.orSignupWith,
                     style: const TextStyle(

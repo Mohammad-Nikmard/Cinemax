@@ -1,4 +1,5 @@
-part of 'language_bloc.dart';
+import 'package:cinemax/data/model/language.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class LanguageEvent extends Equatable {
   const LanguageEvent();

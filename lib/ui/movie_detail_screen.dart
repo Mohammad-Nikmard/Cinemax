@@ -27,11 +27,8 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) {
-        var bloc = MovieBloc(locator.get(), locator.get());
-        bloc.add(MoviesDataRequestEvent(movie.id));
-        return bloc;
-      },
+      create: (context) => MovieBloc(locator.get(), locator.get())
+        ..add(MoviesDataRequestEvent(movie.id)),
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: BlocBuilder<MovieBloc, MoviesState>(
@@ -78,7 +75,7 @@ class MovieDetailScreen extends StatelessWidget {
                                     color: TextColors.whiteText,
                                   ),
                                 ),
-                                SizedBox(height: 10.0),
+                                const SizedBox(height: 10.0),
                               ],
                             ),
                           ),
@@ -415,7 +412,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
-                  color: TextColors.greyText,
+                  colorFilter: const ColorFilter.mode(
+                    TextColors.greyText,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 const SizedBox(width: 3.0),
                 Text(
@@ -440,7 +440,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
-                  color: TextColors.greyText,
+                  colorFilter: const ColorFilter.mode(
+                    TextColors.greyText,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 const SizedBox(width: 3.0),
                 Text(
@@ -465,7 +468,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 16,
-                  color: TextColors.greyText,
+                  colorFilter: const ColorFilter.mode(
+                    TextColors.greyText,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 const SizedBox(width: 3.0),
                 Text(
@@ -498,7 +504,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   'assets/images/icon_star.svg',
                   height: 16,
                   width: 16,
-                  color: SecondaryColors.orangeColor,
+                  colorFilter: const ColorFilter.mode(
+                    SecondaryColors.orangeColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 const SizedBox(width: 5),
                 Text(

@@ -71,9 +71,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   TextField(
                     controller: nameController,
                     style: const TextStyle(
-                        color: TextColors.greyText,
-                        fontFamily: "MR",
-                        fontSize: 14),
+                      color: TextColors.greyText,
+                      fontFamily: "MR",
+                      fontSize: 14,
+                    ),
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.fullName,
                       labelStyle: const TextStyle(
@@ -250,7 +251,10 @@ class _UserDetail extends StatelessWidget {
                 ),
                 child: SvgPicture.asset(
                   'assets/images/icon_edit_pen.svg',
-                  color: PrimaryColors.blueAccentColor,
+                  colorFilter: const ColorFilter.mode(
+                    PrimaryColors.blueAccentColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ),

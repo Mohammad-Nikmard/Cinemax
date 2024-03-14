@@ -276,7 +276,10 @@ class MovieHeadDetail extends StatelessWidget {
                         width: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
-                        color: TextColors.greyText,
+                        colorFilter: const ColorFilter.mode(
+                          TextColors.greyText,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       const SizedBox(width: 3),
                       Text(
@@ -313,7 +316,10 @@ class MovieHeadDetail extends StatelessWidget {
                         width: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
-                        color: TextColors.greyText,
+                        colorFilter: const ColorFilter.mode(
+                          TextColors.greyText,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       const SizedBox(width: 3),
                       Text(

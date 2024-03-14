@@ -6,10 +6,10 @@ import 'package:cinemax/data/repository/movie_repository.dart';
 import 'package:cinemax/data/repository/search_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SearhcBloc extends Bloc<SearchEvent, SearchState> {
+class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final MovieRepository _movieRemoteRpository;
   final SearchRepository _searchRepository;
-  SearhcBloc(this._movieRemoteRpository, this._searchRepository)
+  SearchBloc(this._movieRemoteRpository, this._searchRepository)
       : super(SearchInitState()) {
     on<SearchFetchDataEvent>(
       (event, emit) async {

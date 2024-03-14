@@ -1,5 +1,7 @@
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/language/language_bloc.dart';
+import 'package:cinemax/bloc/language/language_event.dart';
+import 'package:cinemax/bloc/language/language_state.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/theme/main_theme.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';

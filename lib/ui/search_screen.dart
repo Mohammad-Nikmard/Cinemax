@@ -22,7 +22,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: BlocBuilder<SearhcBloc, SearchState>(
+      body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchLoadingState) {
             return const AppLoadingIndicator();
@@ -70,7 +70,7 @@ class SearchScreen extends StatelessWidget {
                                                 context,
                                                 screen: BlocProvider(
                                                   create: (context) {
-                                                    var bloc = SearhcBloc(
+                                                    var bloc = SearchBloc(
                                                         locator.get(),
                                                         locator.get());
                                                     bloc.add(

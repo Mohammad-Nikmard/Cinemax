@@ -410,7 +410,10 @@ class _HomeHeader extends StatelessWidget {
               child: Center(
                 child: SvgPicture.asset(
                   'assets/images/icon_heart.svg',
-                  color: SecondaryColors.redColor,
+                  colorFilter: const ColorFilter.mode(
+                    SecondaryColors.redColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ),
@@ -434,11 +437,8 @@ class SearchBox extends StatelessWidget {
             PersistentNavBarNavigator.pushNewScreen(
               context,
               screen: BlocProvider(
-                create: (context) {
-                  var bloc = SearhcBloc(locator.get(), locator.get());
-                  bloc.add(SearchFetchDataEvent());
-                  return bloc;
-                },
+                create: (context) => SearchBloc(locator.get(), locator.get())
+                  ..add(SearchFetchDataEvent()),
                 child: const SearchScreen(),
               ),
               withNavBar: true, // OPTIONAL VALUE. True by default.
@@ -465,7 +465,10 @@ class SearchBox extends StatelessWidget {
                         'assets/images/icon_search.svg',
                         height: 16,
                         width: 16,
-                        color: TextColors.greyText,
+                        colorFilter: const ColorFilter.mode(
+                          TextColors.greyText,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       const SizedBox(
                         width: 10,

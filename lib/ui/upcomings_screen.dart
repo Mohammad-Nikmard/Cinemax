@@ -141,7 +141,10 @@ class _UpcomingChip extends StatelessWidget {
                         'assets/images/icon_calendar.svg',
                         height: 16,
                         width: 16,
-                        color: TextColors.greyText,
+                        colorFilter: const ColorFilter.mode(
+                          TextColors.greyText,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       const SizedBox(width: 3),
                       Text(
@@ -166,7 +169,10 @@ class _UpcomingChip extends StatelessWidget {
                         width: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
-                        color: TextColors.greyText,
+                        colorFilter: const ColorFilter.mode(
+                          TextColors.greyText,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       const SizedBox(width: 3),
                       Text(

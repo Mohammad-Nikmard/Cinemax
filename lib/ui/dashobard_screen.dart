@@ -60,27 +60,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> _buildScreens() {
     return [
       BlocProvider(
-        create: (context) {
-          var bloc = HomeBloc(locator.get(), locator.get());
-          bloc.add(HomeDataRequestEvent());
-          return bloc;
-        },
+        create: (context) =>
+            HomeBloc(locator.get(), locator.get())..add(HomeDataRequestEvent()),
         child: const HomeScreen(),
       ),
       BlocProvider(
-        create: (context) {
-          var bloc = UpcomingsBloc(locator.get());
-          bloc.add(UpcomingsDataRequestEvent());
-          return bloc;
-        },
+        create: (context) =>
+            UpcomingsBloc(locator.get())..add(UpcomingsDataRequestEvent()),
         child: const UpcomingsScreen(),
       ),
       BlocProvider(
-        create: (context) {
-          var bloc = SearhcBloc(locator.get(), locator.get());
-          bloc.add(SearchFetchDataEvent());
-          return bloc;
-        },
+        create: (context) => SearchBloc(locator.get(), locator.get())
+          ..add(SearchFetchDataEvent()),
         child: const SearchScreen(),
       ),
       BlocProvider<WishlistBloc>(
@@ -96,11 +87,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       PersistentBottomNavBarItem(
         inactiveIcon: SvgPicture.asset(
           "assets/images/icon_home.svg",
-          color: TextColors.greyText,
+          colorFilter:
+              const ColorFilter.mode(TextColors.greyText, BlendMode.srcIn),
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_home.svg",
-          color: PrimaryColors.blueAccentColor,
+          colorFilter: const ColorFilter.mode(
+              PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.home),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
@@ -110,11 +103,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       PersistentBottomNavBarItem(
         inactiveIcon: SvgPicture.asset(
           "assets/images/icon_film.svg",
-          color: TextColors.greyText,
+          colorFilter:
+              const ColorFilter.mode(TextColors.greyText, BlendMode.srcIn),
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_film.svg",
-          color: PrimaryColors.blueAccentColor,
+          colorFilter: const ColorFilter.mode(
+              PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.upcomings),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
@@ -124,11 +119,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       PersistentBottomNavBarItem(
         inactiveIcon: SvgPicture.asset(
           "assets/images/icon_search.svg",
-          color: TextColors.greyText,
+          colorFilter:
+              const ColorFilter.mode(TextColors.greyText, BlendMode.srcIn),
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_search.svg",
-          color: PrimaryColors.blueAccentColor,
+          colorFilter: const ColorFilter.mode(
+              PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.search),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
@@ -138,11 +135,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       PersistentBottomNavBarItem(
         inactiveIcon: SvgPicture.asset(
           "assets/images/icon_save_star.svg",
-          color: TextColors.greyText,
+          colorFilter:
+              const ColorFilter.mode(TextColors.greyText, BlendMode.srcIn),
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_save_star.svg",
-          color: PrimaryColors.blueAccentColor,
+          colorFilter: const ColorFilter.mode(
+              PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.wishlist),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
@@ -152,11 +151,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       PersistentBottomNavBarItem(
         inactiveIcon: SvgPicture.asset(
           "assets/images/icon_profile.svg",
-          color: TextColors.greyText,
+          colorFilter:
+              const ColorFilter.mode(TextColors.greyText, BlendMode.srcIn),
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_profile.svg",
-          color: PrimaryColors.blueAccentColor,
+          colorFilter: const ColorFilter.mode(
+              PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.profile),
         textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
