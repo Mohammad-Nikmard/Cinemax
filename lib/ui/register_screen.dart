@@ -5,6 +5,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/ui/privacy_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
@@ -44,312 +45,299 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: BlocConsumer<AuthBloc, AuthState>(
-        builder: (context, state) {
-          if (state is AuthInitState) {
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const OnBoardingScreen(),
-                              ),
-                            );
-                          },
-                          child: const BackLabel(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OnBoardingScreen(),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.signUp,
-                          style: const TextStyle(
-                            fontFamily: "MSB",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 32,
-                        ),
-                      ],
+                      );
+                    },
+                    child: const BackLabel(),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.signUp,
+                    style: const TextStyle(
+                      fontFamily: "MSB",
+                      fontSize: 16,
+                      color: TextColors.whiteText,
                     ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.getStarted,
-                      style: const TextStyle(
-                        fontFamily: "MSB",
-                        fontSize: 24,
-                        color: TextColors.whiteText,
+                  ),
+                  const SizedBox(
+                    width: 32,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Text(
+                AppLocalizations.of(context)!.getStarted,
+                style: const TextStyle(
+                  fontFamily: "MSB",
+                  fontSize: 24,
+                  color: TextColors.whiteText,
+                ),
+              ),
+              SizedBox(
+                width: 183,
+                child: Text(
+                  AppLocalizations.of(context)!.getStartedCap,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: "MM",
+                    fontSize: 12,
+                    color: TextColors.wihteGreyText,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 90,
+              ),
+              MyTextField(
+                text: AppLocalizations.of(context)!.fullName,
+                controller: nameController,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              MyTextField(
+                text: AppLocalizations.of(context)!.emailAd,
+                controller: emailController,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Stack(
+                alignment: AlignmentDirectional.centerEnd,
+                children: [
+                  TextFormField(
+                    controller: pwController,
+                    style: const TextStyle(
+                        color: TextColors.greyText,
+                        fontFamily: "MM",
+                        fontSize: 14),
+                    obscureText: _obsecureText,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, right: 40),
+                      labelText: AppLocalizations.of(context)!.password,
+                      labelStyle: const TextStyle(
+                          color: TextColors.greyText, fontSize: 15),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(27),
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(27),
+                        ),
                       ),
                     ),
-                    SizedBox(
-                      width: 183,
-                      child: Text(
-                        AppLocalizations.of(context)!.getStartedCap,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: "MM",
-                          fontSize: 12,
-                          color: TextColors.wihteGreyText,
+                    validator: (value) =>
+                        value!.length < 8 ? "Password is too short" : null,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obsecureText = !_obsecureText;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: _obsecureText
+                          ? SvgPicture.asset(
+                              "assets/images/icon_eye_off.svg",
+                            )
+                          : const Icon(
+                              Icons.remove_red_eye,
+                              color: TextColors.greyText,
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Stack(
+                alignment: AlignmentDirectional.centerEnd,
+                children: [
+                  TextFormField(
+                    controller: pwConfirmController,
+                    style: const TextStyle(
+                        color: TextColors.greyText,
+                        fontFamily: "MM",
+                        fontSize: 14),
+                    obscureText: _obsecureText,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, right: 40),
+                      labelText: AppLocalizations.of(context)!.pwConfirm,
+                      labelStyle: const TextStyle(
+                          color: TextColors.greyText, fontSize: 15),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(27),
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(27),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 90,
-                    ),
-                    MyTextField(
-                      text: AppLocalizations.of(context)!.fullName,
-                      controller: nameController,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    MyTextField(
-                      text: AppLocalizations.of(context)!.emailAd,
-                      controller: emailController,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Stack(
-                      alignment: AlignmentDirectional.centerEnd,
-                      children: [
-                        TextFormField(
-                          controller: pwController,
-                          style: const TextStyle(
+                    validator: (value) =>
+                        value!.length < 8 ? "Password is too short" : null,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obsecureText = !_obsecureText;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: _obsecureText
+                          ? SvgPicture.asset(
+                              "assets/images/icon_eye_off.svg",
+                            )
+                          : const Icon(
+                              Icons.remove_red_eye,
                               color: TextColors.greyText,
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Transform.scale(
+                    scale: 1.3,
+                    child: Checkbox(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
+                        ),
+                      ),
+                      side: const BorderSide(
+                        width: 1.3,
+                        color: TextColors.greyText,
+                      ),
+                      checkColor: Colors.transparent,
+                      activeColor: TextColors.greyText,
+                      value: isTermsChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isTermsChecked = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.agree,
+                            style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: 14),
-                          obscureText: _obsecureText,
-                          decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.only(left: 10, right: 40),
-                            labelText: AppLocalizations.of(context)!.password,
-                            labelStyle: const TextStyle(
-                                color: TextColors.greyText, fontSize: 15),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                          ),
-                          validator: (value) => value!.length < 8
-                              ? "Password is too short"
-                              : null,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obsecureText = !_obsecureText;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: _obsecureText
-                                ? SvgPicture.asset(
-                                    "assets/images/icon_eye_off.svg",
-                                  )
-                                : const Icon(
-                                    Icons.remove_red_eye,
-                                    color: TextColors.greyText,
-                                  ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Stack(
-                      alignment: AlignmentDirectional.centerEnd,
-                      children: [
-                        TextFormField(
-                          controller: pwConfirmController,
-                          style: const TextStyle(
+                              fontSize: (screenSize.width < 350) ? 10 : 12,
                               color: TextColors.greyText,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              AppLocalizations.of(context)!.terms,
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize: (screenSize.width < 350) ? 10 : 12,
+                                color: PrimaryColors.blueAccentColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.and,
+                            style: TextStyle(
                               fontFamily: "MM",
-                              fontSize: 14),
-                          obscureText: _obsecureText,
-                          decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.only(left: 10, right: 40),
-                            labelText: AppLocalizations.of(context)!.pwConfirm,
-                            labelStyle: const TextStyle(
-                                color: TextColors.greyText, fontSize: 15),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                          ),
-                          validator: (value) => value!.length < 8
-                              ? "Password is too short"
-                              : null,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obsecureText = !_obsecureText;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: _obsecureText
-                                ? SvgPicture.asset(
-                                    "assets/images/icon_eye_off.svg",
-                                  )
-                                : const Icon(
-                                    Icons.remove_red_eye,
-                                    color: TextColors.greyText,
-                                  ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Transform.scale(
-                          scale: 1.3,
-                          child: Checkbox(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(4),
-                              ),
-                            ),
-                            side: const BorderSide(
-                              width: 1.3,
+                              fontSize: (screenSize.width < 350) ? 10 : 12,
                               color: TextColors.greyText,
                             ),
-                            checkColor: Colors.transparent,
-                            activeColor: TextColors.greyText,
-                            value: isTermsChecked,
-                            onChanged: (value) {
-                              setState(() {
-                                isTermsChecked = value!;
-                              });
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: const PrivacyPolicyScreen(),
+                                withNavBar: false,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
                             },
+                            child: Text(
+                              AppLocalizations.of(context)!.policy,
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize: (screenSize.width < 350) ? 10 : 12,
+                                color: PrimaryColors.blueAccentColor,
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.agree,
-                                  style: TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize:
-                                        (screenSize.width < 350) ? 10 : 12,
-                                    color: TextColors.greyText,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Text(
-                                    AppLocalizations.of(context)!.terms,
-                                    style: TextStyle(
-                                      fontFamily: "MM",
-                                      fontSize:
-                                          (screenSize.width < 350) ? 10 : 12,
-                                      color: PrimaryColors.blueAccentColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.and,
-                                  style: TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize:
-                                        (screenSize.width < 350) ? 10 : 12,
-                                    color: TextColors.greyText,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                      context,
-                                      screen: const PrivacyPolicyScreen(),
-                                      withNavBar: false,
-                                      pageTransitionAnimation:
-                                          PageTransitionAnimation.cupertino,
-                                    );
-                                  },
-                                  child: Text(
-                                    AppLocalizations.of(context)!.policy,
-                                    style: TextStyle(
-                                      fontFamily: "MM",
-                                      fontSize:
-                                          (screenSize.width < 350) ? 10 : 12,
-                                      color: PrimaryColors.blueAccentColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    SizedBox(
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              BlocConsumer<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthInitState) {
+                    return SizedBox(
                       height: 56,
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<AuthBloc>().add(
-                                AuthRegisterEvent(
-                                  nameController.text.trim(),
-                                  emailController.text.trim(),
-                                  pwController.text.trim(),
-                                  pwConfirmController.text.trim(),
-                                ),
-                              );
+                          _eventHandler();
                         },
                         child: Text(
                           AppLocalizations.of(context)!.signUp,
@@ -360,369 +348,112 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-          if (state is AuthLoadingState) {
-            return const AppLoadingIndicator();
-          }
-          if (state is AuthRegisterResponseState) {
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const OnBoardingScreen(),
-                              ),
-                            );
-                          },
-                          child: const BackLabel(),
-                        ),
-                        const Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            fontFamily: "MSB",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 32,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    const Text(
-                      "let's get started",
-                      style: TextStyle(
-                        fontFamily: "MSB",
-                        fontSize: 24,
-                        color: TextColors.whiteText,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 183,
-                      child: Text(
-                        "the latest movies ans series are here",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "MM",
-                          fontSize: 12,
-                          color: TextColors.wihteGreyText,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 90,
-                    ),
-                    MyTextField(
-                      text: "Full Name",
-                      controller: nameController,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    MyTextField(
-                      text: "Email Address",
-                      controller: emailController,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Stack(
-                      alignment: AlignmentDirectional.centerEnd,
-                      children: [
-                        TextFormField(
-                          controller: pwController,
-                          style: const TextStyle(
-                              color: TextColors.greyText,
-                              fontFamily: "MM",
-                              fontSize: 14),
-                          obscureText: _obsecureText,
-                          decoration: const InputDecoration(
-                            contentPadding:
-                                EdgeInsets.only(left: 10, right: 40),
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                                color: TextColors.greyText, fontSize: 15),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                          ),
-                          validator: (value) => value!.length < 8
-                              ? "Password is too short"
-                              : null,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obsecureText = !_obsecureText;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: _obsecureText
-                                ? SvgPicture.asset(
-                                    "assets/images/icon_eye_off.svg",
-                                  )
-                                : const Icon(
-                                    Icons.remove_red_eye,
-                                    color: TextColors.greyText,
-                                  ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Stack(
-                      alignment: AlignmentDirectional.centerEnd,
-                      children: [
-                        TextFormField(
-                          controller: pwConfirmController,
-                          style: const TextStyle(
-                              color: TextColors.greyText,
-                              fontFamily: "MM",
-                              fontSize: 14),
-                          obscureText: _obsecureText,
-                          decoration: const InputDecoration(
-                            contentPadding:
-                                EdgeInsets.only(left: 10, right: 40),
-                            labelText: "Password Confirm",
-                            labelStyle: TextStyle(
-                                color: TextColors.greyText, fontSize: 15),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: TextColors.greyText,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(27),
-                              ),
-                            ),
-                          ),
-                          validator: (value) => value!.length < 8
-                              ? "Password is too short"
-                              : null,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obsecureText = !_obsecureText;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: _obsecureText
-                                ? SvgPicture.asset(
-                                    "assets/images/icon_eye_off.svg",
-                                  )
-                                : const Icon(
-                                    Icons.remove_red_eye,
-                                    color: TextColors.greyText,
-                                  ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Transform.scale(
-                          scale: 1.3,
-                          child: Checkbox(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(4),
-                              ),
-                            ),
-                            side: const BorderSide(
-                              width: 1.3,
-                              color: TextColors.greyText,
-                            ),
-                            checkColor: Colors.transparent,
-                            activeColor: TextColors.greyText,
-                            value: isTermsChecked,
-                            onChanged: (value) {
-                              setState(() {
-                                isTermsChecked = value!;
-                              });
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 5),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "I agree to the ",
-                                  style: TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize:
-                                        (screenSize.width < 350) ? 10 : 12,
-                                    color: TextColors.greyText,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Text(
-                                    "Terms and Services",
-                                    style: TextStyle(
-                                      fontFamily: "MM",
-                                      fontSize:
-                                          (screenSize.width < 350) ? 10 : 12,
-                                      color: PrimaryColors.blueAccentColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "and ",
-                                  style: TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize:
-                                        (screenSize.width < 350) ? 10 : 12,
-                                    color: TextColors.greyText,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                      context,
-                                      screen: const PrivacyPolicyScreen(),
-                                      withNavBar:
-                                          false, // OPTIONAL VALUE. True by default.
-                                      pageTransitionAnimation:
-                                          PageTransitionAnimation.cupertino,
-                                    );
-                                  },
-                                  child: Text(
-                                    "Privacy Policy",
-                                    style: TextStyle(
-                                      fontFamily: "MM",
-                                      fontSize:
-                                          (screenSize.width < 350) ? 10 : 12,
-                                      color: PrimaryColors.blueAccentColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    state.registerRespnse.fold(
-                      (exceptionMessage) {
-                        return Text(exceptionMessage);
-                      },
-                      (rsponse) {
-                        return Text(rsponse);
-                      },
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
+                    );
+                  } else if (state is AuthLoadingState) {
+                    return const AppLoadingIndicator();
+                  } else if (state is AuthRegisterResponseState) {
                     SizedBox(
                       height: 56,
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<AuthBloc>().add(
-                                AuthRegisterEvent(
-                                  nameController.text.trim(),
-                                  emailController.text.trim(),
-                                  pwController.text.trim(),
-                                  pwConfirmController.text.trim(),
-                                ),
-                              );
+                          _eventHandler();
                         },
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!.signUp,
+                          style: const TextStyle(
                             fontFamily: "MM",
                             fontSize: 16,
                             color: TextColors.whiteText,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  }
+                  return Text("There seem to be errors Getting data");
+                },
+                listener: (context, state) {
+                  if (state is AuthRegisterResponseState) {
+                    nameController.text = "";
+                    pwConfirmController.text = "";
+                    pwController.text = "";
+                    emailController.text = "";
+                    return state.registerRespnse.fold(
+                      (exceptionMessage) {},
+                      (registerResponse) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DashboardScreen(),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
-            );
-          }
-          return Text("");
-        },
-        listener: (context, state) {
-          if (state is AuthRegisterResponseState) {
-            nameController.text = "";
-            pwConfirmController.text = "";
-            pwController.text = "";
-            emailController.text = "";
-            return state.registerRespnse.fold(
-              (exceptionMessage) {},
-              (registerResponse) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const DashboardScreen(),
-                  ),
-                );
-              },
-            );
-          }
-        },
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  Widget snackBarMessage(bool isTermsChecked) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25),
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.redColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                (isTermsChecked)
+                    ? "Passwords do NOT match"
+                    : "You MUST agree to the terms",
+                style: const TextStyle(
+                  color: TextColors.whiteText,
+                  fontSize: 12,
+                  fontFamily: "MSB",
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _eventHandler() {
+    if (pwConfirmController.text.trim() == pwController.text.trim() &&
+        isTermsChecked) {
+      context.read<AuthBloc>().add(
+            AuthRegisterEvent(
+              nameController.text.trim(),
+              emailController.text.trim(),
+              pwController.text.trim(),
+              pwConfirmController.text.trim(),
+            ),
+          );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          backgroundColor: Colors.transparent,
+          content: snackBarMessage(isTermsChecked),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    }
   }
 }
