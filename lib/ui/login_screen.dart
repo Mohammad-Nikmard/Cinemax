@@ -5,6 +5,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/my_textfield.dart';
@@ -255,7 +256,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     emailController.text = "";
 
                     return state.loginResponse.fold(
-                      (exceptionMessage) {},
+                      (exceptionMessage) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            backgroundColor: Colors.transparent,
+                            content: _SnackFailMessage(
+                                error: AppLocalizations.of(context)!.wrongPW),
+                            duration: const Duration(seconds: 5),
+                          ),
+                        );
+                      },
                       (loginResponse) {
                         Navigator.pushReplacement(
                           context,
@@ -269,6 +281,41 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SnackFailMessage extends StatelessWidget {
+  const _SnackFailMessage({required this.error});
+  final String error;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25.0),
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.redColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Center(
+            child: Text(
+              error,
+              style: const TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 12,
+                fontFamily: "MSB",
+              ),
+            ),
           ),
         ),
       ),

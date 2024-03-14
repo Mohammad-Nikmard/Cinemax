@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,10 +20,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   @override
   void initState() {
-    emailController = TextEditingController(text: "mnikmard1344@gmail.com");
+    emailController = TextEditingController(text: AuthManager.readEmail());
     pwController = TextEditingController(text: "mohammadNIkmard");
     phoneNumberController = TextEditingController(text: "+98 9377964183");
-    nameController = TextEditingController(text: "Mohammad Bruh");
+    nameController = TextEditingController(text: AuthManager.readId());
     super.initState();
   }
 
@@ -261,18 +262,18 @@ class _UserDetail extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 20),
-        const Text(
-          "Mohammad",
-          style: TextStyle(
+        Text(
+          AuthManager.readId(),
+          style: const TextStyle(
             fontFamily: "MSB",
             fontSize: 16,
             color: TextColors.whiteText,
           ),
         ),
         const SizedBox(height: 10),
-        const Text(
-          "mnikmard1344@gmail.com",
-          style: TextStyle(
+        Text(
+          AuthManager.readEmail(),
+          style: const TextStyle(
             fontFamily: "MM",
             fontSize: 14,
             color: TextColors.greyText,

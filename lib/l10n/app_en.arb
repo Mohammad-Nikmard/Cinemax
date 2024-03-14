@@ -80,5 +80,9 @@
     "policy": "Privacy Policy",
     "hiThere": "Hi There",
     "welcomeBack": "Welcome back! Plase enter your details.",
-    "forgotPw": "Forgot Password?"
+    "forgotPw": "Forgot Password?",
+    "wrongPW": "You have entered an invalid username or password",
+    "userExists": "The username is invalid or already in use.",
+    "pwNotMatch": "Passwords do NOT match",
+    "agreement": "You MUST agree to the terms"
 }

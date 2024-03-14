@@ -22,6 +22,8 @@ class AuthManager {
 
   static void logOut() {
     _preferences.remove("access_token");
+    _preferences.remove("ID");
+    _preferences.remove("E-mail");
     notifier.value = null;
   }
 
@@ -31,5 +33,13 @@ class AuthManager {
 
   static String readId() {
     return _preferences.getString("ID") ?? "";
+  }
+
+  static void saveEmail(String email) async {
+    await _preferences.setString("E-mail", email);
+  }
+
+  static String readEmail() {
+    return _preferences.getString("E-mail") ?? "";
   }
 }

@@ -519,7 +519,7 @@ class _ProfileChip extends StatelessWidget {
           PersistentNavBarNavigator.pushNewScreen(
             context,
             screen: const ProfileEditScreen(),
-            withNavBar: true, // OPTIONAL VALUE. True by default.
+            withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
         },
@@ -552,7 +552,7 @@ class _ProfileChip extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Mohammad",
+                      AuthManager.readId(),
                       style: TextStyle(
                         fontFamily: "MSB",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -562,7 +562,7 @@ class _ProfileChip extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "mnikmard1344@gmail.com",
+                      AuthManager.readEmail(),
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)

@@ -80,5 +80,9 @@
     "policy": "隐私政策",
     "hiThere": "你好呀",
     "welcomeBack": "欢迎回来！请输入您的详细信息。",
-    "forgotPw": "忘记密码？"
+    "forgotPw": "忘记密码？",
+    "wrongPW": "您输入的用户名或密码无效",
+    "userExists": "用户名无效或已被使用。",
+    "pwNotMatch": "密码不匹配",
+    "agreement": "你必须同意这些条件"
 }

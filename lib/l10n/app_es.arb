@@ -80,5 +80,9 @@
     "policy": "política de privacidad",
     "hiThere": "Hola",
     "welcomeBack": "Bienvenido de nuevo! Por favor introduce tus datos.",
-    "forgotPw": "Has olvidado tu contraseña?"
+    "forgotPw": "Has olvidado tu contraseña?",
+    "wrongPW": "Ha ingresado un nombre de usuario o contraseña no válidos",
+    "userExists": "El nombre de usuario no es válido o ya está en uso.",
+    "pwNotMatch": "Las contraseñas no coinciden",
+    "agreement": "Debes estar de acuerdo con los términos"
 }

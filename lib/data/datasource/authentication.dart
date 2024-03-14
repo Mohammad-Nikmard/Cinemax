@@ -31,7 +31,8 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
         login(password, email);
       }
     } on DioException catch (ex) {
-      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode,
+          response: ex.response);
     } catch (ex) {
       throw ApiException("$ex", 9);
     }
@@ -50,12 +51,15 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
       if (response.statusCode == 200) {
         var token = response.data["token"];
         var username = response.data["record"]["username"];
+        var email = identity;
         AuthManager.saveToken(token);
         AuthManager.saveId(username);
+        AuthManager.saveEmail(email);
         return token;
       }
     } on DioException catch (ex) {
-      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode,
+          response: ex.response);
     } catch (ex) {
       throw ApiException("$ex", 9);
     }
