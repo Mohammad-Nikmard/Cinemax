@@ -19,6 +19,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
   List<String> languages = [
     "English",
     "فارسی",
+    "Français",
+    "Español",
+    "中国人",
   ];
   @override
   Widget build(BuildContext context) {
@@ -83,21 +86,23 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
-                          height: 110,
+                          height: 280,
                           child: ListView.builder(
-                            itemCount: 2,
+                            itemCount: languages.length,
                             itemBuilder: (context, index) {
-                              if (index == 1) {
+                              if (index == 4) {
                                 return GestureDetector(
                                   onTap: () {
-                                    setState(() {
-                                      context.read<LanguageBloc>().add(
-                                            ChangeLanguage(
-                                              selectedLanguage:
-                                                  Language.values[index],
-                                            ),
-                                          );
-                                    });
+                                    setState(
+                                      () {
+                                        context.read<LanguageBloc>().add(
+                                              ChangeLanguage(
+                                                selectedLanguage:
+                                                    Language.values[index],
+                                              ),
+                                            );
+                                      },
+                                    );
                                   },
                                   child: SizedBox(
                                     height: 25,

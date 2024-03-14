@@ -24,13 +24,13 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(bottom: 20, top: 20),
+                padding: const EdgeInsets.only(bottom: 20, top: 20),
                 child: Center(
                   child: Text(
-                    "Profile",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.profile,
+                    style: const TextStyle(
                       fontFamily: "MSB",
                       fontSize: 16,
                       color: TextColors.whiteText,

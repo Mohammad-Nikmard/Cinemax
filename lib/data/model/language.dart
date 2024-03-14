@@ -8,6 +8,18 @@ enum Language {
   persian(
     Locale('fa', 'IR'),
     'Persian',
+  ),
+  french(
+    Locale('fr', 'FR'),
+    'French',
+  ),
+  spanish(
+    Locale('es', 'ES'),
+    'Spanish',
+  ),
+  chineese(
+    Locale('zh', 'CN'),
+    'Chinese ',
   );
 
   const Language(

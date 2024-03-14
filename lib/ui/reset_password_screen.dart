@@ -41,6 +41,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 fontSize: 28,
                 color: TextColors.whiteText,
               ),
+              textAlign: TextAlign.center,
             ),
             Text(
               AppLocalizations.of(context)!.recovePw,
