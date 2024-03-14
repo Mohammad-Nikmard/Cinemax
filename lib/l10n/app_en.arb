@@ -69,5 +69,16 @@
     "continuee": "Contunue",
     "didntRecieve": "Didn't recieve code?",
     "resend": "Resend",
-    "suggestedLang": "Suggested Languages"
+    "suggestedLang": "Suggested Languages",
+    "areSure": "Are You Sure?",
+    "sureCap": "you will be signing out if click on logout",
+    "getStarted": "Let's get started",
+    "getStartedCap": "the latest movies and series are here",
+    "agree": "I agree to the",
+    "terms": "Terms and Services",
+    "and": "And",
+    "policy": "Privacy Policy",
+    "hiThere": "Hi There",
+    "welcomeBack": "Welcome back! Plase enter your details.",
+    "forgotPw": "Forgot Password?"
 }

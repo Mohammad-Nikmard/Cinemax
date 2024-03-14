@@ -69,5 +69,16 @@
     "continuee": "Continuar",
     "didntRecieve": "No recibiste el código?",
     "resend": "Reenviar",
-    "suggestedLang": "Idiomas sugeridos"
+    "suggestedLang": "Idiomas sugeridos",
+    "areSure": "Estas seguro",
+    "sureCap": "cerrará sesión si hace clic en cerrar sesión",
+    "getStarted": "Let's get started",
+    "getStartedCap": "las últimas películas y series están aquí",
+    "agree": "Estoy de acuerdo con la",
+    "terms": "Términos y servicios",
+    "and": "Y",
+    "policy": "política de privacidad",
+    "hiThere": "Hola",
+    "welcomeBack": "Bienvenido de nuevo! Por favor introduce tus datos.",
+    "forgotPw": "Has olvidado tu contraseña?"
 }

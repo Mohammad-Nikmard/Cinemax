@@ -11,6 +11,7 @@ import 'package:cinemax/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -57,9 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: const BackLabel(),
                   ),
-                  const Text(
-                    "Login",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.login,
+                    style: const TextStyle(
                       fontFamily: "MSB",
                       fontSize: 16,
                       color: TextColors.whiteText,
@@ -73,20 +74,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 50,
               ),
-              const Text(
-                "Hi There",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.hiThere,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 24,
                   color: TextColors.whiteText,
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 width: 183,
                 child: Text(
-                  "Welcome back! Please enter your details.",
+                  AppLocalizations.of(context)!.welcomeBack,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: "MM",
                     fontSize: 12,
                     color: TextColors.wihteGreyText,
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 90,
               ),
               MyTextField(
-                text: "Email Address",
+                text: AppLocalizations.of(context)!.emailAd,
                 controller: emailController,
               ),
               const SizedBox(
@@ -113,12 +114,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontFamily: "MM",
                         fontSize: 14),
                     obscureText: _obsecureText,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 10, right: 40),
-                      labelText: "Password",
-                      labelStyle:
-                          TextStyle(color: TextColors.greyText, fontSize: 15),
-                      enabledBorder: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, right: 40),
+                      labelText: AppLocalizations.of(context)!.password,
+                      labelStyle: const TextStyle(
+                          color: TextColors.greyText, fontSize: 15),
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -127,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Radius.circular(27),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
                           color: TextColors.greyText,
@@ -174,9 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       },
-                      child: const Text(
-                        "Forgot Password?",
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.forgotPw,
+                        style: const TextStyle(
                           fontFamily: "MM",
                           fontSize: 12,
                           color: PrimaryColors.blueAccentColor,
@@ -207,9 +209,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               );
                         },
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!.login,
+                          style: const TextStyle(
                             fontFamily: "MM",
                             fontSize: 16,
                             color: TextColors.whiteText,
@@ -234,9 +236,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               );
                         },
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!.login,
+                          style: const TextStyle(
                             fontFamily: "MM",
                             fontSize: 16,
                             color: TextColors.whiteText,

@@ -69,5 +69,16 @@
     "continuee": "继续",
     "didntRecieve": "没有收到代码？",
     "resend": "重发",
-    "suggestedLang": "建议语言"
+    "suggestedLang": "建议语言",
+    "areSure": "你确定吗？",
+    "sureCap": "如果单击注销，您将注销",
+    "getStarted": "让我们开始吧",
+    "getStartedCap": "最新的电影和连续剧都在这里",
+    "agree": "我同意",
+    "terms": "条款和服务",
+    "and": "和",
+    "policy": "隐私政策",
+    "hiThere": "你好呀",
+    "welcomeBack": "欢迎回来！请输入您的详细信息。",
+    "forgotPw": "忘记密码？"
 }

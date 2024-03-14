@@ -107,9 +107,9 @@ Future<void> signoutDialog(BuildContext context) async {
                 const SizedBox(
                   height: 30,
                 ),
-                const Text(
-                  "Are you sure?",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.areSure,
+                  style: const TextStyle(
                     fontFamily: "MSB",
                     fontSize: 18,
                     color: TextColors.whiteText,
@@ -118,9 +118,9 @@ Future<void> signoutDialog(BuildContext context) async {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "you will be signing out if click on logout",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.sureCap,
+                  style: const TextStyle(
                     fontFamily: "MR",
                     fontSize: 12,
                     color: TextColors.greyText,
@@ -145,9 +145,9 @@ Future<void> signoutDialog(BuildContext context) async {
                               ),
                             );
                           },
-                          child: const Text(
-                            "Log Out",
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.logout,
+                            style: const TextStyle(
                               color: PrimaryColors.blueAccentColor,
                               fontSize: 16,
                               fontFamily: "MR",
@@ -166,9 +166,9 @@ Future<void> signoutDialog(BuildContext context) async {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: const Text(
-                            "Cancel",
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.cancel,
+                            style: const TextStyle(
                               fontFamily: "MR",
                               fontSize: 16,
                               color: TextColors.whiteText,

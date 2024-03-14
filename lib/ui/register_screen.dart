@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -68,9 +69,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                           child: const BackLabel(),
                         ),
-                        const Text(
-                          "Sign Up",
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.signUp,
+                          style: const TextStyle(
                             fontFamily: "MSB",
                             fontSize: 16,
                             color: TextColors.whiteText,
@@ -84,20 +85,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(
                       height: 50,
                     ),
-                    const Text(
-                      "let's get started",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.getStarted,
+                      style: const TextStyle(
                         fontFamily: "MSB",
                         fontSize: 24,
                         color: TextColors.whiteText,
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 183,
                       child: Text(
-                        "the latest movies ans series are here",
+                        AppLocalizations.of(context)!.getStartedCap,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: "MM",
                           fontSize: 12,
                           color: TextColors.wihteGreyText,
@@ -108,14 +109,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 90,
                     ),
                     MyTextField(
-                      text: "Full Name",
+                      text: AppLocalizations.of(context)!.fullName,
                       controller: nameController,
                     ),
                     const SizedBox(
                       height: 30,
                     ),
                     MyTextField(
-                      text: "Email Address",
+                      text: AppLocalizations.of(context)!.emailAd,
                       controller: emailController,
                     ),
                     const SizedBox(
@@ -131,13 +132,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fontFamily: "MM",
                               fontSize: 14),
                           obscureText: _obsecureText,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             contentPadding:
-                                EdgeInsets.only(left: 10, right: 40),
-                            labelText: "Password",
-                            labelStyle: TextStyle(
+                                const EdgeInsets.only(left: 10, right: 40),
+                            labelText: AppLocalizations.of(context)!.password,
+                            labelStyle: const TextStyle(
                                 color: TextColors.greyText, fontSize: 15),
-                            enabledBorder: OutlineInputBorder(
+                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 1,
                                 color: TextColors.greyText,
@@ -146,7 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 Radius.circular(27),
                               ),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 1,
                                 color: TextColors.greyText,
@@ -193,13 +194,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fontFamily: "MM",
                               fontSize: 14),
                           obscureText: _obsecureText,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             contentPadding:
-                                EdgeInsets.only(left: 10, right: 40),
-                            labelText: "Password Confirm",
-                            labelStyle: TextStyle(
+                                const EdgeInsets.only(left: 10, right: 40),
+                            labelText: AppLocalizations.of(context)!.pwConfirm,
+                            labelStyle: const TextStyle(
                                 color: TextColors.greyText, fontSize: 15),
-                            enabledBorder: OutlineInputBorder(
+                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 1,
                                 color: TextColors.greyText,
@@ -208,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 Radius.circular(27),
                               ),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 1,
                                 color: TextColors.greyText,
@@ -274,7 +275,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Row(
                               children: [
                                 Text(
-                                  "I agree to the ",
+                                  AppLocalizations.of(context)!.agree,
                                   style: TextStyle(
                                     fontFamily: "MM",
                                     fontSize:
@@ -285,7 +286,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 GestureDetector(
                                   onTap: () {},
                                   child: Text(
-                                    "Terms and Services",
+                                    AppLocalizations.of(context)!.terms,
                                     style: TextStyle(
                                       fontFamily: "MM",
                                       fontSize:
@@ -299,7 +300,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Row(
                               children: [
                                 Text(
-                                  "and ",
+                                  AppLocalizations.of(context)!.and,
                                   style: TextStyle(
                                     fontFamily: "MM",
                                     fontSize:
@@ -312,14 +313,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     PersistentNavBarNavigator.pushNewScreen(
                                       context,
                                       screen: const PrivacyPolicyScreen(),
-                                      withNavBar:
-                                          false, // OPTIONAL VALUE. True by default.
+                                      withNavBar: false,
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.cupertino,
                                     );
                                   },
                                   child: Text(
-                                    "Privacy Policy",
+                                    AppLocalizations.of(context)!.policy,
                                     style: TextStyle(
                                       fontFamily: "MM",
                                       fontSize:
@@ -351,9 +351,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               );
                         },
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!.signUp,
+                          style: const TextStyle(
                             fontFamily: "MM",
                             fontSize: 16,
                             color: TextColors.whiteText,

@@ -21,7 +21,7 @@ class AuthManager {
   }
 
   static void logOut() {
-    _preferences.clear();
+    _preferences.remove("access_token");
     notifier.value = null;
   }
 
