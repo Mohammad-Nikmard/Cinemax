@@ -28,10 +28,3 @@ class SeriesEpisodesFetchEvent extends SeriesEvent {
 
   SeriesEpisodesFetchEvent(this.seasonId, this.seriesId, this.seriesName);
 }
-
-class OnSeasonDialogEvent extends SeriesEvent {
-  String seriesId;
-  String seriesName;
-
-  OnSeasonDialogEvent(this.seriesId, this.seriesName);
-}

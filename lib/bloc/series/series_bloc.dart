@@ -41,7 +41,6 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
     );
     on<SeriesEpisodesFetchEvent>(
       (event, emit) async {
-        emit(SeriesLoadingState());
         var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
         var casts = await _seriesRepository.getSeriesCast(event.seriesId);
         var episodes = await _seriesRepository.getEpisodes(event.seasonId);
@@ -49,11 +48,6 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         emit(SeriesResponseState(getSeasons, casts, episodes, isLiked));
       },
     );
-    on<OnSeasonDialogEvent>(
-      (event, emit) async {
-        var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
-        emit(OnDialogResponseState(getSeasons));
-      },
-    );
+    ;
   }
 }
