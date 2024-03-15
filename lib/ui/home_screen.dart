@@ -365,7 +365,6 @@ class _HomeHeader extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 20,
-                  backgroundImage: AssetImage("assets/images/icon_user.png"),
                   backgroundColor: SecondaryColors.redColor,
                 ),
                 const SizedBox(width: 10),

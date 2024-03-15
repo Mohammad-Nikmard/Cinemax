@@ -9,10 +9,10 @@ import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/series_cast.dart';
-import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/episode_widget.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,33 +60,54 @@ class SeriesDetailScreen extends StatelessWidget {
                               );
                             },
                           ),
-                          state.getSeasons.fold(
-                            (exceptionMessage) {
-                              return Text("exceptionMessage");
-                            },
-                            (seasonList) {
-                              return _SeasonChip(
-                                getSeasonList: seasonList,
-                              );
-                            },
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 20.0, top: 20.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.gallery,
-                                  style: const TextStyle(
-                                    fontFamily: "MSB",
-                                    fontSize: 16,
-                                    color: TextColors.whiteText,
-                                  ),
-                                ),
-                                const SizedBox(height: 10.0),
-                              ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 20, left: 20, bottom: 15),
+                      child: _SeasonChip(
+                        seriesid: series.id,
+                      ),
+                    ),
+                  ),
+                  state.getEpisodes.fold(
+                    (exceptionMessage) {
+                      return Text("exceptionMessage");
+                    },
+                    (episodeList) {
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 20, left: 20, bottom: 15),
+                              child: EpisodeWidget(
+                                episode: episodeList[index],
+                              ),
+                            );
+                          },
+                          childCount: episodeList.length,
+                        ),
+                      );
+                    },
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20.0, top: 20.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.gallery,
+                            style: const TextStyle(
+                              fontFamily: "MSB",
+                              fontSize: 16,
+                              color: TextColors.whiteText,
                             ),
                           ),
+                          const SizedBox(height: 10.0),
                         ],
                       ),
                     ),
@@ -157,8 +178,8 @@ class _Gallery extends StatelessWidget {
 }
 
 class _SeasonChip extends StatefulWidget {
-  const _SeasonChip({required this.getSeasonList});
-  final List<SeriesSeasons> getSeasonList;
+  const _SeasonChip({required this.seriesid});
+  final String seriesid;
 
   @override
   State<_SeasonChip> createState() => __SeasonChipState();
@@ -169,8 +190,6 @@ class __SeasonChipState extends State<_SeasonChip> {
 
   @override
   Widget build(BuildContext context) {
-    int seasonNumbers = widget.getSeasonList.length;
-    double maxHeight = 44.0 * seasonNumbers;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -189,79 +208,123 @@ class __SeasonChipState extends State<_SeasonChip> {
             showDialog(
               context: context,
               builder: (context) {
-                return ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                    child: AlertDialog(
-                      backgroundColor: PrimaryColors.softColor,
-                      content: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const SizedBox(width: 10),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  height: 32,
-                                  width: 32,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xff252836),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'assets/images/icon_close.svg',
-                                    height: 16,
-                                    width: 16,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              SizedBox(
-                                height: maxHeight,
-                                child: ListView.builder(
-                                  itemCount: seasonNumbers,
-                                  itemBuilder: (context, index) {
-                                    return Center(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10.0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              selectedIndex = index;
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(
-                                            "${AppLocalizations.of(context)!.season} ${widget.getSeasonList[index].season}",
-                                            style: TextStyle(
-                                              fontFamily: "MSB",
-                                              fontSize: (selectedIndex == index)
-                                                  ? 24
-                                                  : 20,
-                                              color: (selectedIndex == index)
-                                                  ? TextColors.whiteText
-                                                  : TextColors.greyText,
+                return BlocProvider(
+                  create: (context) => SeriesBloc(locator.get(), locator.get())
+                    ..add(
+                      OnSeasonDialogEvent(widget.seriesid),
+                    ),
+                  child: BlocBuilder<SeriesBloc, SeriesState>(
+                    builder: (context, state) {
+                      if (state is SeriesResponseState) {
+                        return state.getSeasons.fold(
+                          (exceptionMessage) {
+                            return Text("exceptionMessage");
+                          },
+                          (getSeasonList) {
+                            int seasonNumbers = getSeasonList.length;
+                            double maxHeight = 44.0 * seasonNumbers;
+                            return ClipRect(
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                    sigmaX: 10.0, sigmaY: 10.0),
+                                child: AlertDialog(
+                                  backgroundColor: PrimaryColors.softColor,
+                                  content: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 20),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          const SizedBox(width: 10),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                              height: 32,
+                                              width: 32,
+                                              decoration: const BoxDecoration(
+                                                color: Color(0xff252836),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: SvgPicture.asset(
+                                                'assets/images/icon_close.svg',
+                                                height: 12,
+                                                width: 12,
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                          const SizedBox(height: 20),
+                                          SizedBox(
+                                            height: maxHeight,
+                                            child: ListView.builder(
+                                              itemCount: seasonNumbers,
+                                              itemBuilder: (context, index) {
+                                                return Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 10.0),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          selectedIndex = index;
+                                                        });
+
+                                                        context
+                                                            .read<SeriesBloc>()
+                                                            .add(
+                                                              SeriesEpisodesFetchEvent(
+                                                                getSeasonList[
+                                                                        selectedIndex]
+                                                                    .id,
+                                                                getSeasonList[
+                                                                        selectedIndex]
+                                                                    .seriesId,
+                                                              ),
+                                                            );
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text(
+                                                        "${AppLocalizations.of(context)!.season} ${getSeasonList[index].season}",
+                                                        style: TextStyle(
+                                                          fontFamily: "MSB",
+                                                          fontSize:
+                                                              (selectedIndex ==
+                                                                      index)
+                                                                  ? 24
+                                                                  : 20,
+                                                          color:
+                                                              (selectedIndex ==
+                                                                      index)
+                                                                  ? TextColors
+                                                                      .whiteText
+                                                                  : TextColors
+                                                                      .greyText,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                            );
+                          },
+                        );
+                      }
+                      return Text("");
+                    },
                   ),
                 );
               },

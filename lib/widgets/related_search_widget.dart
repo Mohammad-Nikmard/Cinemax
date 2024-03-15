@@ -91,7 +91,10 @@ class RelatedSeachWidget extends StatelessWidget {
                                   'assets/images/icon_star.svg',
                                   height: 16,
                                   width: 16,
-                                  color: SecondaryColors.orangeColor,
+                                  colorFilter: const ColorFilter.mode(
+                                    SecondaryColors.orangeColor,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
@@ -142,7 +145,10 @@ class RelatedSeachWidget extends StatelessWidget {
                       width: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 12
                           : 16,
-                      color: TextColors.greyText,
+                      colorFilter: const ColorFilter.mode(
+                        TextColors.greyText,
+                        BlendMode.srcIn,
+                      ),
                     ),
                     const SizedBox(width: 3),
                     Text(
@@ -168,7 +174,10 @@ class RelatedSeachWidget extends StatelessWidget {
                       width: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 12
                           : 16,
-                      color: TextColors.greyText,
+                      colorFilter: const ColorFilter.mode(
+                        TextColors.greyText,
+                        BlendMode.srcIn,
+                      ),
                     ),
                     const SizedBox(width: 3),
                     Text(
@@ -231,7 +240,10 @@ class RelatedSeachWidget extends StatelessWidget {
                         width: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
-                        color: TextColors.greyText,
+                        colorFilter: const ColorFilter.mode(
+                          TextColors.greyText,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       const SizedBox(width: 3),
                       Text(

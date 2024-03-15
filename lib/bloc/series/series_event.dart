@@ -19,3 +19,16 @@ class WishlistDeleteItemEvent extends SeriesEvent {
 
   WishlistDeleteItemEvent(this.movieName);
 }
+
+class SeriesEpisodesFetchEvent extends SeriesEvent {
+  String seasonId;
+  String seriesId;
+
+  SeriesEpisodesFetchEvent(this.seasonId, this.seriesId);
+}
+
+class OnSeasonDialogEvent extends SeriesEvent {
+  String seriesId;
+
+  OnSeasonDialogEvent(this.seriesId);
+}

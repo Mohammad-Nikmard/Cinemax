@@ -100,7 +100,10 @@ class MovieWidget extends StatelessWidget {
                                 'assets/images/icon_star.svg',
                                 height: 16,
                                 width: 16,
-                                color: SecondaryColors.orangeColor,
+                                colorFilter: const ColorFilter.mode(
+                                  SecondaryColors.orangeColor,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                               const SizedBox(width: 5),
                               Text(

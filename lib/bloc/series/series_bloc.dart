@@ -15,7 +15,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         emit(SeriesLoadingState());
         var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
         var casts = await _seriesRepository.getSeriesCast(event.seriesId);
-        emit(SeriesResponseState(getSeasons, casts));
+        var firstSeasonEpisode =
+            await _seriesRepository.getFirstSeasonEpisode(event.seriesId);
+        emit(SeriesResponseState(getSeasons, casts, firstSeasonEpisode));
       },
     );
     on<WishlistAddToCartEvent>(
@@ -33,6 +35,24 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
     on<WishlistDeleteItemEvent>(
       (event, emit) async {
         await _wishlistRepository.deleteSelectedItem(event.movieName);
+      },
+    );
+    on<SeriesEpisodesFetchEvent>(
+      (event, emit) async {
+        emit(SeriesLoadingState());
+        var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
+        var casts = await _seriesRepository.getSeriesCast(event.seriesId);
+        var episodes = await _seriesRepository.getEpisodes(event.seasonId);
+        emit(SeriesResponseState(getSeasons, casts, episodes));
+      },
+    );
+    on<OnSeasonDialogEvent>(
+      (event, emit) async {
+        var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
+        var casts = await _seriesRepository.getSeriesCast(event.seriesId);
+        var firstSeasonEpisode =
+            await _seriesRepository.getFirstSeasonEpisode(event.seriesId);
+        emit(SeriesResponseState(getSeasons, casts, firstSeasonEpisode));
       },
     );
   }

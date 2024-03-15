@@ -1,3 +1,4 @@
+import 'package:cinemax/data/model/episode.dart';
 import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/util/api_exception.dart';
@@ -6,6 +7,8 @@ import 'package:dio/dio.dart';
 abstract class SeriesDatasource {
   Future<List<SeriesSeasons>> getSeasons(String seriesId);
   Future<List<SeriesCasts>> getSeriesCasts(String seriesId);
+  Future<List<Episode>> getSeriesEpisodes(String season);
+  Future<List<Episode>> getFirstSeasonEpisode(String seriesId);
 }
 
 class SeriesRemoteDatasource extends SeriesDatasource {
@@ -27,7 +30,7 @@ class SeriesRemoteDatasource extends SeriesDatasource {
               (jsonMapObject) => SeriesSeasons.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 6);
     }
@@ -48,9 +51,46 @@ class SeriesRemoteDatasource extends SeriesDatasource {
               (jsonMapObject) => SeriesCasts.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 6);
+    }
+  }
+
+  @override
+  Future<List<Episode>> getSeriesEpisodes(String season) async {
+    Map<String, dynamic> qparams = {
+      'filter': 'season_id="$season"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/episodes/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Episode>((jsonMapObject) => Episode.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 11);
+    }
+  }
+
+  @override
+  Future<List<Episode>> getFirstSeasonEpisode(String seriesId) async {
+    List<SeriesSeasons> seasonList = await getSeasons(seriesId);
+    Map<String, dynamic> qparams = {
+      'filter': 'season_id="${seasonList[0].id}"',
+    };
+    try {
+      var response = await _dio.get("/api/collections/episodes/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<Episode>((jsonMapObject) => Episode.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 11);
     }
   }
 }

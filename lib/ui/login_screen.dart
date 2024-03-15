@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Padding(
@@ -116,8 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 14),
                     obscureText: _obsecureText,
                     decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.only(left: 10, right: 40),
+                      contentPadding: const EdgeInsets.only(
+                          left: 10, right: 40, top: 20, bottom: 20),
                       labelText: AppLocalizations.of(context)!.password,
                       labelStyle: const TextStyle(
                           color: TextColors.greyText, fontSize: 15),
