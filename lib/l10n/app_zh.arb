@@ -84,5 +84,7 @@
     "wrongPW": "您输入的用户名或密码无效",
     "userExists": "用户名无效或已被使用。",
     "pwNotMatch": "密码不匹配",
-    "agreement": "你必须同意这些条件"
+    "agreement": "你必须同意这些条件",
+    "exception": "哎呀！错误",
+    "state": "未处理状态"
 }

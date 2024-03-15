@@ -13,6 +13,7 @@ import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,10 +53,8 @@ class MovieDetailScreen extends StatelessWidget {
                             storyLine: movie.storyline,
                           ),
                           state.castList.fold(
-                            (l) {
-                              return SliverToBoxAdapter(
-                                child: Text("exceptionMessage"),
-                              );
+                            (exceptionMessage) {
+                              return const ExceptionMessage();
                             },
                             (castList) {
                               return MovieCastAndCrew(
@@ -86,8 +85,8 @@ class MovieDetailScreen extends StatelessWidget {
                   ),
                   state.getPhotos.fold(
                     (exceptionMessage) {
-                      return SliverToBoxAdapter(
-                        child: Text("exceptionMessage"),
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
                       );
                     },
                     (photoList) {
@@ -99,7 +98,9 @@ class MovieDetailScreen extends StatelessWidget {
                 ],
               );
             }
-            return Text("There seem to be errors Getting data");
+            return Center(
+              child: Text(AppLocalizations.of(context)!.state),
+            );
           },
         ),
       ),

@@ -84,5 +84,7 @@
     "wrongPW": "You have entered an invalid username or password",
     "userExists": "The username is invalid or already in use.",
     "pwNotMatch": "Passwords do NOT match",
-    "agreement": "You MUST agree to the terms"
+    "agreement": "You MUST agree to the terms",
+    "exception": "Whopps! Error",
+    "state": "Unhandled state"
 }

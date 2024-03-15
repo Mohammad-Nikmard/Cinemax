@@ -9,6 +9,7 @@ import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,8 +43,8 @@ class UpcomingMovieDetail extends StatelessWidget {
                   ),
                   state.casts.fold(
                     (exceptionMessage) {
-                      return SliverToBoxAdapter(
-                        child: Text("exceptionMessage"),
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
                       );
                     },
                     (castList) {
@@ -82,8 +83,8 @@ class UpcomingMovieDetail extends StatelessWidget {
                   ),
                   state.getphotos.fold(
                     (exceptionMessage) {
-                      return SliverToBoxAdapter(
-                        child: Text("exceptionMessage"),
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
                       );
                     },
                     (gallery) {
@@ -95,7 +96,9 @@ class UpcomingMovieDetail extends StatelessWidget {
                 ],
               );
             }
-            return Text("There seem to be errors Getting data");
+            return Center(
+              child: Text(AppLocalizations.of(context)!.state),
+            );
           },
         ));
   }

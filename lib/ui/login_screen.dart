@@ -249,7 +249,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   }
-                  return Text("");
+                  return Center(
+                    child: Text(AppLocalizations.of(context)!.state),
+                  );
                 },
                 listener: (context, state) {
                   if (state is AuthLoginResponseState) {

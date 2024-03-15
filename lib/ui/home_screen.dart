@@ -10,6 +10,7 @@ import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
+import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +38,8 @@ class HomeScreen extends StatelessWidget {
                 const SearchBox(),
                 state.getBanners.fold(
                   (exceptionMessage) {
-                    return SliverToBoxAdapter(
-                      child: Text("exceptionMessage"),
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
                     );
                   },
                   (bannerList) {
@@ -51,7 +52,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getHottestMovies.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (movieList) {
                     return SliverToBoxAdapter(
@@ -101,7 +104,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getHottestMovies.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (movieList) {
                     return MovieListChip(movieList: movieList);
@@ -109,7 +114,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getLatestMovies.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (movieList) {
                     return SliverToBoxAdapter(
@@ -159,7 +166,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getLatestMovies.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (movieList) {
                     return MovieListChip(movieList: movieList);
@@ -167,7 +176,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getHottestSeries.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (seriesList) {
                     return SliverToBoxAdapter(
@@ -217,7 +228,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getHottestSeries.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (seriesList) {
                     return SeriesList(movieList: seriesList);
@@ -225,7 +238,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getForYouSeries.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (seriesList) {
                     return SliverToBoxAdapter(
@@ -275,7 +290,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getForYouSeries.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (seriesList) {
                     return SeriesList(movieList: seriesList);
@@ -283,7 +300,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getForYouMovies.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (movieList) {
                     return SliverToBoxAdapter(
@@ -333,7 +352,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.getForYouMovies.fold(
                   (exceptionMessage) {
-                    return Text("exceptionMessage");
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
                   },
                   (movieList) {
                     return MovieListChip(movieList: movieList);
@@ -342,7 +363,9 @@ class HomeScreen extends StatelessWidget {
               ],
             );
           }
-          return Text("There seem to be errors Getting data");
+          return Center(
+            child: Text(AppLocalizations.of(context)!.state),
+          );
         },
       ),
     );

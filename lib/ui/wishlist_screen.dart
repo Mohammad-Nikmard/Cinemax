@@ -3,6 +3,7 @@ import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/wishlist_widget.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   ),
                   state.getCards.fold(
                     (exceptionMessage) {
-                      return Text("exceptionMessage");
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
+                      );
                     },
                     (cartList) {
                       return SliverList(
@@ -111,7 +114,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
               ),
             );
           }
-          return Text("There seem to be errors Getting data");
+          return Center(
+            child: Text(AppLocalizations.of(context)!.state),
+          );
         },
       ),
     );

@@ -55,7 +55,10 @@ class SearchResultScreen extends StatelessWidget {
                                       'assets/images/icon_search.svg',
                                       height: 16,
                                       width: 16,
-                                      color: TextColors.greyText,
+                                      colorFilter: const ColorFilter.mode(
+                                        TextColors.greyText,
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
                                     const SizedBox(width: 10.0),
                                     Expanded(
@@ -146,7 +149,10 @@ class SearchResultScreen extends StatelessWidget {
                                       'assets/images/icon_search.svg',
                                       height: 16,
                                       width: 16,
-                                      color: TextColors.greyText,
+                                      colorFilter: const ColorFilter.mode(
+                                        TextColors.greyText,
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
                                     const SizedBox(width: 10.0),
                                     Expanded(
@@ -261,7 +267,10 @@ class SearchResultScreen extends StatelessWidget {
                                       'assets/images/icon_search.svg',
                                       height: 16,
                                       width: 16,
-                                      color: TextColors.greyText,
+                                      colorFilter: const ColorFilter.mode(
+                                        TextColors.greyText,
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
                                     const SizedBox(width: 10.0),
                                     Expanded(
@@ -325,7 +334,9 @@ class SearchResultScreen extends StatelessWidget {
               ),
             );
           }
-          return Text("There seem to be errors Getting data");
+          return Center(
+            child: Text(AppLocalizations.of(context)!.state),
+          );
         },
       ),
     );

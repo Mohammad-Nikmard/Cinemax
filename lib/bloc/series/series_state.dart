@@ -18,3 +18,9 @@ class SeriesResponseState extends SeriesState {
   SeriesResponseState(
       this.getSeasons, this.getCasts, this.getEpisodes, this.isLiked);
 }
+
+class OnDialogResponseState extends SeriesState {
+  Either<String, List<SeriesSeasons>> getSeasons;
+
+  OnDialogResponseState(this.getSeasons);
+}

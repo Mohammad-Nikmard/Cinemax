@@ -8,6 +8,7 @@ import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +35,9 @@ class UpcomingsScreen extends StatelessWidget {
                   const _Header(),
                   state.getUpcomingsList.fold(
                     (exceptionMessage) {
-                      return Text("exceptionMessage");
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
+                      );
                     },
                     (upList) {
                       return _UpcomingsList(
@@ -46,7 +49,9 @@ class UpcomingsScreen extends StatelessWidget {
               ),
             );
           }
-          return Text("There seem to be errors Getting data");
+          return Center(
+            child: Text(AppLocalizations.of(context)!.state),
+          );
         },
       ),
     );

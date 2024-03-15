@@ -84,5 +84,7 @@
     "wrongPW": "Vous avez entré un nom d'utilisateur ou un mot de passe invalide",
     "userExists": "Le nom d'utilisateur n'est pas valide ou est déjà utilisé.",
     "pwNotMatch": "Les mots de passe ne correspondent pas",
-    "agreement": "Vous devez accepter les conditions"
+    "agreement": "Vous devez accepter les conditions",
+    "exception": "Oups ! Erreur",
+    "state": "État non géré"
 }

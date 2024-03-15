@@ -52,12 +52,7 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
     on<OnSeasonDialogEvent>(
       (event, emit) async {
         var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
-        var casts = await _seriesRepository.getSeriesCast(event.seriesId);
-        var firstSeasonEpisode =
-            await _seriesRepository.getFirstSeasonEpisode(event.seriesId);
-        var isLiked = _wishlistRepository.likedOnList(event.seriesName);
-        emit(SeriesResponseState(
-            getSeasons, casts, firstSeasonEpisode, isLiked));
+        emit(OnDialogResponseState(getSeasons));
       },
     );
   }

@@ -13,6 +13,7 @@ import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/episode_widget.dart';
+import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +54,7 @@ class SeriesDetailScreen extends StatelessWidget {
                           ),
                           state.getCasts.fold(
                             (exceptionMessage) {
-                              return Text(exceptionMessage);
+                              return const ExceptionMessage();
                             },
                             (casts) {
                               return SeriesCastAndCrew(
@@ -77,7 +78,9 @@ class SeriesDetailScreen extends StatelessWidget {
                   ),
                   state.getEpisodes.fold(
                     (exceptionMessage) {
-                      return Text("exceptionMessage");
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
+                      );
                     },
                     (episodeList) {
                       return SliverList(
@@ -118,7 +121,9 @@ class SeriesDetailScreen extends StatelessWidget {
                 ],
               );
             }
-            return Text("There seem to be errors Getting data");
+            return Center(
+              child: Text(AppLocalizations.of(context)!.state),
+            );
           },
         ),
       ),
@@ -218,10 +223,10 @@ class __SeasonChipState extends State<_SeasonChip> {
                     ),
                   child: BlocBuilder<SeriesBloc, SeriesState>(
                     builder: (context, state) {
-                      if (state is SeriesResponseState) {
+                      if (state is OnDialogResponseState) {
                         return state.getSeasons.fold(
                           (exceptionMessage) {
-                            return Text("exceptionMessage");
+                            return const ExceptionMessage();
                           },
                           (getSeasonList) {
                             int seasonNumbers = getSeasonList.length;
@@ -327,7 +332,9 @@ class __SeasonChipState extends State<_SeasonChip> {
                           },
                         );
                       }
-                      return Text("");
+                      return Center(
+                        child: Text(AppLocalizations.of(context)!.state),
+                      );
                     },
                   ),
                 );

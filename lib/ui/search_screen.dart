@@ -6,6 +6,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_result_screen.dart';
+import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
@@ -58,7 +59,10 @@ class SearchScreen extends StatelessWidget {
                                           'assets/images/icon_search.svg',
                                           height: 16,
                                           width: 16,
-                                          color: TextColors.greyText,
+                                          colorFilter: const ColorFilter.mode(
+                                            TextColors.greyText,
+                                            BlendMode.srcIn,
+                                          ),
                                         ),
                                         const SizedBox(width: 10.0),
                                         Expanded(
@@ -117,7 +121,7 @@ class SearchScreen extends StatelessWidget {
                         ),
                         state.getAllMovies.fold(
                           (exceptionMessage) {
-                            return Text("exceptionMessage");
+                            return const ExceptionMessage();
                           },
                           (movieList) {
                             return Padding(
@@ -146,7 +150,7 @@ class SearchScreen extends StatelessWidget {
                     ),
                     state.getMovies.fold(
                       (exceptionMessage) {
-                        return Text("exceptionMessage");
+                        return const ExceptionMessage();
                       },
                       (movieList) {
                         return Column(
@@ -183,7 +187,9 @@ class SearchScreen extends StatelessWidget {
               ),
             );
           }
-          return Text("There seem to be errors Getting data");
+          return Center(
+            child: Text(AppLocalizations.of(context)!.state),
+          );
         },
       ),
     );
@@ -237,48 +243,6 @@ class RecommendHeader extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
         ],
-      ),
-    );
-  }
-}
-
-class _EmptySearch extends StatelessWidget {
-  const _EmptySearch();
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Center(
-        child: Column(
-          children: [
-            Image.asset('assets/images/search_image.png'),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: 200,
-              child: Text(
-                AppLocalizations.of(context)!.sorryForSearch,
-                style: const TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 16,
-                  color: TextColors.whiteText,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: 210,
-              child: Text(
-                AppLocalizations.of(context)!.noMovieCap,
-                style: const TextStyle(
-                  fontFamily: "MM",
-                  fontSize: 12,
-                  color: TextColors.greyText,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -84,5 +84,7 @@
     "wrongPW": "Ha ingresado un nombre de usuario o contraseña no válidos",
     "userExists": "El nombre de usuario no es válido o ya está en uso.",
     "pwNotMatch": "Las contraseñas no coinciden",
-    "agreement": "Debes estar de acuerdo con los términos"
+    "agreement": "Debes estar de acuerdo con los términos",
+    "exception": "Vaya! Error",
+    "state": "Estado no controlado"
 }
