@@ -17,7 +17,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var casts = await _seriesRepository.getSeriesCast(event.seriesId);
         var firstSeasonEpisode =
             await _seriesRepository.getFirstSeasonEpisode(event.seriesId);
-        emit(SeriesResponseState(getSeasons, casts, firstSeasonEpisode));
+        var isLiked = _wishlistRepository.likedOnList(event.seriesName);
+        emit(SeriesResponseState(
+            getSeasons, casts, firstSeasonEpisode, isLiked));
       },
     );
     on<WishlistAddToCartEvent>(
@@ -43,7 +45,8 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var getSeasons = await _seriesRepository.getSeasons(event.seriesId);
         var casts = await _seriesRepository.getSeriesCast(event.seriesId);
         var episodes = await _seriesRepository.getEpisodes(event.seasonId);
-        emit(SeriesResponseState(getSeasons, casts, episodes));
+        var isLiked = _wishlistRepository.likedOnList(event.seriesName);
+        emit(SeriesResponseState(getSeasons, casts, episodes, isLiked));
       },
     );
     on<OnSeasonDialogEvent>(
@@ -52,7 +55,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var casts = await _seriesRepository.getSeriesCast(event.seriesId);
         var firstSeasonEpisode =
             await _seriesRepository.getFirstSeasonEpisode(event.seriesId);
-        emit(SeriesResponseState(getSeasons, casts, firstSeasonEpisode));
+        var isLiked = _wishlistRepository.likedOnList(event.seriesName);
+        emit(SeriesResponseState(
+            getSeasons, casts, firstSeasonEpisode, isLiked));
       },
     );
   }

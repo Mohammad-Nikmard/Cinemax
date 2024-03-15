@@ -11,6 +11,7 @@ class MoviesLoadingState extends MoviesState {}
 class MoviesresponseState extends MoviesState {
   Either<String, List<Moviesgallery>> getPhotos;
   Either<String, List<MovieCasts>> castList;
+  bool isLiked;
 
-  MoviesresponseState(this.getPhotos, this.castList);
+  MoviesresponseState(this.getPhotos, this.castList, this.isLiked);
 }

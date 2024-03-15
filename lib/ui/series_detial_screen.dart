@@ -28,7 +28,7 @@ class SeriesDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SeriesBloc(locator.get(), locator.get())
-        ..add(SeriesDataRequestEvent(series.id)),
+        ..add(SeriesDataRequestEvent(series.id, series.name)),
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: BlocBuilder<SeriesBloc, SeriesState>(
@@ -40,6 +40,7 @@ class SeriesDetailScreen extends StatelessWidget {
                 slivers: [
                   _MovieDetailHeader(
                     series: series,
+                    onLike: state.isLiked,
                   ),
                   SliverToBoxAdapter(
                     child: Padding(
@@ -70,6 +71,7 @@ class SeriesDetailScreen extends StatelessWidget {
                           right: 20, left: 20, bottom: 15),
                       child: _SeasonChip(
                         seriesid: series.id,
+                        seriesName: series.name,
                       ),
                     ),
                   ),
@@ -178,8 +180,9 @@ class _Gallery extends StatelessWidget {
 }
 
 class _SeasonChip extends StatefulWidget {
-  const _SeasonChip({required this.seriesid});
+  const _SeasonChip({required this.seriesid, required this.seriesName});
   final String seriesid;
+  final String seriesName;
 
   @override
   State<_SeasonChip> createState() => __SeasonChipState();
@@ -211,7 +214,7 @@ class __SeasonChipState extends State<_SeasonChip> {
                 return BlocProvider(
                   create: (context) => SeriesBloc(locator.get(), locator.get())
                     ..add(
-                      OnSeasonDialogEvent(widget.seriesid),
+                      OnSeasonDialogEvent(widget.seriesid, widget.seriesName),
                     ),
                   child: BlocBuilder<SeriesBloc, SeriesState>(
                     builder: (context, state) {
@@ -279,13 +282,14 @@ class __SeasonChipState extends State<_SeasonChip> {
                                                             .read<SeriesBloc>()
                                                             .add(
                                                               SeriesEpisodesFetchEvent(
-                                                                getSeasonList[
-                                                                        selectedIndex]
-                                                                    .id,
-                                                                getSeasonList[
-                                                                        selectedIndex]
-                                                                    .seriesId,
-                                                              ),
+                                                                  getSeasonList[
+                                                                          selectedIndex]
+                                                                      .id,
+                                                                  getSeasonList[
+                                                                          selectedIndex]
+                                                                      .seriesId,
+                                                                  widget
+                                                                      .seriesName),
                                                             );
                                                         Navigator.pop(context);
                                                       },
@@ -385,8 +389,9 @@ class _StoryLine extends StatelessWidget {
 }
 
 class _MovieDetailHeader extends StatelessWidget {
-  const _MovieDetailHeader({required this.series});
+  const _MovieDetailHeader({required this.series, required this.onLike});
   final Movie series;
+  final bool onLike;
 
   @override
   Widget build(BuildContext context) {
@@ -425,6 +430,7 @@ class _MovieDetailHeader extends StatelessWidget {
           ),
           _MovieHeaderContent(
             series: series,
+            isLiked: onLike,
           ),
         ],
       ),
@@ -433,8 +439,9 @@ class _MovieDetailHeader extends StatelessWidget {
 }
 
 class _MovieHeaderContent extends StatefulWidget {
-  const _MovieHeaderContent({required this.series});
+  const _MovieHeaderContent({required this.series, required this.isLiked});
   final Movie series;
+  final bool isLiked;
 
   @override
   State<_MovieHeaderContent> createState() => _MovieHeaderContentState();
@@ -451,6 +458,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
+    isLiked = isLiked;
     super.initState();
   }
 

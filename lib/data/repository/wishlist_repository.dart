@@ -7,6 +7,7 @@ abstract class WishlistRepository {
   Future<Either<String, List<WishlistCart>>> showList();
   Future<Either<String, String>> deleteCard(int index);
   Future<void> deleteSelectedItem(String name);
+  bool likedOnList(String name);
 }
 
 class WishlistLocalRepository extends WishlistRepository {
@@ -46,5 +47,10 @@ class WishlistLocalRepository extends WishlistRepository {
   @override
   Future<void> deleteSelectedItem(String name) async {
     await _datasource.deleteSelectedItem(name);
+  }
+
+  @override
+  bool likedOnList(String name) {
+    return _datasource.likedOnList(name);
   }
 }

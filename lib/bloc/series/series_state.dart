@@ -13,6 +13,8 @@ class SeriesResponseState extends SeriesState {
   Either<String, List<SeriesSeasons>> getSeasons;
   Either<String, List<SeriesCasts>> getCasts;
   Either<String, List<Episode>> getEpisodes;
+  bool isLiked;
 
-  SeriesResponseState(this.getSeasons, this.getCasts, this.getEpisodes);
+  SeriesResponseState(
+      this.getSeasons, this.getCasts, this.getEpisodes, this.isLiked);
 }

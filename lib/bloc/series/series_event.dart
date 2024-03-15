@@ -4,8 +4,9 @@ abstract class SeriesEvent {}
 
 class SeriesDataRequestEvent extends SeriesEvent {
   String seriesId;
+  String seriesName;
 
-  SeriesDataRequestEvent(this.seriesId);
+  SeriesDataRequestEvent(this.seriesId, this.seriesName);
 }
 
 class WishlistAddToCartEvent extends SeriesEvent {
@@ -23,12 +24,14 @@ class WishlistDeleteItemEvent extends SeriesEvent {
 class SeriesEpisodesFetchEvent extends SeriesEvent {
   String seasonId;
   String seriesId;
+  String seriesName;
 
-  SeriesEpisodesFetchEvent(this.seasonId, this.seriesId);
+  SeriesEpisodesFetchEvent(this.seasonId, this.seriesId, this.seriesName);
 }
 
 class OnSeasonDialogEvent extends SeriesEvent {
   String seriesId;
+  String seriesName;
 
-  OnSeasonDialogEvent(this.seriesId);
+  OnSeasonDialogEvent(this.seriesId, this.seriesName);
 }

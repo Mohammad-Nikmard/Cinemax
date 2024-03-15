@@ -28,7 +28,7 @@ class MovieDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MovieBloc(locator.get(), locator.get())
-        ..add(MoviesDataRequestEvent(movie.id)),
+        ..add(MoviesDataRequestEvent(movie.id, movie.name)),
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: BlocBuilder<MovieBloc, MoviesState>(
@@ -40,6 +40,7 @@ class MovieDetailScreen extends StatelessWidget {
                 slivers: [
                   _MovieDetailHeader(
                     movie: movie,
+                    isLiked: state.isLiked,
                   ),
                   SliverToBoxAdapter(
                     child: Padding(
@@ -203,8 +204,9 @@ class _StoryLine extends StatelessWidget {
 }
 
 class _MovieDetailHeader extends StatelessWidget {
-  const _MovieDetailHeader({required this.movie});
+  const _MovieDetailHeader({required this.movie, required this.isLiked});
   final Movie movie;
+  final bool isLiked;
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +244,7 @@ class _MovieDetailHeader extends StatelessWidget {
           ),
           _MovieHeaderContent(
             movie: movie,
+            isOnLikes: isLiked,
           ),
         ],
       ),
@@ -250,8 +253,9 @@ class _MovieDetailHeader extends StatelessWidget {
 }
 
 class _MovieHeaderContent extends StatefulWidget {
-  const _MovieHeaderContent({required this.movie});
+  const _MovieHeaderContent({required this.movie, required this.isOnLikes});
   final Movie movie;
+  final bool isOnLikes;
 
   @override
   State<_MovieHeaderContent> createState() => _MovieHeaderContentState();
@@ -260,7 +264,7 @@ class _MovieHeaderContent extends StatefulWidget {
 class _MovieHeaderContentState extends State<_MovieHeaderContent>
     with TickerProviderStateMixin {
   late final AnimationController controller;
-  bool isLiked = false;
+  bool? isLiked;
 
   @override
   void initState() {
@@ -268,6 +272,12 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
+    isLiked = widget.isOnLikes;
+    if (!isLiked!) {
+      controller.value = 0.0;
+    } else if (isLiked!) {
+      controller.value = 1.0;
+    }
     super.initState();
   }
 
@@ -315,7 +325,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (isLiked) {
+                    if (isLiked!) {
                       context
                           .read<MovieBloc>()
                           .add(WishlistDeleteItemEvent(widget.movie.name));
@@ -335,7 +345,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           duration: const Duration(seconds: 5),
                         ),
                       );
-                    } else if (!isLiked) {
+                    } else if (!isLiked!) {
                       context.read<MovieBloc>().add(
                             WishlistAddToCartEvent(widget.movie),
                           );

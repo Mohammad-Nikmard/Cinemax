@@ -4,8 +4,9 @@ abstract class MoviesEvent {}
 
 class MoviesDataRequestEvent extends MoviesEvent {
   String movieId;
+  String movieName;
 
-  MoviesDataRequestEvent(this.movieId);
+  MoviesDataRequestEvent(this.movieId, this.movieName);
 }
 
 class WishlistAddToCartEvent extends MoviesEvent {
