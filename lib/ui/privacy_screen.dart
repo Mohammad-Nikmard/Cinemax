@@ -9,221 +9,223 @@ class PrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const BackLabel(),
-                  ),
-                  const Text(
-                    "Legal & Policies",
-                    style: TextStyle(
-                      fontFamily: "MSB",
-                      fontSize: 16,
-                      color: TextColors.whiteText,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const BackLabel(),
                     ),
+                    const Text(
+                      "Legal & Policies",
+                      style: TextStyle(
+                        fontFamily: "MSB",
+                        fontSize: 16,
+                        color: TextColors.whiteText,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 32,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Privacy Policy",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 14,
+                    color: TextColors.whiteText,
                   ),
-                  const SizedBox(
-                    width: 32,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                privacyPolicy(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Interpretation and Definitions",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 20,
+                    color: TextColors.whiteText,
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Privacy Policy",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 14,
-                  color: TextColors.whiteText,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              privacyPolicy(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Interpretation and Definitions",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 20,
-                  color: TextColors.whiteText,
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              interpretationAndDef(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Collecting and Using Your Personal Data",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 20,
-                  color: TextColors.whiteText,
+                interpretationAndDef(),
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              collectAnduseData(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Retention of Your Personal Data",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 14,
-                  color: TextColors.whiteText,
+                const Text(
+                  "Collecting and Using Your Personal Data",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 20,
+                    color: TextColors.whiteText,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              retentionOfData(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Transfer of Your Personal Data",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 14,
-                  color: TextColors.whiteText,
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              transferYourData(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Delete Your Personal Data",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 14,
-                  color: TextColors.whiteText,
+                collectAnduseData(),
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              deleteYourData(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Disclosure of Your Personal Data",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 20,
-                  color: TextColors.whiteText,
+                const Text(
+                  "Retention of Your Personal Data",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 14,
+                    color: TextColors.whiteText,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              disclosureOfPersonalData(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Security of Your Personal Data",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 14,
-                  color: TextColors.whiteText,
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              securityofYourdata(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Children's Privacy",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 18,
-                  color: TextColors.whiteText,
+                retentionOfData(),
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              childrenPrivacy(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Links to Other Websites",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 18,
-                  color: TextColors.whiteText,
+                const Text(
+                  "Transfer of Your Personal Data",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 14,
+                    color: TextColors.whiteText,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              linksTowebsites(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Changes to this Privacy Policy",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 18,
-                  color: TextColors.whiteText,
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              changesToPrivacyPolicy(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Contact Us",
-                style: TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 18,
-                  color: TextColors.whiteText,
+                transferYourData(),
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              contact(),
-              const SizedBox(
-                height: 50,
-              ),
-            ],
+                const Text(
+                  "Delete Your Personal Data",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 14,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                deleteYourData(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Disclosure of Your Personal Data",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 20,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                disclosureOfPersonalData(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Security of Your Personal Data",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 14,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                securityofYourdata(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Children's Privacy",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 18,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                childrenPrivacy(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Links to Other Websites",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 18,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                linksTowebsites(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Changes to this Privacy Policy",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 18,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                changesToPrivacyPolicy(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Contact Us",
+                  style: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 18,
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                contact(),
+                const SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
           ),
         ),
       ),

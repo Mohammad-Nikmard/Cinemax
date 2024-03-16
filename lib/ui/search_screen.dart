@@ -28,161 +28,164 @@ class SearchScreen extends StatelessWidget {
           if (state is SearchLoadingState) {
             return const AppLoadingIndicator();
           } else if (state is SearchResponseState) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 25, bottom: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    color: PrimaryColors.softColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(24),
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                      color: PrimaryColors.softColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(24),
+                                      ),
                                     ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/images/icon_search.svg',
-                                          height: 16,
-                                          width: 16,
-                                          colorFilter: const ColorFilter.mode(
-                                            TextColors.greyText,
-                                            BlendMode.srcIn,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10.0),
-                                        Expanded(
-                                          child: TextField(
-                                            readOnly: true,
-                                            onTap: () {
-                                              PersistentNavBarNavigator
-                                                  .pushNewScreen(
-                                                context,
-                                                screen: BlocProvider(
-                                                  create: (context) {
-                                                    var bloc = SearchBloc(
-                                                        locator.get(),
-                                                        locator.get());
-                                                    bloc.add(
-                                                        SearchAllMoviesEvent());
-                                                    return bloc;
-                                                  },
-                                                  child:
-                                                      const SearchResultScreen(),
-                                                ),
-                                                withNavBar: false,
-                                                pageTransitionAnimation:
-                                                    PageTransitionAnimation
-                                                        .cupertino,
-                                              );
-                                            },
-                                            style: const TextStyle(
-                                              fontFamily: "MM",
-                                              fontSize: 14,
-                                              color: TextColors.whiteText,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/images/icon_search.svg',
+                                            height: 16,
+                                            width: 16,
+                                            colorFilter: const ColorFilter.mode(
+                                              TextColors.greyText,
+                                              BlendMode.srcIn,
                                             ),
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      bottom: 10),
-                                              border: InputBorder.none,
-                                              hintText:
-                                                  AppLocalizations.of(context)!
-                                                      .recommendforYou,
-                                              hintStyle: const TextStyle(
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Expanded(
+                                            child: TextField(
+                                              readOnly: true,
+                                              onTap: () {
+                                                PersistentNavBarNavigator
+                                                    .pushNewScreen(
+                                                  context,
+                                                  screen: BlocProvider(
+                                                    create: (context) {
+                                                      var bloc = SearchBloc(
+                                                          locator.get(),
+                                                          locator.get());
+                                                      bloc.add(
+                                                          SearchAllMoviesEvent());
+                                                      return bloc;
+                                                    },
+                                                    child:
+                                                        const SearchResultScreen(),
+                                                  ),
+                                                  withNavBar: false,
+                                                  pageTransitionAnimation:
+                                                      PageTransitionAnimation
+                                                          .cupertino,
+                                                );
+                                              },
+                                              style: const TextStyle(
                                                 fontFamily: "MM",
                                                 fontSize: 14,
-                                                color: TextColors.greyText,
+                                                color: TextColors.whiteText,
+                                              ),
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        bottom: 10),
+                                                border: InputBorder.none,
+                                                hintText: AppLocalizations.of(
+                                                        context)!
+                                                    .recommendforYou,
+                                                hintStyle: const TextStyle(
+                                                  fontFamily: "MM",
+                                                  fontSize: 14,
+                                                  color: TextColors.greyText,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          state.getAllMovies.fold(
+                            (exceptionMessage) {
+                              return const ExceptionMessage();
+                            },
+                            (movieList) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 90),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.today,
+                                      style: const TextStyle(
+                                        fontFamily: "MSB",
+                                        fontSize: 16,
+                                        color: TextColors.whiteText,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    RelatedSeachWidget(
+                                      movie: movieList[5],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      state.getMovies.fold(
+                        (exceptionMessage) {
+                          return const ExceptionMessage();
+                        },
+                        (movieList) {
+                          return Column(
+                            children: [
+                              RecommendHeader(
+                                movies: movieList,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 30),
+                                child: SizedBox(
+                                  height: 231,
+                                  child: ListView.builder(
+                                    itemCount: movieList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 15),
+                                        child: MovieWidget(
+                                          showRate: true,
+                                          movie: movieList[index],
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                        state.getAllMovies.fold(
-                          (exceptionMessage) {
-                            return const ExceptionMessage();
-                          },
-                          (movieList) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 90),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.today,
-                                    style: const TextStyle(
-                                      fontFamily: "MSB",
-                                      fontSize: 16,
-                                      color: TextColors.whiteText,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  RelatedSeachWidget(
-                                    movie: movieList[5],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    state.getMovies.fold(
-                      (exceptionMessage) {
-                        return const ExceptionMessage();
-                      },
-                      (movieList) {
-                        return Column(
-                          children: [
-                            RecommendHeader(
-                              movies: movieList,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 5, bottom: 30),
-                              child: SizedBox(
-                                height: 231,
-                                child: ListView.builder(
-                                  itemCount: movieList.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 15),
-                                      child: MovieWidget(
-                                        showRate: true,
-                                        movie: movieList[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

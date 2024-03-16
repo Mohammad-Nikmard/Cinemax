@@ -27,310 +27,316 @@ class SearchResultScreen extends StatelessWidget {
           if (state is SearchLoadingState) {
             return const AppLoadingIndicator();
           } else if (state is SearchAllMoviesResponse) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 25, bottom: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: PrimaryColors.softColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(24),
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 40,
+                                decoration: const BoxDecoration(
+                                  color: PrimaryColors.softColor,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(24),
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/icon_search.svg',
-                                      height: 16,
-                                      width: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        TextColors.greyText,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10.0),
-                                    Expanded(
-                                      child: TextField(
-                                        onChanged: (value) {
-                                          if (value.isNotEmpty) {
-                                            context
-                                                .read<SearchBloc>()
-                                                .add(SearchQueryEvent(value));
-                                          } else if (value.isEmpty) {
-                                            context
-                                                .read<SearchBloc>()
-                                                .add(SearchAllMoviesEvent());
-                                          }
-                                        },
-                                        style: const TextStyle(
-                                          fontFamily: "MM",
-                                          fontSize: 14,
-                                          color: TextColors.whiteText,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/icon_search.svg',
+                                        height: 16,
+                                        width: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          TextColors.greyText,
+                                          BlendMode.srcIn,
                                         ),
-                                        decoration: const InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.only(bottom: 10),
-                                          border: InputBorder.none,
-                                          hintText: "Type Something...",
-                                          hintStyle: TextStyle(
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        child: TextField(
+                                          onChanged: (value) {
+                                            if (value.isNotEmpty) {
+                                              context
+                                                  .read<SearchBloc>()
+                                                  .add(SearchQueryEvent(value));
+                                            } else if (value.isEmpty) {
+                                              context
+                                                  .read<SearchBloc>()
+                                                  .add(SearchAllMoviesEvent());
+                                            }
+                                          },
+                                          style: const TextStyle(
                                             fontFamily: "MM",
                                             fontSize: 14,
-                                            color: TextColors.greyText,
+                                            color: TextColors.whiteText,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.only(bottom: 10),
+                                            border: InputBorder.none,
+                                            hintText: "Type Something...",
+                                            hintStyle: TextStyle(
+                                              fontFamily: "MM",
+                                              fontSize: 14,
+                                              color: TextColors.greyText,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.cancel,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 12,
-                                  color: TextColors.whiteText,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.cancel,
+                                  style: const TextStyle(
+                                    fontFamily: "MM",
+                                    fontSize: 12,
+                                    color: TextColors.whiteText,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           } else if (state is SearchResultState) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 25, bottom: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: PrimaryColors.softColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(24),
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 40,
+                                decoration: const BoxDecoration(
+                                  color: PrimaryColors.softColor,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(24),
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/icon_search.svg',
-                                      height: 16,
-                                      width: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        TextColors.greyText,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10.0),
-                                    Expanded(
-                                      child: TextField(
-                                        onChanged: (value) {
-                                          if (value.isNotEmpty) {
-                                            context
-                                                .read<SearchBloc>()
-                                                .add(SearchQueryEvent(value));
-                                          } else if (value.isEmpty) {
-                                            context
-                                                .read<SearchBloc>()
-                                                .add(SearchAllMoviesEvent());
-                                          }
-                                        },
-                                        style: const TextStyle(
-                                          fontFamily: "MM",
-                                          fontSize: 14,
-                                          color: TextColors.whiteText,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/icon_search.svg',
+                                        height: 16,
+                                        width: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          TextColors.greyText,
+                                          BlendMode.srcIn,
                                         ),
-                                        decoration: const InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.only(bottom: 10),
-                                          border: InputBorder.none,
-                                          hintText: "Type Something...",
-                                          hintStyle: TextStyle(
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        child: TextField(
+                                          onChanged: (value) {
+                                            if (value.isNotEmpty) {
+                                              context
+                                                  .read<SearchBloc>()
+                                                  .add(SearchQueryEvent(value));
+                                            } else if (value.isEmpty) {
+                                              context
+                                                  .read<SearchBloc>()
+                                                  .add(SearchAllMoviesEvent());
+                                            }
+                                          },
+                                          style: const TextStyle(
                                             fontFamily: "MM",
                                             fontSize: 14,
-                                            color: TextColors.greyText,
+                                            color: TextColors.whiteText,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.only(bottom: 10),
+                                            border: InputBorder.none,
+                                            hintText: "Type Something...",
+                                            hintStyle: TextStyle(
+                                              fontFamily: "MM",
+                                              fontSize: 14,
+                                              color: TextColors.greyText,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.cancel,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 12,
-                                  color: TextColors.whiteText,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.cancel,
+                                  style: const TextStyle(
+                                    fontFamily: "MM",
+                                    fontSize: 12,
+                                    color: TextColors.whiteText,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: RelatedActorList(
-                      actorsList: state.getActors,
+                    SliverToBoxAdapter(
+                      child: RelatedActorList(
+                        actorsList: state.getActors,
+                      ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: MovieRelatedHeader(
-                      movies: state.moviesearch,
+                    SliverToBoxAdapter(
+                      child: MovieRelatedHeader(
+                        movies: state.moviesearch,
+                      ),
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: RelatedSeachWidget(
-                            movie: state.moviesearch[index],
-                          ),
-                        );
-                      },
-                      childCount: state.moviesearch.length,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: RelatedSeachWidget(
+                              movie: state.moviesearch[index],
+                            ),
+                          );
+                        },
+                        childCount: state.moviesearch.length,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }
           if (state is EmptySearchState) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 25, bottom: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: PrimaryColors.softColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(24),
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 40,
+                                decoration: const BoxDecoration(
+                                  color: PrimaryColors.softColor,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(24),
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/icon_search.svg',
-                                      height: 16,
-                                      width: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        TextColors.greyText,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10.0),
-                                    Expanded(
-                                      child: TextField(
-                                        onChanged: (value) {
-                                          if (value.isNotEmpty) {
-                                            context
-                                                .read<SearchBloc>()
-                                                .add(SearchQueryEvent(value));
-                                          } else if (value.isEmpty) {
-                                            context
-                                                .read<SearchBloc>()
-                                                .add(SearchAllMoviesEvent());
-                                          }
-                                        },
-                                        style: const TextStyle(
-                                          fontFamily: "MM",
-                                          fontSize: 14,
-                                          color: TextColors.whiteText,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/icon_search.svg',
+                                        height: 16,
+                                        width: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          TextColors.greyText,
+                                          BlendMode.srcIn,
                                         ),
-                                        decoration: const InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.only(bottom: 10),
-                                          border: InputBorder.none,
-                                          hintText: "Type Something...",
-                                          hintStyle: TextStyle(
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        child: TextField(
+                                          onChanged: (value) {
+                                            if (value.isNotEmpty) {
+                                              context
+                                                  .read<SearchBloc>()
+                                                  .add(SearchQueryEvent(value));
+                                            } else if (value.isEmpty) {
+                                              context
+                                                  .read<SearchBloc>()
+                                                  .add(SearchAllMoviesEvent());
+                                            }
+                                          },
+                                          style: const TextStyle(
                                             fontFamily: "MM",
                                             fontSize: 14,
-                                            color: TextColors.greyText,
+                                            color: TextColors.whiteText,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.only(bottom: 10),
+                                            border: InputBorder.none,
+                                            hintText: "Type Something...",
+                                            hintStyle: TextStyle(
+                                              fontFamily: "MM",
+                                              fontSize: 14,
+                                              color: TextColors.greyText,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.cancel,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 12,
-                                  color: TextColors.whiteText,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.cancel,
+                                  style: const TextStyle(
+                                    fontFamily: "MM",
+                                    fontSize: 12,
+                                    color: TextColors.whiteText,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const _EmptySearch(),
-                ],
+                    const _EmptySearch(),
+                  ],
+                ),
               ),
             );
           }
@@ -350,7 +356,7 @@ class MovieRelatedHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -446,9 +452,10 @@ class RelatedActor extends StatelessWidget {
             Radius.circular(100),
           ),
           child: SizedBox(
-            height: 50,
-            width: 50,
+            height: 70,
+            width: 70,
             child: FittedBox(
+              fit: BoxFit.cover,
               child: CachedImage(
                 imageUrl: actors.thumbnail,
                 radius: 100,

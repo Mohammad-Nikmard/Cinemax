@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +25,16 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   late final TextEditingController phoneNumberController;
   late final TextEditingController nameController;
   File? image;
-
+  late User user;
   @override
   void initState() {
-    emailController = TextEditingController(text: AuthManager.readEmail());
+    user = AuthManager.getUser();
+
+    emailController = TextEditingController(text: user.email);
     pwController = TextEditingController(text: "mohammadNIkmard");
     phoneNumberController = TextEditingController(text: "+98 9377964183");
-    nameController = TextEditingController(text: AuthManager.readId());
+    nameController = TextEditingController(text: user.name);
+
     super.initState();
   }
 
@@ -52,12 +56,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     final directory = await getApplicationDocumentsDirectory();
     final name = basename(imagepath);
     final image = File("${directory.path}/$name");
+    final newImage = await File(imagepath).copy(image.path);
 
-    return File(imagepath).copy(image.path);
+    setState(() {
+      user = user.copy(imagePath: newImage.path);
+    });
+
+    return newImage;
   }
 
   @override
   Widget build(BuildContext context) {
+    final image = FileImage(File(user.imagePath));
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -70,7 +80,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 Column(
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,30 +117,20 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 barrierColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return modalProfileSheet();
+                                  return modalProfileSheet(context);
                                 });
                           },
                           child: Stack(
                             alignment: AlignmentDirectional.bottomEnd,
                             clipBehavior: Clip.none,
                             children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(100),
-                                ),
-                                child: SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: FittedBox(
-                                    fit: BoxFit.cover,
-                                    child: (image != null)
-                                        ? Image.file(
-                                            image!,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : const FlutterLogo(),
-                                  ),
-                                ),
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundImage: (user.imagePath == "")
+                                    ? SvgPicture.asset(
+                                        'assets/images/icon_user.svg',
+                                      ) as ImageProvider
+                                    : image as ImageProvider,
                               ),
                               Positioned(
                                 bottom: -8,
@@ -157,7 +157,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          AuthManager.readId(),
+                          user.name,
                           style: const TextStyle(
                             fontFamily: "MSB",
                             fontSize: 16,
@@ -166,7 +166,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          AuthManager.readEmail(),
+                          user.email,
                           style: const TextStyle(
                             fontFamily: "MM",
                             fontSize: 14,
@@ -177,6 +177,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     ),
                     const SizedBox(height: 25),
                     TextField(
+                      onChanged: (name) => user = user.copy(name: name),
                       controller: nameController,
                       style: const TextStyle(
                         color: TextColors.greyText,
@@ -312,6 +313,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       onPressed: () {
+                        AuthManager.setUser(user);
                         Navigator.pop(context);
                       },
                       child: Text(
@@ -333,7 +335,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     );
   }
 
-  Widget modalProfileSheet() {
+  Widget modalProfileSheet(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(30),
@@ -354,8 +356,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GestureDetector(
-                onTap: () async {
-                  await pickImage(ImageSource.camera);
+                onTap: () {
+                  pickImage(ImageSource.camera);
+
+                  Navigator.pop(context);
                 },
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(
@@ -397,8 +401,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: () async {
-                  await pickImage(ImageSource.gallery);
+                onTap: () {
+                  pickImage(ImageSource.gallery);
+                  Navigator.pop(context);
                 },
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(

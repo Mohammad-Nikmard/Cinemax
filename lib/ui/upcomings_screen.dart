@@ -28,24 +28,26 @@ class UpcomingsScreen extends StatelessWidget {
           if (state is UpcomingsLoadingState) {
             return const AppLoadingIndicator();
           } else if (state is UpcomingsResponseState) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomScrollView(
-                slivers: [
-                  const _Header(),
-                  state.getUpcomingsList.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (upList) {
-                      return _UpcomingsList(
-                        upList: upList,
-                      );
-                    },
-                  ),
-                ],
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomScrollView(
+                  slivers: [
+                    const _Header(),
+                    state.getUpcomingsList.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (upList) {
+                        return _UpcomingsList(
+                          upList: upList,
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             );
           }
@@ -277,7 +279,7 @@ class _Header extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

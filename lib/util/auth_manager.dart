@@ -1,10 +1,20 @@
+import 'dart:convert';
+
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/data/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthManager {
   static final SharedPreferences _preferences = locator.get();
   static final ValueNotifier notifier = ValueNotifier(null);
+
+  static final myUser = User(
+    "",
+    AuthManager.readId(),
+    AuthManager.readEmail(),
+    "123456",
+  );
 
   static void saveToken(String token) async {
     await _preferences.setString("access_token", token);
@@ -24,6 +34,7 @@ class AuthManager {
     _preferences.remove("access_token");
     _preferences.remove("ID");
     _preferences.remove("E-mail");
+    _preferences.remove("user");
     notifier.value = null;
   }
 
@@ -41,5 +52,17 @@ class AuthManager {
 
   static String readEmail() {
     return _preferences.getString("E-mail") ?? "";
+  }
+
+  static Future<void> setUser(User user) async {
+    final json = jsonEncode(user.toJson());
+
+    await _preferences.setString("user", json);
+  }
+
+  static User getUser() {
+    final json = _preferences.getString("user");
+
+    return json == null ? myUser : User.fromJson(jsonDecode(json));
   }
 }

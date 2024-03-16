@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:cinemax/constants/color_constants.dart';
@@ -21,64 +22,66 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 20),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context)!.profile,
-                    style: const TextStyle(
-                      fontFamily: "MSB",
-                      fontSize: 16,
-                      color: TextColors.whiteText,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SliverPadding(
-              padding: EdgeInsets.only(bottom: 25),
-              sliver: _ProfileChip(),
-            ),
-            const SliverPadding(
-              padding: EdgeInsets.only(bottom: 25),
-              sliver: _AccountChip(),
-            ),
-            const SliverPadding(
-              padding: EdgeInsets.only(bottom: 25),
-              sliver: _GeneralChip(),
-            ),
-            const SliverPadding(
-              padding: EdgeInsets.only(bottom: 40),
-              sliver: _MoreChip(),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(bottom: 50),
-              sliver: SliverToBoxAdapter(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 56,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      signoutDialog(context);
-                    },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20, top: 20),
+                  child: Center(
                     child: Text(
-                      AppLocalizations.of(context)!.logout,
+                      AppLocalizations.of(context)!.profile,
                       style: const TextStyle(
-                        color: PrimaryColors.blueAccentColor,
-                        fontSize: 16,
                         fontFamily: "MSB",
+                        fontSize: 16,
+                        color: TextColors.whiteText,
                       ),
                     ),
                   ),
                 ),
               ),
-            )
-          ],
+              const SliverPadding(
+                padding: EdgeInsets.only(bottom: 25),
+                sliver: _ProfileChip(),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.only(bottom: 25),
+                sliver: _AccountChip(),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.only(bottom: 25),
+                sliver: _GeneralChip(),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.only(bottom: 40),
+                sliver: _MoreChip(),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.only(bottom: 50),
+                sliver: SliverToBoxAdapter(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 56,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        signoutDialog(context);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.logout,
+                        style: const TextStyle(
+                          color: PrimaryColors.blueAccentColor,
+                          fontSize: 16,
+                          fontFamily: "MSB",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -508,20 +511,29 @@ class _AccountChip extends StatelessWidget {
   }
 }
 
-class _ProfileChip extends StatelessWidget {
+class _ProfileChip extends StatefulWidget {
   const _ProfileChip();
 
   @override
+  State<_ProfileChip> createState() => _ProfileChipState();
+}
+
+class _ProfileChipState extends State<_ProfileChip> {
+  @override
   Widget build(BuildContext context) {
+    final user = AuthManager.getUser();
+    final image = FileImage(File(user.imagePath));
+
     return SliverToBoxAdapter(
       child: GestureDetector(
-        onTap: () {
-          PersistentNavBarNavigator.pushNewScreen(
+        onTap: () async {
+          await PersistentNavBarNavigator.pushNewScreen(
             context,
             screen: const ProfileEditScreen(),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
+          setState(() {});
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -542,7 +554,11 @@ class _ProfileChip extends StatelessWidget {
                 CircleAvatar(
                   radius:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 15 : 25,
-                  backgroundColor: PrimaryColors.blueAccentColor,
+                  backgroundImage: (user.imagePath == "")
+                      ? SvgPicture.asset(
+                          'assets/images/icon_user.svg',
+                        ) as ImageProvider
+                      : image as ImageProvider,
                 ),
                 const SizedBox(
                   width: 10,
@@ -552,7 +568,7 @@ class _ProfileChip extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      AuthManager.readId(),
+                      user.name,
                       style: TextStyle(
                         fontFamily: "MSB",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -562,7 +578,7 @@ class _ProfileChip extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      AuthManager.readEmail(),
+                      user.email,
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)

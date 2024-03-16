@@ -30,70 +30,73 @@ class UpcomingMovieDetail extends StatelessWidget {
             if (state is UpDetailLoadingState) {
               return const AppLoadingIndicator();
             } else if (state is UpDetailResponseState) {
-              return CustomScrollView(
-                slivers: [
-                  _Header(
-                    upcomingtitle: upcomingItem.name,
-                  ),
-                  MovieHeadDetail(
-                    upcomingItem: upcomingItem,
-                  ),
-                  _Synopsis(
-                    synopsis: upcomingItem.synopsis,
-                  ),
-                  state.casts.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (castList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: UpcomingCastAndCrew(
-                            casts: castList,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, top: 20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.gallery,
-                            style: TextStyle(
-                              fontFamily: "MSB",
-                              fontSize:
-                                  (MediaQueryHandler.screenWidth(context) < 350)
-                                      ? 14
-                                      : 16,
-                              color: TextColors.whiteText,
+              return SafeArea(
+                child: CustomScrollView(
+                  slivers: [
+                    _Header(
+                      upcomingtitle: upcomingItem.name,
+                    ),
+                    MovieHeadDetail(
+                      upcomingItem: upcomingItem,
+                    ),
+                    _Synopsis(
+                      synopsis: upcomingItem.synopsis,
+                    ),
+                    state.casts.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (castList) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: UpcomingCastAndCrew(
+                              casts: castList,
                             ),
                           ),
-                          const SizedBox(height: 10.0),
-                        ],
+                        );
+                      },
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, right: 20.0, top: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.gallery,
+                              style: TextStyle(
+                                fontFamily: "MSB",
+                                fontSize:
+                                    (MediaQueryHandler.screenWidth(context) <
+                                            350)
+                                        ? 14
+                                        : 16,
+                                color: TextColors.whiteText,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  state.getphotos.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (gallery) {
-                      return _Gallery(
-                        photoList: gallery,
-                      );
-                    },
-                  ),
-                ],
+                    state.getphotos.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (gallery) {
+                        return _Gallery(
+                          photoList: gallery,
+                        );
+                      },
+                    ),
+                  ],
+                ),
               );
             }
             return Center(
@@ -177,7 +180,7 @@ class _Synopsis extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -191,32 +194,14 @@ class _Synopsis extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10.0),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Flexible(
-                  child: Text(
-                    synopsis,
-                    style: TextStyle(
-                      fontFamily: "MR",
-                      fontSize: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 12
-                          : 14,
-                      color: TextColors.whiteText,
-                    ),
-                  ),
-                ),
-                Text(
-                  "More",
-                  style: TextStyle(
-                    fontFamily: "MSB",
-                    fontSize: (MediaQueryHandler.screenWidth(context) < 350)
-                        ? 12
-                        : 14,
-                    color: PrimaryColors.blueAccentColor,
-                  ),
-                ),
-              ],
+            Text(
+              synopsis,
+              style: TextStyle(
+                fontFamily: "MR",
+                fontSize:
+                    (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
+                color: TextColors.whiteText,
+              ),
             ),
           ],
         ),
@@ -383,7 +368,7 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
         child: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -452,7 +437,6 @@ class UpcomingCastAndCrew extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 30),
         Text(
           AppLocalizations.of(context)!.casts,
           style: TextStyle(

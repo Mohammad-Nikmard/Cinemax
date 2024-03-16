@@ -34,17 +34,71 @@ class _WishlistScreenState extends State<WishlistScreen> {
           if (state is WishlistLoadingState) {
             return const AppLoadingIndicator();
           } else if (state is WishlistResponseState) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomScrollView(
-                slivers: [
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 30,
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: CustomScrollView(
+                  slivers: [
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 20,
+                      ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Row(
+                    SliverToBoxAdapter(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.wishlist,
+                            style: const TextStyle(
+                              fontFamily: "MSB",
+                              fontSize: 16,
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 35),
+                    ),
+                    state.getCards.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (cartList) {
+                        return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: WishlistWidget(
+                                  cart: cartList[index],
+                                  index: index,
+                                ),
+                              );
+                            },
+                            childCount: cartList.length,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else if (state is WishlistEmptyState) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -57,60 +111,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         ),
                       ],
                     ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 35),
-                  ),
-                  state.getCards.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (cartList) {
-                      return SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: WishlistWidget(
-                                cart: cartList[index],
-                                index: index,
-                              ),
-                            );
-                          },
-                          childCount: cartList.length,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            );
-          } else if (state is WishlistEmptyState) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.wishlist,
-                        style: const TextStyle(
-                          fontFamily: "MSB",
-                          fontSize: 16,
-                          color: TextColors.whiteText,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 35),
-                  const _EmptyWishlist(),
-                ],
+                    const SizedBox(height: 35),
+                    const _EmptyWishlist(),
+                  ],
+                ),
               ),
             );
           }
@@ -129,7 +133,7 @@ class _EmptyWishlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQueryHandler.screenHeight(context) - 150,
+      height: MediaQueryHandler.screenHeight(context) - 180,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
