@@ -258,20 +258,18 @@ class __SeasonChipState extends State<_SeasonChip> {
               setState(() {
                 selectedValue = value;
               });
-              Future.delayed(const Duration(milliseconds: 200), () {
-                context.read<SeriesBloc>().add(
-                      SeriesEpisodesFetchEvent(
-                        widget.seasons[items.indexOf(selectedValue!)].id,
-                        widget.seasons[items.indexOf(selectedValue!)].seriesId,
-                        widget.seriesName,
-                      ),
-                    );
-              });
+              context.read<SeriesBloc>().add(
+                    SeriesEpisodesFetchEvent(
+                      widget.seasons[items.indexOf(selectedValue!)].id,
+                      widget.seasons[items.indexOf(selectedValue!)].seriesId,
+                      widget.seriesName,
+                    ),
+                  );
             },
             buttonStyleData: const ButtonStyleData(
               padding: EdgeInsets.symmetric(horizontal: 16),
               height: 40,
-              width: 140,
+              width: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),

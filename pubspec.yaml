@@ -35,6 +35,10 @@ dependencies:
 
   dropdown_button2: ^2.3.9
 
+  image_picker: ^1.0.7
+  path_provider: ^2.1.2
+  pocketbase: ^0.18.1
+
 
  
 
