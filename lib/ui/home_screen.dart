@@ -16,6 +16,7 @@ import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -398,13 +399,26 @@ class _HomeHeaderState extends State<_HomeHeader> {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: (user.imagePath == "")
-                      ? SvgPicture.asset(
-                          'assets/images/icon_user.svg',
-                        ) as ImageProvider
-                      : image as ImageProvider,
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(100),
+                  ),
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: (user.imagePath == "")
+                          ? SvgPicture.asset(
+                              'assets/images/icon_user.svg',
+                              colorFilter: const ColorFilter.mode(
+                                TextColors.whiteText,
+                                BlendMode.srcIn,
+                              ),
+                            )
+                          : Image(image: image),
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Column(

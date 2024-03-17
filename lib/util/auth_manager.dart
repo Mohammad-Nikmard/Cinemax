@@ -34,6 +34,7 @@ class AuthManager {
     _preferences.remove("access_token");
     _preferences.remove("ID");
     _preferences.remove("E-mail");
+    _preferences.remove("RecordID");
     _preferences.remove("user");
     notifier.value = null;
   }
@@ -44,6 +45,22 @@ class AuthManager {
 
   static String readId() {
     return _preferences.getString("ID") ?? "";
+  }
+
+  static void saveRecordID(String id) async {
+    await _preferences.setString("RecordID", id);
+  }
+
+  static String readRecordID() {
+    return _preferences.getString("RecordID") ?? "";
+  }
+
+  static Future<void> saveNum(String phoneNumber) async {
+    await _preferences.setString("number", phoneNumber);
+  }
+
+  static String readNum() {
+    return _preferences.getString("number") ?? "";
   }
 
   static void saveEmail(String email) async {

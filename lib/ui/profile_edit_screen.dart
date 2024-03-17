@@ -1,11 +1,17 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:cinemax/bloc/profile/profile_bloc.dart';
+import 'package:cinemax/bloc/profile/profile_event.dart';
+import 'package:cinemax/bloc/profile/profile_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/widgets/back_label.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +30,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   late final TextEditingController pwController;
   late final TextEditingController phoneNumberController;
   late final TextEditingController nameController;
-  File? image;
+  File? imageFile;
   late User user;
   @override
   void initState() {
@@ -32,7 +38,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
     emailController = TextEditingController(text: user.email);
     pwController = TextEditingController(text: "mohammadNIkmard");
-    phoneNumberController = TextEditingController(text: "+98 9377964183");
+    phoneNumberController = TextEditingController(text: AuthManager.readNum());
     nameController = TextEditingController(text: user.name);
 
     super.initState();
@@ -43,26 +49,19 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
 
-      final imagePermenant = await seavePermenantImage(image.path);
+      final directory = await getApplicationDocumentsDirectory();
+      final name = basename(image.path);
+      final pathImage = File("${directory.path}/$name");
+      final newImage = await File(image.path).copy(pathImage.path);
+
+      imageFile = newImage;
+
       setState(() {
-        this.image = imagePermenant;
+        user = user.copy(imagePath: newImage.path);
       });
     } on PlatformException {
       // print(ex);
     }
-  }
-
-  Future<File> seavePermenantImage(String imagepath) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final name = basename(imagepath);
-    final image = File("${directory.path}/$name");
-    final newImage = await File(imagepath).copy(image.path);
-
-    setState(() {
-      user = user.copy(imagePath: newImage.path);
-    });
-
-    return newImage;
   }
 
   @override
@@ -124,13 +123,26 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             alignment: AlignmentDirectional.bottomEnd,
                             clipBehavior: Clip.none,
                             children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundImage: (user.imagePath == "")
-                                    ? SvgPicture.asset(
-                                        'assets/images/icon_user.svg',
-                                      ) as ImageProvider
-                                    : image as ImageProvider,
+                              ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                child: SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: (user.imagePath == "")
+                                        ? SvgPicture.asset(
+                                            'assets/images/icon_user.svg',
+                                            colorFilter: const ColorFilter.mode(
+                                              TextColors.whiteText,
+                                              BlendMode.srcIn,
+                                            ),
+                                          )
+                                        : Image(image: image),
+                                  ),
+                                ),
                               ),
                               Positioned(
                                 bottom: -8,
@@ -306,26 +318,74 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 35, top: 30),
-                  child: SizedBox(
-                    height: 56,
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        AuthManager.setUser(user);
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.saveChanges,
-                        style: const TextStyle(
-                          fontFamily: "MM",
-                          fontSize: 16,
-                          color: TextColors.whiteText,
+                BlocConsumer<ProfileBloc, ProfileState>(
+                  builder: (context, state) {
+                    if (state is ProfileIniState) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 35, top: 30),
+                        child: SizedBox(
+                          height: 56,
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (imageFile == null) {
+                              } else if (imageFile != null) {
+                                AuthManager.saveNum(phoneNumberController.text);
+                                AuthManager.setUser(user);
+                                // context.read<ProfileBloc>().add(UpdateDataEvent(
+                                //     AuthManager.readRecordID(), imageFile!));
+                              }
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.saveChanges,
+                              style: const TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                      );
+                    } else if (state is ProfileLoadingState) {
+                      return const AppLoadingIndicator();
+                    } else if (state is ProfileResponseState) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 35, top: 30),
+                        child: SizedBox(
+                          height: 56,
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (imageFile == null) {
+                              } else if (imageFile != null) {
+                                AuthManager.saveNum(phoneNumberController.text);
+                                AuthManager.setUser(user);
+                                // context.read<ProfileBloc>().add(UpdateDataEvent(
+                                //     AuthManager.readRecordID(), imageFile!));
+                              }
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.saveChanges,
+                              style: const TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    return Center(
+                      child: Text(AppLocalizations.of(context)!.state),
+                    );
+                  },
+                  listener: (context, state) {
+                    if (state is ProfileResponseState) {
+                      Navigator.pop(context);
+                    }
+                  },
                 ),
               ],
             ),

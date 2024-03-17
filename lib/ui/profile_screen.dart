@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/profile/profile_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/language_screen.dart';
 import 'package:cinemax/ui/notifications_screen.dart';
@@ -11,6 +13,7 @@ import 'package:cinemax/ui/reset_password_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -529,7 +532,10 @@ class _ProfileChipState extends State<_ProfileChip> {
         onTap: () async {
           await PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: const ProfileEditScreen(),
+            screen: BlocProvider(
+              create: (context) => ProfileBloc(locator.get()),
+              child: const ProfileEditScreen(),
+            ),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
@@ -551,14 +557,26 @@ class _ProfileChipState extends State<_ProfileChip> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-                CircleAvatar(
-                  radius:
-                      (MediaQueryHandler.screenWidth(context) < 350) ? 15 : 25,
-                  backgroundImage: (user.imagePath == "")
-                      ? SvgPicture.asset(
-                          'assets/images/icon_user.svg',
-                        ) as ImageProvider
-                      : image as ImageProvider,
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(100),
+                  ),
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: (user.imagePath == "")
+                          ? SvgPicture.asset(
+                              'assets/images/icon_user.svg',
+                              colorFilter: const ColorFilter.mode(
+                                TextColors.whiteText,
+                                BlendMode.srcIn,
+                              ),
+                            )
+                          : Image(image: image),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   width: 10,
