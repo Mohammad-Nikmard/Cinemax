@@ -12,4 +12,12 @@ class AppManager {
   static String? getLnag() {
     return _sharedPreferences.getString(languagePrefsKey);
   }
+
+  static Future<void> setFirstTime(bool isFirst) async {
+    await _sharedPreferences.setBool("FirstUsage", isFirst);
+  }
+
+  static bool isFistTime() {
+    return _sharedPreferences.getBool("FirstUsage") ?? true;
+  }
 }

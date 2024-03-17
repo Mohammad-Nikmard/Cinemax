@@ -86,7 +86,10 @@ class MovieDetailScreen extends StatelessWidget {
                   state.getPhotos.fold(
                     (exceptionMessage) {
                       return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: ExceptionMessage(),
+                        ),
                       );
                     },
                     (photoList) {
@@ -295,7 +298,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
       child: Column(
         children: [
           const SizedBox(
-            height: 25,
+            height: 40,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -393,7 +396,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               ),
             ],
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 35),
           ClipRRect(
             borderRadius: const BorderRadius.all(
               Radius.circular(12),

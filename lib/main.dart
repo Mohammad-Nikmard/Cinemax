@@ -6,7 +6,9 @@ import 'package:cinemax/bloc/splash/splash_bloc.dart';
 import 'package:cinemax/bloc/splash/splash_event.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/theme/main_theme.dart';
+import 'package:cinemax/ui/intro%20screens/intro_dashboard.dart';
 import 'package:cinemax/ui/splash_screen.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -42,10 +44,13 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           debugShowCheckedModeBanner: false,
           theme: mainTheme,
-          home: BlocProvider(
-            create: (context) => SplashBloc()..add(CheckConnectionEvent()),
-            child: const SplashScreen(),
-          ),
+          home: (AppManager.isFistTime())
+              ? const IntroDashboard()
+              : BlocProvider(
+                  create: (context) =>
+                      SplashBloc()..add(CheckConnectionEvent()),
+                  child: const SplashScreen(),
+                ),
         );
       },
     );

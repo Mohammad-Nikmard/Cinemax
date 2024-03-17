@@ -1,8 +1,15 @@
+import 'package:cinemax/bloc/splash/splash_bloc.dart';
+import 'package:cinemax/bloc/splash/splash_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/intro%20screens/first_intro_page.dart';
 import 'package:cinemax/ui/intro%20screens/second_intro_page.dart';
 import 'package:cinemax/ui/intro%20screens/third_intro_page.dart';
+import 'package:cinemax/ui/splash_screen.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroDashboard extends StatefulWidget {
@@ -122,9 +129,24 @@ class _IntroDashboardState extends State<IntroDashboard> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            controller.nextPage(
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.decelerate);
+                            if (controller.page == 2) {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: BlocProvider(
+                                  create: (context) =>
+                                      SplashBloc()..add(CheckConnectionEvent()),
+                                  child: const SplashScreen(),
+                                ),
+                                withNavBar: false,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                              AppManager.setFirstTime(false);
+                            } else {
+                              controller.nextPage(
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.decelerate);
+                            }
                           },
                           child: Container(
                             height: 60,
@@ -136,8 +158,13 @@ class _IntroDashboardState extends State<IntroDashboard> {
                               ),
                             ),
                             child: Center(
-                              child: Image.asset(
-                                  'assets/images/icon_arrow_right.png'),
+                              child: SvgPicture.asset(
+                                'assets/images/icon_arrow_right.svg',
+                                colorFilter: const ColorFilter.mode(
+                                  Colors.black,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
                             ),
                           ),
                         ),

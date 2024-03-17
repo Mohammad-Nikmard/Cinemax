@@ -16,7 +16,6 @@ import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
