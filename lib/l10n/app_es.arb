@@ -86,5 +86,8 @@
     "pwNotMatch": "Las contraseñas no coinciden",
     "agreement": "Debes estar de acuerdo con los términos",
     "exception": "Vaya! Error",
-    "state": "Estado no controlado"
+    "state": "Estado no controlado",
+    "noConnections": "Sin conexión a Internet",
+    "tryAgain": "Intentar otra vez",
+    "phoneNumber": "Número de teléfono"
 }

@@ -293,7 +293,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           fontFamily: "MR",
                           fontSize: 14),
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.pwConfirm,
+                        labelText: AppLocalizations.of(context)!.phoneNumber,
                         labelStyle: const TextStyle(
                             color: TextColors.whiteText, fontSize: 15),
                         enabledBorder: const OutlineInputBorder(

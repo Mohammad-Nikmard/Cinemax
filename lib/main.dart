@@ -2,11 +2,11 @@ import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/language/language_bloc.dart';
 import 'package:cinemax/bloc/language/language_event.dart';
 import 'package:cinemax/bloc/language/language_state.dart';
+import 'package:cinemax/bloc/splash/splash_bloc.dart';
+import 'package:cinemax/bloc/splash/splash_event.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/theme/main_theme.dart';
-import 'package:cinemax/ui/dashobard_screen.dart';
-import 'package:cinemax/ui/onboarding_screen.dart';
-import 'package:cinemax/util/auth_manager.dart';
+import 'package:cinemax/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -42,17 +42,12 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           debugShowCheckedModeBanner: false,
           theme: mainTheme,
-          home: condition(),
+          home: BlocProvider(
+            create: (context) => SplashBloc()..add(CheckConnectionEvent()),
+            child: const SplashScreen(),
+          ),
         );
       },
     );
-  }
-
-  condition() {
-    if (AuthManager.readToken().isEmpty) {
-      return const OnBoardingScreen();
-    } else if (AuthManager.readToken().isNotEmpty) {
-      return const DashboardScreen();
-    }
   }
 }

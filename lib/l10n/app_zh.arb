@@ -86,5 +86,8 @@
     "pwNotMatch": "密码不匹配",
     "agreement": "你必须同意这些条件",
     "exception": "哎呀！错误",
-    "state": "未处理状态"
+    "state": "未处理状态",
+    "noConnections": "没有网络连接",
+    "tryAgain": "再试一次",
+    "phoneNumber": "电话号码"
 }

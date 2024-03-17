@@ -86,5 +86,8 @@
     "pwNotMatch": "Les mots de passe ne correspondent pas",
     "agreement": "Vous devez accepter les conditions",
     "exception": "Oups ! Erreur",
-    "state": "État non géré"
+    "state": "État non géré",
+    "noConnections": "Pas de connexion Internet",
+    "tryAgain": "Essayer à nouveau",
+    "phoneNumber": "Numéro de téléphone"
 }

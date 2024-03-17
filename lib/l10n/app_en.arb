@@ -86,5 +86,8 @@
     "pwNotMatch": "Passwords do NOT match",
     "agreement": "You MUST agree to the terms",
     "exception": "Whopps! Error",
-    "state": "Unhandled state"
+    "state": "Unhandled state",
+    "noConnections": "No Internet Connection",
+    "tryAgain": "Try Again",
+    "phoneNumber": "Phone Number"
 }
