@@ -12,8 +12,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
           final result = await Connectivity().checkConnectivity();
           switch (result) {
             case ConnectivityResult.mobile:
-              emit(SplashResponseState());
             case ConnectivityResult.wifi:
+            case ConnectivityResult.vpn:
+            case ConnectivityResult.ethernet:
               emit(SplashResponseState());
             case ConnectivityResult.none:
               emit(SplashErrorState());
