@@ -1,6 +1,8 @@
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_event.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
+import 'package:cinemax/bloc/profile/profile_bloc.dart';
+import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
@@ -61,7 +63,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return [
       BlocProvider(
         create: (context) =>
-            HomeBloc(locator.get(), locator.get())..add(HomeDataRequestEvent()),
+            HomeBloc(locator.get(), locator.get(), locator.get())
+              ..add(HomeDataRequestEvent()),
         child: const HomeScreen(),
       ),
       BlocProvider(
@@ -78,7 +81,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         create: (context) => locator.get(),
         child: const WishlistScreen(),
       ),
-      const ProfileScreen(),
+      BlocProvider(
+        create: (context) => ProfileBloc(locator.get())..add(GetuserEvent()),
+        child: const ProfileScreen(),
+      ),
     ];
   }
 

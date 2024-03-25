@@ -8,3 +8,5 @@ class UpdateDataEvent extends ProfileEvent {
 
   UpdateDataEvent(this.id, this.file);
 }
+
+class GetuserEvent extends ProfileEvent {}

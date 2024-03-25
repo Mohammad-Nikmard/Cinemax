@@ -1,4 +1,5 @@
 import 'package:cinemax/data/datasource/authentication.dart';
+import 'package:cinemax/data/model/usera.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:dartz/dartz.dart';
 
@@ -7,6 +8,7 @@ abstract class AuthenticationRepository {
       String email, String name, String password, String passwordConfirm);
 
   Future<Either<String, String>> login(String password, String identity);
+  Future<Either<String, UserApp>> getCurrentUser(String id);
   Future<Either<String, dynamic>> sendImage(String userId, image);
 }
 
@@ -47,6 +49,16 @@ class AuthenticationRemoteRepo extends AuthenticationRepository {
       return left("success");
     } on ApiException catch (ex) {
       return right(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, UserApp>> getCurrentUser(String id) async {
+    try {
+      var response = await _datasource.getCurrentUser(id);
+      return right(response);
+    } on ApiException catch (ex) {
+      return left(ex.message);
     }
   }
 }

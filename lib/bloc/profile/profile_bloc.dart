@@ -1,6 +1,7 @@
 import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/profile/profile_state.dart';
 import 'package:cinemax/data/repository/authentication_repository.dart';
+import 'package:cinemax/util/auth_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
@@ -9,11 +10,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UpdateDataEvent>(
       (event, emit) async {
         emit(ProfileLoadingState());
-        var response =
-            await _authenticationRepository.sendImage(event.id, event.file);
-        response.fold((l) => print(l), (r) => print(r));
+
+        await _authenticationRepository.sendImage(event.id, event.file);
         emit(ProfileResponseState());
       },
     );
+
+    on<GetuserEvent>((event, emit) async {
+      var response = await _authenticationRepository
+          .getCurrentUser(AuthManager.readRecordID());
+      emit(UserResponseState(response));
+    });
   }
 }

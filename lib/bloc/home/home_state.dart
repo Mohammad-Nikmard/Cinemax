@@ -1,5 +1,6 @@
 import 'package:cinemax/data/model/banner.dart';
 import 'package:cinemax/data/model/movie.dart';
+import 'package:cinemax/data/model/usera.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class HomeState {}
@@ -9,6 +10,7 @@ class HomeInitState extends HomeState {}
 class HomeLoadingState extends HomeState {}
 
 class HomeResponseState extends HomeState {
+  Either<String, UserApp> currentUser;
   Either<String, List<BannerModel>> getBanners;
   Either<String, List<Movie>> getForYouSeries;
   Either<String, List<Movie>> getHottestSeries;
@@ -17,6 +19,7 @@ class HomeResponseState extends HomeState {
   Either<String, List<Movie>> getHottestMovies;
 
   HomeResponseState(
+      this.currentUser,
       this.getBanners,
       this.getForYouSeries,
       this.getHottestSeries,

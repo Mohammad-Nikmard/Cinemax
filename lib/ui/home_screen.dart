@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
@@ -7,9 +6,9 @@ import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
+import 'package:cinemax/data/model/usera.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
-import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
 import 'package:cinemax/widgets/exception_message.dart';
@@ -37,7 +36,18 @@ class HomeScreen extends StatelessWidget {
             return SafeArea(
               child: CustomScrollView(
                 slivers: [
-                  _HomeHeader(name: AuthManager.readId()),
+                  state.currentUser.fold(
+                    (exceptionMessage) {
+                      return SliverToBoxAdapter(
+                        child: Text(exceptionMessage),
+                      );
+                    },
+                    (user) {
+                      return _HomeHeader(
+                        user: user,
+                      );
+                    },
+                  ),
                   const SearchBox(),
                   state.getBanners.fold(
                     (exceptionMessage) {
@@ -377,8 +387,8 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HomeHeader extends StatefulWidget {
-  const _HomeHeader({required this.name});
-  final String name;
+  const _HomeHeader({required this.user});
+  final UserApp user;
 
   @override
   State<_HomeHeader> createState() => _HomeHeaderState();
@@ -387,8 +397,7 @@ class _HomeHeader extends StatefulWidget {
 class _HomeHeaderState extends State<_HomeHeader> {
   @override
   Widget build(BuildContext context) {
-    final user = AuthManager.getUser();
-    var image = FileImage(File(user.imagePath));
+    var image = FileImage(File(widget.user.imagePath));
     return SliverToBoxAdapter(
       child: Padding(
         padding:
@@ -407,7 +416,7 @@ class _HomeHeaderState extends State<_HomeHeader> {
                     width: 50,
                     child: FittedBox(
                       fit: BoxFit.cover,
-                      child: (user.imagePath == "")
+                      child: (widget.user.imagePath == "")
                           ? SvgPicture.asset(
                               'assets/images/icon_user.svg',
                               colorFilter: const ColorFilter.mode(
@@ -415,7 +424,9 @@ class _HomeHeaderState extends State<_HomeHeader> {
                                 BlendMode.srcIn,
                               ),
                             )
-                          : Image(image: image),
+                          : Image(
+                              image: image,
+                            ),
                     ),
                   ),
                 ),
@@ -424,7 +435,7 @@ class _HomeHeaderState extends State<_HomeHeader> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${AppLocalizations.of(context)!.hello}, ${user.name}",
+                      "${AppLocalizations.of(context)!.hello}, ${widget.user.name}",
                       style: TextStyle(
                         fontFamily: "MSB",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)

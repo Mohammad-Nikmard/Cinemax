@@ -27,7 +27,6 @@ class ProfileEditScreen extends StatefulWidget {
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   late final TextEditingController emailController;
-  late final TextEditingController pwController;
   late final TextEditingController phoneNumberController;
   late final TextEditingController nameController;
   File? imageFile;
@@ -37,11 +36,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     user = AuthManager.getUser();
 
     emailController = TextEditingController(text: user.email);
-    pwController = TextEditingController(text: "mohammadNIkmard");
     phoneNumberController = TextEditingController(text: AuthManager.readNum());
     nameController = TextEditingController(text: user.name);
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    phoneNumberController.dispose();
+    nameController.dispose();
+    super.dispose();
   }
 
   Future pickImage(ImageSource source) async {
@@ -230,39 +236,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           fontSize: 14),
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.email,
-                        labelStyle: const TextStyle(
-                            color: TextColors.whiteText, fontSize: 15),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 35),
-                    TextField(
-                      controller: pwController,
-                      readOnly: true,
-                      obscureText: true,
-                      style: const TextStyle(
-                          color: TextColors.greyText,
-                          fontFamily: "MR",
-                          fontSize: 14),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.password,
                         labelStyle: const TextStyle(
                             color: TextColors.whiteText, fontSize: 15),
                         enabledBorder: const OutlineInputBorder(

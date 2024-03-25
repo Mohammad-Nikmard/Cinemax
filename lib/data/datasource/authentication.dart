@@ -1,3 +1,4 @@
+import 'package:cinemax/data/model/usera.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:dio/dio.dart';
@@ -7,6 +8,7 @@ abstract class AuthenticationDatasource {
       String email, String name, String password, String passwordConfirm);
 
   Future<String> login(String password, String identity);
+  Future<UserApp> getCurrentUser(String id);
   Future<dynamic> sendImageProfile(String userid, image);
 }
 
@@ -71,14 +73,31 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
   }
 
   @override
+  Future<UserApp> getCurrentUser(String id) async {
+    Map<String, dynamic> qparams = {
+      'filter': 'id="$id"',
+    };
+    try {
+      var response = await _dio.get(
+        "/api/collections/users/records",
+        queryParameters: qparams,
+      );
+      return UserApp.withJson(response.data["items"][0]);
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 12);
+    }
+  }
+
+  @override
   Future<dynamic> sendImageProfile(String userid, image) async {
     FormData formData = FormData.fromMap({
-      "profile_pic": image== null
-          ? null
-          : await MultipartFile.fromFile(image.path),
+      "profile_pic":
+          image == null ? null : await MultipartFile.fromFile(image.path),
     });
 
-    var response = await _dio.patch(
+    await _dio.patch(
       "/api/collections/users/records/$userid",
       data: formData,
     );

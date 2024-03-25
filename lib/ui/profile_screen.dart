@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/profile/profile_bloc.dart';
+import 'package:cinemax/bloc/profile/profile_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/usera.dart';
 import 'package:cinemax/ui/language_screen.dart';
 import 'package:cinemax/ui/notifications_screen.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
@@ -25,68 +26,81 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20, top: 20),
-                  child: Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.profile,
-                      style: const TextStyle(
-                        fontFamily: "MSB",
-                        fontSize: 16,
-                        color: TextColors.whiteText,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 25),
-                sliver: _ProfileChip(),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 25),
-                sliver: _AccountChip(),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 25),
-                sliver: _GeneralChip(),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 40),
-                sliver: _MoreChip(),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 50),
-                sliver: SliverToBoxAdapter(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 56,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        signoutDialog(context);
-                      },
+      body: SafeArea(child: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20, top: 20),
+                    child: Center(
                       child: Text(
-                        AppLocalizations.of(context)!.logout,
+                        AppLocalizations.of(context)!.profile,
                         style: const TextStyle(
-                          color: PrimaryColors.blueAccentColor,
-                          fontSize: 16,
                           fontFamily: "MSB",
+                          fontSize: 16,
+                          color: TextColors.whiteText,
                         ),
                       ),
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+                if (state is UserResponseState) ...{
+                  state.user.fold(
+                    (exceptionMessage) {
+                      return SliverToBoxAdapter(
+                        child: Text(exceptionMessage),
+                      );
+                    },
+                    (user) {
+                      return SliverPadding(
+                        padding: EdgeInsets.only(bottom: 25),
+                        sliver: _ProfileChip(user: user),
+                      );
+                    },
+                  ),
+                },
+                const SliverPadding(
+                  padding: EdgeInsets.only(bottom: 25),
+                  sliver: _AccountChip(),
+                ),
+                const SliverPadding(
+                  padding: EdgeInsets.only(bottom: 25),
+                  sliver: _GeneralChip(),
+                ),
+                const SliverPadding(
+                  padding: EdgeInsets.only(bottom: 40),
+                  sliver: _MoreChip(),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.only(bottom: 50),
+                  sliver: SliverToBoxAdapter(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 56,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          signoutDialog(context);
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.logout,
+                          style: const TextStyle(
+                            color: PrimaryColors.blueAccentColor,
+                            fontSize: 16,
+                            fontFamily: "MSB",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      )),
     );
   }
 }
@@ -515,7 +529,8 @@ class _AccountChip extends StatelessWidget {
 }
 
 class _ProfileChip extends StatefulWidget {
-  const _ProfileChip();
+  const _ProfileChip({required this.user});
+  final UserApp user;
 
   @override
   State<_ProfileChip> createState() => _ProfileChipState();
@@ -524,9 +539,7 @@ class _ProfileChip extends StatefulWidget {
 class _ProfileChipState extends State<_ProfileChip> {
   @override
   Widget build(BuildContext context) {
-    final user = AuthManager.getUser();
-    final image = FileImage(File(user.imagePath));
-
+    var image = FileImage(File(widget.user.imagePath));
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () async {
@@ -566,7 +579,7 @@ class _ProfileChipState extends State<_ProfileChip> {
                     width: 50,
                     child: FittedBox(
                       fit: BoxFit.cover,
-                      child: (user.imagePath == "")
+                      child: (widget.user.imagePath == "")
                           ? SvgPicture.asset(
                               'assets/images/icon_user.svg',
                               colorFilter: const ColorFilter.mode(
@@ -574,7 +587,9 @@ class _ProfileChipState extends State<_ProfileChip> {
                                 BlendMode.srcIn,
                               ),
                             )
-                          : Image(image: image),
+                          : Image(
+                              image: image,
+                            ),
                     ),
                   ),
                 ),
@@ -586,7 +601,7 @@ class _ProfileChipState extends State<_ProfileChip> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      user.name,
+                      widget.user.name,
                       style: TextStyle(
                         fontFamily: "MSB",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
@@ -596,7 +611,7 @@ class _ProfileChipState extends State<_ProfileChip> {
                       ),
                     ),
                     Text(
-                      user.email,
+                      AuthManager.readEmail(),
                       style: TextStyle(
                         fontFamily: "MM",
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
