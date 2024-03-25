@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/profile/profile_bloc.dart';
@@ -13,6 +12,7 @@ import 'package:cinemax/ui/profile_edit_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -539,7 +539,6 @@ class _ProfileChip extends StatefulWidget {
 class _ProfileChipState extends State<_ProfileChip> {
   @override
   Widget build(BuildContext context) {
-    var image = FileImage(File(widget.user.imagePath));
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () async {
@@ -587,8 +586,9 @@ class _ProfileChipState extends State<_ProfileChip> {
                                 BlendMode.srcIn,
                               ),
                             )
-                          : Image(
-                              image: image,
+                          : CachedImage(
+                              imageUrl: widget.user.imagePath,
+                              radius: 100,
                             ),
                     ),
                   ),

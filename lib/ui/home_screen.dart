@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
@@ -11,6 +10,7 @@ import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
@@ -397,7 +397,6 @@ class _HomeHeader extends StatefulWidget {
 class _HomeHeaderState extends State<_HomeHeader> {
   @override
   Widget build(BuildContext context) {
-    var image = FileImage(File(widget.user.imagePath));
     return SliverToBoxAdapter(
       child: Padding(
         padding:
@@ -424,8 +423,9 @@ class _HomeHeaderState extends State<_HomeHeader> {
                                 BlendMode.srcIn,
                               ),
                             )
-                          : Image(
-                              image: image,
+                          : CachedImage(
+                              imageUrl: widget.user.imagePath,
+                              radius: 100,
                             ),
                     ),
                   ),
