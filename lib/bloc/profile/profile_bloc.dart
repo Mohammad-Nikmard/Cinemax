@@ -10,7 +10,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       (event, emit) async {
         emit(ProfileLoadingState());
         var response =
-            await _authenticationRepository.updateData(event.file, event.id);
+            await _authenticationRepository.sendImage(event.id, event.file);
         response.fold((l) => print(l), (r) => print(r));
         emit(ProfileResponseState());
       },

@@ -332,8 +332,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               } else if (imageFile != null) {
                                 AuthManager.saveNum(phoneNumberController.text);
                                 AuthManager.setUser(user);
-                                // context.read<ProfileBloc>().add(UpdateDataEvent(
-                                //     AuthManager.readRecordID(), imageFile!));
+                                context.read<ProfileBloc>().add(UpdateDataEvent(
+                                    AuthManager.readRecordID(), imageFile!));
                               }
                             },
                             child: Text(
@@ -361,8 +361,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               } else if (imageFile != null) {
                                 AuthManager.saveNum(phoneNumberController.text);
                                 AuthManager.setUser(user);
-                                // context.read<ProfileBloc>().add(UpdateDataEvent(
-                                //     AuthManager.readRecordID(), imageFile!));
+                                context.read<ProfileBloc>().add(UpdateDataEvent(
+                                    AuthManager.readRecordID(), imageFile!));
                               }
                             },
                             child: Text(

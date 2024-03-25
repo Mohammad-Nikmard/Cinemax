@@ -1,18 +1,13 @@
-import 'dart:io';
-// import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:dio/dio.dart';
-// import 'package:http_parser/http_parser.dart';
-// import 'package:mime_type/mime_type.dart';
-// import 'package:pocketbase/pocketbase.dart';
 
 abstract class AuthenticationDatasource {
   Future<void> register(
       String email, String name, String password, String passwordConfirm);
 
   Future<String> login(String password, String identity);
-  Future<String> updateData(File image, String id);
+  Future<dynamic> sendImageProfile(String userid, image);
 }
 
 class AuthenticationRemoteDatasource extends AuthenticationDatasource {
@@ -76,39 +71,16 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
   }
 
   @override
-  Future<String> updateData(File image, String id) async {
-    // String fileName = user.imagePath.split('/').last;
-    // String mimeType = mime(fileName) ?? '';
-    // String mimee = mimeType.split('/')[0];
-    // String type = mimeType.split('/')[1];
+  Future<dynamic> sendImageProfile(String userid, image) async {
+    FormData formData = FormData.fromMap({
+      "profile_pic": image== null
+          ? null
+          : await MultipartFile.fromFile(image.path),
+    });
 
-    // var imageData = FormData.fromMap({
-    //   "image": await MultipartFile.fromFile(
-    //     image.path,
-    //     filename: fileName,
-    //     contentType: MediaType(mimee, type),
-    //   ),
-    // });
-    try {
-      // var response = await _dio.patch(
-      //   "/api/collections/users/records/:$id",
-      //   data: {
-      //     "profile_pic": image,
-      //   },
-      // );
-      // final pb = PocketBase(StringConstants.baseImage);
-      // final body = <String, dynamic>{
-      //   "profile_pic": imageData,
-      // };
-      // await pb.collection('users').update(id, body: body);
-      // if (record. == 200) {
-      //   return "Success";
-      // }
-    } on DioException catch (ex) {
-      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
-    } catch (ex) {
-      throw ApiException("$ex", 12);
-    }
-    return "";
+    var response = await _dio.patch(
+      "/api/collections/users/records/$userid",
+      data: formData,
+    );
   }
 }

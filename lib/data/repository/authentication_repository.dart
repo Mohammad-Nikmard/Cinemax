@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cinemax/data/datasource/authentication.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:dartz/dartz.dart';
@@ -9,7 +7,7 @@ abstract class AuthenticationRepository {
       String email, String name, String password, String passwordConfirm);
 
   Future<Either<String, String>> login(String password, String identity);
-  Future<Either<String, String>> updateData(File image, String id);
+  Future<Either<String, dynamic>> sendImage(String userId, image);
 }
 
 class AuthenticationRemoteRepo extends AuthenticationRepository {
@@ -43,16 +41,12 @@ class AuthenticationRemoteRepo extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<String, String>> updateData(File image, String id) async {
+  Future<Either<String, dynamic>> sendImage(String userId, image) async {
     try {
-      String response = await _datasource.updateData(image, id);
-      if (response.isNotEmpty) {
-        return right("Update was successful");
-      } else {
-        return left("empty");
-      }
+      await _datasource.sendImageProfile(userId, image);
+      return left("success");
     } on ApiException catch (ex) {
-      return left(ex.message);
+      return right(ex.message);
     }
   }
 }
