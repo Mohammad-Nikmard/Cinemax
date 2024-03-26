@@ -10,6 +10,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie_casts.dart';
 import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/movie.dart';
+import 'package:cinemax/ui/comments_screen.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -17,10 +18,12 @@ import 'package:cinemax/widgets/comment_section.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   const MovieDetailScreen({super.key, required this.movie});
@@ -99,8 +102,26 @@ class MovieDetailScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  const SliverToBoxAdapter(
-                    child: CommentSection(),
+                  SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () {
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: CommentsScreen(
+                            movieName: movie.name,
+                            year: movie.year,
+                            imageURL: movie.thumbnail,
+                          ),
+                          withNavBar: false,
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 25, bottom: 20),
+                        child: CommentSection(),
+                      ),
+                    ),
                   ),
                 ],
               );

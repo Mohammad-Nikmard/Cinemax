@@ -1,10 +1,20 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/ui/post_comment_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class CommentsScreen extends StatelessWidget {
-  const CommentsScreen({super.key});
+  const CommentsScreen(
+      {super.key,
+      required this.imageURL,
+      required this.movieName,
+      required this.year});
+  final String movieName;
+  final String year;
+  final String imageURL;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +23,13 @@ class CommentsScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            const SliverPadding(
-              padding: EdgeInsets.only(bottom: 30),
-              sliver: _CommentsHeader(),
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 30),
+              sliver: _CommentsHeader(
+                movieName: movieName,
+                year: year,
+                imageURL: imageURL,
+              ),
             ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -39,7 +53,7 @@ class CommentsScreen extends StatelessWidget {
 }
 
 class _UserReview extends StatelessWidget {
-  const _UserReview({super.key});
+  const _UserReview();
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +168,11 @@ class _UserReview extends StatelessWidget {
 }
 
 class _CommentsHeader extends StatelessWidget {
-  const _CommentsHeader({super.key});
+  const _CommentsHeader(
+      {required this.imageURL, required this.movieName, required this.year});
+  final String movieName;
+  final String year;
+  final String imageURL;
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +209,12 @@ class _CommentsHeader extends StatelessWidget {
                     (MediaQueryHandler.screenWidth(context) < 380) ? 120 : 140,
                 width:
                     (MediaQueryHandler.screenWidth(context) < 380) ? 85 : 105,
-                child: const ColoredBox(
-                  color: PrimaryColors.blueAccentColor,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: CachedImage(
+                    imageUrl: imageURL,
+                    radius: 10,
+                  ),
                 ),
               ),
             ),
@@ -203,7 +225,7 @@ class _CommentsHeader extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Oppenheimer",
+                      movieName,
                       style: TextStyle(
                         fontSize: (MediaQueryHandler.screenWidth(context) < 290)
                             ? 12
@@ -214,7 +236,7 @@ class _CommentsHeader extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      "(2023)",
+                      "($year)",
                       style: TextStyle(
                         fontSize: (MediaQueryHandler.screenWidth(context) < 290)
                             ? 10
@@ -233,6 +255,32 @@ class _CommentsHeader extends StatelessWidget {
                         : 22,
                     color: TextColors.whiteText,
                     fontFamily: "MSB",
+                  ),
+                ),
+                const SizedBox(height: 5),
+                GestureDetector(
+                  onTap: () {
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: PostCommentScreen(
+                        movieName: movieName,
+                        year: year,
+                        imageURL: imageURL,
+                      ),
+                      withNavBar: false,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
+                  },
+                  child: Text(
+                    "ADD YOUR REVIEW",
+                    style: TextStyle(
+                      fontSize: (MediaQueryHandler.screenWidth(context) < 290)
+                          ? 10
+                          : 14,
+                      color: PrimaryColors.blueAccentColor,
+                      fontFamily: "MSB",
+                    ),
                   ),
                 ),
               ],

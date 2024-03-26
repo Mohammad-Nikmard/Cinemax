@@ -1,11 +1,19 @@
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PostCommentScreen extends StatefulWidget {
-  const PostCommentScreen({super.key});
+  const PostCommentScreen(
+      {super.key,
+      required this.imageURL,
+      required this.movieName,
+      required this.year});
+  final String imageURL;
+  final String movieName;
+  final String year;
 
   @override
   State<PostCommentScreen> createState() => _PostCommentScreenState();
@@ -28,7 +36,11 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const _Header(),
+                _Header(
+                  movieName: widget.movieName,
+                  year: widget.year,
+                  imageURL: widget.imageURL,
+                ),
                 const Text(
                   "YOUR RATING",
                   style: TextStyle(
@@ -195,7 +207,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 5),
                         Row(
                           children: [
                             Checkbox(
@@ -288,41 +300,64 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({super.key});
+  const _Header(
+      {required this.imageURL, required this.movieName, required this.year});
+  final String imageURL;
+  final String movieName;
+  final String year;
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 20, bottom: 20),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: Row(
         children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: SvgPicture.asset(
+              'assets/images/icon_arrow_back.svg',
+              height: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
+              width: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
+              colorFilter: const ColorFilter.mode(
+                TextColors.whiteText,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
           ClipRRect(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(8),
             ),
             child: SizedBox(
               height: 100,
               width: 75,
-              child: ColoredBox(
-                color: PrimaryColors.blueAccentColor,
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: CachedImage(
+                  imageUrl: imageURL,
+                  radius: 8,
+                ),
               ),
             ),
           ),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Oppenheimer",
-                style: TextStyle(
+                movieName,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 18,
                   color: TextColors.whiteText,
                 ),
               ),
               Text(
-                "(2023)",
-                style: TextStyle(
+                "($year)",
+                style: const TextStyle(
                   fontFamily: "MR",
                   fontSize: 16,
                   color: TextColors.greyText,

@@ -10,6 +10,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
+import 'package:cinemax/ui/comments_screen.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -23,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class SeriesDetailScreen extends StatelessWidget {
   const SeriesDetailScreen({super.key, required this.series});
@@ -130,9 +132,24 @@ class SeriesDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const _Gallery(),
-                  const SliverToBoxAdapter(
-                    child: CommentSection(),
-                  )
+                  SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () {
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: CommentsScreen(
+                            movieName: series.name,
+                            year: series.year,
+                            imageURL: series.thumbnail,
+                          ),
+                          withNavBar: false,
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                      },
+                      child: const CommentSection(),
+                    ),
+                  ),
                 ],
               );
             }
