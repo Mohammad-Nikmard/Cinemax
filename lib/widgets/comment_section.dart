@@ -2,6 +2,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CommentSection extends StatefulWidget {
   const CommentSection({super.key});
@@ -46,9 +47,9 @@ class _CommentSectionState extends State<CommentSection> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Text(
-                    "Comments",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.comments,
+                    style: const TextStyle(
                       fontFamily: "MSB",
                       fontSize: 20,
                       color: TextColors.whiteText,

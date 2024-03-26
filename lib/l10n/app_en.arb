@@ -89,5 +89,19 @@
     "state": "Unhandled state",
     "noConnections": "No Internet Connection",
     "tryAgain": "Try Again",
-    "phoneNumber": "Phone Number"
+    "phoneNumber": "Phone Number",
+    "comments": "Comments",
+    "userReview": "Users Review",
+    "addReview": "ADD YOUR REVIEW",
+    "addRating": "ADD YOUR RATING",
+    "yourReview": "YOUR REVIEW",
+    "rheadline": "Write a headline for your review here",
+    "rReview": "Write your review here",
+    "spoil": "Does your review contain spoiler?",
+    "submit": "Submit",
+    "conditionOfUse": "Condition of use.",
+    "couCaption": "The data i'm submitting is true and not copyrighted by a third party.",
+    "youRated": "You rated",
+    "yes": "Yes",
+    "no": "No"
 }

@@ -4,6 +4,7 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PostCommentScreen extends StatefulWidget {
   const PostCommentScreen(
@@ -41,9 +42,9 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   year: widget.year,
                   imageURL: widget.imageURL,
                 ),
-                const Text(
-                  "YOUR RATING",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.addRating,
+                  style: const TextStyle(
                     fontSize: 18,
                     color: TextColors.whiteText,
                     fontFamily: "MSB",
@@ -82,7 +83,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      " You rated $rateText / 10",
+                      " ${AppLocalizations.of(context)!.youRated} $rateText / 10",
                       style: const TextStyle(
                         fontFamily: "MM",
                         fontSize: 14,
@@ -92,9 +93,9 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  "YOUR REVIEW",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.yourReview,
+                  style: const TextStyle(
                     fontSize: 18,
                     color: TextColors.whiteText,
                     fontFamily: "MSB",
@@ -108,11 +109,11 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     fontSize: 14,
                   ),
                   controller: headlineController,
-                  decoration: const InputDecoration(
-                    hintText: "Write a headline for your review here",
-                    hintStyle:
-                        TextStyle(color: TextColors.greyText, fontSize: 14),
-                    enabledBorder: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.rheadline,
+                    hintStyle: const TextStyle(
+                        color: TextColors.greyText, fontSize: 14),
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
                         color: TextColors.greyText,
@@ -121,7 +122,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                         Radius.circular(15),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
                         color: TextColors.greyText,
@@ -141,11 +142,11 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     fontSize: 14,
                   ),
                   controller: reviewController,
-                  decoration: const InputDecoration(
-                    hintText: "Write your review here",
-                    hintStyle:
-                        TextStyle(color: TextColors.greyText, fontSize: 14),
-                    enabledBorder: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.rReview,
+                    hintStyle: const TextStyle(
+                        color: TextColors.greyText, fontSize: 14),
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
                         color: TextColors.greyText,
@@ -154,7 +155,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                         Radius.circular(15),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
                         color: TextColors.greyText,
@@ -171,9 +172,9 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   children: [
                     SizedBox(
                       width: MediaQueryHandler.screenWidth(context) - 190,
-                      child: const Text(
-                        "Does your review contain spoiler? ",
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.spoil,
+                        style: const TextStyle(
                           fontFamily: "MR",
                           fontSize: 14,
                           color: TextColors.whiteText,
@@ -197,9 +198,9 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                                 });
                               },
                             ),
-                            const Text(
-                              "Yes",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.yes,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontFamily: "MR",
                                 color: TextColors.whiteText,
@@ -223,9 +224,9 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                                 });
                               },
                             ),
-                            const Text(
-                              "No",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.no,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontFamily: "MR",
                                 color: TextColors.whiteText,
@@ -243,9 +244,9 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   width: MediaQueryHandler.screenWidth(context),
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: const Text(
-                      "Submit",
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.submit,
+                      style: const TextStyle(
                         color: TextColors.whiteText,
                         fontSize: 16,
                         fontFamily: "MSB",
@@ -254,24 +255,24 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 25),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Text(
-                            "I agree to the ",
-                            style: TextStyle(
+                            AppLocalizations.of(context)!.agree,
+                            style: const TextStyle(
                               color: TextColors.whiteText,
                               fontSize: 14,
                               fontFamily: "MR",
                             ),
                           ),
                           Text(
-                            "Condition of use.",
-                            style: TextStyle(
+                            AppLocalizations.of(context)!.conditionOfUse,
+                            style: const TextStyle(
                               color: PrimaryColors.blueAccentColor,
                               fontSize: 14,
                               fontFamily: "MSB",
@@ -280,8 +281,8 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                         ],
                       ),
                       Text(
-                        "The data i'm submitting is true and not copyrighted by a third party.",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.couCaption,
+                        style: const TextStyle(
                           color: TextColors.whiteText,
                           fontSize: 14,
                           fontFamily: "MR",
@@ -347,12 +348,15 @@ class _Header extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                movieName,
-                style: const TextStyle(
-                  fontFamily: "MSB",
-                  fontSize: 18,
-                  color: TextColors.whiteText,
+              SizedBox(
+                width: 200,
+                child: Text(
+                  movieName,
+                  style: const TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 18,
+                    color: TextColors.whiteText,
+                  ),
                 ),
               ),
               Text(

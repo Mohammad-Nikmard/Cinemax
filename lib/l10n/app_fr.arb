@@ -89,5 +89,19 @@
     "state": "État non géré",
     "noConnections": "Pas de connexion Internet",
     "tryAgain": "Essayer à nouveau",
-    "phoneNumber": "Numéro de téléphone"
+    "phoneNumber": "Numéro de téléphone",
+    "comments": "commentaires",
+    "userReview": "Avis des utilisateurs",
+    "addReview": "AJOUTEZ VOTRE AVIS",
+    "addRating": "AJOUTEZ VOTRE NOTE",
+    "yourReview": "VOTRE AVIS",
+    "rheadline": "Écrivez un titre pour votre avis ici",
+    "rReview": "Écrivez votre avis ici",
+    "spoil": "Votre critique contient-elle du spoiler ?",
+    "submit": "Soumettre",
+    "conditionOfUse": "État d'usage.",
+    "couCaption": "Les données que je soumets sont vraies et ne sont pas protégées par des droits d'auteur par un tiers.",
+    "youRated": "Vous avez noté",
+    "yes": "Oui",
+    "no": "Non"
 }

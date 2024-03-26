@@ -147,7 +147,10 @@ class SeriesDetailScreen extends StatelessWidget {
                               PageTransitionAnimation.cupertino,
                         );
                       },
-                      child: const CommentSection(),
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: CommentSection(),
+                      ),
                     ),
                   ),
                 ],

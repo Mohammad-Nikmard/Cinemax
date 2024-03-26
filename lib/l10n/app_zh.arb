@@ -89,5 +89,19 @@
     "state": "未处理状态",
     "noConnections": "没有网络连接",
     "tryAgain": "再试一次",
-    "phoneNumber": "电话号码"
+    "phoneNumber": "电话号码",
+    "comments": "评论",
+    "userReview": "用户评论",
+    "addReview": "添加您的评论",
+    "addRating": "添加您的评分",
+    "yourReview": "你的意见",
+    "rheadline": "在这里写下您的评论标题",
+    "rReview": "在这里写下您的评论",
+    "spoil": "您的评论是否包含剧透？",
+    "submit": "提交",
+    "conditionOfUse": "使用条件。",
+    "couCaption": "我提交的数据是真实的，不受第三方版权保护。",
+    "youRated": "您评价",
+    "yes": "是的",
+    "no": "不"
 }

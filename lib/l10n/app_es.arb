@@ -89,5 +89,19 @@
     "state": "Estado no controlado",
     "noConnections": "Sin conexión a Internet",
     "tryAgain": "Intentar otra vez",
-    "phoneNumber": "Número de teléfono"
+    "phoneNumber": "Número de teléfono",
+    "comments": "Comentarios",
+    "userReview": "Revisión de los usuarios",
+    "addReview": "AGREGA TU EVALUACIÓN",
+    "addRating": "AGREGA TU CALIFICACIÓN",
+    "yourReview": "TU RESEÑA",
+    "rheadline": "Escriba un titular para su reseña aquí",
+    "rReview": "Escribe tu reseña aquí",
+    "spoil": "Tu reseña contiene spoiler?",
+    "submit": "Entregar",
+    "conditionOfUse": "Condición de uso.",
+    "couCaption": "Los datos que envío son verdaderos y no tienen derechos de autor de terceros.",
+    "youRated": "usted calificó",
+    "yes": "Sí",
+    "no": "No"
 }
