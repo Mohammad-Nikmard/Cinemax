@@ -262,6 +262,18 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                                   headlineController.text,
                                   double.parse(rateText),
                                   hasSpoiler));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: _SnackFailPostMessage(
+                                    error:
+                                        "You headline and review can NOT be empty.",
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                  elevation: 0,
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              );
                             }
                           },
                           child: Text(
@@ -290,6 +302,18 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                                   headlineController.text,
                                   double.parse(rateText),
                                   hasSpoiler));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: _SnackFailPostMessage(
+                                    error:
+                                        "You headline and review can NOT be empty.",
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                  elevation: 0,
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              );
                             }
                           },
                           child: Text(
@@ -310,7 +334,17 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   listener: (context, state) {
                     if (state is PostCommentResponse) {
                       state.commentResponse.fold(
-                        (exceptionMessage) {},
+                        (exceptionMessage) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: _SnackFailPostMessage(
+                                  error: exceptionMessage),
+                              duration: const Duration(seconds: 3),
+                              elevation: 0,
+                              backgroundColor: Colors.transparent,
+                            ),
+                          );
+                        },
                         (response) {
                           Navigator.pop(context);
                         },
@@ -434,6 +468,41 @@ class _Header extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _SnackFailPostMessage extends StatelessWidget {
+  const _SnackFailPostMessage({required this.error});
+  final String error;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18.0),
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.redColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Center(
+            child: Text(
+              error,
+              style: const TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 12,
+                fontFamily: "MSB",
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
