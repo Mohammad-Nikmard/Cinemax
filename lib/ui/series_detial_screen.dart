@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/series/series_bloc.dart';
 import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/bloc/series/series_state.dart';
@@ -137,10 +139,16 @@ class SeriesDetailScreen extends StatelessWidget {
                       onTap: () {
                         PersistentNavBarNavigator.pushNewScreen(
                           context,
-                          screen: CommentsScreen(
-                            movieName: series.name,
-                            year: series.year,
-                            imageURL: series.thumbnail,
+                          screen: BlocProvider(
+                            create: (context) => CommentsBloc(locator.get())
+                              ..add(
+                                CommentFetchEvent(series.id),
+                              ),
+                            child: CommentsScreen(
+                              movieName: series.name,
+                              year: series.year,
+                              imageURL: series.thumbnail,
+                            ),
                           ),
                           withNavBar: false,
                           pageTransitionAnimation:

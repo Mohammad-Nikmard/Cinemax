@@ -1,8 +1,14 @@
+import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/ui/post_comment_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/exception_message.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,31 +28,53 @@ class CommentsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.only(bottom: 30),
-              sliver: _CommentsHeader(
-                movieName: movieName,
-                year: year,
-                imageURL: imageURL,
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: _UserReview(),
-                    );
-                  },
-                  childCount: 5,
-                ),
-              ),
-            ),
-          ],
+        child: BlocBuilder<CommentsBloc, CommentsState>(
+          builder: (context, state) {
+            if (state is CommensLoadingState) {
+              return const AppLoadingIndicator();
+            } else if (state is CommentsResponseState) {
+              return CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 30),
+                    sliver: _CommentsHeader(
+                      movieName: movieName,
+                      year: year,
+                      imageURL: imageURL,
+                    ),
+                  ),
+                  state.getComments.fold(
+                    (exceptionMessage) {
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
+                      );
+                    },
+                    (commentsList) {
+                      return SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: _UserReview(
+                                  comment: commentsList[index],
+                                ),
+                              );
+                            },
+                            childCount: commentsList.length,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            }
+            return Center(
+              child: Text(AppLocalizations.of(context)!.state),
+            );
+          },
         ),
       ),
     );
@@ -54,7 +82,8 @@ class CommentsScreen extends StatelessWidget {
 }
 
 class _UserReview extends StatelessWidget {
-  const _UserReview();
+  const _UserReview({required this.comment});
+  final Comment comment;
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +104,27 @@ class _UserReview extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(
-                          radius: (MediaQueryHandler.screenWidth(context) < 290)
-                              ? 15
-                              : 20,
-                          backgroundColor: PrimaryColors.blueAccentColor,
+                        ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(100),
+                          ),
+                          child: SizedBox(
+                            height:
+                                (MediaQueryHandler.screenWidth(context) < 290)
+                                    ? 30
+                                    : 40,
+                            width:
+                                (MediaQueryHandler.screenWidth(context) < 290)
+                                    ? 30
+                                    : 40,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: CachedImage(
+                                imageUrl: comment.userThumbnail,
+                                radius: 100,
+                              ),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: (MediaQueryHandler.screenWidth(context) < 380)
@@ -90,7 +135,7 @@ class _UserReview extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "name of the user",
+                              comment.username,
                               style: TextStyle(
                                 fontSize:
                                     (MediaQueryHandler.screenWidth(context) <
@@ -102,7 +147,7 @@ class _UserReview extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "date released",
+                              "2024-03-26",
                               style: TextStyle(
                                 fontFamily: "MR",
                                 fontSize:
@@ -134,7 +179,7 @@ class _UserReview extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          "7 / 10",
+                          "${comment.rate} / 10",
                           style: TextStyle(
                             fontFamily: "MR",
                             color: TextColors.greyText,
@@ -150,7 +195,7 @@ class _UserReview extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 Text(
-                  "You'll have to have your wits about you and your brain fully switched on watching Oppenheimer as it could easily get away from a nonattentive viewer. This is intelligent filmmaking which shows it's audience great respect. It fires dialogue packed with information at a relentless pace and jumps to very different times in Oppenheimer's life continuously through it's 3 hour runtime. There are visual clues to guide the viewer through these times but again you'll have to get to grips with these quite quickly. This relentlessness helps to express the urgency with which the US attacked it's chase for the atomic bomb before Germany could do the same. An absolute career best performance from (the consistenly brilliant) Cillian Murphy anchors the film. This is a nailed on Oscar performance. In fact the whole cast are fantastic (apart maybe for the sometimes overwrought Emily Blunt performance). RDJ is also particularly brilliant in a return to proper acting after his decade or so of calling it in. The screenplay is dense and layered (I'd say it was a thick as a Bible), cinematography is quite stark and spare for the most part but imbued with rich, lucious colour in moments (especially scenes with Florence Pugh), the score is beautiful at times but mostly anxious and oppressive, adding to the relentless pacing. The 3 hour runtime flies by. All in all I found it an intense, taxing but highly rewarding watch. This is film making at it finest. A really great watch.",
+                  comment.text,
                   style: TextStyle(
                     fontSize: (MediaQueryHandler.screenWidth(context) < 380)
                         ? 12

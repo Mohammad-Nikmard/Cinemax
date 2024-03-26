@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/movies/movies_bloc.dart';
 import 'package:cinemax/bloc/movies/movies_event.dart';
 import 'package:cinemax/bloc/movies/movies_state.dart';
@@ -18,7 +20,6 @@ import 'package:cinemax/widgets/comment_section.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -107,10 +108,16 @@ class MovieDetailScreen extends StatelessWidget {
                       onTap: () {
                         PersistentNavBarNavigator.pushNewScreen(
                           context,
-                          screen: CommentsScreen(
-                            movieName: movie.name,
-                            year: movie.year,
-                            imageURL: movie.thumbnail,
+                          screen: BlocProvider(
+                            create: (context) => CommentsBloc(locator.get())
+                              ..add(
+                                CommentFetchEvent(movie.id),
+                              ),
+                            child: CommentsScreen(
+                              movieName: movie.name,
+                              year: movie.year,
+                              imageURL: movie.thumbnail,
+                            ),
                           ),
                           withNavBar: false,
                           pageTransitionAnimation:
