@@ -8,6 +8,7 @@ import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/theme/main_theme.dart';
 import 'package:cinemax/ui/comments_screen.dart';
 import 'package:cinemax/ui/intro%20screens/intro_dashboard.dart';
+import 'package:cinemax/ui/post_comment_screen.dart';
 import 'package:cinemax/ui/splash_screen.dart';
 import 'package:cinemax/util/app_manager.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
           //             SplashBloc()..add(CheckConnectionEvent()),
           //         child: const SplashScreen(),
           //       ),
-          home: CommentsScreen(),
+          home: const PostCommentScreen(),
         );
       },
     );

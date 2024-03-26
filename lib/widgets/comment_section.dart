@@ -17,11 +17,11 @@ class _CommentSectionState extends State<CommentSection> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       width: MediaQueryHandler.screenWidth(context),
       height: containerHeight,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: PrimaryColors.softColor,
         borderRadius: BorderRadius.all(
           Radius.circular(15),
@@ -29,14 +29,13 @@ class _CommentSectionState extends State<CommentSection> {
       ),
       child: LayoutBuilder(
         builder: ((context, constraints) {
-          print("this is height : ${constraints.maxHeight}");
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: [
-                  ClipRRect(
+                  const ClipRRect(
                     borderRadius: BorderRadius.all(
                       Radius.circular(3),
                     ),
@@ -47,7 +46,7 @@ class _CommentSectionState extends State<CommentSection> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(
+                  const Text(
                     "Comments",
                     style: TextStyle(
                       fontFamily: "MSB",
@@ -67,7 +66,7 @@ class _CommentSectionState extends State<CommentSection> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "title",
                     style: TextStyle(
                       fontSize: 18,
@@ -85,7 +84,7 @@ class _CommentSectionState extends State<CommentSection> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
+                      const Text(
                         "7 / 10",
                         style: TextStyle(
                           fontFamily: "MR",
@@ -98,7 +97,7 @@ class _CommentSectionState extends State<CommentSection> {
                 ],
               ),
               const SizedBox(height: 15),
-              Flexible(
+              const Flexible(
                 child: Text(
                   "The story is presented really well and through the eyes of Oppenheimer. 90% of the movie feels like a flashback scene which though looks really cool, doesn't actually feel like something I would watch again. As in classic Nolan style 3 timelines are running simultaneously - before the atom bomb dropped, after and the present. I feel like this could have been handled better especially in the second half of the movie. The two main events in the movies the bomb explosion and the last act felt underwhelming. Actually the bomb explosion scene for which everyone was waiting so intently for was underwhelming beyond belief - Nolan should have used CGI 100%, it looked like an explosion from the 90s. There were so many characters and sub-stories that it felt like someone compressed an entire tv series into a 3 hour long movie.",
                   style: TextStyle(
