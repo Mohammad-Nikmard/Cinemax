@@ -13,7 +13,9 @@ class UserApp {
       jsonMapObject['id'],
       jsonMapObject['collectionId'],
       jsonMapObject['username'],
-      "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["profile_pic"]}",
+      jsonMapObject["profile_pic"] == null
+          ? ""
+          : "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["profile_pic"]}",
     );
   }
 }

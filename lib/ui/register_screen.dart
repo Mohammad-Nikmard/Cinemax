@@ -45,6 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -131,8 +132,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontSize: 14),
                     obscureText: _obsecureText,
                     decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.only(left: 10, right: 40),
+                      contentPadding: const EdgeInsets.only(
+                          left: 10, right: 40, bottom: 20, top: 20),
                       labelText: AppLocalizations.of(context)!.password,
                       labelStyle: const TextStyle(
                           color: TextColors.greyText, fontSize: 15),
@@ -192,8 +193,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontSize: 14),
                     obscureText: _obsecureText,
                     decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.only(left: 10, right: 40),
+                      contentPadding: const EdgeInsets.only(
+                          left: 10, right: 40, bottom: 20, top: 20),
                       labelText: AppLocalizations.of(context)!.pwConfirm,
                       labelStyle: const TextStyle(
                           color: TextColors.greyText, fontSize: 15),

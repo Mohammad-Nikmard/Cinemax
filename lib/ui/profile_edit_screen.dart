@@ -45,6 +45,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   @override
   void dispose() {
     emailController.dispose();
+
     phoneNumberController.dispose();
     nameController.dispose();
     super.dispose();

@@ -14,7 +14,6 @@ abstract class AuthenticationDatasource {
 
 class AuthenticationRemoteDatasource extends AuthenticationDatasource {
   final Dio _dio;
-  final user = AuthManager.getUser();
 
   AuthenticationRemoteDatasource(this._dio);
 

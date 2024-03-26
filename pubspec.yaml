@@ -38,12 +38,8 @@ dependencies:
 
   image_picker: ^1.0.7
   path_provider: ^2.1.2
-  pocketbase: ^0.18.1
-  # http_parser: ^4.0.2
-  # mime_type: ^1.0.0
 
 
- 
 
 
   cupertino_icons: ^1.0.6

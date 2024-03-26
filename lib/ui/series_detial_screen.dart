@@ -13,6 +13,7 @@ import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/comment_section.dart';
 import 'package:cinemax/widgets/episode_widget.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -129,6 +130,9 @@ class SeriesDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const _Gallery(),
+                  const SliverToBoxAdapter(
+                    child: CommentSection(),
+                  )
                 ],
               );
             }
