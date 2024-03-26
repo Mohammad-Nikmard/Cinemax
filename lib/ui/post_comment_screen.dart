@@ -2,6 +2,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 class PostCommentScreen extends StatefulWidget {
   const PostCommentScreen({super.key});
@@ -15,6 +16,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
   final reviewController = TextEditingController();
 
   bool hasSpoiler = false;
+  String rateText = "3";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +50,36 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     color: SecondaryColors.orangeColor,
                   ),
                   onRatingUpdate: (rating) {
-                    print(rating);
+                    setState(() {
+                      rateText = rating.toString();
+                    });
                   },
                   itemSize: 25,
                   glowColor: SecondaryColors.orangeColor,
                   glowRadius: 0.5,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/images/tick_image.svg",
+                      colorFilter: const ColorFilter.mode(
+                        SecondaryColors.orangeColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      " You rated $rateText / 10",
+                      style: const TextStyle(
+                        fontFamily: "MM",
+                        fontSize: 14,
+                        color: SecondaryColors.orangeColor,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 const Text(
                   "YOUR REVIEW",
                   style: TextStyle(
@@ -217,37 +242,41 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                const Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "I agree to the ",
-                          style: TextStyle(
-                            color: TextColors.whiteText,
-                            fontSize: 14,
-                            fontFamily: "MR",
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 25),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "I agree to the ",
+                            style: TextStyle(
+                              color: TextColors.whiteText,
+                              fontSize: 14,
+                              fontFamily: "MR",
+                            ),
                           ),
-                        ),
-                        Text(
-                          "Condition of use.",
-                          style: TextStyle(
-                            color: PrimaryColors.blueAccentColor,
-                            fontSize: 14,
-                            fontFamily: "MSB",
+                          Text(
+                            "Condition of use.",
+                            style: TextStyle(
+                              color: PrimaryColors.blueAccentColor,
+                              fontSize: 14,
+                              fontFamily: "MSB",
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      "The data i'm submitting is true and not copyrighted by a third party.",
-                      style: TextStyle(
-                        color: TextColors.whiteText,
-                        fontSize: 14,
-                        fontFamily: "MR",
+                        ],
                       ),
-                    ),
-                  ],
+                      Text(
+                        "The data i'm submitting is true and not copyrighted by a third party.",
+                        style: TextStyle(
+                          color: TextColors.whiteText,
+                          fontSize: 14,
+                          fontFamily: "MR",
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
