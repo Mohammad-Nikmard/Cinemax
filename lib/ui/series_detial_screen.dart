@@ -148,6 +148,7 @@ class SeriesDetailScreen extends StatelessWidget {
                               movieName: series.name,
                               year: series.year,
                               imageURL: series.thumbnail,
+                              movieID: series.id,
                             ),
                           ),
                           withNavBar: false,

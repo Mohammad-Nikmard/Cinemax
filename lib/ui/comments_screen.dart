@@ -1,3 +1,4 @@
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
@@ -18,10 +19,12 @@ class CommentsScreen extends StatelessWidget {
       {super.key,
       required this.imageURL,
       required this.movieName,
-      required this.year});
+      required this.year,
+      required this.movieID});
   final String movieName;
   final String year;
   final String imageURL;
+  final String movieID;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,7 @@ class CommentsScreen extends StatelessWidget {
                       movieName: movieName,
                       year: year,
                       imageURL: imageURL,
+                      movieID: movieID,
                     ),
                   ),
                   state.getComments.fold(
@@ -98,6 +102,7 @@ class _UserReview extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,6 +200,17 @@ class _UserReview extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 Text(
+                  comment.headline,
+                  style: TextStyle(
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 380)
+                        ? 16
+                        : 20,
+                    fontFamily: "MSB",
+                    color: TextColors.whiteText,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Text(
                   comment.text,
                   style: TextStyle(
                     fontSize: (MediaQueryHandler.screenWidth(context) < 380)
@@ -215,10 +231,14 @@ class _UserReview extends StatelessWidget {
 
 class _CommentsHeader extends StatelessWidget {
   const _CommentsHeader(
-      {required this.imageURL, required this.movieName, required this.year});
+      {required this.imageURL,
+      required this.movieName,
+      required this.year,
+      required this.movieID});
   final String movieName;
   final String year;
   final String imageURL;
+  final String movieID;
 
   @override
   Widget build(BuildContext context) {
@@ -307,10 +327,14 @@ class _CommentsHeader extends StatelessWidget {
                   onTap: () {
                     PersistentNavBarNavigator.pushNewScreen(
                       context,
-                      screen: PostCommentScreen(
-                        movieName: movieName,
-                        year: year,
-                        imageURL: imageURL,
+                      screen: BlocProvider(
+                        create: (context) => CommentsBloc(locator.get()),
+                        child: PostCommentScreen(
+                          movieName: movieName,
+                          year: year,
+                          imageURL: imageURL,
+                          movieID: movieID,
+                        ),
                       ),
                       withNavBar: false,
                       pageTransitionAnimation:

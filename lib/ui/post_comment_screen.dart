@@ -1,7 +1,12 @@
+import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_event.dart';
+import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,10 +16,12 @@ class PostCommentScreen extends StatefulWidget {
       {super.key,
       required this.imageURL,
       required this.movieName,
-      required this.year});
+      required this.year,
+      required this.movieID});
   final String imageURL;
   final String movieName;
   final String year;
+  final String movieID;
 
   @override
   State<PostCommentScreen> createState() => _PostCommentScreenState();
@@ -239,20 +246,77 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
-                  height: 54,
-                  width: MediaQueryHandler.screenWidth(context),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      AppLocalizations.of(context)!.submit,
-                      style: const TextStyle(
-                        color: TextColors.whiteText,
-                        fontSize: 16,
-                        fontFamily: "MSB",
-                      ),
-                    ),
-                  ),
+                BlocConsumer<CommentsBloc, CommentsState>(
+                  builder: (context, state) {
+                    if (state is CommentsInitState) {
+                      return SizedBox(
+                        height: 54,
+                        width: MediaQueryHandler.screenWidth(context),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (headlineController.text.isNotEmpty &&
+                                reviewController.text.isNotEmpty) {
+                              context.read<CommentsBloc>().add(PostCommentEvent(
+                                  widget.movieID,
+                                  reviewController.text.trim(),
+                                  headlineController.text,
+                                  double.parse(rateText),
+                                  hasSpoiler));
+                            }
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.submit,
+                            style: const TextStyle(
+                              color: TextColors.whiteText,
+                              fontSize: 16,
+                              fontFamily: "MSB",
+                            ),
+                          ),
+                        ),
+                      );
+                    } else if (state is CommensLoadingState) {
+                      return const AppLoadingIndicator();
+                    } else if (state is PostCommentResponse) {
+                      return SizedBox(
+                        height: 54,
+                        width: MediaQueryHandler.screenWidth(context),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (headlineController.text.isNotEmpty &&
+                                reviewController.text.isNotEmpty) {
+                              context.read<CommentsBloc>().add(PostCommentEvent(
+                                  widget.movieID,
+                                  reviewController.text.trim(),
+                                  headlineController.text,
+                                  double.parse(rateText),
+                                  hasSpoiler));
+                            }
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.submit,
+                            style: const TextStyle(
+                              color: TextColors.whiteText,
+                              fontSize: 16,
+                              fontFamily: "MSB",
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    return Center(
+                      child: Text(AppLocalizations.of(context)!.state),
+                    );
+                  },
+                  listener: (context, state) {
+                    if (state is PostCommentResponse) {
+                      state.commentResponse.fold(
+                        (exceptionMessage) {},
+                        (response) {
+                          Navigator.pop(context);
+                        },
+                      );
+                    }
+                  },
                 ),
                 const SizedBox(height: 15),
                 Padding(
