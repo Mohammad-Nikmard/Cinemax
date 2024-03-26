@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           //             SplashBloc()..add(CheckConnectionEvent()),
           //         child: const SplashScreen(),
           //       ),
-          home: const PostCommentScreen(),
+          home: const CommentsScreen(),
         );
       },
     );

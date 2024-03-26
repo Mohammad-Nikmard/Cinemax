@@ -58,20 +58,30 @@ class _UserReview extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Row(
+                    Row(
                       children: [
                         CircleAvatar(
-                          radius: 20,
+                          radius: (MediaQueryHandler.screenWidth(context) < 290)
+                              ? 15
+                              : 20,
                           backgroundColor: PrimaryColors.blueAccentColor,
                         ),
-                        SizedBox(width: 15),
+                        SizedBox(
+                          width: (MediaQueryHandler.screenWidth(context) < 380)
+                              ? 5
+                              : 15,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "name of the user",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize:
+                                    (MediaQueryHandler.screenWidth(context) <
+                                            380)
+                                        ? 12
+                                        : 18,
                                 color: TextColors.whiteText,
                                 fontFamily: "MM",
                               ),
@@ -80,7 +90,11 @@ class _UserReview extends StatelessWidget {
                               "date released",
                               style: TextStyle(
                                 fontFamily: "MR",
-                                fontSize: 16,
+                                fontSize:
+                                    (MediaQueryHandler.screenWidth(context) <
+                                            290)
+                                        ? 10
+                                        : 16,
                                 color: TextColors.whiteText,
                               ),
                             ),
@@ -92,18 +106,27 @@ class _UserReview extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                           'assets/images/icon_star.svg',
+                          height: (MediaQueryHandler.screenWidth(context) < 290)
+                              ? 18
+                              : 30,
+                          width: (MediaQueryHandler.screenWidth(context) < 290)
+                              ? 18
+                              : 30,
                           colorFilter: const ColorFilter.mode(
                             SecondaryColors.orangeColor,
                             BlendMode.srcIn,
                           ),
                         ),
                         const SizedBox(width: 8),
-                        const Text(
+                        Text(
                           "7 / 10",
                           style: TextStyle(
                             fontFamily: "MR",
                             color: TextColors.greyText,
-                            fontSize: 18,
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 380)
+                                    ? 14
+                                    : 18,
                           ),
                         ),
                       ],
@@ -111,10 +134,12 @@ class _UserReview extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 15),
-                const Text(
+                Text(
                   "You'll have to have your wits about you and your brain fully switched on watching Oppenheimer as it could easily get away from a nonattentive viewer. This is intelligent filmmaking which shows it's audience great respect. It fires dialogue packed with information at a relentless pace and jumps to very different times in Oppenheimer's life continuously through it's 3 hour runtime. There are visual clues to guide the viewer through these times but again you'll have to get to grips with these quite quickly. This relentlessness helps to express the urgency with which the US attacked it's chase for the atomic bomb before Germany could do the same. An absolute career best performance from (the consistenly brilliant) Cillian Murphy anchors the film. This is a nailed on Oscar performance. In fact the whole cast are fantastic (apart maybe for the sometimes overwrought Emily Blunt performance). RDJ is also particularly brilliant in a return to proper acting after his decade or so of calling it in. The screenplay is dense and layered (I'd say it was a thick as a Bible), cinematography is quite stark and spare for the most part but imbued with rich, lucious colour in moments (especially scenes with Florence Pugh), the score is beautiful at times but mostly anxious and oppressive, adding to the relentless pacing. The 3 hour runtime flies by. All in all I found it an intense, taxing but highly rewarding watch. This is film making at it finest. A really great watch.",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 380)
+                        ? 12
+                        : 14,
                     fontFamily: "MM",
                     color: TextColors.whiteText,
                   ),
@@ -145,29 +170,34 @@ class _CommentsHeader extends StatelessWidget {
               },
               child: SvgPicture.asset(
                 'assets/images/icon_arrow_back.svg',
-                height: 30,
-                width: 30,
+                height:
+                    (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
+                width: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
                 colorFilter: const ColorFilter.mode(
                   TextColors.whiteText,
                   BlendMode.srcIn,
                 ),
               ),
             ),
-            const SizedBox(width: 30),
-            const ClipRRect(
-              borderRadius: BorderRadius.all(
+            SizedBox(
+              width: (MediaQueryHandler.screenWidth(context) < 380) ? 15 : 30,
+            ),
+            ClipRRect(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(10),
               ),
               child: SizedBox(
-                height: 140,
-                width: 105,
-                child: ColoredBox(
+                height:
+                    (MediaQueryHandler.screenWidth(context) < 380) ? 120 : 140,
+                width:
+                    (MediaQueryHandler.screenWidth(context) < 380) ? 85 : 105,
+                child: const ColoredBox(
                   color: PrimaryColors.blueAccentColor,
                 ),
               ),
             ),
             const SizedBox(width: 15),
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -175,16 +205,20 @@ class _CommentsHeader extends StatelessWidget {
                     Text(
                       "Oppenheimer",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 290)
+                            ? 12
+                            : 18,
                         color: TextColors.whiteText,
                         fontFamily: "MM",
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       "(2023)",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: (MediaQueryHandler.screenWidth(context) < 290)
+                            ? 10
+                            : 14,
                         color: TextColors.greyText,
                         fontFamily: "MR",
                       ),
@@ -194,7 +228,9 @@ class _CommentsHeader extends StatelessWidget {
                 Text(
                   "Users review",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 290)
+                        ? 14
+                        : 22,
                     color: TextColors.whiteText,
                     fontFamily: "MSB",
                   ),
