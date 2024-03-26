@@ -1,11 +1,13 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CommentSection extends StatefulWidget {
-  const CommentSection({super.key});
+  const CommentSection({super.key, required this.comment});
+  final Comment comment;
 
   @override
   State<CommentSection> createState() => _CommentSectionState();
@@ -67,12 +69,15 @@ class _CommentSectionState extends State<CommentSection> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "title",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: "MM",
-                      color: TextColors.whiteText,
+                  SizedBox(
+                    width: MediaQueryHandler.screenWidth(context) - 180,
+                    child: Text(
+                      widget.comment.headline,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: "MSB",
+                        color: TextColors.whiteText,
+                      ),
                     ),
                   ),
                   Row(
@@ -85,9 +90,9 @@ class _CommentSectionState extends State<CommentSection> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      const Text(
-                        "7 / 10",
-                        style: TextStyle(
+                      Text(
+                        "${widget.comment.rate} / 10",
+                        style: const TextStyle(
                           fontFamily: "MR",
                           color: TextColors.greyText,
                           fontSize: 18,
@@ -98,10 +103,10 @@ class _CommentSectionState extends State<CommentSection> {
                 ],
               ),
               const SizedBox(height: 15),
-              const Flexible(
+              Flexible(
                 child: Text(
-                  "The story is presented really well and through the eyes of Oppenheimer. 90% of the movie feels like a flashback scene which though looks really cool, doesn't actually feel like something I would watch again. As in classic Nolan style 3 timelines are running simultaneously - before the atom bomb dropped, after and the present. I feel like this could have been handled better especially in the second half of the movie. The two main events in the movies the bomb explosion and the last act felt underwhelming. Actually the bomb explosion scene for which everyone was waiting so intently for was underwhelming beyond belief - Nolan should have used CGI 100%, it looked like an explosion from the 90s. There were so many characters and sub-stories that it felt like someone compressed an entire tv series into a 3 hour long movie.",
-                  style: TextStyle(
+                  widget.comment.text,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontFamily: "MM",
                     color: TextColors.whiteText,

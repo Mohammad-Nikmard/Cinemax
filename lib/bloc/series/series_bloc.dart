@@ -1,6 +1,7 @@
 import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/bloc/series/series_state.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
+import 'package:cinemax/data/repository/comment_repository.dart';
 import 'package:cinemax/data/repository/series_repository.dart';
 import 'package:cinemax/data/repository/wishlist_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
   final SeriesRepository _seriesRepository;
   final WishlistRepository _wishlistRepository;
-  SeriesBloc(this._seriesRepository, this._wishlistRepository)
+  final CommentsRepository _commentsRepository;
+  SeriesBloc(this._seriesRepository, this._wishlistRepository,
+      this._commentsRepository)
       : super(SeriesInitState()) {
     on<SeriesDataRequestEvent>(
       (event, emit) async {
@@ -18,8 +21,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var firstSeasonEpisode =
             await _seriesRepository.getFirstSeasonEpisode(event.seriesId);
         var isLiked = _wishlistRepository.likedOnList(event.seriesName);
+        var comments = await _commentsRepository.getComments(event.seriesId);
         emit(SeriesResponseState(
-            getSeasons, casts, firstSeasonEpisode, isLiked));
+            getSeasons, casts, firstSeasonEpisode, isLiked, comments));
       },
     );
     on<WishlistAddToCartEvent>(
@@ -45,7 +49,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var casts = await _seriesRepository.getSeriesCast(event.seriesId);
         var episodes = await _seriesRepository.getEpisodes(event.seasonId);
         var isLiked = _wishlistRepository.likedOnList(event.seriesName);
-        emit(SeriesResponseState(getSeasons, casts, episodes, isLiked));
+        var comments = await _commentsRepository.getComments(event.seriesId);
+        emit(SeriesResponseState(
+            getSeasons, casts, episodes, isLiked, comments));
       },
     );
     ;

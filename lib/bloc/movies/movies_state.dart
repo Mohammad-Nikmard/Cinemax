@@ -1,3 +1,4 @@
+import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/data/model/movie_casts.dart';
 import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:dartz/dartz.dart';
@@ -12,6 +13,8 @@ class MoviesresponseState extends MoviesState {
   Either<String, List<Moviesgallery>> getPhotos;
   Either<String, List<MovieCasts>> castList;
   bool isLiked;
+  Either<String, List<Comment>> getComments;
 
-  MoviesresponseState(this.getPhotos, this.castList, this.isLiked);
+  MoviesresponseState(
+      this.getPhotos, this.castList, this.isLiked, this.getComments);
 }

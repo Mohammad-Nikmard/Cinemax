@@ -33,8 +33,9 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MovieBloc(locator.get(), locator.get())
-        ..add(MoviesDataRequestEvent(movie.id, movie.name)),
+      create: (context) =>
+          MovieBloc(locator.get(), locator.get(), locator.get())
+            ..add(MoviesDataRequestEvent(movie.id, movie.name)),
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: BlocBuilder<MovieBloc, MoviesState>(
@@ -103,33 +104,47 @@ class MovieDetailScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () {
-                        PersistentNavBarNavigator.pushNewScreen(
-                          context,
-                          screen: BlocProvider(
-                            create: (context) => CommentsBloc(locator.get())
-                              ..add(
-                                CommentFetchEvent(movie.id),
+                  state.getComments.fold(
+                    (l) {
+                      return const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: ExceptionMessage(),
+                        ),
+                      );
+                    },
+                    (commentList) {
+                      return SliverToBoxAdapter(
+                        child: GestureDetector(
+                          onTap: () {
+                            PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: BlocProvider(
+                                create: (context) => CommentsBloc(locator.get())
+                                  ..add(
+                                    CommentFetchEvent(movie.id),
+                                  ),
+                                child: CommentsScreen(
+                                  movieName: movie.name,
+                                  year: movie.year,
+                                  imageURL: movie.thumbnail,
+                                  movieID: movie.id,
+                                ),
                               ),
-                            child: CommentsScreen(
-                              movieName: movie.name,
-                              year: movie.year,
-                              imageURL: movie.thumbnail,
-                              movieID: movie.id,
+                              withNavBar: false,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 25, bottom: 20),
+                            child: CommentSection(
+                              comment: commentList.first,
                             ),
                           ),
-                          withNavBar: false,
-                          pageTransitionAnimation:
-                              PageTransitionAnimation.cupertino,
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 25, bottom: 20),
-                        child: CommentSection(),
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               );

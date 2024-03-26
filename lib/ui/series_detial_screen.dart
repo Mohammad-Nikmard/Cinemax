@@ -35,8 +35,9 @@ class SeriesDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SeriesBloc(locator.get(), locator.get())
-        ..add(SeriesDataRequestEvent(series.id, series.name)),
+      create: (context) =>
+          SeriesBloc(locator.get(), locator.get(), locator.get())
+            ..add(SeriesDataRequestEvent(series.id, series.name)),
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: BlocBuilder<SeriesBloc, SeriesState>(
@@ -134,33 +135,44 @@ class SeriesDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const _Gallery(),
-                  SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () {
-                        PersistentNavBarNavigator.pushNewScreen(
-                          context,
-                          screen: BlocProvider(
-                            create: (context) => CommentsBloc(locator.get())
-                              ..add(
-                                CommentFetchEvent(series.id),
+                  state.getComments.fold(
+                    (exceptionMessage) {
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
+                      );
+                    },
+                    (commentList) {
+                      return SliverToBoxAdapter(
+                        child: GestureDetector(
+                          onTap: () {
+                            PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: BlocProvider(
+                                create: (context) => CommentsBloc(locator.get())
+                                  ..add(
+                                    CommentFetchEvent(series.id),
+                                  ),
+                                child: CommentsScreen(
+                                  movieName: series.name,
+                                  year: series.year,
+                                  imageURL: series.thumbnail,
+                                  movieID: series.id,
+                                ),
                               ),
-                            child: CommentsScreen(
-                              movieName: series.name,
-                              year: series.year,
-                              imageURL: series.thumbnail,
-                              movieID: series.id,
+                              withNavBar: false,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: CommentSection(
+                              comment: commentList.first,
                             ),
                           ),
-                          withNavBar: false,
-                          pageTransitionAnimation:
-                              PageTransitionAnimation.cupertino,
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: CommentSection(),
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               );
