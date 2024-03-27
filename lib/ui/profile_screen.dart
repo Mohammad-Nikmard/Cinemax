@@ -5,6 +5,7 @@ import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/profile/profile_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/usera.dart';
+import 'package:cinemax/ui/about_us_screen.dart';
 import 'package:cinemax/ui/language_screen.dart';
 import 'package:cinemax/ui/notifications_screen.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
@@ -15,6 +16,7 @@ import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
@@ -270,7 +272,7 @@ class _GeneralChip extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 282,
+        height: 262,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
@@ -458,10 +460,20 @@ class _MoreChipState extends State<_MoreChip> {
               const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
-                title: AppLocalizations.of(context)!.about,
-                image: "assets/images/icon_alert.svg",
-                color: TextColors.greyText,
+              GestureDetector(
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const AboutUsScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.about,
+                  image: "assets/images/icon_alert.svg",
+                  color: TextColors.greyText,
+                ),
               ),
             ],
           ),
