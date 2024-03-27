@@ -868,15 +868,15 @@ Future<void> shareDialog(BuildContext context) async {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          "assets/images/Apple.svg",
+                          "assets/images/telegram.svg",
+                          height: 70,
+                          width: 70,
                         ),
                         const SizedBox(width: 15),
                         SvgPicture.asset(
-                          "assets/images/Facebook.svg",
-                        ),
-                        const SizedBox(width: 15),
-                        SvgPicture.asset(
-                          "assets/images/Google.svg",
+                          "assets/images/instagram.svg",
+                          height: 61.5,
+                          width: 61.5,
                         ),
                       ],
                     ),

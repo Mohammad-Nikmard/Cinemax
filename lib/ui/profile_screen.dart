@@ -14,7 +14,10 @@ import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -267,7 +270,7 @@ class _GeneralChip extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 332,
+        height: 282,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
@@ -332,21 +335,6 @@ class _GeneralChip extends StatelessWidget {
                   image: "assets/images/icon_globe.svg",
                   color: TextColors.greyText,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(
-                thickness: 1.3,
-                color: Color(0xff252836),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              _OptionChip(
-                title: AppLocalizations.of(context)!.country,
-                image: "assets/images/icon_flag.svg",
-                color: TextColors.greyText,
               ),
               const SizedBox(
                 height: 10,
@@ -428,10 +416,128 @@ class _MoreChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              _OptionChip(
-                title: AppLocalizations.of(context)!.help,
-                image: "assets/images/icon_question.svg",
-                color: TextColors.greyText,
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    barrierColor: Colors.transparent,
+                    context: context,
+                    builder: (context) => BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                      child: Container(
+                        height: 500,
+                        width: MediaQueryHandler.screenWidth(context),
+                        decoration: const BoxDecoration(
+                          color: PrimaryColors.softColor,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 25, right: 15, left: 15),
+                          child: Column(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.help,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: TextColors.whiteText,
+                                  fontFamily: "MSB",
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              const Text(
+                                "Your opinion matters to us. Please show us an overall satisfaction of the app.",
+                                style: TextStyle(
+                                  fontFamily: "MR",
+                                  color: TextColors.whiteText,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 10),
+                              RatingBar.builder(
+                                initialRating: 3,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                glow: true,
+                                glowColor: SecondaryColors.orangeColor,
+                                glowRadius: 0.3,
+                                itemCount: 5,
+                                itemPadding:
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => const Icon(
+                                  Icons.star,
+                                  color: SecondaryColors.orangeColor,
+                                ),
+                                onRatingUpdate: (rating) {},
+                              ),
+                              const SizedBox(height: 10),
+                              const TextField(
+                                maxLines: 8,
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 14,
+                                  color: TextColors.whiteText,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText:
+                                      "Please inform us of your experience. We'd love to hear that.",
+                                  hintStyle: TextStyle(
+                                    fontSize: 12,
+                                    color: TextColors.greyText,
+                                    fontFamily: "MR",
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                    borderSide: BorderSide(
+                                      width: 1.5,
+                                      color: TextColors.greyText,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                    borderSide: BorderSide(
+                                      width: 1.5,
+                                      color: TextColors.darkGreyText,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              SizedBox(
+                                height: 52,
+                                width: MediaQueryHandler.screenWidth(context),
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    AppLocalizations.of(context)!.submit,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: TextColors.whiteText,
+                                      fontFamily: "MM",
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.help,
+                  image: "assets/images/icon_question.svg",
+                  color: TextColors.greyText,
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -464,7 +570,7 @@ class _AccountChip extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 188,
+        height: 138,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
@@ -488,14 +594,6 @@ class _AccountChip extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 15,
-              ),
-              _OptionChip(
-                title: AppLocalizations.of(context)!.member,
-                image: "assets/images/icon_profile.svg",
-                color: PrimaryColors.blueAccentColor,
-              ),
-              const SizedBox(
                 height: 10,
               ),
               const Divider(
@@ -507,11 +605,11 @@ class _AccountChip extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResetPasswordScreen(),
-                    ),
+                    screen: const ResetPasswordScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
                 child: _OptionChip(
@@ -541,8 +639,8 @@ class _ProfileChipState extends State<_ProfileChip> {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: GestureDetector(
-        onTap: () async {
-          await PersistentNavBarNavigator.pushNewScreen(
+        onTap: () {
+          PersistentNavBarNavigator.pushNewScreen(
             context,
             screen: BlocProvider(
               create: (context) => ProfileBloc(locator.get()),
@@ -551,7 +649,6 @@ class _ProfileChipState extends State<_ProfileChip> {
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
-          setState(() {});
         },
         child: Container(
           width: MediaQuery.of(context).size.width,

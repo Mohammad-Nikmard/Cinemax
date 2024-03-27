@@ -70,8 +70,9 @@ class ResetPasswordScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const PasswordVerificationScreen(),
+                        builder: (context) => PasswordVerificationScreen(
+                          email: emailController.text.trim(),
+                        ),
                       ),
                     );
                   },
