@@ -125,36 +125,37 @@ class _UserReviewState extends State<_UserReview> {
                   children: [
                     Row(
                       children: [
-                        (widget.comment.profile.isNotEmpty)
-                            ? ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(100),
-                                ),
-                                child: SizedBox(
-                                  height:
-                                      (MediaQueryHandler.screenWidth(context) <
-                                              290)
-                                          ? 30
-                                          : 40,
-                                  width:
-                                      (MediaQueryHandler.screenWidth(context) <
-                                              290)
-                                          ? 30
-                                          : 40,
-                                  child: FittedBox(
+                        ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(100),
+                          ),
+                          child: SizedBox(
+                            height:
+                                (MediaQueryHandler.screenWidth(context) < 290)
+                                    ? 30
+                                    : 40,
+                            width:
+                                (MediaQueryHandler.screenWidth(context) < 290)
+                                    ? 30
+                                    : 40,
+                            child: (widget.comment.profile.isNotEmpty)
+                                ? FittedBox(
                                     fit: BoxFit.cover,
                                     child: CachedImage(
                                       imageUrl: widget.comment.userThumbnail,
                                       radius: 100,
                                     ),
+                                  )
+                                : SvgPicture.asset(
+                                    'assets/images/icon_user.svg',
+                                    fit: BoxFit.cover,
+                                    colorFilter: const ColorFilter.mode(
+                                      TextColors.whiteText,
+                                      BlendMode.srcIn,
+                                    ),
                                   ),
-                                ),
-                              )
-                            : Image.asset(
-                                'assets/images/intro3.png',
-                                height: 50,
-                                width: 50,
-                              ),
+                          ),
+                        ),
                         SizedBox(
                           width: (MediaQueryHandler.screenWidth(context) < 380)
                               ? 5

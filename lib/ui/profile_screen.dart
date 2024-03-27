@@ -56,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
                     },
                     (user) {
                       return SliverPadding(
-                        padding: EdgeInsets.only(bottom: 25),
+                        padding: const EdgeInsets.only(bottom: 25),
                         sliver: _ProfileChip(user: user),
                       );
                     },
@@ -578,7 +578,7 @@ class _ProfileChipState extends State<_ProfileChip> {
                     width: 50,
                     child: FittedBox(
                       fit: BoxFit.cover,
-                      child: (widget.user.imagePath == "")
+                      child: (widget.user.profile.isEmpty)
                           ? SvgPicture.asset(
                               'assets/images/icon_user.svg',
                               colorFilter: const ColorFilter.mode(

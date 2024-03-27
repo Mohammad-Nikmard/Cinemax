@@ -415,7 +415,7 @@ class _HomeHeaderState extends State<_HomeHeader> {
                     width: 50,
                     child: FittedBox(
                       fit: BoxFit.cover,
-                      child: (widget.user.imagePath == "")
+                      child: (widget.user.profile.isEmpty)
                           ? SvgPicture.asset(
                               'assets/images/icon_user.svg',
                               colorFilter: const ColorFilter.mode(

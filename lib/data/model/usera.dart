@@ -5,17 +5,17 @@ class UserApp {
   String collectionId;
   String name;
   String imagePath;
+  String profile;
 
-  UserApp(this.id, this.collectionId, this.name, this.imagePath);
+  UserApp(this.id, this.collectionId, this.name, this.imagePath, this.profile);
 
   factory UserApp.withJson(Map<String, dynamic> jsonMapObject) {
     return UserApp(
       jsonMapObject['id'],
       jsonMapObject['collectionId'],
       jsonMapObject['username'],
-      jsonMapObject["profile_pic"] == null
-          ? ""
-          : "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["profile_pic"]}",
+      "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["profile_pic"]}",
+      jsonMapObject['profile_pic'],
     );
   }
 }
