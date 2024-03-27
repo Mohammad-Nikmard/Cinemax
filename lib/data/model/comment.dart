@@ -10,9 +10,10 @@ class Comment {
   bool spoiler;
   String username;
   String userThumbnail;
+  String profile;
 
   Comment(this.headline, this.text, this.time, this.movieID, this.userID,
-      this.rate, this.spoiler, this.username, this.userThumbnail);
+      this.rate, this.spoiler, this.username, this.userThumbnail, this.profile);
 
   factory Comment.withJson(Map<String, dynamic> jsonMapObject) {
     return Comment(
@@ -25,6 +26,7 @@ class Comment {
       jsonMapObject["spoiler"],
       jsonMapObject["expand"]["user_id"]["username"],
       "${StringConstants.baseImage}/api/files/${jsonMapObject["expand"]["user_id"]["collectionId"]}/${jsonMapObject["expand"]["user_id"]["id"]}/${jsonMapObject["expand"]["user_id"]["profile_pic"]}",
+      jsonMapObject["expand"]["user_id"]["profile_pic"],
     );
   }
 }

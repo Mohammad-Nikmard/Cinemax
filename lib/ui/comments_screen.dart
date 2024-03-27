@@ -125,34 +125,35 @@ class _UserReviewState extends State<_UserReview> {
                   children: [
                     Row(
                       children: [
-                        (widget.comment.userThumbnail.isNotEmpty)
+                        (widget.comment.profile.isNotEmpty)
                             ? ClipRRect(
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                                 child: SizedBox(
-                                    height: (MediaQueryHandler.screenWidth(
-                                                context) <
-                                            290)
-                                        ? 30
-                                        : 40,
-                                    width: (MediaQueryHandler.screenWidth(
-                                                context) <
-                                            290)
-                                        ? 30
-                                        : 40,
-                                    child: FittedBox(
-                                      fit: BoxFit.cover,
-                                      child: CachedImage(
-                                        imageUrl: widget.comment.userThumbnail,
-                                        radius: 100,
-                                      ),
-                                    )),
+                                  height:
+                                      (MediaQueryHandler.screenWidth(context) <
+                                              290)
+                                          ? 30
+                                          : 40,
+                                  width:
+                                      (MediaQueryHandler.screenWidth(context) <
+                                              290)
+                                          ? 30
+                                          : 40,
+                                  child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: CachedImage(
+                                      imageUrl: widget.comment.userThumbnail,
+                                      radius: 100,
+                                    ),
+                                  ),
+                                ),
                               )
-                            : SvgPicture.asset(
-                                "assets/images/icon_home.svg",
-                                colorFilter: const ColorFilter.mode(
-                                    TextColors.greyText, BlendMode.srcIn),
+                            : Image.asset(
+                                'assets/images/intro3.png',
+                                height: 50,
+                                width: 50,
                               ),
                         SizedBox(
                           width: (MediaQueryHandler.screenWidth(context) < 380)
@@ -265,7 +266,7 @@ class _UserReviewState extends State<_UserReview> {
                                 children: [
                                   const SizedBox(height: 10),
                                   const Text(
-                                    "Warning : Spoil Alert",
+                                    "Warning : Spoiler Alert",
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Color.fromARGB(255, 245, 12, 12),
