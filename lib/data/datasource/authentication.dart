@@ -10,6 +10,7 @@ abstract class AuthenticationDatasource {
   Future<String> login(String password, String identity);
   Future<UserApp> getCurrentUser(String id);
   Future<dynamic> sendImageProfile(String userid, image);
+  Future<void> sendFeedback(double rate, String text);
 }
 
 class AuthenticationRemoteDatasource extends AuthenticationDatasource {
@@ -100,5 +101,22 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
       "/api/collections/users/records/$userid",
       data: formData,
     );
+  }
+
+  @override
+  Future<void> sendFeedback(double rate, String text) async {
+    try {
+      await _dio.post(
+        "/api/collections/feedback/records",
+        data: {
+          "rate": rate,
+          "text": text,
+        },
+      );
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 15);
+    }
   }
 }

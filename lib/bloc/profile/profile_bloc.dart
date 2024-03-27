@@ -21,5 +21,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           .getCurrentUser(AuthManager.readRecordID());
       emit(UserResponseState(response));
     });
+
+    on<SendFeedbackEvent>(
+      (event, emit) async {
+        emit(ProfileLoadingState());
+        await _authenticationRepository.sendFeedback(event.rate, event.text);
+        emit(ProfileResponseState());
+      },
+    );
   }
 }

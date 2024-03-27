@@ -10,3 +10,10 @@ class UpdateDataEvent extends ProfileEvent {
 }
 
 class GetuserEvent extends ProfileEvent {}
+
+class SendFeedbackEvent extends ProfileEvent {
+  double rate;
+  String text;
+
+  SendFeedbackEvent(this.rate, this.text);
+}

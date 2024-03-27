@@ -10,6 +10,7 @@ abstract class AuthenticationRepository {
   Future<Either<String, String>> login(String password, String identity);
   Future<Either<String, UserApp>> getCurrentUser(String id);
   Future<Either<String, dynamic>> sendImage(String userId, image);
+  Future<Either<String, String>> sendFeedback(double rate, String text);
 }
 
 class AuthenticationRemoteRepo extends AuthenticationRepository {
@@ -57,6 +58,16 @@ class AuthenticationRemoteRepo extends AuthenticationRepository {
     try {
       var response = await _datasource.getCurrentUser(id);
       return right(response);
+    } on ApiException catch (ex) {
+      return left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, String>> sendFeedback(double rate, String text) async {
+    try {
+      await _datasource.sendFeedback(rate, text);
+      return right("success");
     } on ApiException catch (ex) {
       return left(ex.message);
     }
