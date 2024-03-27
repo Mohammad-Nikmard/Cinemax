@@ -22,8 +22,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
             await _seriesRepository.getFirstSeasonEpisode(event.seriesId);
         var isLiked = _wishlistRepository.likedOnList(event.seriesName);
         var comments = await _commentsRepository.getComments(event.seriesId);
+        var photos = await _seriesRepository.getPhotos(event.seriesId);
         emit(SeriesResponseState(
-            getSeasons, casts, firstSeasonEpisode, isLiked, comments));
+            getSeasons, casts, firstSeasonEpisode, isLiked, comments, photos));
       },
     );
     on<WishlistAddToCartEvent>(
@@ -50,8 +51,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var episodes = await _seriesRepository.getEpisodes(event.seasonId);
         var isLiked = _wishlistRepository.likedOnList(event.seriesName);
         var comments = await _commentsRepository.getComments(event.seriesId);
+        var photos = await _seriesRepository.getPhotos(event.seriesId);
         emit(SeriesResponseState(
-            getSeasons, casts, episodes, isLiked, comments));
+            getSeasons, casts, episodes, isLiked, comments, photos));
       },
     );
     ;

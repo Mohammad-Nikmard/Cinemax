@@ -1,5 +1,6 @@
 import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/data/model/episode.dart';
+import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:dartz/dartz.dart';
@@ -16,7 +17,8 @@ class SeriesResponseState extends SeriesState {
   Either<String, List<Episode>> getEpisodes;
   bool isLiked;
   Either<String, List<Comment>> getComments;
+  Either<String, List<Moviesgallery>> getPhotos;
 
   SeriesResponseState(this.getSeasons, this.getCasts, this.getEpisodes,
-      this.isLiked, this.getComments);
+      this.isLiked, this.getComments, this.getPhotos);
 }

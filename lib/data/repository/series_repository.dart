@@ -1,5 +1,6 @@
 import 'package:cinemax/data/datasource/series_datasource.dart';
 import 'package:cinemax/data/model/episode.dart';
+import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/util/api_exception.dart';
@@ -10,6 +11,7 @@ abstract class SeriesRepository {
   Future<Either<String, List<SeriesCasts>>> getSeriesCast(String seriesId);
   Future<Either<String, List<Episode>>> getEpisodes(String season);
   Future<Either<String, List<Episode>>> getFirstSeasonEpisode(String seriesID);
+  Future<Either<String, List<Moviesgallery>>> getPhotos(String seriesID);
 }
 
 class SeriesRemoteRepository extends SeriesRepository {
@@ -54,6 +56,16 @@ class SeriesRemoteRepository extends SeriesRepository {
       String seriesID) async {
     try {
       var response = await _datasource.getFirstSeasonEpisode(seriesID);
+      return right(response);
+    } on ApiException catch (ex) {
+      return left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, List<Moviesgallery>>> getPhotos(String seriesID) async {
+    try {
+      var response = await _datasource.getPhotos(seriesID);
       return right(response);
     } on ApiException catch (ex) {
       return left(ex.message);

@@ -10,6 +10,7 @@ import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
+import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/ui/comments_screen.dart';
@@ -118,23 +119,30 @@ class SeriesDetailScreen extends StatelessWidget {
                   ),
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 20.0, top: 20.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.gallery,
-                            style: const TextStyle(
-                              fontFamily: "MSB",
-                              fontSize: 16,
-                              color: TextColors.whiteText,
-                            ),
-                          ),
-                          const SizedBox(height: 10.0),
-                        ],
+                      padding: const EdgeInsets.only(
+                          left: 20.0, top: 20.0, bottom: 15.0),
+                      child: Text(
+                        AppLocalizations.of(context)!.gallery,
+                        style: const TextStyle(
+                          fontFamily: "MSB",
+                          fontSize: 16,
+                          color: TextColors.whiteText,
+                        ),
                       ),
                     ),
                   ),
-                  const _Gallery(),
+                  state.getPhotos.fold(
+                    (exceptionMessage) {
+                      return SliverToBoxAdapter(
+                        child: Text(exceptionMessage),
+                      );
+                    },
+                    (photoList) {
+                      return _Gallery(
+                        gallery: photoList,
+                      );
+                    },
+                  ),
                   state.getComments.fold(
                     (exceptionMessage) {
                       return const SliverToBoxAdapter(
@@ -213,7 +221,8 @@ Future<void> showFullScreenGallery(BuildContext context, String photo) async {
 }
 
 class _Gallery extends StatelessWidget {
-  const _Gallery();
+  const _Gallery({required this.gallery});
+  final List<Moviesgallery> gallery;
 
   @override
   Widget build(BuildContext context) {
@@ -222,18 +231,24 @@ class _Gallery extends StatelessWidget {
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return Container(
-              height: 100,
-              width: 100,
-              decoration: const BoxDecoration(
-                color: SecondaryColors.greenColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
+            return ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
+              child: SizedBox(
+                height: 100,
+                width: 100,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: CachedImage(
+                    imageUrl: gallery[index].thumbnail,
+                    radius: 15,
+                  ),
                 ),
               ),
             );
           },
-          childCount: 30,
+          childCount: gallery.length,
         ),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
@@ -286,7 +301,7 @@ class __SeasonChipState extends State<_SeasonChip> {
                 .map((String item) => DropdownMenuItem<String>(
                       value: item,
                       child: Text(
-                        item,
+                        "Season $item",
                         style: const TextStyle(
                           fontSize: 14,
                           fontFamily: "MSB",
@@ -296,7 +311,7 @@ class __SeasonChipState extends State<_SeasonChip> {
                     ))
                 .toList(),
             hint: const Text(
-              '1',
+              'Season 1',
               style: TextStyle(
                 fontSize: 14,
                 color: TextColors.whiteText,
@@ -319,7 +334,7 @@ class __SeasonChipState extends State<_SeasonChip> {
             buttonStyleData: const ButtonStyleData(
               padding: EdgeInsets.symmetric(horizontal: 16),
               height: 40,
-              width: 100,
+              width: 130,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),

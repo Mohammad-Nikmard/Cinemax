@@ -1,4 +1,5 @@
 import 'package:cinemax/data/model/episode.dart';
+import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/util/api_exception.dart';
@@ -9,6 +10,7 @@ abstract class SeriesDatasource {
   Future<List<SeriesCasts>> getSeriesCasts(String seriesId);
   Future<List<Episode>> getSeriesEpisodes(String season);
   Future<List<Episode>> getFirstSeasonEpisode(String seriesId);
+  Future<List<Moviesgallery>> getPhotos(String seriesID);
 }
 
 class SeriesRemoteDatasource extends SeriesDatasource {
@@ -91,6 +93,21 @@ class SeriesRemoteDatasource extends SeriesDatasource {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 11);
+    }
+  }
+
+  @override
+  Future<List<Moviesgallery>> getPhotos(String seriesID) async {
+    try {
+      var response = await _dio.get("/api/collections/series_gallery/records");
+      return response.data["items"]
+          .map<Moviesgallery>(
+              (jsonMapObject) => Moviesgallery.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 16);
     }
   }
 }
