@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 abstract class CommentsRepository {
   Future<Either<String, List<Comment>>> getComments(String movieID);
   Future<Either<String, String>> postComment(
-      String movieID, text, headline, double rate, bool spoiler);
+      String movieID, text, headline, time, double rate, bool spoiler);
 }
 
 class CommentsRemoteRepository extends CommentsRepository {
@@ -25,9 +25,10 @@ class CommentsRemoteRepository extends CommentsRepository {
 
   @override
   Future<Either<String, String>> postComment(
-      String movieID, text, headline, double rate, bool spoiler) async {
+      String movieID, text, headline, time, double rate, bool spoiler) async {
     try {
-      await _datasource.postComment(movieID, text, headline, rate, spoiler);
+      await _datasource.postComment(
+          movieID, text, headline, time, rate, spoiler);
       return right("commend is successfully added");
     } on ApiException catch (ex) {
       return left(ex.message);

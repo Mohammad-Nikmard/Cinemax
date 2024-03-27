@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 abstract class CommentsDatasource {
   Future<List<Comment>> getComments(String movieID);
   Future<void> postComment(
-      String movieID, text, headline, double rate, bool spoiler);
+      String movieID, text, headline, time, double rate, bool spoiler);
 }
 
 class CommentRemoteDatasource extends CommentsDatasource {
@@ -36,13 +36,14 @@ class CommentRemoteDatasource extends CommentsDatasource {
 
   @override
   Future<void> postComment(
-      String movieID, text, headline, double rate, bool spoiler) async {
+      String movieID, text, headline, time, double rate, bool spoiler) async {
     try {
       await _dio.post(
         "/api/collections/movies_comment/records",
         data: {
           'text': text,
           'headline': headline,
+          'time': time,
           'movie_id': movieID,
           'user_id': AuthManager.readRecordID(),
           'rate': rate,

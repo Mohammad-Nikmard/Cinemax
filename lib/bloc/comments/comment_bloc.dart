@@ -22,6 +22,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
             event.movieID,
             event.text,
             event.headline,
+            event.time,
             event.rate,
             event.spoiler);
         emit(PostCommentResponse(response));

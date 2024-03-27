@@ -2,6 +2,7 @@ import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -30,6 +31,8 @@ class PostCommentScreen extends StatefulWidget {
 class _PostCommentScreenState extends State<PostCommentScreen> {
   final headlineController = TextEditingController();
   final reviewController = TextEditingController();
+
+  DateTime now = DateTime.now();
 
   bool hasSpoiler = false;
   String rateText = "3";
@@ -254,12 +257,15 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                         width: MediaQueryHandler.screenWidth(context),
                         child: ElevatedButton(
                           onPressed: () {
+                            String finalTime =
+                                "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
                             if (headlineController.text.isNotEmpty &&
                                 reviewController.text.isNotEmpty) {
                               context.read<CommentsBloc>().add(PostCommentEvent(
                                   widget.movieID,
                                   reviewController.text.trim(),
                                   headlineController.text,
+                                  finalTime,
                                   double.parse(rateText),
                                   hasSpoiler));
                             } else {
@@ -294,12 +300,15 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                         width: MediaQueryHandler.screenWidth(context),
                         child: ElevatedButton(
                           onPressed: () {
+                            String finalTime =
+                                "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
                             if (headlineController.text.isNotEmpty &&
                                 reviewController.text.isNotEmpty) {
                               context.read<CommentsBloc>().add(PostCommentEvent(
                                   widget.movieID,
                                   reviewController.text.trim(),
                                   headlineController.text,
+                                  finalTime,
                                   double.parse(rateText),
                                   hasSpoiler));
                             } else {

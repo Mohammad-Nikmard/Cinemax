@@ -10,9 +10,10 @@ class PostCommentEvent extends CommentsEvent {
   String movieID;
   String text;
   String headline;
+  String time;
   double rate;
   bool spoiler;
 
-  PostCommentEvent(
-      this.movieID, this.text, this.headline, this.rate, this.spoiler);
+  PostCommentEvent(this.movieID, this.text, this.headline, this.time, this.rate,
+      this.spoiler);
 }

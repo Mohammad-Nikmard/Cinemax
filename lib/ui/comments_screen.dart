@@ -152,7 +152,7 @@ class _UserReview extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "2024-03-26",
+                              comment.time,
                               style: TextStyle(
                                 fontFamily: "MR",
                                 fontSize:
