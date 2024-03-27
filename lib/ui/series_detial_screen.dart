@@ -142,36 +142,41 @@ class SeriesDetailScreen extends StatelessWidget {
                       );
                     },
                     (commentList) {
-                      return SliverToBoxAdapter(
-                        child: GestureDetector(
-                          onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
-                              context,
-                              screen: BlocProvider(
-                                create: (context) => CommentsBloc(locator.get())
-                                  ..add(
-                                    CommentFetchEvent(series.id),
+                      if (commentList.isNotEmpty) {
+                        return SliverToBoxAdapter(
+                          child: GestureDetector(
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: BlocProvider(
+                                  create: (context) =>
+                                      CommentsBloc(locator.get())
+                                        ..add(
+                                          CommentFetchEvent(series.id),
+                                        ),
+                                  child: CommentsScreen(
+                                    movieName: series.name,
+                                    year: series.year,
+                                    imageURL: series.thumbnail,
+                                    movieID: series.id,
                                   ),
-                                child: CommentsScreen(
-                                  movieName: series.name,
-                                  year: series.year,
-                                  imageURL: series.thumbnail,
-                                  movieID: series.id,
                                 ),
+                                withNavBar: false,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: CommentSection(
+                                comment: commentList.first,
                               ),
-                              withNavBar: false,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.cupertino,
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: CommentSection(
-                              comment: commentList.first,
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        return const SliverToBoxAdapter();
+                      }
                     },
                   ),
                 ],

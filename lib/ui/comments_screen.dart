@@ -1,5 +1,6 @@
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/comment.dart';
@@ -8,7 +9,9 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -36,43 +39,50 @@ class CommentsScreen extends StatelessWidget {
             if (state is CommensLoadingState) {
               return const AppLoadingIndicator();
             } else if (state is CommentsResponseState) {
-              return CustomScrollView(
-                slivers: [
-                  SliverPadding(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    sliver: _CommentsHeader(
-                      movieName: movieName,
-                      year: year,
-                      imageURL: imageURL,
-                      movieID: movieID,
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<CommentsBloc>().add(CommentFetchEvent(movieID));
+                },
+                triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                color: PrimaryColors.blueAccentColor,
+                child: CustomScrollView(
+                  slivers: [
+                    SliverPadding(
+                      padding: const EdgeInsets.only(bottom: 30),
+                      sliver: _CommentsHeader(
+                        movieName: movieName,
+                        year: year,
+                        imageURL: imageURL,
+                        movieID: movieID,
+                      ),
                     ),
-                  ),
-                  state.getComments.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (commentsList) {
-                      return SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: _UserReview(
-                                  comment: commentsList[index],
-                                ),
-                              );
-                            },
-                            childCount: commentsList.length,
+                    state.getComments.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (commentsList) {
+                        return SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          sliver: SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 15),
+                                  child: _UserReview(
+                                    comment: commentsList[index],
+                                  ),
+                                );
+                              },
+                              childCount: commentsList.length,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               );
             }
             return Center(
@@ -85,10 +95,16 @@ class CommentsScreen extends StatelessWidget {
   }
 }
 
-class _UserReview extends StatelessWidget {
+class _UserReview extends StatefulWidget {
   const _UserReview({required this.comment});
   final Comment comment;
 
+  @override
+  State<_UserReview> createState() => _UserReviewState();
+}
+
+class _UserReviewState extends State<_UserReview> {
+  bool spoilerCheck = false;
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -109,28 +125,35 @@ class _UserReview extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(100),
-                          ),
-                          child: SizedBox(
-                            height:
-                                (MediaQueryHandler.screenWidth(context) < 290)
-                                    ? 30
-                                    : 40,
-                            width:
-                                (MediaQueryHandler.screenWidth(context) < 290)
-                                    ? 30
-                                    : 40,
-                            child: FittedBox(
-                              fit: BoxFit.cover,
-                              child: CachedImage(
-                                imageUrl: comment.userThumbnail,
-                                radius: 100,
+                        (widget.comment.userThumbnail.isNotEmpty)
+                            ? ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                child: SizedBox(
+                                    height: (MediaQueryHandler.screenWidth(
+                                                context) <
+                                            290)
+                                        ? 30
+                                        : 40,
+                                    width: (MediaQueryHandler.screenWidth(
+                                                context) <
+                                            290)
+                                        ? 30
+                                        : 40,
+                                    child: FittedBox(
+                                      fit: BoxFit.cover,
+                                      child: CachedImage(
+                                        imageUrl: widget.comment.userThumbnail,
+                                        radius: 100,
+                                      ),
+                                    )),
+                              )
+                            : SvgPicture.asset(
+                                "assets/images/icon_home.svg",
+                                colorFilter: const ColorFilter.mode(
+                                    TextColors.greyText, BlendMode.srcIn),
                               ),
-                            ),
-                          ),
-                        ),
                         SizedBox(
                           width: (MediaQueryHandler.screenWidth(context) < 380)
                               ? 5
@@ -140,7 +163,7 @@ class _UserReview extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              comment.username,
+                              widget.comment.username,
                               style: TextStyle(
                                 fontSize:
                                     (MediaQueryHandler.screenWidth(context) <
@@ -152,7 +175,7 @@ class _UserReview extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              comment.time,
+                              widget.comment.time,
                               style: TextStyle(
                                 fontFamily: "MR",
                                 fontSize:
@@ -184,7 +207,7 @@ class _UserReview extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          "${comment.rate} / 10",
+                          "${widget.comment.rate} / 10",
                           style: TextStyle(
                             fontFamily: "MR",
                             color: TextColors.greyText,
@@ -199,27 +222,107 @@ class _UserReview extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 15),
-                Text(
-                  comment.headline,
-                  style: TextStyle(
-                    fontSize: (MediaQueryHandler.screenWidth(context) < 380)
-                        ? 16
-                        : 20,
-                    fontFamily: "MSB",
-                    color: TextColors.whiteText,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Text(
-                  comment.text,
-                  style: TextStyle(
-                    fontSize: (MediaQueryHandler.screenWidth(context) < 380)
-                        ? 12
-                        : 14,
-                    fontFamily: "MM",
-                    color: TextColors.whiteText,
-                  ),
-                ),
+                (widget.comment.spoiler)
+                    ? Column(
+                        children: [
+                          Visibility(
+                            visible: (spoilerCheck),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.comment.headline,
+                                  style: TextStyle(
+                                    fontSize: (MediaQueryHandler.screenWidth(
+                                                context) <
+                                            380)
+                                        ? 16
+                                        : 20,
+                                    fontFamily: "MSB",
+                                    color: TextColors.whiteText,
+                                  ),
+                                ),
+                                const SizedBox(height: 15),
+                                Text(
+                                  widget.comment.text,
+                                  style: TextStyle(
+                                    fontSize: (MediaQueryHandler.screenWidth(
+                                                context) <
+                                            380)
+                                        ? 12
+                                        : 14,
+                                    fontFamily: "MM",
+                                    color: TextColors.whiteText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Visibility(
+                            visible: (!spoilerCheck),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 10),
+                                  const Text(
+                                    "Warning : Spoil Alert",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color.fromARGB(255, 245, 12, 12),
+                                      fontFamily: "MM",
+                                    ),
+                                  ),
+                                  const SizedBox(height: 15),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        spoilerCheck = true;
+                                      });
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/images/icon_arrow_down.svg',
+                                      height: 30,
+                                      width: 30,
+                                      colorFilter: const ColorFilter.mode(
+                                        TextColors.whiteText,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.comment.headline,
+                            style: TextStyle(
+                              fontSize:
+                                  (MediaQueryHandler.screenWidth(context) < 380)
+                                      ? 16
+                                      : 20,
+                              fontFamily: "MSB",
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          Text(
+                            widget.comment.text,
+                            style: TextStyle(
+                              fontSize:
+                                  (MediaQueryHandler.screenWidth(context) < 380)
+                                      ? 12
+                                      : 14,
+                              fontFamily: "MM",
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                        ],
+                      )
               ],
             ),
           ),
