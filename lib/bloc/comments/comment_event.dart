@@ -17,3 +17,10 @@ class PostCommentEvent extends CommentsEvent {
   PostCommentEvent(this.movieID, this.text, this.headline, this.time, this.rate,
       this.spoiler);
 }
+
+class ShowMoreCommentsEvent extends CommentsEvent {
+  int page;
+  String movieID;
+
+  ShowMoreCommentsEvent(this.page, this.movieID);
+}

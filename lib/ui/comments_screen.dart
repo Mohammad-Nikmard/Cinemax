@@ -9,9 +9,7 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -81,6 +79,19 @@ class CommentsScreen extends StatelessWidget {
                         );
                       },
                     ),
+                    state.getComments.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (commentsList) {
+                        return MoreCommentWidget(
+                          movieID: movieID,
+                          getComments: commentsList,
+                        );
+                      },
+                    ),
                   ],
                 ),
               );
@@ -89,6 +100,53 @@ class CommentsScreen extends StatelessWidget {
               child: Text(AppLocalizations.of(context)!.state),
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class MoreCommentWidget extends StatefulWidget {
+  const MoreCommentWidget(
+      {super.key, required this.movieID, required this.getComments});
+  final String movieID;
+  final List<Comment> getComments;
+
+  @override
+  State<MoreCommentWidget> createState() => _MoreCommentWidgetState();
+}
+
+class _MoreCommentWidgetState extends State<MoreCommentWidget> {
+  int page = 30;
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Visibility(
+        visible: (widget.getComments.length == page) ? true : false,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 25, right: 45, left: 45),
+          child: SizedBox(
+            height: 46,
+            width: MediaQueryHandler.screenWidth(context),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  page += 30;
+                });
+                context
+                    .read<CommentsBloc>()
+                    .add(ShowMoreCommentsEvent(page, widget.movieID));
+              },
+              child: const Text(
+                "Show More",
+                style: TextStyle(
+                  fontFamily: "MM",
+                  fontSize: 16,
+                  color: TextColors.whiteText,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -324,7 +382,7 @@ class _UserReviewState extends State<_UserReview> {
                             ),
                           ),
                         ],
-                      )
+                      ),
               ],
             ),
           ),

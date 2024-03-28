@@ -4,7 +4,8 @@ import 'package:cinemax/util/api_exception.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class CommentsRepository {
-  Future<Either<String, List<Comment>>> getComments(String movieID);
+  Future<Either<String, List<Comment>>> getComments(String movieID,
+      {int numbers});
   Future<Either<String, String>> postComment(
       String movieID, text, headline, time, double rate, bool spoiler);
 }
@@ -14,9 +15,10 @@ class CommentsRemoteRepository extends CommentsRepository {
 
   CommentsRemoteRepository(this._datasource);
   @override
-  Future<Either<String, List<Comment>>> getComments(String movieID) async {
+  Future<Either<String, List<Comment>>> getComments(String movieID,
+      {int numbers = 30}) async {
     try {
-      var response = await _datasource.getComments(movieID);
+      var response = await _datasource.getComments(movieID, numbers);
       return right(response);
     } on ApiException catch (ex) {
       return left(ex.message);

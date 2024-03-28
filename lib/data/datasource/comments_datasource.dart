@@ -4,7 +4,7 @@ import 'package:cinemax/util/auth_manager.dart';
 import 'package:dio/dio.dart';
 
 abstract class CommentsDatasource {
-  Future<List<Comment>> getComments(String movieID);
+  Future<List<Comment>> getComments(String movieID, int numbers);
   Future<void> postComment(
       String movieID, text, headline, time, double rate, bool spoiler);
 }
@@ -14,10 +14,11 @@ class CommentRemoteDatasource extends CommentsDatasource {
 
   CommentRemoteDatasource(this._dio);
   @override
-  Future<List<Comment>> getComments(String movieID) async {
+  Future<List<Comment>> getComments(String movieID, int numbers) async {
     Map<String, dynamic> qparams = {
       'filter': 'movie_id= "$movieID"',
       'expand': 'user_id',
+      'perPage': numbers,
     };
     try {
       var response = await _dio.get(
