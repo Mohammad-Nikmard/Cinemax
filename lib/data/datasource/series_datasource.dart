@@ -98,8 +98,12 @@ class SeriesRemoteDatasource extends SeriesDatasource {
 
   @override
   Future<List<Moviesgallery>> getPhotos(String seriesID) async {
+    Map<String, dynamic> qparams = {
+      'filter': 'movie_id="$seriesID"',
+    };
     try {
-      var response = await _dio.get("/api/collections/series_gallery/records");
+      var response = await _dio.get("/api/collections/series_gallery/records",
+          queryParameters: qparams);
       return response.data["items"]
           .map<Moviesgallery>(
               (jsonMapObject) => Moviesgallery.withJson(jsonMapObject))

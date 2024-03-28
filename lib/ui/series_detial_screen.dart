@@ -231,18 +231,23 @@ class _Gallery extends StatelessWidget {
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(15),
-              ),
-              child: SizedBox(
-                height: 100,
-                width: 100,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: CachedImage(
-                    imageUrl: gallery[index].thumbnail,
-                    radius: 15,
+            return GestureDetector(
+              onTap: () {
+                showFullScreenGallery(context, gallery[index].thumbnail);
+              },
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+                child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: CachedImage(
+                      imageUrl: gallery[index].thumbnail,
+                      radius: 15,
+                    ),
                   ),
                 ),
               ),
@@ -256,6 +261,26 @@ class _Gallery extends StatelessWidget {
           crossAxisSpacing: 10,
         ),
       ),
+    );
+  }
+
+  Future<void> showFullScreenGallery(BuildContext context, String photo) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: AlertDialog(
+              surfaceTintColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              content: GalleryFullScreen(
+                imageURL: photo,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
