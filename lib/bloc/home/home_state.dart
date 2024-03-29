@@ -17,13 +17,16 @@ class HomeResponseState extends HomeState {
   Either<String, List<Movie>> getForYouMovies;
   Either<String, List<Movie>> getLatestMovies;
   Either<String, List<Movie>> getHottestMovies;
+  Either<String, List<Movie>> getShortSeries;
 
   HomeResponseState(
-      this.currentUser,
-      this.getBanners,
-      this.getForYouSeries,
-      this.getHottestSeries,
-      this.getForYouMovies,
-      this.getHottestMovies,
-      this.getLatestMovies);
+    this.currentUser,
+    this.getBanners,
+    this.getForYouSeries,
+    this.getHottestSeries,
+    this.getForYouMovies,
+    this.getHottestMovies,
+    this.getLatestMovies,
+    this.getShortSeries,
+  );
 }

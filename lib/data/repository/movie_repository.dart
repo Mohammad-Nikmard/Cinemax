@@ -14,6 +14,7 @@ abstract class MovieRepository {
   Future<Either<String, List<Movie>>> getHottestSeries();
   Future<Either<String, List<Moviesgallery>>> getPhotos(String movieId);
   Future<Either<String, List<MovieCasts>>> getCastList(String movieId);
+  Future<Either<String, List<Movie>>> getShortSeries();
 }
 
 class MovieRemoteRpository extends MovieRepository {
@@ -94,6 +95,16 @@ class MovieRemoteRpository extends MovieRepository {
   Future<Either<String, List<Movie>>> getHottestSeries() async {
     try {
       var response = await _datasource.getHottestSeries();
+      return right(response);
+    } on ApiException catch (ex) {
+      return left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, List<Movie>>> getShortSeries() async {
+    try {
+      var response = await _datasource.getShortSeries();
       return right(response);
     } on ApiException catch (ex) {
       return left(ex.message);

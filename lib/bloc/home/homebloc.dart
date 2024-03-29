@@ -24,14 +24,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         var getLatestMovies = await _movieRepository.getLatestMovies();
         var getForYouSeries = await _movieRepository.getForYouSeries();
         var getHottestSeries = await _movieRepository.getHottestSeries();
+        var getShortSeries = await _movieRepository.getShortSeries();
         emit(HomeResponseState(
-            user,
-            getBanners,
-            getForYouSeries,
-            getHottestSeries,
-            getForYouMovies,
-            getHottestMovies,
-            getLatestMovies));
+          user,
+          getBanners,
+          getForYouSeries,
+          getHottestSeries,
+          getForYouMovies,
+          getHottestMovies,
+          getLatestMovies,
+          getShortSeries,
+        ));
       },
     );
   }

@@ -249,6 +249,67 @@ class HomeScreen extends StatelessWidget {
                       return SeriesList(movieList: seriesList);
                     },
                   ),
+                  state.getShortSeries.fold(
+                    (exceptionMessage) {
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
+                      );
+                    },
+                    (seriesList) {
+                      return SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Short Series",
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 16,
+                                  color: TextColors.whiteText,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  PersistentNavBarNavigator.pushNewScreen(
+                                    context,
+                                    screen: CategorySearchScreen(
+                                      title: AppLocalizations.of(context)!
+                                          .seriesForYou,
+                                      movieList: seriesList,
+                                    ),
+                                    withNavBar: false,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.cupertino,
+                                  );
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.seeAll,
+                                  style: const TextStyle(
+                                    fontFamily: "MM",
+                                    fontSize: 14,
+                                    color: PrimaryColors.blueAccentColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  state.getShortSeries.fold(
+                    (exceptionMessage) {
+                      return const SliverToBoxAdapter(
+                        child: ExceptionMessage(),
+                      );
+                    },
+                    (seriesList) {
+                      return SeriesList(movieList: seriesList);
+                    },
+                  ),
                   state.getForYouSeries.fold(
                     (exceptionMessage) {
                       return const SliverToBoxAdapter(
@@ -258,8 +319,7 @@ class HomeScreen extends StatelessWidget {
                     (seriesList) {
                       return SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 20, right: 20),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -320,8 +380,7 @@ class HomeScreen extends StatelessWidget {
                     (movieList) {
                       return SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 20, right: 20),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
