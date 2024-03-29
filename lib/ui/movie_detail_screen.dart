@@ -378,7 +378,6 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                         : 16,
                     color: TextColors.whiteText,
                   ),
-                  overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                 ),
               ),
