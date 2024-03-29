@@ -1,0 +1,19 @@
+import 'package:cinemax/constants/string_constants.dart';
+
+class VideoModel {
+  String id;
+  String collectionId;
+  String movieID;
+  String trailer;
+
+  VideoModel(this.collectionId, this.id, this.movieID, this.trailer);
+
+  factory VideoModel.withJson(Map<String, dynamic> jsonMapObject) {
+    return VideoModel(
+      jsonMapObject["id"],
+      jsonMapObject["collectionId"],
+      jsonMapObject["movie_id"],
+      "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["trailer"]}",
+    );
+  }
+}

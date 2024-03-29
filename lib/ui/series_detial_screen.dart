@@ -6,6 +6,8 @@ import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/series/series_bloc.dart';
 import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/bloc/series/series_state.dart';
+import 'package:cinemax/bloc/video/video_bloc.dart';
+import 'package:cinemax/bloc/video/video_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
@@ -21,8 +23,10 @@ import 'package:cinemax/widgets/comment_section.dart';
 import 'package:cinemax/widgets/episode_widget.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:cinemax/widgets/video_player.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -749,45 +753,67 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height:
-                    (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                width:
-                    (MediaQueryHandler.screenWidth(context) < 350) ? 100 : 115,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(32),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                          child: BlocProvider(
+                            create: (context) => VideoBloc(locator.get())
+                              ..add(FetchTrailerEvent(widget.series.id)),
+                            child: const MainVideoBranch(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
+                  width: (MediaQueryHandler.screenWidth(context) < 350)
+                      ? 100
+                      : 115,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(32),
+                    ),
+                    color: PrimaryColors.blueAccentColor,
                   ),
-                  color: PrimaryColors.blueAccentColor,
-                ),
-                child: Center(
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25, right: 10),
-                        child: SvgPicture.asset(
-                          'assets/images/icon_play.svg',
-                          height: (MediaQueryHandler.screenWidth(context) < 350)
-                              ? 18
-                              : 20,
-                          width: (MediaQueryHandler.screenWidth(context) < 350)
-                              ? 18
-                              : 20,
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25, right: 10),
+                          child: SvgPicture.asset(
+                            'assets/images/icon_play.svg',
+                            height:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 18
+                                    : 20,
+                            width:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 18
+                                    : 20,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        AppLocalizations.of(context)!.play,
-                        style: TextStyle(
-                          fontFamily: "MM",
-                          fontSize:
-                              (MediaQueryHandler.screenWidth(context) < 350)
-                                  ? 12
-                                  : 16,
-                          color: TextColors.whiteText,
+                        const SizedBox(width: 10),
+                        Text(
+                          AppLocalizations.of(context)!.play,
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 12
+                                    : 16,
+                            color: TextColors.whiteText,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
