@@ -18,10 +18,12 @@ import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/comment_section.dart';
+import 'package:cinemax/widgets/downloader.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -659,23 +661,43 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 ),
               ),
               const SizedBox(width: 15.0),
-              Container(
-                height:
-                    (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                width: (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: PrimaryColors.softColor,
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    'assets/images/icon_download.svg',
-                    height: (MediaQueryHandler.screenWidth(context) < 350)
-                        ? 18
-                        : 24,
-                    width: (MediaQueryHandler.screenWidth(context) < 350)
-                        ? 18
-                        : 24,
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                          child: BlocProvider(
+                            create: (context) => VideoBloc(locator.get())
+                              ..add(FetchTrailerEvent(widget.movie.id)),
+                            child: const AppDownloader(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
+                  width:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: PrimaryColors.softColor,
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/images/icon_download.svg',
+                      height: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 18
+                          : 24,
+                      width: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 18
+                          : 24,
+                    ),
                   ),
                 ),
               ),

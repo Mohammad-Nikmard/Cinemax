@@ -46,6 +46,7 @@ dependencies:
 
   video_player: ^2.8.3
   flick_video_player: ^0.7.0
+  flutter_file_downloader: ^1.2.1
 
 
 

@@ -3,14 +3,14 @@ import 'package:cinemax/bloc/video/video_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
-import 'package:flick_video_player/flick_video_player.dart';
+import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MainVideoBranch extends StatelessWidget {
-  const MainVideoBranch({super.key});
+class AppDownloader extends StatelessWidget {
+  const AppDownloader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +18,16 @@ class MainVideoBranch extends StatelessWidget {
       builder: (context, state) {
         if (state is VideoLoadingState) {
           return const AppLoadingIndicator();
-        }
-        if (state is VideoResponseState) {
+        } else if (state is VideoResponseState) {
           return state.trailer.fold(
             (exceptionMessage) {
               return const Text("");
             },
             (response) {
-              return AppVideoPlayer(
-                trailer: response.trailer,
-              );
+              return const Text("");
             },
           );
         }
-
         return Center(
           child: Text(AppLocalizations.of(context)!.state),
         );
@@ -51,7 +47,38 @@ class MainVideoBranch extends StatelessWidget {
                 ),
               );
             },
-            (response) {},
+            (response) {
+              Navigator.pop(context);
+              FileDownloader.downloadFile(
+                notificationType: NotificationType.all,
+                url: response.trailer,
+                name: response.name,
+                onDownloadError: (String error) {
+                  SnackBar(
+                    content: DownloadingMessage(
+                      message: 'DOWNLOAD ERROR: $error',
+                      color: SecondaryColors.orangeColor,
+                    ),
+                    closeIconColor: Colors.transparent,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    duration: const Duration(seconds: 3),
+                  );
+                },
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: DownloadingMessage(
+                    message: "Trailer is added to download list.",
+                    color: SecondaryColors.greenColor,
+                  ),
+                  closeIconColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            },
           );
         }
       },
@@ -59,65 +86,20 @@ class MainVideoBranch extends StatelessWidget {
   }
 }
 
-class AppVideoPlayer extends StatefulWidget {
-  const AppVideoPlayer({super.key, required this.trailer});
-  final String trailer;
-
-  @override
-  State<AppVideoPlayer> createState() => _AppVideoPlayerState();
-}
-
-class _AppVideoPlayerState extends State<AppVideoPlayer> {
-  late FlickManager flickManager;
-
-  @override
-  void initState() {
-    super.initState();
-    flickManager = FlickManager(
-      videoPlayerController: VideoPlayerController.networkUrl(
-        Uri.parse(widget.trailer),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    flickManager.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        child: AspectRatio(
-          aspectRatio: 16 / 7,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(15),
-            ),
-            child: FlickVideoPlayer(
-              flickManager: flickManager,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class NoLinkSnackBar extends StatelessWidget {
-  const NoLinkSnackBar();
+class DownloadingMessage extends StatelessWidget {
+  const DownloadingMessage(
+      {super.key, required this.color, required this.message});
+  final String message;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQueryHandler.screenWidth(context),
       height: 60,
-      decoration: const BoxDecoration(
-        color: SecondaryColors.redColor,
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),
       ),
@@ -125,7 +107,7 @@ class NoLinkSnackBar extends StatelessWidget {
         padding: EdgeInsets.only(right: 15, left: 15),
         child: Center(
           child: Text(
-            "Unfortunately there is no trailer for this movie at the moment.",
+            "Trailer is added to download list.",
             style: TextStyle(
               color: TextColors.whiteText,
               fontSize: 12,
