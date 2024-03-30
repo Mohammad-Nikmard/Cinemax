@@ -1,5 +1,7 @@
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_state.dart';
+import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,7 @@ class MainVideoBranch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VideoBloc, VideoState>(
+    return BlocConsumer<VideoBloc, VideoState>(
       builder: (context, state) {
         if (state is VideoLoadingState) {
           return const AppLoadingIndicator();
@@ -20,7 +22,7 @@ class MainVideoBranch extends StatelessWidget {
         if (state is VideoResponseState) {
           return state.trailer.fold(
             (exceptionMessage) {
-              return Text(exceptionMessage);
+              return const Text("");
             },
             (response) {
               return AppVideoPlayer(
@@ -29,9 +31,29 @@ class MainVideoBranch extends StatelessWidget {
             },
           );
         }
+
         return Center(
           child: Text(AppLocalizations.of(context)!.state),
         );
+      },
+      listener: (context, state) {
+        if (state is VideoResponseState) {
+          state.trailer.fold(
+            (exceptionMessage) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: NoLinkSnackBar(),
+                  closeIconColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            },
+            (response) {},
+          );
+        }
       },
     );
   }
@@ -78,6 +100,38 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
             child: FlickVideoPlayer(
               flickManager: flickManager,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NoLinkSnackBar extends StatelessWidget {
+  const NoLinkSnackBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQueryHandler.screenWidth(context),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: SecondaryColors.redColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.only(right: 15, left: 15),
+        child: Center(
+          child: Text(
+            "Unfortunately there is no trailer for this movie at the moment.",
+            style: TextStyle(
+              color: TextColors.whiteText,
+              fontSize: 12,
+              fontFamily: "MSB",
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
