@@ -103,5 +103,9 @@
     "couCaption": "Les données que je soumets sont vraies et ne sont pas protégées par des droits d'auteur par un tiers.",
     "youRated": "Vous avez noté",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "shortS": "Série courte",
+    "downloadError": "ERREUR DE TÉLÉCHARGEMENT:",
+    "downloadMessage": "La bande-annonce est ajoutée à la liste de téléchargement.",
+    "noDownloadLink": "Malheureusement, il n'y a pas de bande-annonce pour ce film pour le moment."
 }

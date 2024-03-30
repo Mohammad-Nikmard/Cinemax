@@ -108,7 +108,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 }
 
 class NoLinkSnackBar extends StatelessWidget {
-  const NoLinkSnackBar();
+  const NoLinkSnackBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +121,12 @@ class NoLinkSnackBar extends StatelessWidget {
           Radius.circular(15),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.only(right: 15, left: 15),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15),
         child: Center(
           child: Text(
-            "Unfortunately there is no trailer for this movie at the moment.",
-            style: TextStyle(
+            AppLocalizations.of(context)!.noDownloadLink,
+            style: const TextStyle(
               color: TextColors.whiteText,
               fontSize: 12,
               fontFamily: "MSB",

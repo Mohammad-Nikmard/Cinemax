@@ -103,5 +103,9 @@
     "couCaption": "Los datos que envío son verdaderos y no tienen derechos de autor de terceros.",
     "youRated": "usted calificó",
     "yes": "Sí",
-    "no": "No"
+    "no": "No",
+    "shortS": "Serie corta",
+    "downloadError": "ERROR DE DESCARGA:",
+    "downloadMessage": "El tráiler se agrega a la lista de descargas.",
+    "noDownloadLink": "Desafortunadamente no hay ningún avance de esta película por el momento."
 }

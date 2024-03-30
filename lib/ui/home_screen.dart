@@ -262,9 +262,9 @@ class HomeScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Short Series",
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.shortS,
+                                style: const TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 16,
                                   color: TextColors.whiteText,

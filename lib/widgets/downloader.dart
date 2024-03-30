@@ -56,7 +56,8 @@ class AppDownloader extends StatelessWidget {
                 onDownloadError: (String error) {
                   SnackBar(
                     content: DownloadingMessage(
-                      message: 'DOWNLOAD ERROR: $error',
+                      message:
+                          '${AppLocalizations.of(context)!.downloadError} $error',
                       color: SecondaryColors.orangeColor,
                     ),
                     closeIconColor: Colors.transparent,
@@ -67,15 +68,15 @@ class AppDownloader extends StatelessWidget {
                 },
               );
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: DownloadingMessage(
-                    message: "Trailer is added to download list.",
+                    message: AppLocalizations.of(context)!.downloadMessage,
                     color: SecondaryColors.greenColor,
                   ),
                   closeIconColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  duration: Duration(seconds: 3),
+                  duration: const Duration(seconds: 3),
                 ),
               );
             },
@@ -103,12 +104,12 @@ class DownloadingMessage extends StatelessWidget {
           Radius.circular(15),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.only(right: 15, left: 15),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15),
         child: Center(
           child: Text(
-            "Trailer is added to download list.",
-            style: TextStyle(
+            message,
+            style: const TextStyle(
               color: TextColors.whiteText,
               fontSize: 12,
               fontFamily: "MSB",

@@ -103,5 +103,9 @@
     "couCaption": "The data i'm submitting is true and not copyrighted by a third party.",
     "youRated": "You rated",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "shortS": "Short Series",
+    "downloadError": "DOWNLOAD ERROR:",
+    "downloadMessage": "Trailer is added to download list.",
+    "noDownloadLink": "Unfortunately there is no trailer for this movie at the moment."
 }
