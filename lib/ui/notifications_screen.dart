@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,13 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  bool notifSwitch = false;
+  late bool notifSwitch;
+
+  @override
+  void initState() {
+    notifSwitch = AppManager.getNotif();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +113,33 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               onChanged: (value) {
                                 setState(() {
                                   notifSwitch = value;
+                                  AppManager.setNotifications(value);
                                 });
+                                if (notifSwitch == true) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: _NotifMessage(
+                                        message: "Notifications are noe ON",
+                                      ),
+                                      duration: Duration(seconds: 2),
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      closeIconColor: Colors.transparent,
+                                    ),
+                                  );
+                                } else if (notifSwitch == false) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: _NotifMessage(
+                                        message: "Notifications are noe OFF",
+                                      ),
+                                      duration: Duration(seconds: 2),
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      closeIconColor: Colors.transparent,
+                                    ),
+                                  );
+                                }
                               },
                             ),
                           ),
@@ -135,6 +168,41 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NotifMessage extends StatelessWidget {
+  const _NotifMessage({required this.message});
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25.0),
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.orangeColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Center(
+            child: Text(
+              message,
+              style: const TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 12,
+                fontFamily: "MSB",
+              ),
+            ),
           ),
         ),
       ),

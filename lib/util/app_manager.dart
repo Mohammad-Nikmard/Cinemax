@@ -20,4 +20,12 @@ class AppManager {
   static bool isFistTime() {
     return _sharedPreferences.getBool("FirstUsage") ?? true;
   }
+
+  static Future<void> setNotifications(bool trueORfalse) async {
+    await _sharedPreferences.setBool("Notif", trueORfalse);
+  }
+
+  static bool getNotif() {
+    return _sharedPreferences.getBool("Notif") ?? false;
+  }
 }

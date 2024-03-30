@@ -1,6 +1,7 @@
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/video_player.dart';
@@ -50,7 +51,9 @@ class AppDownloader extends StatelessWidget {
             (response) {
               Navigator.pop(context);
               FileDownloader.downloadFile(
-                notificationType: NotificationType.all,
+                notificationType: (AppManager.getNotif() == true)
+                    ? NotificationType.all
+                    : NotificationType.disabled,
                 url: response.trailer,
                 name: response.name,
                 onDownloadError: (String error) {

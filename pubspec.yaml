@@ -48,8 +48,6 @@ dependencies:
   flick_video_player: ^0.7.0
   flutter_file_downloader: ^1.2.1
 
-
-
   cupertino_icons: ^1.0.6
   
 
