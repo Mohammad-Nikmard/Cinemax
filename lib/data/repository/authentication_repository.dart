@@ -6,11 +6,11 @@ import 'package:dartz/dartz.dart';
 abstract class AuthenticationRepository {
   Future<Either<String, String>> register(
       String email, String name, String password, String passwordConfirm);
-
   Future<Either<String, String>> login(String password, String identity);
   Future<Either<String, UserApp>> getCurrentUser(String id);
   Future<Either<String, dynamic>> sendImage(String userId, image);
   Future<Either<String, String>> sendFeedback(double rate, String text);
+  Future<Either<String, dynamic>> sendUserName(String id, name);
 }
 
 class AuthenticationRemoteRepo extends AuthenticationRepository {
@@ -68,6 +68,16 @@ class AuthenticationRemoteRepo extends AuthenticationRepository {
     try {
       await _datasource.sendFeedback(rate, text);
       return right("success");
+    } on ApiException catch (ex) {
+      return left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, dynamic>> sendUserName(String id, name) async {
+    try {
+      await _datasource.sendUserName(id, name);
+      return right("Success");
     } on ApiException catch (ex) {
       return left(ex.message);
     }

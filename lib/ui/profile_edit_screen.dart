@@ -16,6 +16,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
 class ProfileEditScreen extends StatefulWidget {
@@ -31,19 +32,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   late final TextEditingController phoneNumberController;
   late final TextEditingController nameController;
   File? imageFile;
+
   @override
   void initState() {
     emailController = TextEditingController(text: AuthManager.readEmail());
     phoneNumberController = TextEditingController(text: AuthManager.readNum());
     nameController = TextEditingController(text: widget.user.name);
-
     super.initState();
   }
 
   @override
   void dispose() {
     emailController.dispose();
-
     phoneNumberController.dispose();
     nameController.dispose();
     super.dispose();
@@ -134,7 +134,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   width: 100,
                                   child: FittedBox(
                                     fit: BoxFit.cover,
-                                    child: (widget.user.profile == "")
+                                    child: (imageFile == null &&
+                                            widget.user.profile.isEmpty)
                                         ? SvgPicture.asset(
                                             'assets/images/icon_user.svg',
                                             colorFilter: const ColorFilter.mode(
@@ -177,7 +178,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          AuthManager.readId(),
+                          widget.user.name,
                           style: const TextStyle(
                             fontFamily: "MSB",
                             fontSize: 16,
@@ -302,12 +303,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (imageFile == null) {
-                              } else if (imageFile != null) {
-                                AuthManager.saveNum(phoneNumberController.text);
-                                context.read<ProfileBloc>().add(UpdateDataEvent(
-                                    AuthManager.readRecordID(), imageFile!));
-                              }
+                              eventsCondition(context);
                             },
                             child: Text(
                               AppLocalizations.of(context)!.saveChanges,
@@ -329,14 +325,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           height: 56,
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
-                            onPressed: () {
-                              if (imageFile == null) {
-                              } else if (imageFile != null) {
-                                AuthManager.saveNum(phoneNumberController.text);
-                                context.read<ProfileBloc>().add(UpdateDataEvent(
-                                    AuthManager.readRecordID(), imageFile!));
-                              }
-                            },
+                            onPressed: () {},
                             child: Text(
                               AppLocalizations.of(context)!.saveChanges,
                               style: const TextStyle(
@@ -368,6 +357,30 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         ),
       ),
     );
+  }
+
+  eventsCondition(BuildContext context) {
+    if (imageFile != null) {
+      AuthManager.saveNum(phoneNumberController.text);
+      context.read<ProfileBloc>().add(SendFileEvent(
+            AuthManager.readRecordID(),
+            imageFile,
+          ));
+    } else if (nameController.text.isNotEmpty) {
+      AuthManager.saveNum(phoneNumberController.text);
+
+      context.read<ProfileBloc>().add(SendNameEvent(
+          AuthManager.readRecordID(), nameController.text.trim()));
+    } else if (imageFile != null && nameController.text.isNotEmpty) {
+      AuthManager.saveNum(phoneNumberController.text);
+
+      context.read<ProfileBloc>().add(SendNameEvent(
+          AuthManager.readRecordID(), nameController.text.trim()));
+      context.read<ProfileBloc>().add(SendFileEvent(
+            AuthManager.readRecordID(),
+            imageFile,
+          ));
+    }
   }
 
   Widget modalProfileSheet(BuildContext context) {

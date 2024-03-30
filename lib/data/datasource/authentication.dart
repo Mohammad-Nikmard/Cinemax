@@ -6,11 +6,11 @@ import 'package:dio/dio.dart';
 abstract class AuthenticationDatasource {
   Future<void> register(
       String email, String name, String password, String passwordConfirm);
-
   Future<String> login(String password, String identity);
   Future<UserApp> getCurrentUser(String id);
   Future<dynamic> sendImageProfile(String userid, image);
   Future<void> sendFeedback(double rate, String text);
+  Future<dynamic> sendUserName(String userID, name);
 }
 
 class AuthenticationRemoteDatasource extends AuthenticationDatasource {
@@ -54,11 +54,9 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
       );
       if (response.statusCode == 200) {
         var token = response.data["token"];
-        var username = response.data["record"]["username"];
         var id = response.data["record"]["id"];
         var email = identity;
         AuthManager.saveToken(token);
-        AuthManager.saveId(username);
         AuthManager.saveEmail(email);
         AuthManager.saveRecordID(id);
         return token;
@@ -97,10 +95,16 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
           image == null ? null : await MultipartFile.fromFile(image.path),
     });
 
-    await _dio.patch(
-      "/api/collections/users/records/$userid",
-      data: formData,
-    );
+    try {
+      await _dio.patch(
+        "/api/collections/users/records/$userid",
+        data: formData,
+      );
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 19);
+    }
   }
 
   @override
@@ -117,6 +121,23 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 15);
+    }
+  }
+
+  @override
+  Future sendUserName(String userID, name) async {
+    FormData formData = FormData.fromMap({
+      'username': name,
+    });
+    try {
+      await _dio.patch(
+        "/api/collections/users/records/$userID",
+        data: formData,
+      );
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 18);
     }
   }
 }

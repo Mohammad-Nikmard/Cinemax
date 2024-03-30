@@ -29,14 +29,6 @@ class AuthManager {
     notifier.value = null;
   }
 
-  static void saveId(String id) async {
-    await _preferences.setString("ID", id);
-  }
-
-  static String readId() {
-    return _preferences.getString("ID") ?? "";
-  }
-
   static void saveRecordID(String id) async {
     await _preferences.setString("RecordID", id);
   }

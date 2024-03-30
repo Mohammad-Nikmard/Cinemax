@@ -2,11 +2,11 @@ import 'dart:io';
 
 abstract class ProfileEvent {}
 
-class UpdateDataEvent extends ProfileEvent {
+class SendFileEvent extends ProfileEvent {
   String id;
-  File file;
+  File? file;
 
-  UpdateDataEvent(this.id, this.file);
+  SendFileEvent(this.id, this.file);
 }
 
 class GetuserEvent extends ProfileEvent {}
@@ -16,4 +16,11 @@ class SendFeedbackEvent extends ProfileEvent {
   String text;
 
   SendFeedbackEvent(this.rate, this.text);
+}
+
+class SendNameEvent extends ProfileEvent {
+  String id;
+  String name;
+
+  SendNameEvent(this.id, this.name);
 }
