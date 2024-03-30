@@ -3,6 +3,7 @@ import 'package:cinemax/bloc/authentication/authentication_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/login_screen.dart';
 import 'package:cinemax/ui/register_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,7 +14,6 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userScreenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -57,7 +57,7 @@ class OnBoardingScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 height: 56,
-                width: userScreenSize.width,
+                width: MediaQueryHandler.screenWidth(context),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -91,7 +91,9 @@ class OnBoardingScreen extends StatelessWidget {
                   AppLocalizations.of(context)!.haveAccount,
                   style: TextStyle(
                     fontFamily: "MM",
-                    fontSize: (userScreenSize.width < 325) ? 12 : 16,
+                    fontSize: (MediaQueryHandler.screenWidth(context) < 325)
+                        ? 12
+                        : 16,
                     color: TextColors.greyText,
                   ),
                 ),
@@ -112,7 +114,9 @@ class OnBoardingScreen extends StatelessWidget {
                     style: TextStyle(
                       color: PrimaryColors.blueAccentColor,
                       fontFamily: "MM",
-                      fontSize: (userScreenSize.width < 325) ? 12 : 16,
+                      fontSize: (MediaQueryHandler.screenWidth(context) < 325)
+                          ? 12
+                          : 16,
                     ),
                   ),
                 ),
@@ -126,7 +130,9 @@ class OnBoardingScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Visibility(
-                    visible: (userScreenSize.width < 325) ? false : true,
+                    visible: (MediaQueryHandler.screenWidth(context) < 325)
+                        ? false
+                        : true,
                     child: const Divider(
                       color: PrimaryColors.softColor,
                       thickness: 1.4,
@@ -147,36 +153,15 @@ class OnBoardingScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: Visibility(
-                    visible: (userScreenSize.width < 325) ? false : true,
+                    visible: (MediaQueryHandler.screenWidth(context) < 325)
+                        ? false
+                        : true,
                     child: const Divider(
                       color: PrimaryColors.softColor,
                       thickness: 1.4,
                       endIndent: 80,
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  "assets/images/Google.svg",
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                SvgPicture.asset(
-                  "assets/images/Apple.svg",
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                SvgPicture.asset(
-                  "assets/images/Facebook.svg",
                 ),
               ],
             ),

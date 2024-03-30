@@ -107,5 +107,13 @@
     "shortS": "短篇系列",
     "downloadError": "下载错误：",
     "downloadMessage": "预告片已添加到下载列表中。",
-    "noDownloadLink": "不幸的是，目前没有这部电影的预告片。"
+    "noDownloadLink": "不幸的是，目前没有这部电影的预告片。",
+    "yourOpinion": "你的意见于我们很重要。请向我们展示对该应用程序的总体满意度。",
+    "infromText": "请告诉我们您的经验。我们很想听听这个。",
+    "aboutCinemax": "关于 Cinemax",
+    "aboutCinemaxCap": "Cinemax 是一款免费的电影应用程序，您可以在世界各地的众多电影中进行搜索并查看其详细信息，以帮助您更好地选择观看的内容。",
+    "contactMe": "联络我",
+    "contactmeCap": "与我分享您的问题、批评和建议，我很乐意听到并提供帮助:)",
+    "personalEmail": "我的个人电子邮箱：",
+    "personalPhone": "我的电话号码 ："
 }

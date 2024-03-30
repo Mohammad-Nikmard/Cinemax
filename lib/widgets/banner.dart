@@ -17,7 +17,7 @@ class BannerContainer extends StatefulWidget {
 
 class _BannerContainerState extends State<BannerContainer> {
   final PageController controller =
-      PageController(viewportFraction: 0.8, initialPage: 1);
+      PageController(viewportFraction: 0.8, initialPage: 2);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _BannerContainerState extends State<BannerContainer> {
                 height: 154,
                 width: 315,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
+                  padding: const EdgeInsets.only(left: 2.5),
                   child: Stack(
                     clipBehavior: Clip.none,
                     alignment: AlignmentDirectional.bottomStart,

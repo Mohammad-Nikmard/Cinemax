@@ -107,5 +107,13 @@
     "shortS": "Serie corta",
     "downloadError": "ERROR DE DESCARGA:",
     "downloadMessage": "El tráiler se agrega a la lista de descargas.",
-    "noDownloadLink": "Desafortunadamente no hay ningún avance de esta película por el momento."
+    "noDownloadLink": "Desafortunadamente no hay ningún avance de esta película por el momento.",
+    "yourOpinion": "Su opinión nos importa. Muéstrenos su satisfacción general con la aplicación.",
+    "infromText": "Por favor, infórmenos de su experiencia. Nos encantaría escuchar eso.",
+    "aboutCinemax": "Acerca de Cinemax",
+    "aboutCinemaxCap": "Cinemax es una aplicación de películas gratuita que te permitirá buscar entre numerosas películas del mundo y comprobar sus detalles para ayudarte a elegir mejor qué ver.",
+    "contactMe": "Contáctame",
+    "contactmeCap": "Comparta sus problemas, críticas y sugerencias conmigo, estaré feliz de escucharlo y ayudarlo :)",
+    "personalEmail": "Mi correo electrónico personal:",
+    "personalPhone": "Mi número de teléfono :"
 }

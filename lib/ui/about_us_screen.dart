@@ -45,36 +45,36 @@ class AboutUsScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              const Text(
-                "About Cinemax",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.aboutCinemax,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 20,
                   color: TextColors.whiteText,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                "Cinemax is a free movie application that will give you the ablity to search amongst numerous movies out in the world and check the details of it to help you make a better choice to what to watch.",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.aboutCinemaxCap,
+                style: const TextStyle(
                   fontFamily: "MM",
                   fontSize: 16,
                   color: TextColors.whiteText,
                 ),
               ),
               const SizedBox(height: 40),
-              const Text(
-                "Contact me",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.contactMe,
+                style: const TextStyle(
                   fontFamily: "MSB",
                   fontSize: 20,
                   color: TextColors.whiteText,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                "Share your problems, criticisms and suggestions with me, I'd be happy to hear that and help :)",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.contactmeCap,
+                style: const TextStyle(
                   fontFamily: "MM",
                   fontSize: 16,
                   color: TextColors.whiteText,
@@ -84,7 +84,7 @@ class AboutUsScreen extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "My personal E-mail : ",
+                    AppLocalizations.of(context)!.personalEmail,
                     style: TextStyle(
                       fontFamily: "MM",
                       fontSize: (MediaQueryHandler.screenWidth(context) < 290)
@@ -94,7 +94,7 @@ class AboutUsScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "mnikmard2004@gmail.com",
+                    " mnikmard2004@gmail.com",
                     style: TextStyle(
                       fontFamily: "MM",
                       fontSize: (MediaQueryHandler.screenWidth(context) < 290)
@@ -108,7 +108,7 @@ class AboutUsScreen extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "My phone number : ",
+                    AppLocalizations.of(context)!.personalPhone,
                     style: TextStyle(
                       fontFamily: "MM",
                       fontSize: (MediaQueryHandler.screenWidth(context) < 290)
@@ -118,7 +118,7 @@ class AboutUsScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "+989377964183",
+                    " +989377964183",
                     style: TextStyle(
                       fontFamily: "MM",
                       fontSize: (MediaQueryHandler.screenWidth(context) < 290)

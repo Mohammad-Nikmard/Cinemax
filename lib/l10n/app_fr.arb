@@ -107,5 +107,13 @@
     "shortS": "Série courte",
     "downloadError": "ERREUR DE TÉLÉCHARGEMENT:",
     "downloadMessage": "La bande-annonce est ajoutée à la liste de téléchargement.",
-    "noDownloadLink": "Malheureusement, il n'y a pas de bande-annonce pour ce film pour le moment."
+    "noDownloadLink": "Malheureusement, il n'y a pas de bande-annonce pour ce film pour le moment.",
+    "yourOpinion": "Votre avis nous intéresse. Veuillez nous montrer une satisfaction globale de l'application.",
+    "infromText": "S'il vous plaît, faites-nous part de votre expérience. Nous aimerions entendre cela.",
+    "aboutCinemax": "À propos de Cinemax",
+    "aboutCinemaxCap": "Cinemax est une application de cinéma gratuite qui vous donnera la possibilité de rechercher parmi de nombreux films dans le monde et d'en vérifier les détails pour vous aider à faire un meilleur choix quant à ce que vous voulez regarder.",
+    "contactMe": "Contactez moi",
+    "contactmeCap": "Partagez-moi vos problèmes, critiques et suggestions, je serais heureux de les entendre et de vous aider :)",
+    "personalEmail": "Mon E-mail personnel :",
+    "personalPhone": "Mon numéro de téléphone :"
 }

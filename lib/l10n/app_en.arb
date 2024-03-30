@@ -107,5 +107,13 @@
     "shortS": "Short Series",
     "downloadError": "DOWNLOAD ERROR:",
     "downloadMessage": "Trailer is added to download list.",
-    "noDownloadLink": "Unfortunately there is no trailer for this movie at the moment."
+    "noDownloadLink": "Unfortunately there is no trailer for this movie at the moment.",
+    "yourOpinion": "Your opinion matters to us. Please show us an overall satisfaction of the app.",
+    "infromText": "Please infrom us of your experience. We'd love to hear that.",
+    "aboutCinemax": "About Cinemax",
+    "aboutCinemaxCap": "Cinemax is a free movie application that will give you the ablity to search amongst numerous movies out in the world and check the details of it to help you make a better choice to what to watch.",
+    "contactMe": "Contact me",
+    "contactmeCap": "Share your problems, criticisms and suggestions with me, I'd be happy to hear that and help :)",
+    "personalEmail": "My personal E-mail :",
+    "personalPhone": "My phone number :"
 }

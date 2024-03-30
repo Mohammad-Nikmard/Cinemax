@@ -16,7 +16,6 @@ import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
@@ -508,9 +507,9 @@ class _MoreChipState extends State<_MoreChip> {
                 ),
               ),
               const SizedBox(height: 5),
-              const Text(
-                "Your opinion matters to us. Please show us an overall satisfaction of the app.",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.yourOpinion,
+                style: const TextStyle(
                   fontFamily: "MR",
                   color: TextColors.whiteText,
                 ),
@@ -546,15 +545,14 @@ class _MoreChipState extends State<_MoreChip> {
                   fontSize: 14,
                   color: TextColors.whiteText,
                 ),
-                decoration: const InputDecoration(
-                  hintText:
-                      "Please inform us of your experience. We'd love to hear that.",
-                  hintStyle: TextStyle(
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.infromText,
+                  hintStyle: const TextStyle(
                     fontSize: 12,
                     color: TextColors.greyText,
                     fontFamily: "MR",
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(20),
                     ),
@@ -563,7 +561,7 @@ class _MoreChipState extends State<_MoreChip> {
                       color: TextColors.greyText,
                     ),
                   ),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(20),
                     ),
