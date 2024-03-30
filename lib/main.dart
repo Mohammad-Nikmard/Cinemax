@@ -4,11 +4,14 @@ import 'package:cinemax/bloc/language/language_event.dart';
 import 'package:cinemax/bloc/language/language_state.dart';
 import 'package:cinemax/bloc/splash/splash_bloc.dart';
 import 'package:cinemax/bloc/splash/splash_event.dart';
+import 'package:cinemax/data/model/firebase_service.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
+import 'package:cinemax/firebase_options.dart';
 import 'package:cinemax/theme/main_theme.dart';
 import 'package:cinemax/ui/intro%20screens/intro_dashboard.dart';
 import 'package:cinemax/ui/splash_screen.dart';
 import 'package:cinemax/util/app_manager.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,11 +20,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await Hive.initFlutter();
   Hive.registerAdapter(WishlistCartAdapter());
   await Hive.openBox<WishlistCart>("MovieBox");
 
   await initServiceLoactor();
+
+  if (AppManager.getNotif() == true) {
+    await FirebaseService().initNotification();
+  }
 
   runApp(
     BlocProvider(

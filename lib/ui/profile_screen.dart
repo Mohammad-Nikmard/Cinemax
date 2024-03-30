@@ -273,7 +273,7 @@ class _GeneralChip extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 262,
+        height: 192,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
@@ -341,18 +341,6 @@ class _GeneralChip extends StatelessWidget {
               ),
               const SizedBox(
                 height: 10,
-              ),
-              const Divider(
-                thickness: 1.3,
-                color: Color(0xff252836),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              _OptionChip(
-                title: AppLocalizations.of(context)!.clearCache,
-                image: "assets/images/icon_bin.svg",
-                color: TextColors.greyText,
               ),
             ],
           ),

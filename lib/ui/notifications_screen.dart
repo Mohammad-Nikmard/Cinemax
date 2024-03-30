@@ -4,6 +4,7 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -88,62 +89,68 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.showNotif,
-                            style: TextStyle(
-                              fontFamily: "MM",
-                              fontSize:
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (notifSwitch == true) {
+                              notifSwitch = false;
+                              AppManager.setNotifications(false);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: _NotifMessage(
+                                    message: "Notifications are now OFF",
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  closeIconColor: Colors.transparent,
+                                ),
+                              );
+                            } else if (notifSwitch == false) {
+                              notifSwitch = true;
+                              AppManager.setNotifications(true);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: _NotifMessage(
+                                    message: "Notifications are now ON",
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  closeIconColor: Colors.transparent,
+                                ),
+                              );
+                            }
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.showNotif,
+                              style: TextStyle(
+                                fontFamily: "MM",
+                                fontSize:
+                                    (MediaQueryHandler.screenWidth(context) <
+                                            350)
+                                        ? 12
+                                        : 16,
+                                color: TextColors.whiteText,
+                              ),
+                            ),
+                            Transform.scale(
+                              scale:
                                   (MediaQueryHandler.screenWidth(context) < 350)
-                                      ? 12
-                                      : 16,
-                              color: TextColors.whiteText,
+                                      ? 0.6
+                                      : 0.8,
+                              child: CupertinoSwitch(
+                                activeColor: PrimaryColors.blueAccentColor,
+                                value: notifSwitch,
+                                onChanged: (value) {},
+                              ),
                             ),
-                          ),
-                          Transform.scale(
-                            scale:
-                                (MediaQueryHandler.screenWidth(context) < 350)
-                                    ? 0.6
-                                    : 0.8,
-                            child: CupertinoSwitch(
-                              activeColor: PrimaryColors.blueAccentColor,
-                              value: notifSwitch,
-                              onChanged: (value) {
-                                setState(() {
-                                  notifSwitch = value;
-                                  AppManager.setNotifications(value);
-                                });
-                                if (notifSwitch == true) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: _NotifMessage(
-                                        message: "Notifications are noe ON",
-                                      ),
-                                      duration: Duration(seconds: 2),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                      closeIconColor: Colors.transparent,
-                                    ),
-                                  );
-                                } else if (notifSwitch == false) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: _NotifMessage(
-                                        message: "Notifications are noe OFF",
-                                      ),
-                                      duration: Duration(seconds: 2),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                      closeIconColor: Colors.transparent,
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       const Divider(
                         thickness: 1.3,
@@ -182,7 +189,7 @@ class _NotifMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 25.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: Container(
         width: MediaQueryHandler.screenWidth(context),
         height: 60,

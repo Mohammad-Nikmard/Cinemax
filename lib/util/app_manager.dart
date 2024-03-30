@@ -26,6 +26,14 @@ class AppManager {
   }
 
   static bool getNotif() {
-    return _sharedPreferences.getBool("Notif") ?? false;
+    return _sharedPreferences.getBool("Notif") ?? true;
+  }
+
+  static Future<void> setDeviceToken(String token) async {
+    await _sharedPreferences.setString("FCM", token);
+  }
+
+  static String readDeviceToken() {
+    return _sharedPreferences.getString("FCM") ?? "";
   }
 }
