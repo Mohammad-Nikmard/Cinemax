@@ -28,7 +28,7 @@ class MovieRemoteDatasource extends MovieDatasource {
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 1);
     }
@@ -47,7 +47,7 @@ class MovieRemoteDatasource extends MovieDatasource {
               (jsonMapObject) => Moviesgallery.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 5);
     }
@@ -66,7 +66,7 @@ class MovieRemoteDatasource extends MovieDatasource {
               (jsonMapObject) => MovieCasts.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 7);
     }
@@ -84,7 +84,7 @@ class MovieRemoteDatasource extends MovieDatasource {
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 2);
     }
@@ -102,7 +102,7 @@ class MovieRemoteDatasource extends MovieDatasource {
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 2);
     }
@@ -120,7 +120,7 @@ class MovieRemoteDatasource extends MovieDatasource {
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 2);
     }
@@ -138,7 +138,7 @@ class MovieRemoteDatasource extends MovieDatasource {
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 3);
     }
@@ -156,7 +156,7 @@ class MovieRemoteDatasource extends MovieDatasource {
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 3);
     }

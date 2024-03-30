@@ -21,7 +21,7 @@ class SearchRemoteDatasource extends SearchDatasource {
           .map<Actors>((jsonMapObject) => Actors.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 11);
     }
@@ -39,7 +39,7 @@ class SearchRemoteDatasource extends SearchDatasource {
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 2);
     }

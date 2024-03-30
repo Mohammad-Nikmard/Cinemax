@@ -19,8 +19,6 @@ class BannerRemoteRepository extends BannerRepository {
       return right(response);
     } on ApiException catch (ex) {
       return left(ex.message);
-    } catch (ex) {
-      return left("$ex");
     }
   }
 }

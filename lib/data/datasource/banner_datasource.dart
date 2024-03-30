@@ -19,7 +19,7 @@ class BannerRemoteDatasource extends BannerDatasource {
               (jsonMapObject) => BannerModel.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 0);
     }

@@ -22,7 +22,7 @@ class UpcomingsRemoteDatasource extends UpcomingsDatasource {
           .map<Upcomings>((jsonMapObject) => Upcomings.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 4);
     }
@@ -42,7 +42,7 @@ class UpcomingsRemoteDatasource extends UpcomingsDatasource {
               (jsonMapObject) => UpcomingGallery.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 5);
     }
@@ -63,7 +63,7 @@ class UpcomingsRemoteDatasource extends UpcomingsDatasource {
               (jsonMapObject) => UpcomingsCasts.withJson(jsonMapObject))
           .toList();
     } on DioException catch (ex) {
-      throw ApiException(ex.message!, ex.response?.statusCode);
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 8);
     }
