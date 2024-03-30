@@ -22,13 +22,14 @@ class WishlistCartAdapter extends TypeAdapter<WishlistCart> {
       fields[2] as String,
       fields[3] as String,
       fields[4] as String,
+      fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, WishlistCart obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.thumbnail)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class WishlistCartAdapter extends TypeAdapter<WishlistCart> {
       ..writeByte(3)
       ..write(obj.category)
       ..writeByte(4)
-      ..write(obj.rate);
+      ..write(obj.rate)
+      ..writeByte(5)
+      ..write(obj.movieId);
   }
 
   @override

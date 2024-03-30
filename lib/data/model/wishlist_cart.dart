@@ -13,6 +13,9 @@ class WishlistCart {
   String category;
   @HiveField(4)
   String rate;
+  @HiveField(5)
+  String movieId;
 
-  WishlistCart(this.thumbnail, this.name, this.genre, this.category, this.rate);
+  WishlistCart(this.thumbnail, this.name, this.genre, this.category, this.rate,
+      this.movieId);
 }

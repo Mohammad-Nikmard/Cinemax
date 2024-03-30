@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
@@ -8,7 +9,6 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../DI/service_locator.dart';
@@ -35,21 +35,21 @@ class WishlistWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                //     showDialog(
-                //   context: context,
-                //   builder: (context) {
-                //     return ClipRRect(
-                //       child: BackdropFilter(
-                //         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                //         child: BlocProvider(
-                //           create: (context) => VideoBloc(locator.get())
-                //             ..add(FetchTrailerEvent(widget.movie.id)),
-                //           child: const MainVideoBranch(),
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // );
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ClipRRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: BlocProvider(
+                          create: (context) => VideoBloc(locator.get())
+                            ..add(FetchTrailerEvent(cart.movieId)),
+                          child: const MainVideoBranch(),
+                        ),
+                      ),
+                    );
+                  },
+                );
               },
               child: Stack(
                 alignment: AlignmentDirectional.center,
@@ -144,7 +144,10 @@ class WishlistWidget extends StatelessWidget {
                           const SizedBox(width: 10),
                           SvgPicture.asset(
                             'assets/images/icon_star.svg',
-                            color: SecondaryColors.orangeColor,
+                            colorFilter: const ColorFilter.mode(
+                              SecondaryColors.orangeColor,
+                              BlendMode.srcIn,
+                            ),
                             height: 16,
                             width: 16,
                           ),
@@ -167,7 +170,10 @@ class WishlistWidget extends StatelessWidget {
                         },
                         child: SvgPicture.asset(
                           'assets/images/icon_heart.svg',
-                          color: SecondaryColors.redColor,
+                          colorFilter: const ColorFilter.mode(
+                            SecondaryColors.redColor,
+                            BlendMode.srcIn,
+                          ),
                         ),
                       ),
                     ],

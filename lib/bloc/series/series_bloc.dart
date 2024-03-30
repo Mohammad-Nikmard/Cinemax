@@ -35,6 +35,7 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
           event.movie.genre,
           event.movie.category,
           event.movie.rate,
+          event.movie.id,
         );
         await _wishlistRepository.addToCart(cart);
       },
