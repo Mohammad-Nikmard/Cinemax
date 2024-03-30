@@ -122,49 +122,6 @@ class OnBoardingScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Visibility(
-                    visible: (MediaQueryHandler.screenWidth(context) < 325)
-                        ? false
-                        : true,
-                    child: const Divider(
-                      color: PrimaryColors.softColor,
-                      thickness: 1.4,
-                      indent: 80,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    AppLocalizations.of(context)!.orSignupWith,
-                    style: const TextStyle(
-                      fontFamily: "MM",
-                      fontSize: 14,
-                      color: TextColors.greyText,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Visibility(
-                    visible: (MediaQueryHandler.screenWidth(context) < 325)
-                        ? false
-                        : true,
-                    child: const Divider(
-                      color: PrimaryColors.softColor,
-                      thickness: 1.4,
-                      endIndent: 80,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/home/home_event.dart';
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
 import 'package:cinemax/bloc/search/search_bloc.dart';
@@ -34,405 +35,412 @@ class HomeScreen extends StatelessWidget {
           }
           if (state is HomeResponseState) {
             return SafeArea(
-              child: CustomScrollView(
-                slivers: [
-                  state.currentUser.fold(
-                    (exceptionMessage) {
-                      return SliverToBoxAdapter(
-                        child: Text(exceptionMessage),
-                      );
-                    },
-                    (user) {
-                      return _HomeHeader(
-                        user: user,
-                      );
-                    },
-                  ),
-                  const SearchBox(),
-                  state.getBanners.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (bannerList) {
-                      return SliverToBoxAdapter(
-                        child: BannerContainer(
-                          bannerList: bannerList,
-                        ),
-                      );
-                    },
-                  ),
-                  state.getHottestMovies.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (movieList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 20, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.hotMovie,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: CategorySearchScreen(
-                                      title: AppLocalizations.of(context)!
-                                          .hotMovie,
-                                      movieList: movieList,
-                                    ),
-                                    withNavBar: false,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.seeAll,
+              child: RefreshIndicator(
+                backgroundColor: PrimaryColors.softColor,
+                color: PrimaryColors.blueAccentColor,
+                onRefresh: () async {
+                  context.read<HomeBloc>().add(HomeDataRequestEvent());
+                },
+                child: CustomScrollView(
+                  slivers: [
+                    state.currentUser.fold(
+                      (exceptionMessage) {
+                        return SliverToBoxAdapter(
+                          child: Text(exceptionMessage),
+                        );
+                      },
+                      (user) {
+                        return _HomeHeader(
+                          user: user,
+                        );
+                      },
+                    ),
+                    const SearchBox(),
+                    state.getBanners.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (bannerList) {
+                        return SliverToBoxAdapter(
+                          child: BannerContainer(
+                            bannerList: bannerList,
+                          ),
+                        );
+                      },
+                    ),
+                    state.getHottestMovies.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (movieList) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 30, left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.hotMovie,
                                   style: const TextStyle(
                                     fontFamily: "MM",
-                                    fontSize: 14,
-                                    color: PrimaryColors.blueAccentColor,
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: CategorySearchScreen(
+                                        title: AppLocalizations.of(context)!
+                                            .hotMovie,
+                                        movieList: movieList,
+                                      ),
+                                      withNavBar: false,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.seeAll,
+                                    style: const TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 14,
+                                      color: PrimaryColors.blueAccentColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  state.getHottestMovies.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (movieList) {
-                      return MovieListChip(movieList: movieList);
-                    },
-                  ),
-                  state.getLatestMovies.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (movieList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 20, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.latestMovie,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: CategorySearchScreen(
-                                      title: AppLocalizations.of(context)!
-                                          .latestMovie,
-                                      movieList: movieList,
-                                    ),
-                                    withNavBar: false,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.seeAll,
+                        );
+                      },
+                    ),
+                    state.getHottestMovies.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (movieList) {
+                        return MovieListChip(movieList: movieList);
+                      },
+                    ),
+                    state.getLatestMovies.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (movieList) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 30, left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.latestMovie,
                                   style: const TextStyle(
                                     fontFamily: "MM",
-                                    fontSize: 14,
-                                    color: PrimaryColors.blueAccentColor,
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: CategorySearchScreen(
+                                        title: AppLocalizations.of(context)!
+                                            .latestMovie,
+                                        movieList: movieList,
+                                      ),
+                                      withNavBar: false,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.seeAll,
+                                    style: const TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 14,
+                                      color: PrimaryColors.blueAccentColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  state.getLatestMovies.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (movieList) {
-                      return MovieListChip(movieList: movieList);
-                    },
-                  ),
-                  state.getHottestSeries.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (seriesList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 20, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.hotSeries,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: CategorySearchScreen(
-                                      title: AppLocalizations.of(context)!
-                                          .hotSeries,
-                                      movieList: seriesList,
-                                    ),
-                                    withNavBar: false,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.seeAll,
+                        );
+                      },
+                    ),
+                    state.getLatestMovies.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (movieList) {
+                        return MovieListChip(movieList: movieList);
+                      },
+                    ),
+                    state.getHottestSeries.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (seriesList) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 30, left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.hotSeries,
                                   style: const TextStyle(
                                     fontFamily: "MM",
-                                    fontSize: 14,
-                                    color: PrimaryColors.blueAccentColor,
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: CategorySearchScreen(
+                                        title: AppLocalizations.of(context)!
+                                            .hotSeries,
+                                        movieList: seriesList,
+                                      ),
+                                      withNavBar: false,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.seeAll,
+                                    style: const TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 14,
+                                      color: PrimaryColors.blueAccentColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  state.getHottestSeries.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (seriesList) {
-                      return SeriesList(movieList: seriesList);
-                    },
-                  ),
-                  state.getShortSeries.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (seriesList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.shortS,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: CategorySearchScreen(
-                                      title: AppLocalizations.of(context)!
-                                          .seriesForYou,
-                                      movieList: seriesList,
-                                    ),
-                                    withNavBar: false,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.seeAll,
+                        );
+                      },
+                    ),
+                    state.getHottestSeries.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (seriesList) {
+                        return SeriesList(movieList: seriesList);
+                      },
+                    ),
+                    state.getShortSeries.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (seriesList) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.shortS,
                                   style: const TextStyle(
                                     fontFamily: "MM",
-                                    fontSize: 14,
-                                    color: PrimaryColors.blueAccentColor,
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: CategorySearchScreen(
+                                        title: AppLocalizations.of(context)!
+                                            .seriesForYou,
+                                        movieList: seriesList,
+                                      ),
+                                      withNavBar: false,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.seeAll,
+                                    style: const TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 14,
+                                      color: PrimaryColors.blueAccentColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  state.getShortSeries.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (seriesList) {
-                      return SeriesList(movieList: seriesList);
-                    },
-                  ),
-                  state.getForYouSeries.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (seriesList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.seriesForYou,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: CategorySearchScreen(
-                                      title: AppLocalizations.of(context)!
-                                          .seriesForYou,
-                                      movieList: seriesList,
-                                    ),
-                                    withNavBar: false,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.seeAll,
+                        );
+                      },
+                    ),
+                    state.getShortSeries.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (seriesList) {
+                        return SeriesList(movieList: seriesList);
+                      },
+                    ),
+                    state.getForYouSeries.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (seriesList) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.seriesForYou,
                                   style: const TextStyle(
                                     fontFamily: "MM",
-                                    fontSize: 14,
-                                    color: PrimaryColors.blueAccentColor,
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: CategorySearchScreen(
+                                        title: AppLocalizations.of(context)!
+                                            .seriesForYou,
+                                        movieList: seriesList,
+                                      ),
+                                      withNavBar: false,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.seeAll,
+                                    style: const TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 14,
+                                      color: PrimaryColors.blueAccentColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  state.getForYouSeries.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (seriesList) {
-                      return SeriesList(movieList: seriesList);
-                    },
-                  ),
-                  state.getForYouMovies.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (movieList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.movieForYOu,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 16,
-                                  color: TextColors.whiteText,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: CategorySearchScreen(
-                                      title: AppLocalizations.of(context)!
-                                          .movieForYOu,
-                                      movieList: movieList,
-                                    ),
-                                    withNavBar: false,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.seeAll,
+                        );
+                      },
+                    ),
+                    state.getForYouSeries.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (seriesList) {
+                        return SeriesList(movieList: seriesList);
+                      },
+                    ),
+                    state.getForYouMovies.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (movieList) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.movieForYOu,
                                   style: const TextStyle(
                                     fontFamily: "MM",
-                                    fontSize: 14,
-                                    color: PrimaryColors.blueAccentColor,
+                                    fontSize: 16,
+                                    color: TextColors.whiteText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: CategorySearchScreen(
+                                        title: AppLocalizations.of(context)!
+                                            .movieForYOu,
+                                        movieList: movieList,
+                                      ),
+                                      withNavBar: false,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.seeAll,
+                                    style: const TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 14,
+                                      color: PrimaryColors.blueAccentColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  state.getForYouMovies.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (movieList) {
-                      return MovieListChip(movieList: movieList);
-                    },
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                    state.getForYouMovies.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (movieList) {
+                        return MovieListChip(movieList: movieList);
+                      },
+                    ),
+                  ],
+                ),
               ),
             );
           }
