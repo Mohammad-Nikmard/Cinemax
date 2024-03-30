@@ -6,7 +6,7 @@ import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
-import 'package:cinemax/data/model/usera.dart';
+import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/util/query_handler.dart';

@@ -1,40 +1,21 @@
-class User {
-  final String imagePath;
-  final String name;
-  final String email;
-  final String password;
+import 'package:cinemax/constants/string_constants.dart';
 
-  const User(
-    this.imagePath,
-    this.name,
-    this.email,
-    this.password,
-  );
+class UserApp {
+  String id;
+  String collectionId;
+  String name;
+  String imagePath;
+  String profile;
 
-  User copy({
-    String? imagePath,
-    String? name,
-    String? email,
-    String? password,
-  }) =>
-      User(
-        imagePath ?? this.imagePath,
-        name ?? this.name,
-        email ?? this.email,
-        password ?? this.password,
-      );
+  UserApp(this.id, this.collectionId, this.name, this.imagePath, this.profile);
 
-  static User fromJson(Map<String, dynamic> json) => User(
-        json["imagePath"],
-        json["name"],
-        json["email"],
-        json["password"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'imagePath': imagePath,
-        "name": name,
-        "email": email,
-        "password": password,
-      };
+  factory UserApp.withJson(Map<String, dynamic> jsonMapObject) {
+    return UserApp(
+      jsonMapObject['id'],
+      jsonMapObject['collectionId'],
+      jsonMapObject['username'],
+      "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["profile_pic"]}",
+      jsonMapObject['profile_pic'],
+    );
+  }
 }

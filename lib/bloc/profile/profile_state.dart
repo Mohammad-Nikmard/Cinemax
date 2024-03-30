@@ -1,4 +1,4 @@
-import 'package:cinemax/data/model/usera.dart';
+import 'package:cinemax/data/model/user.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class ProfileState {}

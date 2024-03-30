@@ -1,6 +1,6 @@
 import 'package:cinemax/data/model/banner.dart';
 import 'package:cinemax/data/model/movie.dart';
-import 'package:cinemax/data/model/usera.dart';
+import 'package:cinemax/data/model/user.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class HomeState {}

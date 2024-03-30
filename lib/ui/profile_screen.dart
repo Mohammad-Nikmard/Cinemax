@@ -4,7 +4,7 @@ import 'package:cinemax/bloc/profile/profile_bloc.dart';
 import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/profile/profile_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
-import 'package:cinemax/data/model/usera.dart';
+import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/ui/about_us_screen.dart';
 import 'package:cinemax/ui/language_screen.dart';
 import 'package:cinemax/ui/notifications_screen.dart';
@@ -30,81 +30,83 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(child: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20, top: 20),
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.profile,
-                        style: const TextStyle(
-                          fontFamily: "MSB",
-                          fontSize: 16,
-                          color: TextColors.whiteText,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                if (state is UserResponseState) ...{
-                  state.user.fold(
-                    (exceptionMessage) {
-                      return SliverToBoxAdapter(
-                        child: Text(exceptionMessage),
-                      );
-                    },
-                    (user) {
-                      return SliverPadding(
-                        padding: const EdgeInsets.only(bottom: 25),
-                        sliver: _ProfileChip(user: user),
-                      );
-                    },
-                  ),
-                },
-                const SliverPadding(
-                  padding: EdgeInsets.only(bottom: 25),
-                  sliver: _AccountChip(),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.only(bottom: 25),
-                  sliver: _GeneralChip(),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.only(bottom: 40),
-                  sliver: _MoreChip(),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.only(bottom: 50),
-                  sliver: SliverToBoxAdapter(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 56,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          signoutDialog(context);
-                        },
+      body: SafeArea(
+        child: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 20, top: 20),
+                      child: Center(
                         child: Text(
-                          AppLocalizations.of(context)!.logout,
+                          AppLocalizations.of(context)!.profile,
                           style: const TextStyle(
-                            color: PrimaryColors.blueAccentColor,
-                            fontSize: 16,
                             fontFamily: "MSB",
+                            fontSize: 16,
+                            color: TextColors.whiteText,
                           ),
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-          );
-        },
-      )),
+                  if (state is UserResponseState) ...{
+                    state.user.fold(
+                      (exceptionMessage) {
+                        return SliverToBoxAdapter(
+                          child: Text(exceptionMessage),
+                        );
+                      },
+                      (user) {
+                        return SliverPadding(
+                          padding: const EdgeInsets.only(bottom: 25),
+                          sliver: _ProfileChip(user: user),
+                        );
+                      },
+                    ),
+                  },
+                  const SliverPadding(
+                    padding: EdgeInsets.only(bottom: 25),
+                    sliver: _AccountChip(),
+                  ),
+                  const SliverPadding(
+                    padding: EdgeInsets.only(bottom: 25),
+                    sliver: _GeneralChip(),
+                  ),
+                  const SliverPadding(
+                    padding: EdgeInsets.only(bottom: 40),
+                    sliver: _MoreChip(),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    sliver: SliverToBoxAdapter(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 56,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            signoutDialog(context);
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.logout,
+                            style: const TextStyle(
+                              color: PrimaryColors.blueAccentColor,
+                              fontSize: 16,
+                              fontFamily: "MSB",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -722,20 +724,39 @@ class _ProfileChip extends StatefulWidget {
 }
 
 class _ProfileChipState extends State<_ProfileChip> {
+  String? result;
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: GestureDetector(
-        onTap: () {
-          PersistentNavBarNavigator.pushNewScreen(
+        onTap: () async {
+          // await PersistentNavBarNavigator.pushNewScreen(
+          //   context,
+          //   screen: BlocProvider(
+          //     create: (context) => ProfileBloc(locator.get()),
+          //     child: ProfileEditScreen(
+          //       user: widget.user,
+          //     ),
+          //   ),
+          //   withNavBar: true,
+          //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          // );
+          result = await Navigator.push(
             context,
-            screen: BlocProvider(
-              create: (context) => ProfileBloc(locator.get()),
-              child: const ProfileEditScreen(),
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => ProfileBloc(locator.get()),
+                child: ProfileEditScreen(
+                  user: widget.user,
+                ),
+              ),
             ),
-            withNavBar: true,
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
+          if (result != null) {
+            // ignore: use_build_context_synchronously
+            context.read<ProfileBloc>().add(GetuserEvent());
+          }
         },
         child: Container(
           width: MediaQuery.of(context).size.width,

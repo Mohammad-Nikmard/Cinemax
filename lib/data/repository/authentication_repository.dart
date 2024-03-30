@@ -1,5 +1,5 @@
 import 'package:cinemax/data/datasource/authentication.dart';
-import 'package:cinemax/data/model/usera.dart';
+import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:dartz/dartz.dart';
 

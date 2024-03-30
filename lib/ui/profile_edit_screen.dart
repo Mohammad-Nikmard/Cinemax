@@ -7,10 +7,10 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/widgets/back_label.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,7 +19,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
 class ProfileEditScreen extends StatefulWidget {
-  const ProfileEditScreen({super.key});
+  const ProfileEditScreen({super.key, required this.user});
+  final UserApp user;
 
   @override
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();
@@ -30,14 +31,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   late final TextEditingController phoneNumberController;
   late final TextEditingController nameController;
   File? imageFile;
-  late User user;
   @override
   void initState() {
-    user = AuthManager.getUser();
-
-    emailController = TextEditingController(text: user.email);
+    emailController = TextEditingController(text: AuthManager.readEmail());
     phoneNumberController = TextEditingController(text: AuthManager.readNum());
-    nameController = TextEditingController(text: user.name);
+    nameController = TextEditingController(text: widget.user.name);
 
     super.initState();
   }
@@ -61,10 +59,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       final pathImage = File("${directory.path}/$name");
       final newImage = await File(image.path).copy(pathImage.path);
 
-      imageFile = newImage;
-
       setState(() {
-        user = user.copy(imagePath: newImage.path);
+        imageFile = newImage;
       });
     } on PlatformException {
       // print(ex);
@@ -73,7 +69,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final image = FileImage(File(user.imagePath));
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -139,7 +134,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   width: 100,
                                   child: FittedBox(
                                     fit: BoxFit.cover,
-                                    child: (user.imagePath == "")
+                                    child: (widget.user.profile == "")
                                         ? SvgPicture.asset(
                                             'assets/images/icon_user.svg',
                                             colorFilter: const ColorFilter.mode(
@@ -147,7 +142,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                               BlendMode.srcIn,
                                             ),
                                           )
-                                        : Image(image: image),
+                                        : (imageFile == null)
+                                            ? CachedImage(
+                                                imageUrl: widget.user.imagePath,
+                                                radius: 100)
+                                            : Image.file(
+                                                imageFile!,
+                                              ),
                                   ),
                                 ),
                               ),
@@ -176,7 +177,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          user.name,
+                          AuthManager.readId(),
                           style: const TextStyle(
                             fontFamily: "MSB",
                             fontSize: 16,
@@ -185,7 +186,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          user.email,
+                          AuthManager.readEmail(),
                           style: const TextStyle(
                             fontFamily: "MM",
                             fontSize: 14,
@@ -196,7 +197,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     ),
                     const SizedBox(height: 25),
                     TextField(
-                      onChanged: (name) => user = user.copy(name: name),
                       controller: nameController,
                       style: const TextStyle(
                         color: TextColors.greyText,
@@ -305,7 +305,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               if (imageFile == null) {
                               } else if (imageFile != null) {
                                 AuthManager.saveNum(phoneNumberController.text);
-                                AuthManager.setUser(user);
                                 context.read<ProfileBloc>().add(UpdateDataEvent(
                                     AuthManager.readRecordID(), imageFile!));
                               }
@@ -334,7 +333,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               if (imageFile == null) {
                               } else if (imageFile != null) {
                                 AuthManager.saveNum(phoneNumberController.text);
-                                AuthManager.setUser(user);
                                 context.read<ProfileBloc>().add(UpdateDataEvent(
                                     AuthManager.readRecordID(), imageFile!));
                               }
@@ -357,7 +355,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   },
                   listener: (context, state) {
                     if (state is ProfileResponseState) {
-                      Navigator.pop(context);
+                      Navigator.pop(
+                        context,
+                        "true",
+                      );
                     }
                   },
                 ),
