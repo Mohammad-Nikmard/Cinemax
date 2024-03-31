@@ -115,5 +115,7 @@
     "contactMe": "Contact me",
     "contactmeCap": "Share your problems, criticisms and suggestions with me, I'd be happy to hear that and help :)",
     "personalEmail": "My personal E-mail :",
-    "personalPhone": "My phone number :"
+    "personalPhone": "My phone number :",
+    "notifOn": "Notifications are now ON",
+    "notifOFF": "Notifications are now OFF"
 }

@@ -115,5 +115,7 @@
     "contactMe": "联络我",
     "contactmeCap": "与我分享您的问题、批评和建议，我很乐意听到并提供帮助:)",
     "personalEmail": "我的个人电子邮箱：",
-    "personalPhone": "我的电话号码 ："
+    "personalPhone": "我的电话号码 ：",
+    "notifOn": "通知现已开启",
+    "notifOFF": "通知现已关闭"
 }

@@ -80,12 +80,15 @@ class SearchResultScreen extends StatelessWidget {
                                             fontSize: 14,
                                             color: TextColors.whiteText,
                                           ),
-                                          decoration: const InputDecoration(
+                                          decoration: InputDecoration(
                                             contentPadding:
-                                                EdgeInsets.only(bottom: 10),
+                                                const EdgeInsets.only(
+                                                    bottom: 10),
                                             border: InputBorder.none,
-                                            hintText: "Type Something...",
-                                            hintStyle: TextStyle(
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .typeSomething,
+                                            hintStyle: const TextStyle(
                                               fontFamily: "MM",
                                               fontSize: 14,
                                               color: TextColors.greyText,

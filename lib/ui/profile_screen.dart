@@ -725,17 +725,6 @@ class _ProfileChipState extends State<_ProfileChip> {
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () async {
-          // await PersistentNavBarNavigator.pushNewScreen(
-          //   context,
-          //   screen: BlocProvider(
-          //     create: (context) => ProfileBloc(locator.get()),
-          //     child: ProfileEditScreen(
-          //       user: widget.user,
-          //     ),
-          //   ),
-          //   withNavBar: true,
-          //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          // );
           result = await Navigator.push(
             context,
             MaterialPageRoute(

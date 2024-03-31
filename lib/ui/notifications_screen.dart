@@ -96,11 +96,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               notifSwitch = false;
                               AppManager.setNotifications(false);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   content: _NotifMessage(
-                                    message: "Notifications are now OFF",
+                                    message:
+                                        AppLocalizations.of(context)!.notifOFF,
                                   ),
-                                  duration: Duration(seconds: 2),
+                                  duration: const Duration(seconds: 2),
                                   backgroundColor: Colors.transparent,
                                   elevation: 0,
                                   closeIconColor: Colors.transparent,
@@ -110,11 +111,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               notifSwitch = true;
                               AppManager.setNotifications(true);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   content: _NotifMessage(
-                                    message: "Notifications are now ON",
+                                    message:
+                                        AppLocalizations.of(context)!.notifOn,
                                   ),
-                                  duration: Duration(seconds: 2),
+                                  duration: const Duration(seconds: 2),
                                   backgroundColor: Colors.transparent,
                                   elevation: 0,
                                   closeIconColor: Colors.transparent,
