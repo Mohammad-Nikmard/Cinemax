@@ -24,6 +24,10 @@ enum Language {
   hindi(
     Locale('hi', 'IN'),
     'Hindi',
+  ),
+  arabic(
+    Locale('ar', 'AR'),
+    'Arabic',
   );
 
   const Language(
