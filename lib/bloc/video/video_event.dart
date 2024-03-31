@@ -5,3 +5,9 @@ class FetchTrailerEvent extends VideoEvent {
 
   FetchTrailerEvent(this.movideID);
 }
+
+class FetchUpcomingTrailerEvent extends VideoEvent {
+  String upID;
+
+  FetchUpcomingTrailerEvent(this.upID);
+}

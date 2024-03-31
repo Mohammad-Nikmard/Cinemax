@@ -13,5 +13,12 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
         emit(VideoResponseState(trailer));
       },
     );
+    on<FetchUpcomingTrailerEvent>(
+      (event, emit) async {
+        emit(VideoLoadingState());
+        var trailer = await _videoRepository.getTrailer(event.upID);
+        emit(VideoResponseState(trailer));
+      },
+    );
   }
 }

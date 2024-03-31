@@ -1,6 +1,9 @@
 import 'dart:ui';
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_state.dart';
+import 'package:cinemax/bloc/video/video_bloc.dart';
+import 'package:cinemax/bloc/video/video_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/upcoming_cast.dart';
 import 'package:cinemax/data/model/upcoming_gallery.dart';
@@ -11,7 +14,9 @@ import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -221,20 +226,65 @@ class MovieHeadDetail extends StatelessWidget {
         padding: const EdgeInsets.only(top: 40.0, left: 20, right: 20),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20),
-              ),
-              child: SizedBox(
-                height: 180,
-                width: MediaQuery.of(context).size.width,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: CachedImage(
-                    imageUrl: upcomingItem.thumbnail,
-                    radius: 20,
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ClipRRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: BlocProvider(
+                          create: (context) => VideoBloc(locator.get())
+                            ..add(FetchUpcomingTrailerEvent(upcomingItem.id)),
+                          child: const MainVideoBranch(),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        child: SizedBox(
+                          height: 180,
+                          width: MediaQuery.of(context).size.width,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: CachedImage(
+                              imageUrl: upcomingItem.thumbnail,
+                              radius: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        child: SizedBox(
+                          height: 180,
+                          width: MediaQuery.of(context).size.width,
+                          child: ColoredBox(
+                            color: PrimaryColors.darkColor.withOpacity(0.3),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                  SvgPicture.asset(
+                    'assets/images/icon_play_wishlist.svg',
+                    height: 60,
+                    width: 60,
+                  ),
+                ],
               ),
             ),
             Column(
