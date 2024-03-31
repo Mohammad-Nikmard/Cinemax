@@ -20,6 +20,10 @@ enum Language {
   chineese(
     Locale('zh', 'CN'),
     'Chinese ',
+  ),
+  hindi(
+    Locale('hi', 'IN'),
+    'Hindi',
   );
 
   const Language(

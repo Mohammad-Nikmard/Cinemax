@@ -24,6 +24,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     "Français",
     "Español",
     "中国人",
+    "हिंदी",
   ];
   @override
   Widget build(BuildContext context) {
