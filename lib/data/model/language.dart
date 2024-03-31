@@ -28,6 +28,10 @@ enum Language {
   arabic(
     Locale('ar', 'AR'),
     'Arabic',
+  ),
+  russian(
+    Locale('ru', 'RU'),
+    'Ruassian',
   );
 
   const Language(
