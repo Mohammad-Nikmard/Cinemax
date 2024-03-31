@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/authentication/authentication_bloc.dart';
 import 'package:cinemax/bloc/profile/profile_bloc.dart';
 import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/profile/profile_state.dart';
@@ -67,10 +68,10 @@ class ProfileScreen extends StatelessWidget {
                       },
                     ),
                   },
-                  const SliverPadding(
-                    padding: EdgeInsets.only(bottom: 25),
-                    sliver: _AccountChip(),
-                  ),
+                  // const SliverPadding(
+                  //   padding: EdgeInsets.only(bottom: 25),
+                  //   sliver: _AccountChip(),
+                  // ),
                   const SliverPadding(
                     padding: EdgeInsets.only(bottom: 25),
                     sliver: _GeneralChip(),
@@ -684,7 +685,12 @@ class _AccountChip extends StatelessWidget {
                 onTap: () {
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    screen: const ResetPasswordScreen(),
+                    screen: BlocProvider(
+                      create: (context) => AuthBloc(
+                        locator.get(),
+                      ),
+                      child: const ResetPasswordScreen(),
+                    ),
                     withNavBar: false,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );

@@ -4,7 +4,6 @@ import 'package:cinemax/bloc/authentication/authentication_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
-import 'package:cinemax/ui/reset_password_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -164,30 +163,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResetPasswordScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.forgotPw,
-                        style: const TextStyle(
-                          fontFamily: "MM",
-                          fontSize: 12,
-                          color: PrimaryColors.blueAccentColor,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 8.0),
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => BlocProvider(
+                  //             create: (context) => AuthBloc(
+                  //               locator.get(),
+                  //             ),
+                  //             child: const ResetPasswordScreen(),
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //     child: Text(
+                  //       AppLocalizations.of(context)!.forgotPw,
+                  //       style: const TextStyle(
+                  //         fontFamily: "MM",
+                  //         fontSize: 12,
+                  //         color: PrimaryColors.blueAccentColor,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               const SizedBox(
