@@ -11,6 +11,7 @@ class UpDetailLoadingState extends UpDetailState {}
 class UpDetailResponseState extends UpDetailState {
   Either<String, List<UpcomingGallery>> getphotos;
   Either<String, List<UpcomingsCasts>> casts;
+  bool isOnLikes;
 
-  UpDetailResponseState(this.getphotos, this.casts);
+  UpDetailResponseState(this.getphotos, this.casts, this.isOnLikes);
 }

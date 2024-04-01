@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_bloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_state.dart';
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_event.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/upcoming_cast.dart';
 import 'package:cinemax/data/model/upcoming_gallery.dart';
@@ -16,7 +19,6 @@ import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -29,8 +31,11 @@ class UpcomingMovieDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: BlocBuilder<UpDetailBloc, UpDetailState>(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: BlocProvider(
+        create: (context) => UpDetailBloc(locator.get(), locator.get())
+          ..add(UpDetailDataRequestEvent(upcomingItem.id, upcomingItem.name)),
+        child: BlocBuilder<UpDetailBloc, UpDetailState>(
           builder: (context, state) {
             if (state is UpDetailLoadingState) {
               return const AppLoadingIndicator();
@@ -39,7 +44,8 @@ class UpcomingMovieDetail extends StatelessWidget {
                 child: CustomScrollView(
                   slivers: [
                     _Header(
-                      upcomingtitle: upcomingItem.name,
+                      upcomingItem: upcomingItem,
+                      isOnLikes: state.isOnLikes,
                     ),
                     MovieHeadDetail(
                       upcomingItem: upcomingItem,
@@ -108,7 +114,9 @@ class UpcomingMovieDetail extends StatelessWidget {
               child: Text(AppLocalizations.of(context)!.state),
             );
           },
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -384,8 +392,9 @@ class MovieHeadDetail extends StatelessWidget {
 }
 
 class _Header extends StatefulWidget {
-  const _Header({required this.upcomingtitle});
-  final String upcomingtitle;
+  const _Header({required this.upcomingItem, required this.isOnLikes});
+  final Upcomings upcomingItem;
+  final bool isOnLikes;
 
   @override
   State<_Header> createState() => _HeaderState();
@@ -393,7 +402,7 @@ class _Header extends StatefulWidget {
 
 class _HeaderState extends State<_Header> with TickerProviderStateMixin {
   late final AnimationController controller;
-  bool isLiked = false;
+  bool? isLiked;
 
   @override
   void initState() {
@@ -401,6 +410,12 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
+    isLiked = widget.isOnLikes;
+    if (!isLiked!) {
+      controller.value = 0.0;
+    } else if (isLiked!) {
+      controller.value = 1.0;
+    }
     super.initState();
   }
 
@@ -430,7 +445,7 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                   child: const BackLabel(),
                 ),
                 Text(
-                  widget.upcomingtitle,
+                  widget.upcomingItem.name,
                   style: const TextStyle(
                     fontFamily: "MSB",
                     fontSize: 16,
@@ -440,12 +455,45 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      if (isLiked) {
+                      if (isLiked!) {
+                        context.read<UpDetailBloc>().add(
+                            DeleteWishlistItemEvent(widget.upcomingItem.name));
+                        context
+                            .read<WishlistBloc>()
+                            .add(WishlistFetchCartsEvent());
                         controller.reverse();
                         isLiked = false;
-                      } else if (!isLiked) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            backgroundColor: Colors.transparent,
+                            content: _SnackBarUnlikeMessage(
+                              movieName: widget.upcomingItem.name,
+                            ),
+                            duration: const Duration(seconds: 5),
+                          ),
+                        );
+                      } else if (!isLiked!) {
+                        context.read<UpDetailBloc>().add(
+                              UpcomingAddToCartEvent(widget.upcomingItem),
+                            );
+                        context
+                            .read<WishlistBloc>()
+                            .add(WishlistFetchCartsEvent());
                         controller.forward();
                         isLiked = true;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            backgroundColor: Colors.transparent,
+                            content: _SnackBarLikedMessage(
+                              movieName: widget.upcomingItem.name,
+                            ),
+                            duration: const Duration(seconds: 5),
+                          ),
+                        );
                       }
                     });
                   },
@@ -559,6 +607,76 @@ class UpcomingCastAndCrew extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SnackBarLikedMessage extends StatelessWidget {
+  const _SnackBarLikedMessage({required this.movieName});
+  final String movieName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQueryHandler.screenWidth(context),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: SecondaryColors.greenColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "$movieName ${AppLocalizations.of(context)!.isAddedToWishlist}",
+              style: const TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 12,
+                fontFamily: "MSB",
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SnackBarUnlikeMessage extends StatelessWidget {
+  const _SnackBarUnlikeMessage({required this.movieName});
+  final String movieName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQueryHandler.screenWidth(context),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: SecondaryColors.redColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "$movieName ${AppLocalizations.of(context)!.removeFromWishlist}",
+              style: const TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 12,
+                fontFamily: "MSB",
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

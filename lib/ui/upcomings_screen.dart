@@ -1,8 +1,7 @@
 import 'package:cinemax/DI/service_locator.dart';
-import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_bloc.dart';
-import 'package:cinemax/bloc/upcomings/upcomingDetail/updetail_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
+import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
@@ -92,12 +91,8 @@ class _UpcomingChip extends StatelessWidget {
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen: BlocProvider(
-            create: (context) {
-              var bloc = UpDetailBloc(locator.get());
-              bloc.add(UpDetailDataRequestEvent(upcomingsItem.id));
-              return bloc;
-            },
+          screen: BlocProvider<WishlistBloc>.value(
+            value: locator.get<WishlistBloc>(),
             child: UpcomingMovieDetail(
               upcomingItem: upcomingsItem,
             ),
