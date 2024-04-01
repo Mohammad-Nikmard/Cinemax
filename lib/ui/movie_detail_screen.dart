@@ -842,14 +842,16 @@ class _ShareSnackBar extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Text(
-          message,
-          style: const TextStyle(
-            color: TextColors.whiteText,
-            fontSize: 12,
-            fontFamily: "MSB",
+        child: Center(
+          child: Text(
+            message,
+            style: const TextStyle(
+              color: TextColors.whiteText,
+              fontSize: 12,
+              fontFamily: "MSB",
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
         ),
       ),
     );

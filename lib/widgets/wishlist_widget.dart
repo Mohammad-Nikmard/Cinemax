@@ -35,21 +35,39 @@ class WishlistWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ClipRRect(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                        child: BlocProvider(
-                          create: (context) => VideoBloc(locator.get())
-                            ..add(FetchTrailerEvent(cart.movieId)),
-                          child: const MainVideoBranch(),
+                if (cart.category == "Upcomings") {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                          child: BlocProvider(
+                            create: (context) => VideoBloc(locator.get())
+                              ..add(FetchUpcomingTrailerEvent(cart.movieId)),
+                            child: const MainVideoBranch(),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
+                      );
+                    },
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                          child: BlocProvider(
+                            create: (context) => VideoBloc(locator.get())
+                              ..add(FetchTrailerEvent(cart.movieId)),
+                            child: const MainVideoBranch(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
               child: Stack(
                 alignment: AlignmentDirectional.center,
@@ -142,14 +160,17 @@ class WishlistWidget extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          SvgPicture.asset(
-                            'assets/images/icon_star.svg',
-                            colorFilter: const ColorFilter.mode(
-                              SecondaryColors.orangeColor,
-                              BlendMode.srcIn,
+                          Visibility(
+                            visible: cart.rate.isNotEmpty,
+                            child: SvgPicture.asset(
+                              'assets/images/icon_star.svg',
+                              colorFilter: const ColorFilter.mode(
+                                SecondaryColors.orangeColor,
+                                BlendMode.srcIn,
+                              ),
+                              height: 16,
+                              width: 16,
                             ),
-                            height: 16,
-                            width: 16,
                           ),
                           const SizedBox(width: 5),
                           Text(
