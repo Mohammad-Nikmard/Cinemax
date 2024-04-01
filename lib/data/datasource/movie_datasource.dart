@@ -22,8 +22,12 @@ class MovieRemoteDatasource extends MovieDatasource {
   MovieRemoteDatasource(this._dio);
   @override
   Future<List<Movie>> getAllMovies() async {
+    Map<String, dynamic> qparams = {
+      'perPage': 1000,
+    };
     try {
-      var response = await _dio.get("/api/collections/movies/records");
+      var response = await _dio.get("/api/collections/movies/records",
+          queryParameters: qparams);
       return response.data["items"]
           .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
           .toList();

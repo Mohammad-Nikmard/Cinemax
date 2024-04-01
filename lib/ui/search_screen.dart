@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
@@ -16,8 +18,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  int randomToday = 0;
+  @override
+  void initState() {
+    super.initState();
+    randomToday = Random().nextInt(76);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +154,7 @@ class SearchScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 20),
                                     RelatedSeachWidget(
-                                      movie: movieList[5],
+                                      movie: movieList[randomToday],
                                     ),
                                   ],
                                 ),
