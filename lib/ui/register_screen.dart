@@ -5,6 +5,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/ui/privacy_screen.dart';
+import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -328,7 +329,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               BlocConsumer<AuthBloc, AuthState>(
                 builder: (context, state) {
@@ -338,6 +339,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () {
+                          AuthManager.saveName(nameController.text);
                           _eventHandler();
                         },
                         child: Text(
@@ -353,11 +355,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   } else if (state is AuthLoadingState) {
                     return const AppLoadingIndicator();
                   } else if (state is AuthRegisterResponseState) {
-                    SizedBox(
+                    return SizedBox(
                       height: 56,
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () {
+                          AuthManager.saveName(nameController.text.trim());
                           _eventHandler();
                         },
                         child: Text(
@@ -371,7 +374,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     );
                   }
-                  return Text("There seem to be errors Getting data");
+                  return const Text("There seem to be errors Getting data");
                 },
                 listener: (context, state) {
                   if (state is AuthRegisterResponseState) {
@@ -393,7 +396,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         );
                       },
-                      (registerResponse) {
+                      (registerResponse) async {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
