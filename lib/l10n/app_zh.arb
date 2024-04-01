@@ -117,5 +117,6 @@
     "personalEmail": "我的个人电子邮箱：",
     "personalPhone": "我的电话号码 ：",
     "notifOn": "通知现已开启",
-    "notifOFF": "通知现已关闭"
+    "notifOFF": "通知现已关闭",
+    "futureShare": "共享功能将很快在未来版本中添加。"
 }

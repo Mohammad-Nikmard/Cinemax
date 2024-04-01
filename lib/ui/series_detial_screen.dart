@@ -844,7 +844,18 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               const SizedBox(width: 15.0),
               GestureDetector(
                 onTap: () {
-                  shareDialog(context);
+                  // shareDialog(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: _ShareSnackBar(
+                        message: AppLocalizations.of(context)!.futureShare,
+                      ),
+                      elevation: 0,
+                      closeIconColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
                 },
                 child: Container(
                   height:
@@ -871,6 +882,37 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ShareSnackBar extends StatelessWidget {
+  const _ShareSnackBar({required this.message});
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQueryHandler.screenWidth(context),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: SecondaryColors.greenColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15),
+        child: Text(
+          message,
+          style: const TextStyle(
+            color: TextColors.whiteText,
+            fontSize: 12,
+            fontFamily: "MSB",
+          ),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

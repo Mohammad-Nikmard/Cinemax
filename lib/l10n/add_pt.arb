@@ -117,5 +117,6 @@
     "personalEmail": "Meu e-mail pessoal:",
     "personalPhone": "Meu número de telefone :",
     "notifOn": "As notificações agora estão ATIVADAS",
-    "notifOFF": "As notificações agora estão DESATIVADAS"
+    "notifOFF": "As notificações agora estão DESATIVADAS",
+    "futureShare": "A capacidade de compartilhamento será adicionada em breve na versão futura."
 }

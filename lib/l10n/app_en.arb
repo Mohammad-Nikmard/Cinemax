@@ -117,5 +117,6 @@
     "personalEmail": "My personal E-mail :",
     "personalPhone": "My phone number :",
     "notifOn": "Notifications are now ON",
-    "notifOFF": "Notifications are now OFF"
+    "notifOFF": "Notifications are now OFF",
+    "futureShare": "Sharing ability will soon be added in the future release."
 }
