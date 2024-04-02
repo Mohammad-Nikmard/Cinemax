@@ -24,6 +24,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetuserEvent>((event, emit) async {
       var response = await _authenticationRepository
           .getCurrentUser(AuthManager.readRecordID());
+      response.fold(
+        (l) {},
+        (response) {
+          AuthManager.setImage(response.imagePath);
+        },
+      );
       emit(UserResponseState(response));
     });
 

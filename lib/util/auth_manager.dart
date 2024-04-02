@@ -59,4 +59,12 @@ class AuthManager {
   static String readName() {
     return _preferences.getString("Name") ?? "";
   }
+
+  static void setImage(String image) async {
+    await _preferences.setString("Image", image);
+  }
+
+  static String readImage() {
+    return _preferences.getString("Image") ?? "";
+  }
 }

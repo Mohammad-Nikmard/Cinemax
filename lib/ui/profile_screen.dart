@@ -32,29 +32,41 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
-        child: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20, top: 20),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.profile,
-                          style: const TextStyle(
-                            fontFamily: "MSB",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
-                          ),
-                        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20, top: 20),
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.profile,
+                      style: const TextStyle(
+                        fontFamily: "MSB",
+                        fontSize: 16,
+                        color: TextColors.whiteText,
                       ),
                     ),
                   ),
-                  if (state is UserResponseState) ...{
-                    state.user.fold(
+                ),
+              ),
+              BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+                  if (state is ProfileIniState) {
+                    return _ProfileChip(
+                      user: UserApp(
+                        "",
+                        "",
+                        AuthManager.readName(),
+                        AuthManager.readImage(),
+                        AuthManager.readImage(),
+                      ),
+                    );
+                  }
+
+                  if (state is UserResponseState) {
+                    return state.user.fold(
                       (exceptionMessage) {
                         return SliverToBoxAdapter(
                           child: Text(exceptionMessage),
@@ -66,46 +78,52 @@ class ProfileScreen extends StatelessWidget {
                           sliver: _ProfileChip(user: user),
                         );
                       },
+                    );
+                  }
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: Text(AppLocalizations.of(context)!.state),
                     ),
-                  },
-                  // const SliverPadding(
-                  //   padding: EdgeInsets.only(bottom: 25),
-                  //   sliver: _AccountChip(),
-                  // ),
-                  const SliverPadding(
-                    padding: EdgeInsets.only(bottom: 25),
-                    sliver: _GeneralChip(),
-                  ),
-                  const SliverPadding(
-                    padding: EdgeInsets.only(bottom: 40),
-                    sliver: _MoreChip(),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.only(bottom: 50),
-                    sliver: SliverToBoxAdapter(
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 56,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            signoutDialog(context);
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!.logout,
-                            style: const TextStyle(
-                              color: PrimaryColors.blueAccentColor,
-                              fontSize: 16,
-                              fontFamily: "MSB",
-                            ),
-                          ),
+                  );
+                },
+              ),
+
+              // const SliverPadding(
+              //   padding: EdgeInsets.only(bottom: 25),
+              //   sliver: _AccountChip(),
+              // ),
+              const SliverPadding(
+                padding: EdgeInsets.only(bottom: 25),
+                sliver: _GeneralChip(),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.only(bottom: 40),
+                sliver: _MoreChip(),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.only(bottom: 50),
+                sliver: SliverToBoxAdapter(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 56,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        signoutDialog(context);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.logout,
+                        style: const TextStyle(
+                          color: PrimaryColors.blueAccentColor,
+                          fontSize: 16,
+                          fontFamily: "MSB",
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-            );
-          },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -798,14 +816,18 @@ class _ProfileChipState extends State<_ProfileChip> {
                         color: TextColors.whiteText,
                       ),
                     ),
-                    Text(
-                      AuthManager.readEmail(),
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
-                            ? 10
-                            : 14,
-                        color: TextColors.greyText,
+                    SizedBox(
+                      width: 230,
+                      child: Text(
+                        AuthManager.readEmail(),
+                        style: TextStyle(
+                          fontFamily: "MM",
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 350)
+                                  ? 10
+                                  : 14,
+                          color: TextColors.greyText,
+                        ),
                       ),
                     ),
                   ],
