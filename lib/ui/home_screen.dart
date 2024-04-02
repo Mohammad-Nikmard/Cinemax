@@ -1,4 +1,6 @@
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/home/categoryDetail/category_detail_bloc.dart';
+import 'package:cinemax/bloc/home/categoryDetail/category_event.dart';
 import 'package:cinemax/bloc/home/home_event.dart';
 import 'package:cinemax/bloc/home/home_state.dart';
 import 'package:cinemax/bloc/home/homebloc.dart';
@@ -8,6 +10,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/category.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/user.dart';
+import 'package:cinemax/ui/category_detail_screen.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
@@ -17,9 +20,7 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -738,7 +739,20 @@ class Categories extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (context) => CategoryDetailBloc(locator.get())
+                            ..add(CategoryFetchEvent(categories[index].name)),
+                          child: CategoryDetialScreen(
+                            title: categories[index].name,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(15),
