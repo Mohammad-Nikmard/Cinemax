@@ -1,4 +1,5 @@
 import 'package:cinemax/data/model/banner.dart';
+import 'package:cinemax/data/model/category.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/user.dart';
 import 'package:dartz/dartz.dart';
@@ -18,6 +19,7 @@ class HomeResponseState extends HomeState {
   Either<String, List<Movie>> getLatestMovies;
   Either<String, List<Movie>> getHottestMovies;
   Either<String, List<Movie>> getShortSeries;
+  Either<String, List<CategoryModel>> getCategories;
 
   HomeResponseState(
     this.currentUser,
@@ -28,5 +30,6 @@ class HomeResponseState extends HomeState {
     this.getHottestMovies,
     this.getLatestMovies,
     this.getShortSeries,
+    this.getCategories,
   );
 }

@@ -1,6 +1,7 @@
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/data/datasource/authentication.dart';
 import 'package:cinemax/data/datasource/banner_datasource.dart';
+import 'package:cinemax/data/datasource/category_datasource.dart';
 import 'package:cinemax/data/datasource/comments_datasource.dart';
 import 'package:cinemax/data/datasource/movie_datasource.dart';
 import 'package:cinemax/data/datasource/search_datasource.dart';
@@ -10,6 +11,7 @@ import 'package:cinemax/data/datasource/video_datasource.dart';
 import 'package:cinemax/data/datasource/wishlist_datasource.dart';
 import 'package:cinemax/data/repository/authentication_repository.dart';
 import 'package:cinemax/data/repository/banner_repository.dart';
+import 'package:cinemax/data/repository/category_repository.dart';
 import 'package:cinemax/data/repository/comment_repository.dart';
 import 'package:cinemax/data/repository/movie_repository.dart';
 import 'package:cinemax/data/repository/search_repository.dart';
@@ -63,6 +65,9 @@ void getDatasources() {
 
   locator
       .registerSingleton<VideoDatasource>(VideoRemoteDatasource(locator.get()));
+
+  locator.registerSingleton<CategoryDatasource>(
+      CategoryRemoteDatasource(locator.get()));
 }
 
 void getRepositories() {
@@ -92,4 +97,7 @@ void getRepositories() {
 
   locator
       .registerSingleton<VideoRepository>(VideoRemoteRepository(locator.get()));
+
+  locator.registerSingleton<CategoryRepository>(
+      CategoryRemoteRepositry(locator.get()));
 }

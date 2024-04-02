@@ -63,7 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return [
       BlocProvider(
         create: (context) =>
-            HomeBloc(locator.get(), locator.get(), locator.get())
+            HomeBloc(locator.get(), locator.get(), locator.get(), locator.get())
               ..add(HomeDataRequestEvent()),
         child: const HomeScreen(),
       ),

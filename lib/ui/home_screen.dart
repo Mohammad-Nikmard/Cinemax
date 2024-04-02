@@ -5,6 +5,7 @@ import 'package:cinemax/bloc/home/homebloc.dart';
 import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/category.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
@@ -16,7 +17,9 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -74,6 +77,18 @@ class HomeScreen extends StatelessWidget {
                           child: BannerContainer(
                             bannerList: bannerList,
                           ),
+                        );
+                      },
+                    ),
+                    state.getCategories.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (categoryList) {
+                        return Categories(
+                          categories: categoryList,
                         );
                       },
                     ),
@@ -695,6 +710,74 @@ class SeriesList extends StatelessWidget {
                 child: MovieWidget(
                   showRate: true,
                   movie: movieList[index],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Categories extends StatelessWidget {
+  const Categories({super.key, required this.categories});
+  final List<CategoryModel> categories;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.only(left: 20, top: 30),
+      sliver: SliverToBoxAdapter(
+        child: SizedBox(
+          height: 170,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        SizedBox(
+                          height: 170,
+                          width: 150,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: CachedImage(
+                              imageUrl: categories[index].thumbnail,
+                              radius: 15,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 170,
+                          width: 150,
+                          child: ColoredBox(
+                            color: PrimaryColors.darkColor.withOpacity(0.3),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 40,
+                          child: Text(
+                            categories[index].name,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontFamily: "MSB",
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
