@@ -1,5 +1,6 @@
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
+import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
@@ -8,12 +9,13 @@ import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shimmer/shimmer.dart';
 
 class UpcomingsScreen extends StatelessWidget {
   const UpcomingsScreen({super.key});
@@ -25,27 +27,40 @@ class UpcomingsScreen extends StatelessWidget {
       body: BlocBuilder<UpcomingsBloc, UpcomingsState>(
         builder: (context, state) {
           if (state is UpcomingsLoadingState) {
-            return const AppLoadingIndicator();
+            return Shimmer.fromColors(
+              baseColor: Colors.grey[400]!,
+              highlightColor: Colors.grey[100]!,
+              child: const UpcomingLoading(),
+            );
           } else if (state is UpcomingsResponseState) {
             return SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: CustomScrollView(
-                  slivers: [
-                    const _Header(),
-                    state.getUpcomingsList.fold(
-                      (exceptionMessage) {
-                        return const SliverToBoxAdapter(
-                          child: ExceptionMessage(),
-                        );
-                      },
-                      (upList) {
-                        return _UpcomingsList(
-                          upList: upList,
-                        );
-                      },
-                    ),
-                  ],
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    context
+                        .read<UpcomingsBloc>()
+                        .add(UpcomingsDataRequestEvent());
+                  },
+                  backgroundColor: PrimaryColors.softColor,
+                  color: PrimaryColors.blueAccentColor,
+                  child: CustomScrollView(
+                    slivers: [
+                      const _Header(),
+                      state.getUpcomingsList.fold(
+                        (exceptionMessage) {
+                          return const SliverToBoxAdapter(
+                            child: ExceptionMessage(),
+                          );
+                        },
+                        (upList) {
+                          return _UpcomingsList(
+                            upList: upList,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -290,6 +305,110 @@ class _Header extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class UpcomingLoading extends StatelessWidget {
+  const UpcomingLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 25,
+              ),
+              const Center(
+                child: ShimmerSkelton(
+                  height: 20,
+                  width: 100,
+                  radius: 10,
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerSkelton(
+                    height: 168,
+                    width: MediaQueryHandler.screenWidth(context),
+                    radius: 16,
+                  ),
+                  const SizedBox(height: 10),
+                  const ShimmerSkelton(
+                    height: 20,
+                    width: 100,
+                    radius: 5,
+                  ),
+                  const SizedBox(height: 10),
+                  const ShimmerSkelton(
+                    height: 20,
+                    width: 250,
+                    radius: 5,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerSkelton(
+                    height: 168,
+                    width: MediaQueryHandler.screenWidth(context),
+                    radius: 16,
+                  ),
+                  const SizedBox(height: 10),
+                  const ShimmerSkelton(
+                    height: 20,
+                    width: 100,
+                    radius: 5,
+                  ),
+                  const SizedBox(height: 10),
+                  const ShimmerSkelton(
+                    height: 20,
+                    width: 200,
+                    radius: 5,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerSkelton(
+                    height: 168,
+                    width: MediaQueryHandler.screenWidth(context),
+                    radius: 16,
+                  ),
+                  const SizedBox(height: 10),
+                  const ShimmerSkelton(
+                    height: 20,
+                    width: 100,
+                    radius: 5,
+                  ),
+                  const SizedBox(height: 10),
+                  const ShimmerSkelton(
+                    height: 20,
+                    width: 200,
+                    radius: 5,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
