@@ -18,13 +18,14 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/banner.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
+import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -36,7 +37,11 @@ class HomeScreen extends StatelessWidget {
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeLoadingState) {
-            return const AppLoadingIndicator();
+            return Shimmer.fromColors(
+              baseColor: Colors.grey[400]!,
+              highlightColor: Colors.grey[100]!,
+              child: const HomeLoading(),
+            );
           }
           if (state is HomeResponseState) {
             return SafeArea(
@@ -796,6 +801,166 @@ class Categories extends StatelessWidget {
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class HomeLoading extends StatelessWidget {
+  const HomeLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 55),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ShimmerSkelton(height: 60, width: 60, radius: 100),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ShimmerSkelton(height: 20, width: 150, radius: 5),
+                        SizedBox(height: 10),
+                        ShimmerSkelton(height: 18, width: 60, radius: 3),
+                      ],
+                    ),
+                  ],
+                ),
+                ShimmerSkelton(
+                  height: 40,
+                  width: 40,
+                  radius: 100,
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 154,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: ShimmerSkelton(
+                      height: 154,
+                      width: 300,
+                      radius: 16,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: ShimmerSkelton(
+                      height: 154,
+                      width: 300,
+                      radius: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 40),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ShimmerSkelton(
+                  height: 20,
+                  width: 150,
+                  radius: 5,
+                ),
+                ShimmerSkelton(
+                  height: 20,
+                  width: 60,
+                  radius: 5,
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+            SizedBox(
+              height: 210,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: ShimmerSkelton(
+                      height: 210,
+                      width: 145,
+                      radius: 15,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: ShimmerSkelton(
+                      height: 210,
+                      width: 145,
+                      radius: 15,
+                    ),
+                  ),
+                  ShimmerSkelton(
+                    height: 210,
+                    width: 145,
+                    radius: 15,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 45),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ShimmerSkelton(
+                  height: 20,
+                  width: 150,
+                  radius: 5,
+                ),
+                ShimmerSkelton(
+                  height: 20,
+                  width: 60,
+                  radius: 5,
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+            SizedBox(
+              height: 210,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: ShimmerSkelton(
+                      height: 210,
+                      width: 145,
+                      radius: 15,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: ShimmerSkelton(
+                      height: 210,
+                      width: 145,
+                      radius: 15,
+                    ),
+                  ),
+                  ShimmerSkelton(
+                    height: 210,
+                    width: 145,
+                    radius: 15,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
