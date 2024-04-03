@@ -5,6 +5,7 @@ import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/upcomings.dart';
+import 'package:cinemax/ui/news_screen.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -292,8 +293,28 @@ class _Header extends StatelessWidget {
               height: 20,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                InkWell(
+                  onTap: () {
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: const NewsScreen(),
+                      withNavBar: true,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
+                  },
+                  child: SvgPicture.asset(
+                    'assets/images/news_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                      TextColors.greyText,
+                      BlendMode.srcIn,
+                    ),
+                    height: 24,
+                    width: 24,
+                  ),
+                ),
                 Text(
                   AppLocalizations.of(context)!.upcomings,
                   style: const TextStyle(
@@ -301,6 +322,10 @@ class _Header extends StatelessWidget {
                     fontSize: 16,
                     color: TextColors.whiteText,
                   ),
+                ),
+                const SizedBox(
+                  height: 24,
+                  width: 24,
                 ),
               ],
             ),
