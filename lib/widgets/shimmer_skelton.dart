@@ -13,13 +13,13 @@ class ShimmerSkelton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        color: TextColors.wihteGreyText.withOpacity(0.2),
-        borderRadius: BorderRadius.all(
-          Radius.circular(radius),
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(radius)),
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: ColoredBox(
+          color: TextColors.wihteGreyText.withOpacity(0.2),
         ),
       ),
     );

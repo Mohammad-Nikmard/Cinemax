@@ -264,7 +264,7 @@ class RelatedSeachWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        movie.category,
+                        movie.category.toUpperCase(),
                         style: TextStyle(
                           fontFamily: "MM",
                           fontSize:

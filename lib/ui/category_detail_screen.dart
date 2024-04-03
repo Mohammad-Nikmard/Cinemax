@@ -3,11 +3,12 @@ import 'package:cinemax/bloc/home/categoryDetail/category_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
+import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CategoryDetialScreen extends StatelessWidget {
   const CategoryDetialScreen({super.key, required this.title});
@@ -23,7 +24,11 @@ class CategoryDetialScreen extends StatelessWidget {
           child: BlocBuilder<CategoryDetailBloc, CategoryState>(
             builder: (context, state) {
               if (state is CategoryLoadingState) {
-                return const AppLoadingIndicator();
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey[400]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: const CategoryDetailLoading(),
+                );
               }
               if (state is CategoryResponseState) {
                 return CustomScrollView(
@@ -88,6 +93,200 @@ class CategoryDetialScreen extends StatelessWidget {
             },
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CategoryDetailLoading extends StatelessWidget {
+  const CategoryDetailLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ShimmerSkelton(
+                height: 32,
+                width: 32,
+                radius: 100,
+              ),
+              ShimmerSkelton(
+                height: 20,
+                width: 100,
+                radius: 5,
+              ),
+              SizedBox(
+                height: 32,
+                width: 32,
+              ),
+            ],
+          ),
+          SizedBox(height: 35),
+          Row(
+            children: [
+              ShimmerSkelton(
+                height: 147,
+                width: 112,
+                radius: 15,
+              ),
+              SizedBox(width: 15),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 160,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 80,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 210,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 150,
+                    radius: 5,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 15),
+          Row(
+            children: [
+              ShimmerSkelton(
+                height: 147,
+                width: 112,
+                radius: 15,
+              ),
+              SizedBox(width: 15),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 160,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 80,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 210,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 150,
+                    radius: 5,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 15),
+          Row(
+            children: [
+              ShimmerSkelton(
+                height: 147,
+                width: 112,
+                radius: 15,
+              ),
+              SizedBox(width: 15),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 160,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 80,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 210,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 150,
+                    radius: 5,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 15),
+          Row(
+            children: [
+              ShimmerSkelton(
+                height: 147,
+                width: 112,
+                radius: 15,
+              ),
+              SizedBox(width: 15),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 160,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 80,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 210,
+                    radius: 5,
+                  ),
+                  SizedBox(height: 10),
+                  ShimmerSkelton(
+                    height: 20,
+                    width: 150,
+                    radius: 5,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
