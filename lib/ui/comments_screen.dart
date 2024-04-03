@@ -8,12 +8,13 @@ import 'package:cinemax/ui/post_comment_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CommentsScreen extends StatelessWidget {
   const CommentsScreen(
@@ -35,7 +36,11 @@ class CommentsScreen extends StatelessWidget {
         child: BlocBuilder<CommentsBloc, CommentsState>(
           builder: (context, state) {
             if (state is CommensLoadingState) {
-              return const AppLoadingIndicator();
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[400]!,
+                highlightColor: Colors.grey[100]!,
+                child: const CommentsLoading(),
+              );
             } else if (state is CommentsResponseState) {
               return RefreshIndicator(
                 onRefresh: () async {
@@ -516,6 +521,82 @@ class _CommentsHeader extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CommentsLoading extends StatelessWidget {
+  const CommentsLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 15),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ShimmerSkelton(
+                  height: 140,
+                  width: 105,
+                  radius: 15,
+                ),
+                SizedBox(width: 15),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ShimmerSkelton(
+                      height: 20,
+                      width: 90,
+                      radius: 5,
+                    ),
+                    SizedBox(height: 10),
+                    ShimmerSkelton(
+                      height: 20,
+                      width: 100,
+                      radius: 5,
+                    ),
+                    SizedBox(height: 10),
+                    ShimmerSkelton(
+                      height: 20,
+                      width: 110,
+                      radius: 5,
+                    ),
+                    SizedBox(height: 10),
+                    ShimmerSkelton(
+                      height: 20,
+                      width: 100,
+                      radius: 5,
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            ShimmerSkelton(
+              height: 190,
+              width: MediaQueryHandler.screenWidth(context),
+              radius: 15,
+            ),
+            const SizedBox(height: 15),
+            ShimmerSkelton(
+              height: 210,
+              width: MediaQueryHandler.screenWidth(context),
+              radius: 15,
+            ),
+            const SizedBox(height: 15),
+            ShimmerSkelton(
+              height: 230,
+              width: MediaQueryHandler.screenWidth(context),
+              radius: 15,
             ),
           ],
         ),
