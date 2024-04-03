@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
@@ -8,15 +7,17 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_result_screen.dart';
+import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/exception_message.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/movie_widget.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
+import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -40,7 +41,11 @@ class _SearchScreenState extends State<SearchScreen> {
       body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchLoadingState) {
-            return const AppLoadingIndicator();
+            return Shimmer.fromColors(
+              baseColor: Colors.grey[400]!,
+              highlightColor: Colors.grey[100]!,
+              child: const SearchLoading(),
+            );
           } else if (state is SearchResponseState) {
             return SafeArea(
               child: Padding(
@@ -52,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 25),
+                            padding: const EdgeInsets.only(top: 20, bottom: 25),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -260,6 +265,78 @@ class RecommendHeader extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
         ],
+      ),
+    );
+  }
+}
+
+class SearchLoading extends StatelessWidget {
+  const SearchLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              ShimmerSkelton(
+                height: 40,
+                width: MediaQueryHandler.screenWidth(context),
+                radius: 24,
+              ),
+              const SizedBox(height: 30),
+              const ShimmerSkelton(
+                height: 20,
+                width: 100,
+                radius: 5,
+              ),
+              const SizedBox(height: 15),
+              const Row(
+                children: [
+                  ShimmerSkelton(
+                    height: 147,
+                    width: 112,
+                    radius: 15,
+                  ),
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerSkelton(
+                        height: 20,
+                        width: 150,
+                        radius: 5,
+                      ),
+                      SizedBox(height: 15),
+                      ShimmerSkelton(
+                        height: 20,
+                        width: 80,
+                        radius: 5,
+                      ),
+                      SizedBox(height: 15),
+                      ShimmerSkelton(
+                        height: 20,
+                        width: 160,
+                        radius: 5,
+                      ),
+                      SizedBox(height: 15),
+                      ShimmerSkelton(
+                        height: 20,
+                        width: 140,
+                        radius: 5,
+                      ),
+                      SizedBox(height: 15),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
