@@ -1,4 +1,6 @@
 import 'package:cinemax/DI/service_locator.dart';
+import 'package:cinemax/bloc/news/news_bloc.dart';
+import 'package:cinemax/bloc/news/news_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
@@ -299,7 +301,13 @@ class _Header extends StatelessWidget {
                   onTap: () {
                     PersistentNavBarNavigator.pushNewScreen(
                       context,
-                      screen: const NewsScreen(),
+                      screen: BlocProvider(
+                        create: (context) => NewsBloc(locator.get())
+                          ..add(
+                            FetchNewsEvent(),
+                          ),
+                        child: const NewsScreen(),
+                      ),
                       withNavBar: true,
                       pageTransitionAnimation:
                           PageTransitionAnimation.cupertino,

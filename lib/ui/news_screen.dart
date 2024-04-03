@@ -1,10 +1,18 @@
+import 'package:cinemax/bloc/news/news_bloc.dart';
+import 'package:cinemax/bloc/news/news_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/news.dart';
 import 'package:cinemax/ui/news_detail_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
+import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/exception_message.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
@@ -13,14 +21,36 @@ class NewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: CustomScrollView(
-            slivers: [
-              _Header(),
-              _NewsWidget(),
-            ],
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: BlocBuilder<NewsBloc, NewsState>(
+            builder: (context, state) {
+              if (state is NewsLoadingState) {
+                return const AppLoadingIndicator();
+              } else if (state is NewsResponseState) {
+                return CustomScrollView(
+                  slivers: [
+                    const _Header(),
+                    state.getNews.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (newsList) {
+                        return _NewsWidget(
+                          newsList: newsList,
+                        );
+                      },
+                    ),
+                  ],
+                );
+              }
+              return Center(
+                child: Text(AppLocalizations.of(context)!.state),
+              );
+            },
           ),
         ),
       ),
@@ -65,7 +95,8 @@ class _Header extends StatelessWidget {
 }
 
 class _NewsWidget extends StatelessWidget {
-  const _NewsWidget({super.key});
+  const _NewsWidget({required this.newsList});
+  final List<News> newsList;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +111,9 @@ class _NewsWidget extends StatelessWidget {
                 onTap: () {
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    screen: const NewsDetailScreen(),
+                    screen: NewsDetailScreen(
+                      news: newsList[index],
+                    ),
                     withNavBar: true,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
@@ -101,11 +134,15 @@ class _NewsWidget extends StatelessWidget {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15),
                             ),
-                            child: ColoredBox(
-                              color: PrimaryColors.blueAccentColor,
-                              child: SizedBox(
-                                height: 160,
-                                width: MediaQueryHandler.screenWidth(context),
+                            child: SizedBox(
+                              height: 160,
+                              width: MediaQueryHandler.screenWidth(context),
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: CachedImage(
+                                  imageUrl: newsList[index].thumbnail,
+                                  radius: 0,
+                                ),
                               ),
                             ),
                           ),
@@ -123,9 +160,9 @@ class _NewsWidget extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                const Text(
-                                  "Apr 3, 2024",
-                                  style: TextStyle(
+                                Text(
+                                  newsList[index].date,
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     fontFamily: "MR",
                                     color: TextColors.greyText,
@@ -134,12 +171,12 @@ class _NewsWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                                 left: 10, top: 10, right: 10, bottom: 20),
                             child: Text(
-                              "Godzilla x Kong Box Office Roars Past Major Global Milestone In Less Than 1 Week.",
-                              style: TextStyle(
+                              newsList[index].title,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontFamily: "MSB",
                                 color: TextColors.whiteText,
@@ -154,7 +191,7 @@ class _NewsWidget extends StatelessWidget {
               ),
             );
           },
-          childCount: 5,
+          childCount: newsList.length,
         ),
       ),
     );

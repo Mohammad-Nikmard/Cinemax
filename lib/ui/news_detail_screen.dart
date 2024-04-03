@@ -1,12 +1,14 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/data/model/news.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
+import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class NewsDetailScreen extends StatelessWidget {
-  const NewsDetailScreen({super.key});
+  const NewsDetailScreen({super.key, required this.news});
+  final News news;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +44,15 @@ class NewsDetailScreen extends StatelessWidget {
                         borderRadius: const BorderRadius.all(
                           Radius.circular(15),
                         ),
-                        child: ColoredBox(
-                          color: PrimaryColors.blueAccentColor,
-                          child: SizedBox(
-                            height: 185,
-                            width: MediaQueryHandler.screenWidth(context),
+                        child: SizedBox(
+                          height: 185,
+                          width: MediaQueryHandler.screenWidth(context),
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: CachedImage(
+                              imageUrl: news.thumbnail,
+                              radius: 15,
+                            ),
                           ),
                         ),
                       ),
@@ -64,9 +70,9 @@ class NewsDetailScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const Text(
-                              "Apr 3, 2024",
-                              style: TextStyle(
+                            Text(
+                              news.date,
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontFamily: "MR",
                                 color: TextColors.greyText,
@@ -75,22 +81,22 @@ class NewsDetailScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 15),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 15),
                         child: Text(
-                          "Lady Gaga's Harley Quinn Speaks First Words In Joker 2 Teaser Ahead Of New Trailer Release.",
-                          style: TextStyle(
+                          news.title,
+                          style: const TextStyle(
                             fontSize: 20,
                             fontFamily: "MSB",
                             color: TextColors.whiteText,
                           ),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 30),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 30),
                         child: Text(
-                          "Lady Gaga's Harley Quinn is heard for the first time in a new Joker: Folie à Deux teaser, giving the world a taste of her version of the iconic DC character. One of the upcoming Elseworlds movies from Warner Bros. Discovery and DC Studios is the highly anticipated Joker: Folie à Deux film, featuring Phoenix back as the Clown Prince of Crime. Original Joker director Todd Phillips is back to help flesh out his own little DC Universe as he continues to explore Arthur Fleck's story.",
-                          style: TextStyle(
+                          news.subtitle,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontFamily: "MR",
                             color: TextColors.whiteText,
