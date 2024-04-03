@@ -20,7 +20,7 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/comment_section.dart';
 import 'package:cinemax/widgets/downloader.dart';
 import 'package:cinemax/widgets/exception_message.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +28,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   const MovieDetailScreen({super.key, required this.movie});
@@ -44,7 +45,11 @@ class MovieDetailScreen extends StatelessWidget {
         body: BlocBuilder<MovieBloc, MoviesState>(
           builder: (context, state) {
             if (state is MoviesLoadingState) {
-              return const AppLoadingIndicator();
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[400]!,
+                highlightColor: Colors.grey[100]!,
+                child: const MovieDetailLoading(),
+              );
             } else if (state is MoviesresponseState) {
               return CustomScrollView(
                 slivers: [
@@ -1006,6 +1011,116 @@ class _SnackBarUnlikeMessage extends StatelessWidget {
                 fontSize: 12,
                 fontFamily: "MSB",
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MovieDetailLoading extends StatelessWidget {
+  const MovieDetailLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 15),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ShimmerSkelton(
+                  height: 32,
+                  width: 32,
+                  radius: 100,
+                ),
+                ShimmerSkelton(
+                  height: 20,
+                  width: 100,
+                  radius: 5,
+                ),
+                ShimmerSkelton(
+                  height: 32,
+                  width: 32,
+                  radius: 100,
+                ),
+              ],
+            ),
+            const SizedBox(height: 40),
+            const Center(
+              child: ShimmerSkelton(
+                height: 287,
+                width: 205,
+                radius: 15,
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Center(
+              child: ShimmerSkelton(
+                height: 20,
+                width: 230,
+                radius: 5,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Center(
+              child: ShimmerSkelton(
+                height: 20,
+                width: 60,
+                radius: 5,
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ShimmerSkelton(
+                  height: 48,
+                  width: 100,
+                  radius: 100,
+                ),
+                SizedBox(width: 15),
+                ShimmerSkelton(
+                  height: 48,
+                  width: 48,
+                  radius: 100,
+                ),
+                SizedBox(width: 15),
+                ShimmerSkelton(
+                  height: 48,
+                  width: 48,
+                  radius: 100,
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+            const ShimmerSkelton(
+              height: 20,
+              width: 100,
+              radius: 5,
+            ),
+            const SizedBox(height: 15),
+            ShimmerSkelton(
+              height: 20,
+              width: MediaQueryHandler.screenWidth(context),
+              radius: 5,
+            ),
+            const SizedBox(height: 10),
+            ShimmerSkelton(
+              height: 20,
+              width: MediaQueryHandler.screenWidth(context) - 70,
+              radius: 5,
+            ),
+            const SizedBox(height: 10),
+            ShimmerSkelton(
+              height: 20,
+              width: MediaQueryHandler.screenWidth(context) - 100,
+              radius: 5,
             ),
           ],
         ),

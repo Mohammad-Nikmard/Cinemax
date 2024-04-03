@@ -17,21 +17,21 @@ import 'package:cinemax/data/model/series_cast.dart';
 import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/ui/comments_screen.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
+import 'package:cinemax/ui/movie_detail_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/comment_section.dart';
 import 'package:cinemax/widgets/episode_widget.dart';
 import 'package:cinemax/widgets/exception_message.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/video_player.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SeriesDetailScreen extends StatelessWidget {
   const SeriesDetailScreen({super.key, required this.series});
@@ -48,7 +48,11 @@ class SeriesDetailScreen extends StatelessWidget {
         body: BlocBuilder<SeriesBloc, SeriesState>(
           builder: (context, state) {
             if (state is SeriesLoadingState) {
-              return const AppLoadingIndicator();
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[400]!,
+                highlightColor: Colors.grey[100]!,
+                child: const MovieDetailLoading(),
+              );
             } else if (state is SeriesResponseState) {
               return CustomScrollView(
                 slivers: [
