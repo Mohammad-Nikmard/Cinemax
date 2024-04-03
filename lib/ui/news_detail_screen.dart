@@ -5,6 +5,7 @@ import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewsDetailScreen extends StatelessWidget {
   const NewsDetailScreen({super.key, required this.news});
@@ -76,6 +77,25 @@ class NewsDetailScreen extends StatelessWidget {
                                 fontSize: 12,
                                 fontFamily: "MR",
                                 color: TextColors.greyText,
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            Text(
+                              AppLocalizations.of(context)!.publisher,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontFamily: "MR",
+                                color: TextColors.greyText,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: CachedImage(
+                                  imageUrl: news.publisher,
+                                  radius: 0,
+                                ),
                               ),
                             ),
                           ],

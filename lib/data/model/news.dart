@@ -7,9 +7,10 @@ class News {
   String subtitle;
   String date;
   String thumbnail;
+  String publisher;
 
   News(this.id, this.collectionId, this.title, this.subtitle, this.date,
-      this.thumbnail);
+      this.thumbnail, this.publisher);
 
   factory News.withJson(Map<String, dynamic> jsonMapObject) {
     return News(
@@ -19,6 +20,7 @@ class News {
       jsonMapObject["subtitle"],
       jsonMapObject["date"],
       "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["thumbnail"]}",
+      "${StringConstants.baseImage}/api/files/${jsonMapObject["collectionId"]}/${jsonMapObject["id"]}/${jsonMapObject["publisher"]}",
     );
   }
 }

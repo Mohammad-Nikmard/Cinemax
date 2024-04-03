@@ -118,5 +118,7 @@
     "personalPhone": "My phone number :",
     "notifOn": "Notifications are now ON",
     "notifOFF": "Notifications are now OFF",
-    "futureShare": "Sharing ability will soon be added in the future release."
+    "futureShare": "Sharing ability will soon be added in the future release.",
+    "news": "News",
+    "publisher": "Publisher :  "
 }

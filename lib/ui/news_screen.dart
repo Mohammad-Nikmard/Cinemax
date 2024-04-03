@@ -80,9 +80,9 @@ class _Header extends StatelessWidget {
               },
               child: const BackLabel(),
             ),
-            const Text(
-              "News",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.news,
+              style: const TextStyle(
                 fontFamily: "MSB",
                 fontSize: 16,
                 color: TextColors.whiteText,
@@ -171,6 +171,25 @@ class _NewsWidget extends StatelessWidget {
                                     fontSize: 12,
                                     fontFamily: "MR",
                                     color: TextColors.greyText,
+                                  ),
+                                ),
+                                const SizedBox(width: 15),
+                                Text(
+                                  AppLocalizations.of(context)!.publisher,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: "MR",
+                                    color: TextColors.greyText,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                  child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: CachedImage(
+                                      imageUrl: newsList[index].publisher,
+                                      radius: 0,
+                                    ),
                                   ),
                                 ),
                               ],
