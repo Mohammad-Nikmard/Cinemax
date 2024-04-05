@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    randomToday = Random().nextInt(76);
+    randomToday = Random().nextInt(86);
   }
 
   @override
@@ -173,6 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           return const ExceptionMessage();
                         },
                         (movieList) {
+                          movieList.shuffle();
                           return Column(
                             children: [
                               RecommendHeader(
@@ -184,7 +185,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: SizedBox(
                                   height: 231,
                                   child: ListView.builder(
-                                    itemCount: movieList.length,
+                                    itemCount: 8,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return Padding(

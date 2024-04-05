@@ -672,13 +672,14 @@ class MovieListChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    movieList.shuffle();
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 25, left: 20),
         child: SizedBox(
           height: 231,
           child: ListView.builder(
-            itemCount: movieList.length,
+            itemCount: 7,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
@@ -702,13 +703,14 @@ class SeriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    movieList.shuffle();
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 25, left: 20, bottom: 35),
         child: SizedBox(
           height: 231,
           child: ListView.builder(
-            itemCount: movieList.length,
+            itemCount: 5,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
@@ -732,6 +734,7 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    categories.shuffle();
     return SliverPadding(
       padding: const EdgeInsets.only(left: 20, top: 30),
       sliver: SliverToBoxAdapter(
@@ -745,17 +748,18 @@ class Categories extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    PersistentNavBarNavigator.pushNewScreen(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => CategoryDetailBloc(locator.get())
-                            ..add(CategoryFetchEvent(categories[index].name)),
-                          child: CategoryDetialScreen(
-                            title: categories[index].name,
-                          ),
+                      screen: BlocProvider(
+                        create: (context) => CategoryDetailBloc(locator.get())
+                          ..add(CategoryFetchEvent(categories[index].name)),
+                        child: CategoryDetialScreen(
+                          title: categories[index].name,
                         ),
                       ),
+                      withNavBar: true,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
                     );
                   },
                   child: ClipRRect(

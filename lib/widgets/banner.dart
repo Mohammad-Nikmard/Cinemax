@@ -21,6 +21,7 @@ class _BannerContainerState extends State<BannerContainer> {
 
   @override
   Widget build(BuildContext context) {
+    widget.bannerList.shuffle();
     return Column(
       children: [
         SizedBox(

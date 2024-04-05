@@ -1,4 +1,5 @@
 import 'package:cinemax/bloc/news/news_bloc.dart';
+import 'package:cinemax/bloc/news/news_event.dart';
 import 'package:cinemax/bloc/news/news_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/news.dart';
@@ -34,22 +35,28 @@ class NewsScreen extends StatelessWidget {
                   child: const NewsLoading(),
                 );
               } else if (state is NewsResponseState) {
-                return CustomScrollView(
-                  slivers: [
-                    const _Header(),
-                    state.getNews.fold(
-                      (exceptionMessage) {
-                        return const SliverToBoxAdapter(
-                          child: ExceptionMessage(),
-                        );
-                      },
-                      (newsList) {
-                        return _NewsWidget(
-                          newsList: newsList,
-                        );
-                      },
-                    ),
-                  ],
+                return RefreshIndicator(
+                  onRefresh: () async =>
+                      context.read<NewsBloc>().add(FetchNewsEvent()),
+                  color: PrimaryColors.blueAccentColor,
+                  backgroundColor: PrimaryColors.softColor,
+                  child: CustomScrollView(
+                    slivers: [
+                      const _Header(),
+                      state.getNews.fold(
+                        (exceptionMessage) {
+                          return const SliverToBoxAdapter(
+                            child: ExceptionMessage(),
+                          );
+                        },
+                        (newsList) {
+                          return _NewsWidget(
+                            newsList: newsList,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 );
               }
               return Center(
