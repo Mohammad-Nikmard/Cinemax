@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
@@ -27,13 +26,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  int randomToday = 0;
-  @override
-  void initState() {
-    super.initState();
-    randomToday = Random().nextInt(86);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,6 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               return const ExceptionMessage();
                             },
                             (movieList) {
+                              movieList.shuffle();
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 90),
                                 child: Column(
@@ -159,7 +152,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     ),
                                     const SizedBox(height: 20),
                                     RelatedSeachWidget(
-                                      movie: movieList[randomToday],
+                                      movie: movieList[0],
                                     ),
                                   ],
                                 ),
