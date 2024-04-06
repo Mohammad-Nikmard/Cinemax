@@ -66,22 +66,63 @@ class CommentsScreen extends StatelessWidget {
                         );
                       },
                       (commentsList) {
-                        return SliverPadding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 15),
-                                  child: _UserReview(
-                                    comment: commentsList[index],
-                                  ),
-                                );
-                              },
-                              childCount: commentsList.length,
+                        if (commentsList.isNotEmpty) {
+                          return SliverPadding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            sliver: SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 15),
+                                    child: _UserReview(
+                                      comment: commentsList[index],
+                                    ),
+                                  );
+                                },
+                                childCount: commentsList.length,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          return SliverToBoxAdapter(
+                            child: Center(
+                              child: SizedBox(
+                                width: 230,
+                                height:
+                                    MediaQueryHandler.screenHeight(context) -
+                                        300,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/box_image.svg',
+                                    ),
+                                    const SizedBox(height: 5),
+                                    const Text(
+                                      "There is no comments yet.",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: "MSB",
+                                        fontSize: 16,
+                                        color: TextColors.whiteText,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    const Text(
+                                      "Post a comment so everyone could use your experience.",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: "MM",
+                                        fontSize: 12,
+                                        color: TextColors.greyText,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }
                       },
                     ),
                     state.getComments.fold(

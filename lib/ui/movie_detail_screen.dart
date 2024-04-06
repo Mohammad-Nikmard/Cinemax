@@ -156,7 +156,32 @@ class MovieDetailScreen extends StatelessWidget {
                           ),
                         );
                       } else {
-                        return const SliverToBoxAdapter();
+                        return SliverToBoxAdapter(
+                          child: GestureDetector(
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: BlocProvider(
+                                  create: (context) =>
+                                      CommentsBloc(locator.get())
+                                        ..add(
+                                          CommentFetchEvent(movie.id),
+                                        ),
+                                  child: CommentsScreen(
+                                    movieName: movie.name,
+                                    year: movie.year,
+                                    imageURL: movie.thumbnail,
+                                    movieID: movie.id,
+                                  ),
+                                ),
+                                withNavBar: false,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
+                            child: const EmptyCommentSection(),
+                          ),
+                        );
                       }
                     },
                   ),

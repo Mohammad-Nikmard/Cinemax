@@ -191,7 +191,32 @@ class SeriesDetailScreen extends StatelessWidget {
                           ),
                         );
                       } else {
-                        return const SliverToBoxAdapter();
+                        return SliverToBoxAdapter(
+                          child: GestureDetector(
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: BlocProvider(
+                                  create: (context) =>
+                                      CommentsBloc(locator.get())
+                                        ..add(
+                                          CommentFetchEvent(series.id),
+                                        ),
+                                  child: CommentsScreen(
+                                    movieName: series.name,
+                                    year: series.year,
+                                    imageURL: series.thumbnail,
+                                    movieID: series.id,
+                                  ),
+                                ),
+                                withNavBar: false,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
+                            child: const EmptyCommentSection(),
+                          ),
+                        );
                       }
                     },
                   ),

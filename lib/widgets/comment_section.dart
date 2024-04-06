@@ -165,3 +165,81 @@ class _CommentSectionState extends State<CommentSection> {
     }
   }
 }
+
+class EmptyCommentSection extends StatelessWidget {
+  const EmptyCommentSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20, left: 20, top: 15, bottom: 20),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15),
+        ),
+        child: ColoredBox(
+          color: PrimaryColors.softColor,
+          child: SizedBox(
+            width: MediaQueryHandler.screenWidth(context),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const ClipRRect(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(3),
+                        ),
+                        child: SizedBox(
+                          height: 25,
+                          width: 2,
+                          child:
+                              ColoredBox(color: PrimaryColors.blueAccentColor),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        AppLocalizations.of(context)!.comments,
+                        style: const TextStyle(
+                          fontFamily: "MSB",
+                          fontSize: 20,
+                          color: TextColors.whiteText,
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      SvgPicture.asset(
+                        'assets/images/icon_arrow_right.svg',
+                        height: 30,
+                        width: 30,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "No comments here.",
+                    style: TextStyle(
+                      fontFamily: "MSB",
+                      fontSize: 20,
+                      color: TextColors.whiteText,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    "Feel free to share your experince of this movie with everybody.",
+                    style: TextStyle(
+                      fontFamily: "MR",
+                      fontSize: 16,
+                      color: TextColors.whiteText,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
