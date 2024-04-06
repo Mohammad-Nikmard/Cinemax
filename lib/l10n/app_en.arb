@@ -120,5 +120,9 @@
     "notifOFF": "Notifications are now OFF",
     "futureShare": "Sharing ability will soon be added in the future release.",
     "news": "News",
-    "publisher": "Publisher :  "
+    "publisher": "Publisher :  ",
+    "noCommentHere": "No comments here.",
+    "noCommentCap": "Feel free to share your experience of this movie or series with everybody.",
+    "noCommentYet": "There is no comments yet.",
+    "noCommentsYetCap": "Post a comment so everyone could use your experience"
 }

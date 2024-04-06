@@ -98,20 +98,22 @@ class CommentsScreen extends StatelessWidget {
                                       'assets/images/box_image.svg',
                                     ),
                                     const SizedBox(height: 5),
-                                    const Text(
-                                      "There is no comments yet.",
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .noCommentYet,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: "MSB",
                                         fontSize: 16,
                                         color: TextColors.whiteText,
                                       ),
                                     ),
                                     const SizedBox(height: 5),
-                                    const Text(
-                                      "Post a comment so everyone could use your experience.",
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .noCommentsYetCap,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: "MM",
                                         fontSize: 12,
                                         color: TextColors.greyText,

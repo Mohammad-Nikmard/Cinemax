@@ -120,5 +120,9 @@
     "notifOFF": "通知现已关闭",
     "futureShare": "共享功能将很快在未来版本中添加。",
     "news": "消息",
-    "publisher": "出版商 :  "
+    "publisher": "出版商 :  ",
+    "noCommentHere": "这里没有评论。",
+    "noCommentCap": "欢迎与大家分享您对这部电影或系列的体验。",
+    "noCommentYet": "还没有评论。",
+    "noCommentsYetCap": "发表评论，以便每个人都可以使用您的经验"
 }

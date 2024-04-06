@@ -120,5 +120,9 @@
     "notifOFF": "As notificações agora estão DESATIVADAS",
     "futureShare": "A capacidade de compartilhamento será adicionada em breve na versão futura.",
     "news": "Notícias",
-    "publisher": "Editor :  "
+    "publisher": "Editor :  ",
+    "noCommentHere": "Sem comentários aqui.",
+    "noCommentCap": "Sinta-se à vontade para compartilhar sua experiência deste filme ou série com todos.",
+    "noCommentYet": "Ainda não há comentários.",
+    "noCommentsYetCap": "Poste um comentário para que todos possam usar sua experiência"
 }

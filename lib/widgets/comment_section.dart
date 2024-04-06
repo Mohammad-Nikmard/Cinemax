@@ -217,18 +217,18 @@ class EmptyCommentSection extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "No comments here.",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.noCommentHere,
+                    style: const TextStyle(
                       fontFamily: "MSB",
                       fontSize: 20,
                       color: TextColors.whiteText,
                     ),
                   ),
                   const SizedBox(height: 5),
-                  const Text(
-                    "Feel free to share your experince of this movie with everybody.",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.noCommentCap,
+                    style: const TextStyle(
                       fontFamily: "MR",
                       fontSize: 16,
                       color: TextColors.whiteText,
