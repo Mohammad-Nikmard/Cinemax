@@ -1,6 +1,7 @@
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/authentication/authentication_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/ui/login_screen.dart';
 import 'package:cinemax/ui/register_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
@@ -24,17 +25,6 @@ class OnBoardingScreen extends StatelessWidget {
               "assets/images/splash_logo.svg",
             ),
             const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "CINEMAX",
-              style: TextStyle(
-                fontFamily: "MSB",
-                color: TextColors.whiteText,
-                fontSize: 28,
-              ),
-            ),
-            const SizedBox(
               height: 5,
             ),
             SizedBox(
@@ -42,8 +32,8 @@ class OnBoardingScreen extends StatelessWidget {
               width: 200,
               child: Text(
                 AppLocalizations.of(context)!.enterNumber,
-                style: const TextStyle(
-                  fontFamily: "MSB",
+                style: TextStyle(
+                  fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 14,
                   color: TextColors.greyText,
                 ),
@@ -72,8 +62,8 @@ class OnBoardingScreen extends StatelessWidget {
                   },
                   child: Text(
                     AppLocalizations.of(context)!.signUp,
-                    style: const TextStyle(
-                      fontFamily: "MM",
+                    style: TextStyle(
+                      fontFamily: StringConstants.setMediumPersionFont(),
                       fontSize: 16,
                       color: TextColors.whiteText,
                     ),
@@ -90,7 +80,7 @@ class OnBoardingScreen extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.haveAccount,
                   style: TextStyle(
-                    fontFamily: "MM",
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: (MediaQueryHandler.screenWidth(context) < 325)
                         ? 12
                         : 16,
@@ -113,7 +103,7 @@ class OnBoardingScreen extends StatelessWidget {
                     AppLocalizations.of(context)!.login,
                     style: TextStyle(
                       color: PrimaryColors.blueAccentColor,
-                      fontFamily: "MM",
+                      fontFamily: StringConstants.setMediumPersionFont(),
                       fontSize: (MediaQueryHandler.screenWidth(context) < 325)
                           ? 12
                           : 16,

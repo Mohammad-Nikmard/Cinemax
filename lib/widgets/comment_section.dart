@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,8 @@ class _CommentSectionState extends State<CommentSection> {
                   const SizedBox(width: 10),
                   Text(
                     AppLocalizations.of(context)!.comments,
-                    style: const TextStyle(
-                      fontFamily: "MSB",
+                    style: TextStyle(
+                      fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 20,
                       color: TextColors.whiteText,
                     ),
@@ -73,9 +74,9 @@ class _CommentSectionState extends State<CommentSection> {
                     width: MediaQueryHandler.screenWidth(context) - 180,
                     child: Text(
                       widget.comment.headline,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
-                        fontFamily: "MSB",
+                        fontFamily: StringConstants.setBoldPersianFont(),
                         color: TextColors.whiteText,
                       ),
                     ),
@@ -92,8 +93,8 @@ class _CommentSectionState extends State<CommentSection> {
                       const SizedBox(width: 8),
                       Text(
                         "${widget.comment.rate} / 10",
-                        style: const TextStyle(
-                          fontFamily: "MR",
+                        style: TextStyle(
+                          fontFamily: StringConstants.setSmallPersionFont(),
                           color: TextColors.greyText,
                           fontSize: 18,
                         ),
@@ -106,9 +107,9 @@ class _CommentSectionState extends State<CommentSection> {
               Flexible(
                 child: Text(
                   widget.comment.text,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    fontFamily: "MM",
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     color: TextColors.whiteText,
                   ),
                   overflow: TextOverflow.fade,
@@ -202,8 +203,8 @@ class EmptyCommentSection extends StatelessWidget {
                       const SizedBox(width: 10),
                       Text(
                         AppLocalizations.of(context)!.comments,
-                        style: const TextStyle(
-                          fontFamily: "MSB",
+                        style: TextStyle(
+                          fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 20,
                           color: TextColors.whiteText,
                         ),
@@ -219,8 +220,8 @@ class EmptyCommentSection extends StatelessWidget {
                   const SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.noCommentHere,
-                    style: const TextStyle(
-                      fontFamily: "MSB",
+                    style: TextStyle(
+                      fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 20,
                       color: TextColors.whiteText,
                     ),
@@ -228,8 +229,8 @@ class EmptyCommentSection extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     AppLocalizations.of(context)!.noCommentCap,
-                    style: const TextStyle(
-                      fontFamily: "MR",
+                    style: TextStyle(
+                      fontFamily: StringConstants.setSmallPersionFont(),
                       fontSize: 16,
                       color: TextColors.whiteText,
                     ),

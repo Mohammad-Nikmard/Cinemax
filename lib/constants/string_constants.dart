@@ -1,3 +1,5 @@
+import 'package:cinemax/util/app_manager.dart';
+
 class StringConstants {
   static const baseImage = "https://pocketbase-t303vjb-1.liara.run";
 
@@ -15,4 +17,28 @@ class StringConstants {
     11: "Nov",
     12: "Dec",
   };
+
+  static String setBoldPersianFont() {
+    if (AppManager.getLnag() == 'fa') {
+      return "SM";
+    } else {
+      return "MSB";
+    }
+  }
+
+  static String setMediumPersionFont() {
+    if (AppManager.getLnag() == 'fa') {
+      return "SM";
+    } else {
+      return "MM";
+    }
+  }
+
+  static String setSmallPersionFont() {
+    if (AppManager.getLnag() == 'fa') {
+      return "SM";
+    } else {
+      return "MR";
+    }
+  }
 }

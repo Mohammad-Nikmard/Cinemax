@@ -11,6 +11,7 @@ import 'package:cinemax/bloc/video/video_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/series_cast.dart';
@@ -18,6 +19,7 @@ import 'package:cinemax/data/model/series_seasons.dart';
 import 'package:cinemax/ui/comments_screen.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/comment_section.dart';
@@ -54,173 +56,176 @@ class SeriesDetailScreen extends StatelessWidget {
                 child: const MovieDetailLoading(),
               );
             } else if (state is SeriesResponseState) {
-              return CustomScrollView(
-                slivers: [
-                  _MovieDetailHeader(
-                    series: series,
-                    onLike: state.isLiked,
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _StoryLine(
-                            storyLine: series.storyline,
-                          ),
-                          state.getCasts.fold(
-                            (exceptionMessage) {
-                              return const ExceptionMessage();
-                            },
-                            (casts) {
-                              return SeriesCastAndCrew(
-                                casts: casts,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+              return Directionality(
+                textDirection: TextDirection.ltr,
+                child: CustomScrollView(
+                  slivers: [
+                    _MovieDetailHeader(
+                      series: series,
+                      onLike: state.isLiked,
                     ),
-                  ),
-                  state.getSeasons.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (seasonList) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 20, left: 20, bottom: 15),
-                          child: _SeasonChip(
-                            seasons: seasonList,
-                            seriesName: series.name,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  state.getEpisodes.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (episodeList) {
-                      return SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 20, left: 20, bottom: 15),
-                              child: EpisodeWidget(
-                                episode: episodeList[index],
-                              ),
-                            );
-                          },
-                          childCount: episodeList.length,
-                        ),
-                      );
-                    },
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20.0, top: 20.0, bottom: 15.0),
-                      child: Text(
-                        AppLocalizations.of(context)!.gallery,
-                        style: const TextStyle(
-                          fontFamily: "MSB",
-                          fontSize: 16,
-                          color: TextColors.whiteText,
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _StoryLine(
+                              storyLine: series.storyline,
+                            ),
+                            state.getCasts.fold(
+                              (exceptionMessage) {
+                                return const ExceptionMessage();
+                              },
+                              (casts) {
+                                return SeriesCastAndCrew(
+                                  casts: casts,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                  state.getPhotos.fold(
-                    (exceptionMessage) {
-                      return SliverToBoxAdapter(
-                        child: Text(exceptionMessage),
-                      );
-                    },
-                    (photoList) {
-                      return _Gallery(
-                        gallery: photoList,
-                      );
-                    },
-                  ),
-                  state.getComments.fold(
-                    (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: ExceptionMessage(),
-                      );
-                    },
-                    (commentList) {
-                      if (commentList.isNotEmpty) {
+                    state.getSeasons.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (seasonList) {
                         return SliverToBoxAdapter(
-                          child: GestureDetector(
-                            onTap: () {
-                              PersistentNavBarNavigator.pushNewScreen(
-                                context,
-                                screen: BlocProvider(
-                                  create: (context) =>
-                                      CommentsBloc(locator.get())
-                                        ..add(
-                                          CommentFetchEvent(series.id),
-                                        ),
-                                  child: CommentsScreen(
-                                    movieName: series.name,
-                                    year: series.year,
-                                    imageURL: series.thumbnail,
-                                    movieID: series.id,
-                                  ),
-                                ),
-                                withNavBar: false,
-                                pageTransitionAnimation:
-                                    PageTransitionAnimation.cupertino,
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: CommentSection(
-                                comment: commentList.first,
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                right: 20, left: 20, bottom: 15),
+                            child: _SeasonChip(
+                              seasons: seasonList,
+                              seriesName: series.name,
                             ),
                           ),
                         );
-                      } else {
-                        return SliverToBoxAdapter(
-                          child: GestureDetector(
-                            onTap: () {
-                              PersistentNavBarNavigator.pushNewScreen(
-                                context,
-                                screen: BlocProvider(
-                                  create: (context) =>
-                                      CommentsBloc(locator.get())
-                                        ..add(
-                                          CommentFetchEvent(series.id),
-                                        ),
-                                  child: CommentsScreen(
-                                    movieName: series.name,
-                                    year: series.year,
-                                    imageURL: series.thumbnail,
-                                    movieID: series.id,
-                                  ),
+                      },
+                    ),
+                    state.getEpisodes.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (episodeList) {
+                        return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 20, left: 20, bottom: 15),
+                                child: EpisodeWidget(
+                                  episode: episodeList[index],
                                 ),
-                                withNavBar: false,
-                                pageTransitionAnimation:
-                                    PageTransitionAnimation.cupertino,
                               );
                             },
-                            child: const EmptyCommentSection(),
+                            childCount: episodeList.length,
                           ),
                         );
-                      }
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, top: 20.0, bottom: 15.0),
+                        child: Text(
+                          AppLocalizations.of(context)!.gallery,
+                          style: TextStyle(
+                            fontFamily: StringConstants.setBoldPersianFont(),
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                    ),
+                    state.getPhotos.fold(
+                      (exceptionMessage) {
+                        return SliverToBoxAdapter(
+                          child: Text(exceptionMessage),
+                        );
+                      },
+                      (photoList) {
+                        return _Gallery(
+                          gallery: photoList,
+                        );
+                      },
+                    ),
+                    state.getComments.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter(
+                          child: ExceptionMessage(),
+                        );
+                      },
+                      (commentList) {
+                        if (commentList.isNotEmpty) {
+                          return SliverToBoxAdapter(
+                            child: GestureDetector(
+                              onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: BlocProvider(
+                                    create: (context) =>
+                                        CommentsBloc(locator.get())
+                                          ..add(
+                                            CommentFetchEvent(series.id),
+                                          ),
+                                    child: CommentsScreen(
+                                      movieName: series.name,
+                                      year: series.year,
+                                      imageURL: series.thumbnail,
+                                      movieID: series.id,
+                                    ),
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: CommentSection(
+                                  comment: commentList.first,
+                                ),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return SliverToBoxAdapter(
+                            child: GestureDetector(
+                              onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: BlocProvider(
+                                    create: (context) =>
+                                        CommentsBloc(locator.get())
+                                          ..add(
+                                            CommentFetchEvent(series.id),
+                                          ),
+                                    child: CommentsScreen(
+                                      movieName: series.name,
+                                      year: series.year,
+                                      imageURL: series.thumbnail,
+                                      movieID: series.id,
+                                    ),
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: const EmptyCommentSection(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
               );
             }
             return Center(
@@ -345,8 +350,8 @@ class __SeasonChipState extends State<_SeasonChip> {
         const SizedBox(height: 30),
         Text(
           AppLocalizations.of(context)!.episodes,
-          style: const TextStyle(
-            fontFamily: "MSB",
+          style: TextStyle(
+            fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: 16,
             color: TextColors.whiteText,
           ),
@@ -360,20 +365,20 @@ class __SeasonChipState extends State<_SeasonChip> {
                       value: item,
                       child: Text(
                         "Season $item",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          fontFamily: "MSB",
+                          fontFamily: StringConstants.setBoldPersianFont(),
                           color: TextColors.whiteText,
                         ),
                       ),
                     ))
                 .toList(),
-            hint: const Text(
+            hint: Text(
               'Season 1',
               style: TextStyle(
                 fontSize: 14,
                 color: TextColors.whiteText,
-                fontFamily: "MSB",
+                fontFamily: StringConstants.setBoldPersianFont(),
               ),
             ),
             value: selectedValue,
@@ -435,7 +440,7 @@ class _StoryLine extends StatelessWidget {
         Text(
           AppLocalizations.of(context)!.storyLine,
           style: TextStyle(
-            fontFamily: "MSB",
+            fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
             color: TextColors.whiteText,
           ),
@@ -444,7 +449,7 @@ class _StoryLine extends StatelessWidget {
         Text(
           storyLine,
           style: TextStyle(
-            fontFamily: "MR",
+            fontFamily: StringConstants.setSmallPersionFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
             color: TextColors.whiteText,
           ),
@@ -559,7 +564,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 child: Text(
                   widget.series.name,
                   style: TextStyle(
-                    fontFamily: "MSB",
+                    fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 14
                         : 16,
@@ -677,7 +682,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 Text(
                   widget.series.year,
                   style: TextStyle(
-                    fontFamily: "MM",
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 10
                         : 12,
@@ -705,7 +710,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 Text(
                   "${widget.series.timeLength} ${AppLocalizations.of(context)!.minutes}",
                   style: TextStyle(
-                    fontFamily: "MM",
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 10
                         : 12,
@@ -733,7 +738,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 Text(
                   widget.series.genre,
                   style: TextStyle(
-                    fontFamily: "MM",
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 10
                         : 12,
@@ -768,8 +773,8 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                 const SizedBox(width: 5),
                 Text(
                   widget.series.rate,
-                  style: const TextStyle(
-                    fontFamily: "MM",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 12,
                     color: SecondaryColors.orangeColor,
                   ),
@@ -832,7 +837,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                         Text(
                           AppLocalizations.of(context)!.play,
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 12
@@ -936,10 +941,10 @@ class _ShareSnackBar extends StatelessWidget {
         child: Center(
           child: Text(
             message,
-            style: const TextStyle(
+            style: TextStyle(
               color: TextColors.whiteText,
               fontSize: 12,
-              fontFamily: "MSB",
+              fontFamily: StringConstants.setBoldPersianFont(),
             ),
             textAlign: TextAlign.center,
           ),
@@ -989,8 +994,8 @@ Future<void> shareDialog(BuildContext context) async {
                     Center(
                       child: Text(
                         AppLocalizations.of(context)!.share,
-                        style: const TextStyle(
-                          fontFamily: "MSB",
+                        style: TextStyle(
+                          fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 18,
                           color: TextColors.whiteText,
                         ),
@@ -1042,7 +1047,7 @@ class SeriesCastAndCrew extends StatelessWidget {
         Text(
           AppLocalizations.of(context)!.casts,
           style: TextStyle(
-            fontFamily: "MSB",
+            fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
             color: TextColors.whiteText,
           ),
@@ -1083,7 +1088,7 @@ class SeriesCastAndCrew extends StatelessWidget {
                         Text(
                           casts[index].name,
                           style: TextStyle(
-                            fontFamily: "MSB",
+                            fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 12
@@ -1094,7 +1099,7 @@ class SeriesCastAndCrew extends StatelessWidget {
                         Text(
                           casts[index].role,
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 8
@@ -1121,29 +1126,33 @@ class _SnackBarLikedMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQueryHandler.screenWidth(context),
-      height: 60,
-      decoration: const BoxDecoration(
-        color: SecondaryColors.greenColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
+    return Directionality(
+      textDirection:
+          AppManager.getLnag() == 'fa' ? TextDirection.rtl : TextDirection.ltr,
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.greenColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "$seriesName ${AppLocalizations.of(context)!.isAddedToWishlist}",
-              style: const TextStyle(
-                color: TextColors.whiteText,
-                fontSize: 12,
-                fontFamily: "MSB",
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "$seriesName ${AppLocalizations.of(context)!.isAddedToWishlist}",
+                style: TextStyle(
+                  color: TextColors.whiteText,
+                  fontSize: 12,
+                  fontFamily: StringConstants.setMediumPersionFont(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -1156,29 +1165,33 @@ class _SnackBarUnlikeMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQueryHandler.screenWidth(context),
-      height: 60,
-      decoration: const BoxDecoration(
-        color: SecondaryColors.redColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
+    return Directionality(
+      textDirection:
+          AppManager.getLnag() == 'fa' ? TextDirection.rtl : TextDirection.ltr,
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.redColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "$seriesName ${AppLocalizations.of(context)!.removeFromWishlist}",
-              style: const TextStyle(
-                color: TextColors.whiteText,
-                fontSize: 12,
-                fontFamily: "MSB",
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "$seriesName ${AppLocalizations.of(context)!.removeFromWishlist}",
+                style: TextStyle(
+                  color: TextColors.whiteText,
+                  fontSize: 12,
+                  fontFamily: StringConstants.setBoldPersianFont(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

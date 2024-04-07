@@ -2,6 +2,7 @@ import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -37,55 +38,59 @@ class _WishlistScreenState extends State<WishlistScreen> {
             return SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomScrollView(
-                  slivers: [
-                    const SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 20,
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: CustomScrollView(
+                    slivers: [
+                      const SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 20,
+                        ),
                       ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.wishlist,
-                            style: const TextStyle(
-                              fontFamily: "MSB",
-                              fontSize: 16,
-                              color: TextColors.whiteText,
+                      SliverToBoxAdapter(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.wishlist,
+                              style: TextStyle(
+                                fontFamily:
+                                    StringConstants.setBoldPersianFont(),
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SliverToBoxAdapter(
-                      child: SizedBox(height: 35),
-                    ),
-                    state.getCards.fold(
-                      (exceptionMessage) {
-                        return const SliverToBoxAdapter(
-                          child: ExceptionMessage(),
-                        );
-                      },
-                      (cartList) {
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: WishlistWidget(
-                                  cart: cartList[index],
-                                  index: index,
-                                ),
-                              );
-                            },
-                            childCount: cartList.length,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                      const SliverToBoxAdapter(
+                        child: SizedBox(height: 35),
+                      ),
+                      state.getCards.fold(
+                        (exceptionMessage) {
+                          return const SliverToBoxAdapter(
+                            child: ExceptionMessage(),
+                          );
+                        },
+                        (cartList) {
+                          return SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: WishlistWidget(
+                                    cart: cartList[index],
+                                    index: index,
+                                  ),
+                                );
+                              },
+                              childCount: cartList.length,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -103,8 +108,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.wishlist,
-                          style: const TextStyle(
-                            fontFamily: "MSB",
+                          style: TextStyle(
+                            fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize: 16,
                             color: TextColors.whiteText,
                           ),
@@ -143,23 +148,29 @@ class _EmptyWishlist extends StatelessWidget {
           const SizedBox(height: 15),
           Text(
             AppLocalizations.of(context)!.noMovie,
-            style: const TextStyle(
-              fontFamily: "MSB",
+            style: TextStyle(
+              fontFamily: StringConstants.setBoldPersianFont(),
               fontSize: 16,
               color: TextColors.whiteText,
             ),
+            textDirection: StringConstants.setBoldPersianFont() == "SM"
+                ? TextDirection.rtl
+                : TextDirection.ltr,
           ),
           const SizedBox(height: 5),
           SizedBox(
             width: 190,
             child: Text(
               AppLocalizations.of(context)!.noMovieCap,
-              style: const TextStyle(
-                fontFamily: "MM",
+              style: TextStyle(
+                fontFamily: StringConstants.setMediumPersionFont(),
                 fontSize: 12,
                 color: TextColors.greyText,
               ),
               textAlign: TextAlign.center,
+              textDirection: StringConstants.setBoldPersianFont() == "SM"
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
             ),
           ),
         ],

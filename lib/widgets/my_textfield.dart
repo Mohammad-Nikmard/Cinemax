@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatefulWidget {
@@ -18,12 +19,19 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: const TextStyle(
-          color: TextColors.greyText, fontFamily: "MM", fontSize: 14),
+      style: TextStyle(
+        color: TextColors.greyText,
+        fontFamily: StringConstants.setMediumPersionFont(),
+        fontSize: 14,
+      ),
       controller: widget.controller,
       decoration: InputDecoration(
         labelText: widget.text,
-        labelStyle: const TextStyle(color: TextColors.greyText, fontSize: 15),
+        labelStyle: TextStyle(
+          color: TextColors.greyText,
+          fontSize: 15,
+          fontFamily: StringConstants.setMediumPersionFont(),
+        ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             width: 1,

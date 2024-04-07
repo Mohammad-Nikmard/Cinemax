@@ -93,3 +93,8 @@ flutter:
     - family: MSB
       fonts:
         - asset: assets/fonts/Montserrat-SemiBold.ttf
+
+    - family: SM
+      fonts:
+        - asset: assets/fonts/ShabnamMedium.ttf
+    

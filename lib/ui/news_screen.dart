@@ -2,6 +2,7 @@ import 'package:cinemax/bloc/news/news_bloc.dart';
 import 'package:cinemax/bloc/news/news_event.dart';
 import 'package:cinemax/bloc/news/news_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/news.dart';
 import 'package:cinemax/ui/news_detail_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
@@ -40,22 +41,25 @@ class NewsScreen extends StatelessWidget {
                       context.read<NewsBloc>().add(FetchNewsEvent()),
                   color: PrimaryColors.blueAccentColor,
                   backgroundColor: PrimaryColors.softColor,
-                  child: CustomScrollView(
-                    slivers: [
-                      const _Header(),
-                      state.getNews.fold(
-                        (exceptionMessage) {
-                          return const SliverToBoxAdapter(
-                            child: ExceptionMessage(),
-                          );
-                        },
-                        (newsList) {
-                          return _NewsWidget(
-                            newsList: newsList,
-                          );
-                        },
-                      ),
-                    ],
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: CustomScrollView(
+                      slivers: [
+                        const _Header(),
+                        state.getNews.fold(
+                          (exceptionMessage) {
+                            return const SliverToBoxAdapter(
+                              child: ExceptionMessage(),
+                            );
+                          },
+                          (newsList) {
+                            return _NewsWidget(
+                              newsList: newsList,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
@@ -89,8 +93,8 @@ class _Header extends StatelessWidget {
             ),
             Text(
               AppLocalizations.of(context)!.news,
-              style: const TextStyle(
-                fontFamily: "MSB",
+              style: TextStyle(
+                fontFamily: StringConstants.setBoldPersianFont(),
                 fontSize: 16,
                 color: TextColors.whiteText,
               ),
@@ -174,18 +178,20 @@ class _NewsWidget extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 Text(
                                   newsList[index].date,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    fontFamily: "MR",
+                                    fontFamily:
+                                        StringConstants.setSmallPersionFont(),
                                     color: TextColors.greyText,
                                   ),
                                 ),
                                 const SizedBox(width: 15),
                                 Text(
                                   AppLocalizations.of(context)!.publisher,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    fontFamily: "MR",
+                                    fontFamily:
+                                        StringConstants.setSmallPersionFont(),
                                     color: TextColors.greyText,
                                   ),
                                 ),
@@ -207,9 +213,10 @@ class _NewsWidget extends StatelessWidget {
                                 left: 10, top: 10, right: 10, bottom: 20),
                             child: Text(
                               newsList[index].title,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 20,
-                                fontFamily: "MSB",
+                                fontFamily:
+                                    StringConstants.setBoldPersianFont(),
                                 color: TextColors.whiteText,
                               ),
                             ),

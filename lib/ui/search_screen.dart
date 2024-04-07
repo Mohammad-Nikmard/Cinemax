@@ -3,6 +3,7 @@ import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/search/search_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
 import 'package:cinemax/ui/search_result_screen.dart';
@@ -43,161 +44,171 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 25),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 40,
-                                    decoration: const BoxDecoration(
-                                      color: PrimaryColors.softColor,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(24),
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 25),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: 40,
+                                      decoration: const BoxDecoration(
+                                        color: PrimaryColors.softColor,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(24),
+                                        ),
                                       ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/images/icon_search.svg',
-                                            height: 16,
-                                            width: 16,
-                                            colorFilter: const ColorFilter.mode(
-                                              TextColors.greyText,
-                                              BlendMode.srcIn,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10.0),
-                                          Expanded(
-                                            child: TextField(
-                                              readOnly: true,
-                                              onTap: () {
-                                                PersistentNavBarNavigator
-                                                    .pushNewScreen(
-                                                  context,
-                                                  screen: BlocProvider(
-                                                    create: (context) {
-                                                      var bloc = SearchBloc(
-                                                          locator.get(),
-                                                          locator.get());
-                                                      bloc.add(
-                                                          SearchAllMoviesEvent());
-                                                      return bloc;
-                                                    },
-                                                    child:
-                                                        const SearchResultScreen(),
-                                                  ),
-                                                  withNavBar: false,
-                                                  pageTransitionAnimation:
-                                                      PageTransitionAnimation
-                                                          .cupertino,
-                                                );
-                                              },
-                                              style: const TextStyle(
-                                                fontFamily: "MM",
-                                                fontSize: 14,
-                                                color: TextColors.whiteText,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/images/icon_search.svg',
+                                              height: 16,
+                                              width: 16,
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                TextColors.greyText,
+                                                BlendMode.srcIn,
                                               ),
-                                              decoration: InputDecoration(
-                                                contentPadding:
-                                                    const EdgeInsets.only(
-                                                        bottom: 10),
-                                                border: InputBorder.none,
-                                                hintText: AppLocalizations.of(
-                                                        context)!
-                                                    .recommendforYou,
-                                                hintStyle: const TextStyle(
-                                                  fontFamily: "MM",
+                                            ),
+                                            const SizedBox(width: 10.0),
+                                            Expanded(
+                                              child: TextField(
+                                                readOnly: true,
+                                                onTap: () {
+                                                  PersistentNavBarNavigator
+                                                      .pushNewScreen(
+                                                    context,
+                                                    screen: BlocProvider(
+                                                      create: (context) {
+                                                        var bloc = SearchBloc(
+                                                            locator.get(),
+                                                            locator.get());
+                                                        bloc.add(
+                                                            SearchAllMoviesEvent());
+                                                        return bloc;
+                                                      },
+                                                      child:
+                                                          const SearchResultScreen(),
+                                                    ),
+                                                    withNavBar: false,
+                                                    pageTransitionAnimation:
+                                                        PageTransitionAnimation
+                                                            .cupertino,
+                                                  );
+                                                },
+                                                style: TextStyle(
+                                                  fontFamily: StringConstants
+                                                      .setMediumPersionFont(),
                                                   fontSize: 14,
-                                                  color: TextColors.greyText,
+                                                  color: TextColors.whiteText,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 10),
+                                                  border: InputBorder.none,
+                                                  hintText: AppLocalizations.of(
+                                                          context)!
+                                                      .recommendforYou,
+                                                  hintStyle: TextStyle(
+                                                    fontFamily: StringConstants
+                                                        .setMediumPersionFont(),
+                                                    fontSize: 14,
+                                                    color: TextColors.greyText,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            state.getAllMovies.fold(
+                              (exceptionMessage) {
+                                return const ExceptionMessage();
+                              },
+                              (movieList) {
+                                movieList.shuffle();
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 90),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!.today,
+                                        style: TextStyle(
+                                          fontFamily: StringConstants
+                                              .setBoldPersianFont(),
+                                          fontSize: 16,
+                                          color: TextColors.whiteText,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      RelatedSeachWidget(
+                                        movie: movieList[0],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        state.getMovies.fold(
+                          (exceptionMessage) {
+                            return const ExceptionMessage();
+                          },
+                          (movieList) {
+                            movieList.shuffle();
+                            return Column(
+                              children: [
+                                RecommendHeader(
+                                  movies: movieList,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 5, bottom: 30),
+                                  child: SizedBox(
+                                    height: 231,
+                                    child: ListView.builder(
+                                      itemCount: 8,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 15),
+                                          child: MovieWidget(
+                                            showRate: true,
+                                            movie: movieList[index],
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
                               ],
-                            ),
-                          ),
-                          state.getAllMovies.fold(
-                            (exceptionMessage) {
-                              return const ExceptionMessage();
-                            },
-                            (movieList) {
-                              movieList.shuffle();
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 90),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      AppLocalizations.of(context)!.today,
-                                      style: const TextStyle(
-                                        fontFamily: "MSB",
-                                        fontSize: 16,
-                                        color: TextColors.whiteText,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    RelatedSeachWidget(
-                                      movie: movieList[0],
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      state.getMovies.fold(
-                        (exceptionMessage) {
-                          return const ExceptionMessage();
-                        },
-                        (movieList) {
-                          movieList.shuffle();
-                          return Column(
-                            children: [
-                              RecommendHeader(
-                                movies: movieList,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 5, bottom: 30),
-                                child: SizedBox(
-                                  height: 231,
-                                  child: ListView.builder(
-                                    itemCount: 8,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 15),
-                                        child: MovieWidget(
-                                          showRate: true,
-                                          movie: movieList[index],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -228,8 +239,8 @@ class RecommendHeader extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.recommendforYou,
-                style: const TextStyle(
-                  fontFamily: "MSB",
+                style: TextStyle(
+                  fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
                   color: TextColors.whiteText,
                 ),
@@ -248,8 +259,8 @@ class RecommendHeader extends StatelessWidget {
                 },
                 child: Text(
                   AppLocalizations.of(context)!.seeAll,
-                  style: const TextStyle(
-                    fontFamily: "MM",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 14,
                     color: PrimaryColors.blueAccentColor,
                   ),

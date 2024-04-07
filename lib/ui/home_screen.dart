@@ -7,6 +7,7 @@ import 'package:cinemax/bloc/home/homebloc.dart';
 import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/category.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/data/model/user.dart';
@@ -114,8 +115,9 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.hotMovie,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
                                     color: TextColors.whiteText,
                                   ),
@@ -137,8 +139,9 @@ class HomeScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.seeAll,
-                                    style: const TextStyle(
-                                      fontFamily: "MM",
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                       fontSize: 14,
                                       color: PrimaryColors.blueAccentColor,
                                     ),
@@ -176,8 +179,9 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.latestMovie,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
                                     color: TextColors.whiteText,
                                   ),
@@ -199,8 +203,9 @@ class HomeScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.seeAll,
-                                    style: const TextStyle(
-                                      fontFamily: "MM",
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                       fontSize: 14,
                                       color: PrimaryColors.blueAccentColor,
                                     ),
@@ -238,8 +243,9 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.hotSeries,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
                                     color: TextColors.whiteText,
                                   ),
@@ -261,8 +267,9 @@ class HomeScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.seeAll,
-                                    style: const TextStyle(
-                                      fontFamily: "MM",
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                       fontSize: 14,
                                       color: PrimaryColors.blueAccentColor,
                                     ),
@@ -299,8 +306,9 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.shortS,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
                                     color: TextColors.whiteText,
                                   ),
@@ -322,8 +330,9 @@ class HomeScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.seeAll,
-                                    style: const TextStyle(
-                                      fontFamily: "MM",
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                       fontSize: 14,
                                       color: PrimaryColors.blueAccentColor,
                                     ),
@@ -360,8 +369,9 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.seriesForYou,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
                                     color: TextColors.whiteText,
                                   ),
@@ -383,8 +393,9 @@ class HomeScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.seeAll,
-                                    style: const TextStyle(
-                                      fontFamily: "MM",
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                       fontSize: 14,
                                       color: PrimaryColors.blueAccentColor,
                                     ),
@@ -421,8 +432,9 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.movieForYOu,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
                                     color: TextColors.whiteText,
                                   ),
@@ -444,8 +456,9 @@ class HomeScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.seeAll,
-                                    style: const TextStyle(
-                                      fontFamily: "MM",
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                       fontSize: 14,
                                       color: PrimaryColors.blueAccentColor,
                                     ),
@@ -532,7 +545,7 @@ class _HomeHeaderState extends State<_HomeHeader> {
                     Text(
                       "${AppLocalizations.of(context)!.hello}, ${widget.user.name}",
                       style: TextStyle(
-                        fontFamily: "MSB",
+                        fontFamily: StringConstants.setBoldPersianFont(),
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
@@ -542,7 +555,7 @@ class _HomeHeaderState extends State<_HomeHeader> {
                     Text(
                       AppLocalizations.of(context)!.findMovie,
                       style: TextStyle(
-                        fontFamily: "MM",
+                        fontFamily: StringConstants.setMediumPersionFont(),
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 8
                             : 12,
@@ -632,8 +645,8 @@ class SearchBox extends StatelessWidget {
                       ),
                       Text(
                         AppLocalizations.of(context)!.searchAtitle,
-                        style: const TextStyle(
-                          fontFamily: "MM",
+                        style: TextStyle(
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize: 14,
                           color: TextColors.greyText,
                         ),
@@ -791,9 +804,9 @@ class Categories extends StatelessWidget {
                           bottom: 40,
                           child: Text(
                             categories[index].name,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
-                              fontFamily: "MSB",
+                              fontFamily: StringConstants.setBoldPersianFont(),
                               color: TextColors.whiteText,
                             ),
                           ),

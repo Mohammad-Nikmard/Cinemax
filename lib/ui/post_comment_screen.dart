@@ -42,363 +42,374 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _Header(
-                  movieName: widget.movieName,
-                  year: widget.year,
-                  imageURL: widget.imageURL,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.addRating,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: TextColors.whiteText,
-                    fontFamily: "MSB",
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _Header(
+                    movieName: widget.movieName,
+                    year: widget.year,
+                    imageURL: widget.imageURL,
                   ),
-                ),
-                const SizedBox(height: 10),
-                RatingBar.builder(
-                  initialRating: 3,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 10,
-                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    color: SecondaryColors.orangeColor,
-                  ),
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      rateText = rating.toString();
-                    });
-                  },
-                  itemSize: 25,
-                  glowColor: SecondaryColors.orangeColor,
-                  glowRadius: 0.5,
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/images/tick_image.svg",
-                      colorFilter: const ColorFilter.mode(
-                        SecondaryColors.orangeColor,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      " ${AppLocalizations.of(context)!.youRated} $rateText / 10",
-                      style: const TextStyle(
-                        fontFamily: "MM",
-                        fontSize: 14,
-                        color: SecondaryColors.orangeColor,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  AppLocalizations.of(context)!.yourReview,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: TextColors.whiteText,
-                    fontFamily: "MSB",
-                  ),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  style: const TextStyle(
-                    color: TextColors.whiteText,
-                    fontFamily: "MSB",
-                    fontSize: 14,
-                  ),
-                  controller: headlineController,
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.rheadline,
-                    hintStyle: const TextStyle(
-                        color: TextColors.greyText, fontSize: 14),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: TextColors.greyText,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: TextColors.greyText,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
+                  Text(
+                    AppLocalizations.of(context)!.addRating,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: TextColors.whiteText,
+                      fontFamily: StringConstants.setBoldPersianFont(),
                     ),
                   ),
-                ),
-                const SizedBox(height: 15),
-                TextField(
-                  maxLines: 10,
-                  style: const TextStyle(
-                    color: TextColors.whiteText,
-                    fontFamily: "MR",
-                    fontSize: 14,
+                  const SizedBox(height: 10),
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 10,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: SecondaryColors.orangeColor,
+                    ),
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        rateText = rating.toString();
+                      });
+                    },
+                    itemSize: 25,
+                    glowColor: SecondaryColors.orangeColor,
+                    glowRadius: 0.5,
                   ),
-                  controller: reviewController,
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.rReview,
-                    hintStyle: const TextStyle(
-                        color: TextColors.greyText, fontSize: 14),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: TextColors.greyText,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: TextColors.greyText,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: MediaQueryHandler.screenWidth(context) - 190,
-                      child: Text(
-                        AppLocalizations.of(context)!.spoil,
-                        style: const TextStyle(
-                          fontFamily: "MR",
-                          fontSize: 14,
-                          color: TextColors.whiteText,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            Checkbox(
-                              side: const BorderSide(
-                                  width: 1.5, color: TextColors.whiteText),
-                              shape: const CircleBorder(),
-                              checkColor: Colors.transparent,
-                              activeColor: TextColors.greyText,
-                              value: hasSpoiler,
-                              onChanged: (value) {
-                                setState(() {
-                                  hasSpoiler = true;
-                                });
-                              },
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.yes,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: "MR",
-                                color: TextColors.whiteText,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 5),
-                        Row(
-                          children: [
-                            Checkbox(
-                              side: const BorderSide(
-                                  width: 1.5, color: TextColors.whiteText),
-                              shape: const CircleBorder(),
-                              checkColor: Colors.transparent,
-                              activeColor: TextColors.greyText,
-                              value: hasSpoiler ? false : true,
-                              onChanged: (value) {
-                                setState(() {
-                                  hasSpoiler = false;
-                                });
-                              },
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.no,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: "MR",
-                                color: TextColors.whiteText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                BlocConsumer<CommentsBloc, CommentsState>(
-                  builder: (context, state) {
-                    if (state is CommentsInitState) {
-                      return SizedBox(
-                        height: 54,
-                        width: MediaQueryHandler.screenWidth(context),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            String finalTime =
-                                "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
-                            if (headlineController.text.isNotEmpty &&
-                                reviewController.text.isNotEmpty) {
-                              context.read<CommentsBloc>().add(PostCommentEvent(
-                                  widget.movieID,
-                                  reviewController.text.trim(),
-                                  headlineController.text,
-                                  finalTime,
-                                  double.parse(rateText),
-                                  hasSpoiler));
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: _SnackFailPostMessage(
-                                    error:
-                                        "You headline and review can NOT be empty.",
-                                  ),
-                                  duration: Duration(seconds: 3),
-                                  elevation: 0,
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              );
-                            }
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!.submit,
-                            style: const TextStyle(
-                              color: TextColors.whiteText,
-                              fontSize: 16,
-                              fontFamily: "MSB",
-                            ),
-                          ),
-                        ),
-                      );
-                    } else if (state is CommensLoadingState) {
-                      return const AppLoadingIndicator();
-                    } else if (state is PostCommentResponse) {
-                      return SizedBox(
-                        height: 54,
-                        width: MediaQueryHandler.screenWidth(context),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            String finalTime =
-                                "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
-                            if (headlineController.text.isNotEmpty &&
-                                reviewController.text.isNotEmpty) {
-                              context.read<CommentsBloc>().add(PostCommentEvent(
-                                  widget.movieID,
-                                  reviewController.text.trim(),
-                                  headlineController.text,
-                                  finalTime,
-                                  double.parse(rateText),
-                                  hasSpoiler));
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: _SnackFailPostMessage(
-                                    error:
-                                        "You headline and review can NOT be empty.",
-                                  ),
-                                  duration: Duration(seconds: 3),
-                                  elevation: 0,
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              );
-                            }
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!.submit,
-                            style: const TextStyle(
-                              color: TextColors.whiteText,
-                              fontSize: 16,
-                              fontFamily: "MSB",
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    return Center(
-                      child: Text(AppLocalizations.of(context)!.state),
-                    );
-                  },
-                  listener: (context, state) {
-                    if (state is PostCommentResponse) {
-                      state.commentResponse.fold(
-                        (exceptionMessage) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: _SnackFailPostMessage(
-                                  error: exceptionMessage),
-                              duration: const Duration(seconds: 3),
-                              elevation: 0,
-                              backgroundColor: Colors.transparent,
-                            ),
-                          );
-                        },
-                        (response) {
-                          Navigator.pop(context);
-                        },
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 20),
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.agree,
-                            style: const TextStyle(
-                              color: TextColors.whiteText,
-                              fontSize: 14,
-                              fontFamily: "MR",
-                            ),
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.conditionOfUse,
-                            style: const TextStyle(
-                              color: PrimaryColors.blueAccentColor,
-                              fontSize: 14,
-                              fontFamily: "MSB",
-                            ),
-                          ),
-                        ],
+                      SvgPicture.asset(
+                        "assets/images/tick_image.svg",
+                        colorFilter: const ColorFilter.mode(
+                          SecondaryColors.orangeColor,
+                          BlendMode.srcIn,
+                        ),
                       ),
+                      const SizedBox(height: 5),
                       Text(
-                        AppLocalizations.of(context)!.couCaption,
-                        style: const TextStyle(
-                          color: TextColors.whiteText,
+                        " ${AppLocalizations.of(context)!.youRated} $rateText / 10",
+                        style: TextStyle(
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize: 14,
-                          fontFamily: "MR",
+                          color: SecondaryColors.orangeColor,
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Text(
+                    AppLocalizations.of(context)!.yourReview,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: TextColors.whiteText,
+                      fontFamily: StringConstants.setBoldPersianFont(),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    style: TextStyle(
+                      color: TextColors.whiteText,
+                      fontFamily: StringConstants.setBoldPersianFont(),
+                      fontSize: 14,
+                    ),
+                    controller: headlineController,
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.rheadline,
+                      hintStyle: const TextStyle(
+                          color: TextColors.greyText, fontSize: 14),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  TextField(
+                    maxLines: 10,
+                    style: TextStyle(
+                      color: TextColors.whiteText,
+                      fontFamily: StringConstants.setSmallPersionFont(),
+                      fontSize: 14,
+                    ),
+                    controller: reviewController,
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.rReview,
+                      hintStyle: const TextStyle(
+                          color: TextColors.greyText, fontSize: 14),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: TextColors.greyText,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQueryHandler.screenWidth(context) - 190,
+                        child: Text(
+                          AppLocalizations.of(context)!.spoil,
+                          style: TextStyle(
+                            fontFamily: StringConstants.setSmallPersionFont(),
+                            fontSize: 14,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(
+                                side: const BorderSide(
+                                    width: 1.5, color: TextColors.whiteText),
+                                shape: const CircleBorder(),
+                                checkColor: Colors.transparent,
+                                activeColor: TextColors.greyText,
+                                value: hasSpoiler,
+                                onChanged: (value) {
+                                  setState(() {
+                                    hasSpoiler = true;
+                                  });
+                                },
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.yes,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily:
+                                      StringConstants.setSmallPersionFont(),
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 5),
+                          Row(
+                            children: [
+                              Checkbox(
+                                side: const BorderSide(
+                                    width: 1.5, color: TextColors.whiteText),
+                                shape: const CircleBorder(),
+                                checkColor: Colors.transparent,
+                                activeColor: TextColors.greyText,
+                                value: hasSpoiler ? false : true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    hasSpoiler = false;
+                                  });
+                                },
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.no,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily:
+                                      StringConstants.setSmallPersionFont(),
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  BlocConsumer<CommentsBloc, CommentsState>(
+                    builder: (context, state) {
+                      if (state is CommentsInitState) {
+                        return SizedBox(
+                          height: 54,
+                          width: MediaQueryHandler.screenWidth(context),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              String finalTime =
+                                  "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
+                              if (headlineController.text.isNotEmpty &&
+                                  reviewController.text.isNotEmpty) {
+                                context.read<CommentsBloc>().add(
+                                    PostCommentEvent(
+                                        widget.movieID,
+                                        reviewController.text.trim(),
+                                        headlineController.text,
+                                        finalTime,
+                                        double.parse(rateText),
+                                        hasSpoiler));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: _SnackFailPostMessage(
+                                      error:
+                                          "You headline and review can NOT be empty.",
+                                    ),
+                                    duration: Duration(seconds: 3),
+                                    elevation: 0,
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.submit,
+                              style: TextStyle(
+                                color: TextColors.whiteText,
+                                fontSize: 16,
+                                fontFamily:
+                                    StringConstants.setBoldPersianFont(),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else if (state is CommensLoadingState) {
+                        return const AppLoadingIndicator();
+                      } else if (state is PostCommentResponse) {
+                        return SizedBox(
+                          height: 54,
+                          width: MediaQueryHandler.screenWidth(context),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              String finalTime =
+                                  "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
+                              if (headlineController.text.isNotEmpty &&
+                                  reviewController.text.isNotEmpty) {
+                                context.read<CommentsBloc>().add(
+                                    PostCommentEvent(
+                                        widget.movieID,
+                                        reviewController.text.trim(),
+                                        headlineController.text,
+                                        finalTime,
+                                        double.parse(rateText),
+                                        hasSpoiler));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: _SnackFailPostMessage(
+                                      error:
+                                          "You headline and review can NOT be empty.",
+                                    ),
+                                    duration: Duration(seconds: 3),
+                                    elevation: 0,
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.submit,
+                              style: TextStyle(
+                                color: TextColors.whiteText,
+                                fontSize: 16,
+                                fontFamily:
+                                    StringConstants.setBoldPersianFont(),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      return Center(
+                        child: Text(AppLocalizations.of(context)!.state),
+                      );
+                    },
+                    listener: (context, state) {
+                      if (state is PostCommentResponse) {
+                        state.commentResponse.fold(
+                          (exceptionMessage) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: _SnackFailPostMessage(
+                                    error: exceptionMessage),
+                                duration: const Duration(seconds: 3),
+                                elevation: 0,
+                                backgroundColor: Colors.transparent,
+                              ),
+                            );
+                          },
+                          (response) {
+                            Navigator.pop(context);
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.agree,
+                              style: TextStyle(
+                                color: TextColors.whiteText,
+                                fontSize: 14,
+                                fontFamily:
+                                    StringConstants.setSmallPersionFont(),
+                              ),
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.conditionOfUse,
+                              style: TextStyle(
+                                color: PrimaryColors.blueAccentColor,
+                                fontSize: 14,
+                                fontFamily:
+                                    StringConstants.setBoldPersianFont(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.couCaption,
+                          style: TextStyle(
+                            color: TextColors.whiteText,
+                            fontSize: 14,
+                            fontFamily: StringConstants.setSmallPersionFont(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -459,8 +470,8 @@ class _Header extends StatelessWidget {
                 width: 200,
                 child: Text(
                   movieName,
-                  style: const TextStyle(
-                    fontFamily: "MSB",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 18,
                     color: TextColors.whiteText,
                   ),
@@ -468,8 +479,8 @@ class _Header extends StatelessWidget {
               ),
               Text(
                 "($year)",
-                style: const TextStyle(
-                  fontFamily: "MR",
+                style: TextStyle(
+                  fontFamily: StringConstants.setSmallPersionFont(),
                   fontSize: 16,
                   color: TextColors.greyText,
                 ),
@@ -504,10 +515,10 @@ class _SnackFailPostMessage extends StatelessWidget {
           child: Center(
             child: Text(
               error,
-              style: const TextStyle(
+              style: TextStyle(
                 color: TextColors.whiteText,
                 fontSize: 12,
-                fontFamily: "MSB",
+                fontFamily: StringConstants.setBoldPersianFont(),
               ),
             ),
           ),

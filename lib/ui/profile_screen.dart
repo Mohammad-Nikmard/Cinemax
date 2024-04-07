@@ -5,6 +5,7 @@ import 'package:cinemax/bloc/profile/profile_bloc.dart';
 import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/profile/profile_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/ui/about_us_screen.dart';
 import 'package:cinemax/ui/language_screen.dart';
@@ -34,95 +35,98 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20, top: 20),
-                  child: Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.profile,
-                      style: const TextStyle(
-                        fontFamily: "MSB",
-                        fontSize: 16,
-                        color: TextColors.whiteText,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              BlocBuilder<ProfileBloc, ProfileState>(
-                builder: (context, state) {
-                  if (state is ProfileIniState) {
-                    return _ProfileChip(
-                      user: UserApp(
-                        "",
-                        "",
-                        AuthManager.readName(),
-                        AuthManager.readImage(),
-                        AuthManager.readImage(),
-                      ),
-                    );
-                  }
-
-                  if (state is UserResponseState) {
-                    return state.user.fold(
-                      (exceptionMessage) {
-                        return SliverToBoxAdapter(
-                          child: Text(exceptionMessage),
-                        );
-                      },
-                      (user) {
-                        return SliverPadding(
-                          padding: const EdgeInsets.only(bottom: 25),
-                          sliver: _ProfileChip(user: user),
-                        );
-                      },
-                    );
-                  }
-                  return SliverToBoxAdapter(
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20, top: 20),
                     child: Center(
-                      child: Text(AppLocalizations.of(context)!.state),
-                    ),
-                  );
-                },
-              ),
-
-              // const SliverPadding(
-              //   padding: EdgeInsets.only(bottom: 25),
-              //   sliver: _AccountChip(),
-              // ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 25),
-                sliver: _GeneralChip(),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 40),
-                sliver: _MoreChip(),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 50),
-                sliver: SliverToBoxAdapter(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 56,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        signoutDialog(context);
-                      },
                       child: Text(
-                        AppLocalizations.of(context)!.logout,
-                        style: const TextStyle(
-                          color: PrimaryColors.blueAccentColor,
+                        AppLocalizations.of(context)!.profile,
+                        style: TextStyle(
+                          fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 16,
-                          fontFamily: "MSB",
+                          color: TextColors.whiteText,
                         ),
                       ),
                     ),
                   ),
                 ),
-              )
-            ],
+                BlocBuilder<ProfileBloc, ProfileState>(
+                  builder: (context, state) {
+                    if (state is ProfileIniState) {
+                      return _ProfileChip(
+                        user: UserApp(
+                          "",
+                          "",
+                          AuthManager.readName(),
+                          AuthManager.readImage(),
+                          AuthManager.readImage(),
+                        ),
+                      );
+                    }
+
+                    if (state is UserResponseState) {
+                      return state.user.fold(
+                        (exceptionMessage) {
+                          return SliverToBoxAdapter(
+                            child: Text(exceptionMessage),
+                          );
+                        },
+                        (user) {
+                          return SliverPadding(
+                            padding: const EdgeInsets.only(bottom: 25),
+                            sliver: _ProfileChip(user: user),
+                          );
+                        },
+                      );
+                    }
+                    return SliverToBoxAdapter(
+                      child: Center(
+                        child: Text(AppLocalizations.of(context)!.state),
+                      ),
+                    );
+                  },
+                ),
+
+                // const SliverPadding(
+                //   padding: EdgeInsets.only(bottom: 25),
+                //   sliver: _AccountChip(),
+                // ),
+                const SliverPadding(
+                  padding: EdgeInsets.only(bottom: 25),
+                  sliver: _GeneralChip(),
+                ),
+                const SliverPadding(
+                  padding: EdgeInsets.only(bottom: 40),
+                  sliver: _MoreChip(),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.only(bottom: 50),
+                  sliver: SliverToBoxAdapter(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 56,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          signoutDialog(context);
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.logout,
+                          style: TextStyle(
+                            color: PrimaryColors.blueAccentColor,
+                            fontSize: 16,
+                            fontFamily: StringConstants.setBoldPersianFont(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -154,8 +158,8 @@ Future<void> signoutDialog(BuildContext context) async {
                 ),
                 Text(
                   AppLocalizations.of(context)!.areSure,
-                  style: const TextStyle(
-                    fontFamily: "MSB",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 18,
                     color: TextColors.whiteText,
                   ),
@@ -165,8 +169,8 @@ Future<void> signoutDialog(BuildContext context) async {
                 ),
                 Text(
                   AppLocalizations.of(context)!.sureCap,
-                  style: const TextStyle(
-                    fontFamily: "MR",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setSmallPersionFont(),
                     fontSize: 12,
                     color: TextColors.greyText,
                   ),
@@ -192,10 +196,10 @@ Future<void> signoutDialog(BuildContext context) async {
                           },
                           child: Text(
                             AppLocalizations.of(context)!.logout,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: PrimaryColors.blueAccentColor,
                               fontSize: 16,
-                              fontFamily: "MR",
+                              fontFamily: StringConstants.setSmallPersionFont(),
                             ),
                           ),
                         ),
@@ -213,8 +217,8 @@ Future<void> signoutDialog(BuildContext context) async {
                           },
                           child: Text(
                             AppLocalizations.of(context)!.cancel,
-                            style: const TextStyle(
-                              fontFamily: "MR",
+                            style: TextStyle(
+                              fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,
                               color: TextColors.whiteText,
                             ),
@@ -265,8 +269,8 @@ class _OptionChip extends StatelessWidget {
         const SizedBox(width: 15),
         Text(
           title,
-          style: const TextStyle(
-            fontFamily: "MM",
+          style: TextStyle(
+            fontFamily: StringConstants.setMediumPersionFont(),
             fontSize: 14,
             color: TextColors.whiteText,
           ),
@@ -309,8 +313,8 @@ class _GeneralChip extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.general,
-                style: const TextStyle(
-                  fontFamily: "MSB",
+                style: TextStyle(
+                  fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 18,
                   color: TextColors.whiteText,
                 ),
@@ -408,8 +412,8 @@ class _MoreChipState extends State<_MoreChip> {
             children: [
               Text(
                 AppLocalizations.of(context)!.more,
-                style: const TextStyle(
-                  fontFamily: "MSB",
+                style: TextStyle(
+                  fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 18,
                   color: TextColors.whiteText,
                 ),
@@ -509,17 +513,17 @@ class _MoreChipState extends State<_MoreChip> {
             children: [
               Text(
                 AppLocalizations.of(context)!.help,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   color: TextColors.whiteText,
-                  fontFamily: "MSB",
+                  fontFamily: StringConstants.setBoldPersianFont(),
                 ),
               ),
               const SizedBox(height: 5),
               Text(
                 AppLocalizations.of(context)!.yourOpinion,
-                style: const TextStyle(
-                  fontFamily: "MR",
+                style: TextStyle(
+                  fontFamily: StringConstants.setSmallPersionFont(),
                   color: TextColors.whiteText,
                 ),
                 textAlign: TextAlign.center,
@@ -549,17 +553,17 @@ class _MoreChipState extends State<_MoreChip> {
               TextField(
                 maxLines: 8,
                 controller: feedbackController,
-                style: const TextStyle(
-                  fontFamily: "MM",
+                style: TextStyle(
+                  fontFamily: StringConstants.setMediumPersionFont(),
                   fontSize: 14,
                   color: TextColors.whiteText,
                 ),
                 decoration: InputDecoration(
                   hintText: AppLocalizations.of(context)!.infromText,
-                  hintStyle: const TextStyle(
+                  hintStyle: TextStyle(
                     fontSize: 12,
                     color: TextColors.greyText,
-                    fontFamily: "MR",
+                    fontFamily: StringConstants.setSmallPersionFont(),
                   ),
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -597,10 +601,10 @@ class _MoreChipState extends State<_MoreChip> {
                         },
                         child: Text(
                           AppLocalizations.of(context)!.submit,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             color: TextColors.whiteText,
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                           ),
                         ),
                       ),
@@ -630,10 +634,10 @@ class _MoreChipState extends State<_MoreChip> {
                         },
                         child: Text(
                           AppLocalizations.of(context)!.submit,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             color: TextColors.whiteText,
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                           ),
                         ),
                       ),
@@ -683,8 +687,8 @@ class _AccountChip extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.account,
-                style: const TextStyle(
-                  fontFamily: "MSB",
+                style: TextStyle(
+                  fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 18,
                   color: TextColors.whiteText,
                 ),
@@ -809,7 +813,7 @@ class _ProfileChipState extends State<_ProfileChip> {
                     Text(
                       widget.user.name,
                       style: TextStyle(
-                        fontFamily: "MSB",
+                        fontFamily: StringConstants.setBoldPersianFont(),
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
@@ -821,7 +825,7 @@ class _ProfileChipState extends State<_ProfileChip> {
                       child: Text(
                         AuthManager.readEmail(),
                         style: TextStyle(
-                          fontFamily: "MM",
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 350)
                                   ? 10

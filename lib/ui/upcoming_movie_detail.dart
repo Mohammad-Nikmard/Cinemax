@@ -8,10 +8,12 @@ import 'package:cinemax/bloc/video/video_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/upcoming_cast.dart';
 import 'package:cinemax/data/model/upcoming_gallery.dart';
 import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -85,7 +87,8 @@ class UpcomingMovieDetail extends StatelessWidget {
                             Text(
                               AppLocalizations.of(context)!.gallery,
                               style: TextStyle(
-                                fontFamily: "MSB",
+                                fontFamily:
+                                    StringConstants.setBoldPersianFont(),
                                 fontSize:
                                     (MediaQueryHandler.screenWidth(context) <
                                             350)
@@ -205,7 +208,7 @@ class _Synopsis extends StatelessWidget {
             Text(
               AppLocalizations.of(context)!.synopsis,
               style: TextStyle(
-                fontFamily: "MSB",
+                fontFamily: StringConstants.setBoldPersianFont(),
                 fontSize:
                     (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
                 color: TextColors.whiteText,
@@ -215,7 +218,7 @@ class _Synopsis extends StatelessWidget {
             Text(
               synopsis,
               style: TextStyle(
-                fontFamily: "MR",
+                fontFamily: StringConstants.setSmallPersionFont(),
                 fontSize:
                     (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
                 color: TextColors.whiteText,
@@ -307,7 +310,7 @@ class MovieHeadDetail extends StatelessWidget {
                 Text(
                   upcomingItem.name,
                   style: TextStyle(
-                    fontFamily: "MSB",
+                    fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 14
                         : 16,
@@ -336,7 +339,7 @@ class MovieHeadDetail extends StatelessWidget {
                       Text(
                         "${AppLocalizations.of(context)!.releaseDate}: ",
                         style: TextStyle(
-                          fontFamily: "MM",
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 350)
                                   ? 10
@@ -347,7 +350,7 @@ class MovieHeadDetail extends StatelessWidget {
                       Text(
                         "${upcomingItem.releaseMonth} ${upcomingItem.releaseDate}, ${upcomingItem.releaseYear}",
                         style: TextStyle(
-                          fontFamily: "MM",
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 350)
                                   ? 10
@@ -376,7 +379,7 @@ class MovieHeadDetail extends StatelessWidget {
                       Text(
                         upcomingItem.genre,
                         style: TextStyle(
-                          fontFamily: "MM",
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 350)
                                   ? 6
@@ -451,8 +454,8 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                 ),
                 Text(
                   widget.upcomingItem.name,
-                  style: const TextStyle(
-                    fontFamily: "MSB",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 16,
                     color: TextColors.whiteText,
                   ),
@@ -543,7 +546,7 @@ class UpcomingCastAndCrew extends StatelessWidget {
         Text(
           AppLocalizations.of(context)!.casts,
           style: TextStyle(
-            fontFamily: "MSB",
+            fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
             color: TextColors.whiteText,
           ),
@@ -584,7 +587,7 @@ class UpcomingCastAndCrew extends StatelessWidget {
                         Text(
                           casts[index].name,
                           style: TextStyle(
-                            fontFamily: "MSB",
+                            fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 12
@@ -595,7 +598,7 @@ class UpcomingCastAndCrew extends StatelessWidget {
                         Text(
                           casts[index].role,
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 8
@@ -622,29 +625,33 @@ class _SnackBarLikedMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQueryHandler.screenWidth(context),
-      height: 60,
-      decoration: const BoxDecoration(
-        color: SecondaryColors.greenColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
+    return Directionality(
+      textDirection:
+          AppManager.getLnag() == 'fa' ? TextDirection.rtl : TextDirection.ltr,
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.greenColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "$movieName ${AppLocalizations.of(context)!.isAddedToWishlist}",
-              style: const TextStyle(
-                color: TextColors.whiteText,
-                fontSize: 12,
-                fontFamily: "MSB",
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "$movieName ${AppLocalizations.of(context)!.isAddedToWishlist}",
+                style: TextStyle(
+                  color: TextColors.whiteText,
+                  fontSize: 12,
+                  fontFamily: StringConstants.setBoldPersianFont(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -657,29 +664,33 @@ class _SnackBarUnlikeMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQueryHandler.screenWidth(context),
-      height: 60,
-      decoration: const BoxDecoration(
-        color: SecondaryColors.redColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
+    return Directionality(
+      textDirection:
+          AppManager.getLnag() == 'fa' ? TextDirection.rtl : TextDirection.ltr,
+      child: Container(
+        width: MediaQueryHandler.screenWidth(context),
+        height: 60,
+        decoration: const BoxDecoration(
+          color: SecondaryColors.redColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "$movieName ${AppLocalizations.of(context)!.removeFromWishlist}",
-              style: const TextStyle(
-                color: TextColors.whiteText,
-                fontSize: 12,
-                fontFamily: "MSB",
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15, left: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "$movieName ${AppLocalizations.of(context)!.removeFromWishlist}",
+                style: TextStyle(
+                  color: TextColors.whiteText,
+                  fontSize: 12,
+                  fontFamily: StringConstants.setBoldPersianFont(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

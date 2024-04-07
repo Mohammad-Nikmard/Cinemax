@@ -3,8 +3,10 @@ import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/ui/post_comment_screen.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
@@ -32,122 +34,135 @@ class CommentsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        child: BlocBuilder<CommentsBloc, CommentsState>(
-          builder: (context, state) {
-            if (state is CommensLoadingState) {
-              return Shimmer.fromColors(
-                baseColor: Colors.grey[400]!,
-                highlightColor: Colors.grey[100]!,
-                child: const CommentsLoading(),
-              );
-            } else if (state is CommentsResponseState) {
-              return RefreshIndicator(
-                onRefresh: () async {
-                  context.read<CommentsBloc>().add(CommentFetchEvent(movieID));
-                },
-                triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                color: PrimaryColors.blueAccentColor,
-                child: CustomScrollView(
-                  slivers: [
-                    SliverPadding(
-                      padding: const EdgeInsets.only(bottom: 30),
-                      sliver: _CommentsHeader(
-                        movieName: movieName,
-                        year: year,
-                        imageURL: imageURL,
-                        movieID: movieID,
+      body: Directionality(
+        textDirection: TextDirection.ltr,
+        child: SafeArea(
+          child: BlocBuilder<CommentsBloc, CommentsState>(
+            builder: (context, state) {
+              if (state is CommensLoadingState) {
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey[400]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: const CommentsLoading(),
+                );
+              } else if (state is CommentsResponseState) {
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    context
+                        .read<CommentsBloc>()
+                        .add(CommentFetchEvent(movieID));
+                  },
+                  triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                  color: PrimaryColors.blueAccentColor,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverPadding(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        sliver: _CommentsHeader(
+                          movieName: movieName,
+                          year: year,
+                          imageURL: imageURL,
+                          movieID: movieID,
+                        ),
                       ),
-                    ),
-                    state.getComments.fold(
-                      (exceptionMessage) {
-                        return const SliverToBoxAdapter(
-                          child: ExceptionMessage(),
-                        );
-                      },
-                      (commentsList) {
-                        if (commentsList.isNotEmpty) {
-                          return SliverPadding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            sliver: SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 15),
-                                    child: _UserReview(
-                                      comment: commentsList[index],
-                                    ),
-                                  );
-                                },
-                                childCount: commentsList.length,
-                              ),
-                            ),
+                      state.getComments.fold(
+                        (exceptionMessage) {
+                          return const SliverToBoxAdapter(
+                            child: ExceptionMessage(),
                           );
-                        } else {
-                          return SliverToBoxAdapter(
-                            child: Center(
-                              child: SizedBox(
-                                width: 230,
-                                height:
-                                    MediaQueryHandler.screenHeight(context) -
-                                        300,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/box_image.svg',
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .noCommentYet,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontFamily: "MSB",
-                                        fontSize: 16,
-                                        color: TextColors.whiteText,
+                        },
+                        (commentsList) {
+                          if (commentsList.isNotEmpty) {
+                            return SliverPadding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              sliver: SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 15),
+                                      child: _UserReview(
+                                        comment: commentsList[index],
                                       ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .noCommentsYetCap,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontFamily: "MM",
-                                        fontSize: 12,
-                                        color: TextColors.greyText,
-                                      ),
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  childCount: commentsList.length,
                                 ),
                               ),
-                            ),
+                            );
+                          } else {
+                            return SliverToBoxAdapter(
+                              child: Center(
+                                child: SizedBox(
+                                  width: 230,
+                                  height:
+                                      MediaQueryHandler.screenHeight(context) -
+                                          300,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/box_image.svg',
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .noCommentYet,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: StringConstants
+                                              .setBoldPersianFont(),
+                                          fontSize: 16,
+                                          color: TextColors.whiteText,
+                                        ),
+                                        textDirection:
+                                            AppManager.getLnag() == 'fa'
+                                                ? TextDirection.rtl
+                                                : TextDirection.ltr,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .noCommentsYetCap,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: StringConstants
+                                              .setMediumPersionFont(),
+                                          fontSize: 12,
+                                          color: TextColors.greyText,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      state.getComments.fold(
+                        (exceptionMessage) {
+                          return const SliverToBoxAdapter(
+                            child: ExceptionMessage(),
                           );
-                        }
-                      },
-                    ),
-                    state.getComments.fold(
-                      (exceptionMessage) {
-                        return const SliverToBoxAdapter(
-                          child: ExceptionMessage(),
-                        );
-                      },
-                      (commentsList) {
-                        return MoreCommentWidget(
-                          movieID: movieID,
-                          getComments: commentsList,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                        },
+                        (commentsList) {
+                          return MoreCommentWidget(
+                            movieID: movieID,
+                            getComments: commentsList,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return Center(
+                child: Text(AppLocalizations.of(context)!.state),
               );
-            }
-            return Center(
-              child: Text(AppLocalizations.of(context)!.state),
-            );
-          },
+            },
+          ),
         ),
       ),
     );
@@ -185,10 +200,10 @@ class _MoreCommentWidgetState extends State<MoreCommentWidget> {
                     .read<CommentsBloc>()
                     .add(ShowMoreCommentsEvent(page, widget.movieID));
               },
-              child: const Text(
+              child: Text(
                 "Show More",
                 style: TextStyle(
-                  fontFamily: "MM",
+                  fontFamily: StringConstants.setMediumPersionFont(),
                   fontSize: 16,
                   color: TextColors.whiteText,
                 ),
@@ -279,13 +294,15 @@ class _UserReviewState extends State<_UserReview> {
                                         ? 12
                                         : 18,
                                 color: TextColors.whiteText,
-                                fontFamily: "MM",
+                                fontFamily:
+                                    StringConstants.setMediumPersionFont(),
                               ),
                             ),
                             Text(
                               widget.comment.time,
                               style: TextStyle(
-                                fontFamily: "MR",
+                                fontFamily:
+                                    StringConstants.setSmallPersionFont(),
                                 fontSize:
                                     (MediaQueryHandler.screenWidth(context) <
                                             290)
@@ -317,7 +334,7 @@ class _UserReviewState extends State<_UserReview> {
                         Text(
                           "${widget.comment.rate} / 10",
                           style: TextStyle(
-                            fontFamily: "MR",
+                            fontFamily: StringConstants.setSmallPersionFont(),
                             color: TextColors.greyText,
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 380)
@@ -346,7 +363,8 @@ class _UserReviewState extends State<_UserReview> {
                                             380)
                                         ? 16
                                         : 20,
-                                    fontFamily: "MSB",
+                                    fontFamily:
+                                        StringConstants.setBoldPersianFont(),
                                     color: TextColors.whiteText,
                                   ),
                                 ),
@@ -359,7 +377,8 @@ class _UserReviewState extends State<_UserReview> {
                                             380)
                                         ? 12
                                         : 14,
-                                    fontFamily: "MM",
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     color: TextColors.whiteText,
                                   ),
                                 ),
@@ -372,12 +391,14 @@ class _UserReviewState extends State<_UserReview> {
                               child: Column(
                                 children: [
                                   const SizedBox(height: 10),
-                                  const Text(
+                                  Text(
                                     "Warning : Spoiler Alert",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Color.fromARGB(255, 245, 12, 12),
-                                      fontFamily: "MM",
+                                      color: const Color.fromARGB(
+                                          255, 245, 12, 12),
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                     ),
                                   ),
                                   const SizedBox(height: 15),
@@ -413,7 +434,7 @@ class _UserReviewState extends State<_UserReview> {
                                   (MediaQueryHandler.screenWidth(context) < 380)
                                       ? 16
                                       : 20,
-                              fontFamily: "MSB",
+                              fontFamily: StringConstants.setBoldPersianFont(),
                               color: TextColors.whiteText,
                             ),
                           ),
@@ -425,7 +446,8 @@ class _UserReviewState extends State<_UserReview> {
                                   (MediaQueryHandler.screenWidth(context) < 380)
                                       ? 12
                                       : 14,
-                              fontFamily: "MM",
+                              fontFamily:
+                                  StringConstants.setMediumPersionFont(),
                               color: TextColors.whiteText,
                             ),
                           ),
@@ -508,7 +530,7 @@ class _CommentsHeader extends StatelessWidget {
                           ? 12
                           : 18,
                       color: TextColors.whiteText,
-                      fontFamily: "MM",
+                      fontFamily: StringConstants.setMediumPersionFont(),
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -520,7 +542,7 @@ class _CommentsHeader extends StatelessWidget {
                         ? 10
                         : 14,
                     color: TextColors.greyText,
-                    fontFamily: "MR",
+                    fontFamily: StringConstants.setSmallPersionFont(),
                   ),
                 ),
                 Text(
@@ -530,7 +552,7 @@ class _CommentsHeader extends StatelessWidget {
                         ? 14
                         : 22,
                     color: TextColors.whiteText,
-                    fontFamily: "MSB",
+                    fontFamily: StringConstants.setBoldPersianFont(),
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -559,7 +581,7 @@ class _CommentsHeader extends StatelessWidget {
                           ? 10
                           : 14,
                       color: PrimaryColors.blueAccentColor,
-                      fontFamily: "MSB",
+                      fontFamily: StringConstants.setBoldPersianFont(),
                     ),
                   ),
                 ),

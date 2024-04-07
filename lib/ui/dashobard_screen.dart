@@ -9,6 +9,7 @@ import 'package:cinemax/bloc/upcomings/upcomings_bloc.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/ui/home_screen.dart';
 import 'package:cinemax/ui/profile_screen.dart';
 import 'package:cinemax/ui/search_screen.dart';
@@ -32,30 +33,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
       PersistentTabController(initialIndex: 0);
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      context,
-      controller: _controller,
-      navBarHeight: 60,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      confineInSafeArea: true,
-      backgroundColor: PrimaryColors.darkColor,
-      handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: true,
-      stateManagement: true,
-      hideNavigationBarWhenKeyboardShows: true,
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: const ItemAnimationProperties(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.decelerate,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: PersistentTabView(
+        context,
+        controller: _controller,
+        navBarHeight: 60,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        confineInSafeArea: true,
+        backgroundColor: PrimaryColors.darkColor,
+        handleAndroidBackButtonPress: true,
+        resizeToAvoidBottomInset: true,
+        stateManagement: true,
+        hideNavigationBarWhenKeyboardShows: true,
+        popAllScreensOnTapOfSelectedTab: true,
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: const ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.decelerate,
+        ),
+        screenTransitionAnimation: const ScreenTransitionAnimation(
+          animateTabTransition: true,
+          curve: Curves.decelerate,
+          duration: Duration(milliseconds: 200),
+        ),
+        navBarStyle: NavBarStyle.style9,
       ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        animateTabTransition: true,
-        curve: Curves.decelerate,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle: NavBarStyle.style9,
     );
   }
 
@@ -102,7 +106,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.home),
-        textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
+        textStyle: TextStyle(
+            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
       ),
@@ -118,7 +123,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.upcomings),
-        textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
+        textStyle: TextStyle(
+            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
       ),
@@ -134,7 +140,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.search),
-        textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
+        textStyle: TextStyle(
+            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
       ),
@@ -150,7 +157,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.wishlist),
-        textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
+        textStyle: TextStyle(
+            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
       ),
@@ -166,7 +174,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               PrimaryColors.blueAccentColor, BlendMode.srcIn),
         ),
         title: (AppLocalizations.of(context)!.profile),
-        textStyle: const TextStyle(fontFamily: "MM", fontSize: 12),
+        textStyle: TextStyle(
+            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
         activeColorPrimary: PrimaryColors.blueAccentColor,
         inactiveColorPrimary: TextColors.greyText,
       ),

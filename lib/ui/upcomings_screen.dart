@@ -6,6 +6,7 @@ import 'package:cinemax/bloc/upcomings/upcomings_event.dart';
 import 'package:cinemax/bloc/upcomings/upcomings_state.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/news_screen.dart';
 import 'package:cinemax/ui/upcoming_movie_detail.dart';
@@ -47,22 +48,25 @@ class UpcomingsScreen extends StatelessWidget {
                   },
                   backgroundColor: PrimaryColors.softColor,
                   color: PrimaryColors.blueAccentColor,
-                  child: CustomScrollView(
-                    slivers: [
-                      const _Header(),
-                      state.getUpcomingsList.fold(
-                        (exceptionMessage) {
-                          return const SliverToBoxAdapter(
-                            child: ExceptionMessage(),
-                          );
-                        },
-                        (upList) {
-                          return _UpcomingsList(
-                            upList: upList,
-                          );
-                        },
-                      ),
-                    ],
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: CustomScrollView(
+                      slivers: [
+                        const _Header(),
+                        state.getUpcomingsList.fold(
+                          (exceptionMessage) {
+                            return const SliverToBoxAdapter(
+                              child: ExceptionMessage(),
+                            );
+                          },
+                          (upList) {
+                            return _UpcomingsList(
+                              upList: upList,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -325,8 +329,8 @@ class _Header extends StatelessWidget {
                 ),
                 Text(
                   AppLocalizations.of(context)!.upcomings,
-                  style: const TextStyle(
-                    fontFamily: "MSB",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 16,
                     color: TextColors.whiteText,
                   ),

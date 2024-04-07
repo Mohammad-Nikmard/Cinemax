@@ -2,9 +2,11 @@ import 'package:cinemax/bloc/search/search_bloc.dart';
 import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/search/search_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/actors.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
+import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -30,98 +32,110 @@ class SearchResultScreen extends StatelessWidget {
             return SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  color: PrimaryColors.softColor,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(24),
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: 40,
+                                  decoration: const BoxDecoration(
+                                    color: PrimaryColors.softColor,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(24),
+                                    ),
                                   ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/images/icon_search.svg',
-                                        height: 16,
-                                        width: 16,
-                                        colorFilter: const ColorFilter.mode(
-                                          TextColors.greyText,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10.0),
-                                      Expanded(
-                                        child: TextField(
-                                          onChanged: (value) {
-                                            if (value.isNotEmpty) {
-                                              context
-                                                  .read<SearchBloc>()
-                                                  .add(SearchQueryEvent(value));
-                                            } else if (value.isEmpty) {
-                                              context
-                                                  .read<SearchBloc>()
-                                                  .add(SearchAllMoviesEvent());
-                                            }
-                                          },
-                                          style: const TextStyle(
-                                            fontFamily: "MM",
-                                            fontSize: 14,
-                                            color: TextColors.whiteText,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/images/icon_search.svg',
+                                          height: 16,
+                                          width: 16,
+                                          colorFilter: const ColorFilter.mode(
+                                            TextColors.greyText,
+                                            BlendMode.srcIn,
                                           ),
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                                    bottom: 10),
-                                            border: InputBorder.none,
-                                            hintText:
-                                                AppLocalizations.of(context)!
+                                        ),
+                                        const SizedBox(width: 10.0),
+                                        Expanded(
+                                          child: Directionality(
+                                            textDirection:
+                                                AppManager.getLnag() == 'fa'
+                                                    ? TextDirection.rtl
+                                                    : TextDirection.ltr,
+                                            child: TextField(
+                                              onChanged: (value) {
+                                                if (value.isNotEmpty) {
+                                                  context
+                                                      .read<SearchBloc>()
+                                                      .add(SearchQueryEvent(
+                                                          value));
+                                                } else if (value.isEmpty) {
+                                                  context.read<SearchBloc>().add(
+                                                      SearchAllMoviesEvent());
+                                                }
+                                              },
+                                              style: TextStyle(
+                                                fontFamily: StringConstants
+                                                    .setMediumPersionFont(),
+                                                fontSize: 14,
+                                                color: TextColors.whiteText,
+                                              ),
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        bottom: 10),
+                                                border: InputBorder.none,
+                                                hintText: AppLocalizations.of(
+                                                        context)!
                                                     .typeSomething,
-                                            hintStyle: const TextStyle(
-                                              fontFamily: "MM",
-                                              fontSize: 14,
-                                              color: TextColors.greyText,
+                                                hintStyle: TextStyle(
+                                                  fontFamily: StringConstants
+                                                      .setMediumPersionFont(),
+                                                  fontSize: 14,
+                                                  color: TextColors.greyText,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.cancel,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize: 12,
-                                    color: TextColors.whiteText,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.cancel,
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
+                                      fontSize: 12,
+                                      color: TextColors.whiteText,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );
@@ -174,18 +188,21 @@ class SearchResultScreen extends StatelessWidget {
                                                   .add(SearchAllMoviesEvent());
                                             }
                                           },
-                                          style: const TextStyle(
-                                            fontFamily: "MM",
+                                          style: TextStyle(
+                                            fontFamily: StringConstants
+                                                .setMediumPersionFont(),
                                             fontSize: 14,
                                             color: TextColors.whiteText,
                                           ),
-                                          decoration: const InputDecoration(
+                                          decoration: InputDecoration(
                                             contentPadding:
-                                                EdgeInsets.only(bottom: 10),
+                                                const EdgeInsets.only(
+                                                    bottom: 10),
                                             border: InputBorder.none,
                                             hintText: "Type Something...",
                                             hintStyle: TextStyle(
-                                              fontFamily: "MM",
+                                              fontFamily: StringConstants
+                                                  .setMediumPersionFont(),
                                               fontSize: 14,
                                               color: TextColors.greyText,
                                             ),
@@ -205,8 +222,9 @@ class SearchResultScreen extends StatelessWidget {
                                 },
                                 child: Text(
                                   AppLocalizations.of(context)!.cancel,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 12,
                                     color: TextColors.whiteText,
                                   ),
@@ -294,18 +312,21 @@ class SearchResultScreen extends StatelessWidget {
                                                   .add(SearchAllMoviesEvent());
                                             }
                                           },
-                                          style: const TextStyle(
-                                            fontFamily: "MM",
+                                          style: TextStyle(
+                                            fontFamily: StringConstants
+                                                .setMediumPersionFont(),
                                             fontSize: 14,
                                             color: TextColors.whiteText,
                                           ),
-                                          decoration: const InputDecoration(
+                                          decoration: InputDecoration(
                                             contentPadding:
-                                                EdgeInsets.only(bottom: 10),
+                                                const EdgeInsets.only(
+                                                    bottom: 10),
                                             border: InputBorder.none,
                                             hintText: "Type Something...",
                                             hintStyle: TextStyle(
-                                              fontFamily: "MM",
+                                              fontFamily: StringConstants
+                                                  .setMediumPersionFont(),
                                               fontSize: 14,
                                               color: TextColors.greyText,
                                             ),
@@ -325,8 +346,9 @@ class SearchResultScreen extends StatelessWidget {
                                 },
                                 child: Text(
                                   AppLocalizations.of(context)!.cancel,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
+                                  style: TextStyle(
+                                    fontFamily:
+                                        StringConstants.setMediumPersionFont(),
                                     fontSize: 12,
                                     color: TextColors.whiteText,
                                   ),
@@ -366,10 +388,10 @@ class MovieRelatedHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 "Movie Related",
                 style: TextStyle(
-                  fontFamily: "MSB",
+                  fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
                   color: TextColors.whiteText,
                 ),
@@ -386,10 +408,10 @@ class MovieRelatedHeader extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: const Text(
+                child: Text(
                   "See All",
                   style: TextStyle(
-                    fontFamily: "MM",
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 14,
                     color: PrimaryColors.blueAccentColor,
                   ),
@@ -413,10 +435,10 @@ class RelatedActorList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Actors",
           style: TextStyle(
-            fontFamily: "MSB",
+            fontFamily: StringConstants.setMediumPersionFont(),
             fontSize: 16,
             color: TextColors.whiteText,
           ),
@@ -469,8 +491,8 @@ class RelatedActor extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           actors.name,
-          style: const TextStyle(
-            fontFamily: "MSB",
+          style: TextStyle(
+            fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: 12,
             color: TextColors.whiteText,
           ),
@@ -500,8 +522,8 @@ class _EmptySearch extends StatelessWidget {
                 width: 200,
                 child: Text(
                   AppLocalizations.of(context)!.sorryForSearch,
-                  style: const TextStyle(
-                    fontFamily: "MSB",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 16,
                     color: TextColors.whiteText,
                   ),
@@ -512,8 +534,8 @@ class _EmptySearch extends StatelessWidget {
                 width: 210,
                 child: Text(
                   AppLocalizations.of(context)!.noMovieCap,
-                  style: const TextStyle(
-                    fontFamily: "MM",
+                  style: TextStyle(
+                    fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 12,
                     color: TextColors.greyText,
                   ),

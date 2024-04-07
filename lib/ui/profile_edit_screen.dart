@@ -4,6 +4,7 @@ import 'package:cinemax/bloc/profile/profile_bloc.dart';
 import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/profile/profile_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/user.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/widgets/back_label.dart';
@@ -75,283 +76,300 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const BackLabel(),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.editProf,
-                          style: const TextStyle(
-                            fontFamily: "MSB",
-                            fontSize: 16,
-                            color: TextColors.whiteText,
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const BackLabel(),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 32,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Column(
-                      children: [
-                        InkWell(
-                          customBorder: const CircleBorder(eccentricity: 1.0),
-                          onTap: () {
-                            showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Colors.transparent,
-                                context: context,
-                                builder: (context) {
-                                  return modalProfileSheet(context);
-                                });
-                          },
-                          child: Stack(
-                            alignment: AlignmentDirectional.bottomEnd,
-                            clipBehavior: Clip.none,
-                            children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(100),
-                                ),
-                                child: SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: FittedBox(
-                                    fit: BoxFit.cover,
-                                    child: (imageFile == null &&
-                                            widget.user.profile.isEmpty)
-                                        ? SvgPicture.asset(
-                                            'assets/images/icon_user.svg',
-                                            colorFilter: const ColorFilter.mode(
-                                              TextColors.whiteText,
-                                              BlendMode.srcIn,
-                                            ),
-                                          )
-                                        : (imageFile == null)
-                                            ? CachedImage(
-                                                imageUrl: widget.user.imagePath,
-                                                radius: 100)
-                                            : Image.file(
-                                                imageFile!,
+                          Text(
+                            AppLocalizations.of(context)!.editProf,
+                            style: TextStyle(
+                              fontFamily: StringConstants.setBoldPersianFont(),
+                              fontSize: 16,
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 32,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Column(
+                        children: [
+                          InkWell(
+                            customBorder: const CircleBorder(eccentricity: 1.0),
+                            onTap: () {
+                              showModalBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  barrierColor: Colors.transparent,
+                                  context: context,
+                                  builder: (context) {
+                                    return modalProfileSheet(context);
+                                  });
+                            },
+                            child: Stack(
+                              alignment: AlignmentDirectional.bottomEnd,
+                              clipBehavior: Clip.none,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(100),
+                                  ),
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: FittedBox(
+                                      fit: BoxFit.cover,
+                                      child: (imageFile == null &&
+                                              widget.user.profile.isEmpty)
+                                          ? SvgPicture.asset(
+                                              'assets/images/icon_user.svg',
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                TextColors.whiteText,
+                                                BlendMode.srcIn,
                                               ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: -8,
-                                right: -8,
-                                child: Container(
-                                  height: 32,
-                                  width: 32,
-                                  padding: const EdgeInsets.all(7.0),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: PrimaryColors.softColor,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'assets/images/icon_edit_pen.svg',
-                                    colorFilter: const ColorFilter.mode(
-                                      PrimaryColors.blueAccentColor,
-                                      BlendMode.srcIn,
+                                            )
+                                          : (imageFile == null)
+                                              ? CachedImage(
+                                                  imageUrl:
+                                                      widget.user.imagePath,
+                                                  radius: 100)
+                                              : Image.file(
+                                                  imageFile!,
+                                                ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  bottom: -8,
+                                  right: -8,
+                                  child: Container(
+                                    height: 32,
+                                    width: 32,
+                                    padding: const EdgeInsets.all(7.0),
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: PrimaryColors.softColor,
+                                    ),
+                                    child: SvgPicture.asset(
+                                      'assets/images/icon_edit_pen.svg',
+                                      colorFilter: const ColorFilter.mode(
+                                        PrimaryColors.blueAccentColor,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          const SizedBox(height: 20),
+                          Text(
+                            widget.user.name,
+                            style: TextStyle(
+                              fontFamily: StringConstants.setBoldPersianFont(),
+                              fontSize: 16,
+                              color: TextColors.whiteText,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            AuthManager.readEmail(),
+                            style: TextStyle(
+                              fontFamily:
+                                  StringConstants.setMediumPersionFont(),
+                              fontSize: 14,
+                              color: TextColors.greyText,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 25),
+                      TextField(
+                        controller: nameController,
+                        style: TextStyle(
+                          color: TextColors.greyText,
+                          fontFamily: StringConstants.setSmallPersionFont(),
+                          fontSize: 14,
                         ),
-                        const SizedBox(height: 20),
-                        Text(
-                          widget.user.name,
-                          style: const TextStyle(
-                            fontFamily: "MSB",
-                            fontSize: 16,
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.fullName,
+                          labelStyle: TextStyle(
                             color: TextColors.whiteText,
+                            fontSize: 15,
+                            fontFamily: StringConstants.setMediumPersionFont(),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          AuthManager.readEmail(),
-                          style: const TextStyle(
-                            fontFamily: "MM",
-                            fontSize: 14,
-                            color: TextColors.greyText,
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: TextColors.greyText,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(27),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 25),
-                    TextField(
-                      controller: nameController,
-                      style: const TextStyle(
-                        color: TextColors.greyText,
-                        fontFamily: "MR",
-                        fontSize: 14,
-                      ),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.fullName,
-                        labelStyle: const TextStyle(
-                            color: TextColors.whiteText, fontSize: 15),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 35),
-                    TextField(
-                      controller: emailController,
-                      readOnly: true,
-                      style: const TextStyle(
-                          color: TextColors.greyText,
-                          fontFamily: "MR",
-                          fontSize: 14),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.email,
-                        labelStyle: const TextStyle(
-                            color: TextColors.whiteText, fontSize: 15),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 35),
-                    TextField(
-                      controller: phoneNumberController,
-                      style: const TextStyle(
-                          color: TextColors.greyText,
-                          fontFamily: "MR",
-                          fontSize: 14),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.phoneNumber,
-                        labelStyle: const TextStyle(
-                            color: TextColors.whiteText, fontSize: 15),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: TextColors.greyText,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(27),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                BlocConsumer<ProfileBloc, ProfileState>(
-                  builder: (context, state) {
-                    if (state is ProfileIniState) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 35, top: 30),
-                        child: SizedBox(
-                          height: 56,
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              eventsCondition(context);
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.saveChanges,
-                              style: const TextStyle(
-                                fontFamily: "MM",
-                                fontSize: 16,
-                                color: TextColors.whiteText,
-                              ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: TextColors.greyText,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(27),
                             ),
                           ),
                         ),
-                      );
-                    } else if (state is ProfileLoadingState) {
-                      return const AppLoadingIndicator();
-                    } else if (state is ProfileResponseState) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 35, top: 30),
-                        child: SizedBox(
-                          height: 56,
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: Text(
-                              AppLocalizations.of(context)!.saveChanges,
-                              style: const TextStyle(
-                                fontFamily: "MM",
-                                fontSize: 16,
-                                color: TextColors.whiteText,
-                              ),
+                      ),
+                      const SizedBox(height: 35),
+                      TextField(
+                        controller: emailController,
+                        readOnly: true,
+                        style: TextStyle(
+                            color: TextColors.greyText,
+                            fontFamily: StringConstants.setSmallPersionFont(),
+                            fontSize: 14),
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.email,
+                          labelStyle: TextStyle(
+                              color: TextColors.whiteText,
+                              fontSize: 15,
+                              fontFamily:
+                                  StringConstants.setMediumPersionFont()),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: TextColors.greyText,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(27),
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: TextColors.greyText,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(27),
                             ),
                           ),
                         ),
+                      ),
+                      const SizedBox(height: 35),
+                      TextField(
+                        controller: phoneNumberController,
+                        style: TextStyle(
+                            color: TextColors.greyText,
+                            fontFamily: StringConstants.setSmallPersionFont(),
+                            fontSize: 14),
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.phoneNumber,
+                          labelStyle: TextStyle(
+                            color: TextColors.whiteText,
+                            fontSize: 15,
+                            fontFamily: StringConstants.setMediumPersionFont(),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: TextColors.greyText,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(27),
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: TextColors.greyText,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(27),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  BlocConsumer<ProfileBloc, ProfileState>(
+                    builder: (context, state) {
+                      if (state is ProfileIniState) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 35, top: 30),
+                          child: SizedBox(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                eventsCondition(context);
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.saveChanges,
+                                style: TextStyle(
+                                  fontFamily:
+                                      StringConstants.setMediumPersionFont(),
+                                  fontSize: 16,
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else if (state is ProfileLoadingState) {
+                        return const AppLoadingIndicator();
+                      } else if (state is ProfileResponseState) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 35, top: 30),
+                          child: SizedBox(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text(
+                                AppLocalizations.of(context)!.saveChanges,
+                                style: TextStyle(
+                                  fontFamily:
+                                      StringConstants.setMediumPersionFont(),
+                                  fontSize: 16,
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      return Center(
+                        child: Text(AppLocalizations.of(context)!.state),
                       );
-                    }
-                    return Center(
-                      child: Text(AppLocalizations.of(context)!.state),
-                    );
-                  },
-                  listener: (context, state) {
-                    if (state is ProfileResponseState) {
-                      Navigator.pop(
-                        context,
-                        "true",
-                      );
-                    }
-                  },
-                ),
-              ],
+                    },
+                    listener: (context, state) {
+                      if (state is ProfileResponseState) {
+                        Navigator.pop(
+                          context,
+                          "true",
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -434,10 +452,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          const Text(
+                          Text(
                             "Capture",
                             style: TextStyle(
-                              fontFamily: "MR",
+                              fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,
                               color: TextColors.whiteText,
                             ),
@@ -478,10 +496,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          const Text(
+                          Text(
                             "Gallery",
                             style: TextStyle(
-                              fontFamily: "MR",
+                              fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,
                               color: TextColors.whiteText,
                             ),
