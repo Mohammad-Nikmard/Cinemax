@@ -1,5 +1,5 @@
 {
-    "enterNumber": "输入您注册的电话号码进行注册",
+    "enterNumber":"输入您的电子邮件地址进行注册",
     "signUp": "报名",
     "haveAccount": "我已经有一个帐户？",
     "login": "登录",
@@ -124,5 +124,7 @@
     "noCommentHere": "这里没有评论。",
     "noCommentCap": "欢迎与大家分享您对这部电影或系列的体验。",
     "noCommentYet": "还没有评论。",
-    "noCommentsYetCap": "发表评论，以便每个人都可以使用您的经验"
+    "noCommentsYetCap": "发表评论，以便每个人都可以使用您的经验",
+    "actor": "演员",
+    "relatedMovie": "相关电影"
 }

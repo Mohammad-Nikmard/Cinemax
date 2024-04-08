@@ -1,5 +1,5 @@
 {
-    "enterNumber": "Entrez votre numéro de téléphone enregistré pour vous inscrire",
+    "enterNumber": "Entrez votre email pour s'inscrire",
     "signUp": "S'inscrire",
     "haveAccount": "Je ai déjà un compte? ",
     "login": "Se connecter",
@@ -124,5 +124,7 @@
     "noCommentHere": "Pas de commentaires ici.",
     "noCommentCap": "N'hésitez pas à partager votre expérience de ce film ou de cette série avec tout le monde.",
     "noCommentYet": "Il n'y a pas encore de commentaires.",
-    "noCommentsYetCap": "Postez un commentaire pour que tout le monde puisse profiter de votre expérience"
+    "noCommentsYetCap": "Postez un commentaire pour que tout le monde puisse profiter de votre expérience",
+    "actor": "Acteurs",
+    "relatedMovie": "Films connexes"
 }

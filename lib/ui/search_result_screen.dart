@@ -199,7 +199,9 @@ class SearchResultScreen extends StatelessWidget {
                                                 const EdgeInsets.only(
                                                     bottom: 10),
                                             border: InputBorder.none,
-                                            hintText: "Type Something...",
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .typeSomething,
                                             hintStyle: TextStyle(
                                               fontFamily: StringConstants
                                                   .setMediumPersionFont(),
@@ -323,7 +325,9 @@ class SearchResultScreen extends StatelessWidget {
                                                 const EdgeInsets.only(
                                                     bottom: 10),
                                             border: InputBorder.none,
-                                            hintText: "Type Something...",
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .typeSomething,
                                             hintStyle: TextStyle(
                                               fontFamily: StringConstants
                                                   .setMediumPersionFont(),
@@ -389,7 +393,7 @@ class MovieRelatedHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Movie Related",
+                AppLocalizations.of(context)!.relatedMovie,
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
@@ -401,7 +405,7 @@ class MovieRelatedHeader extends StatelessWidget {
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: CategorySearchScreen(
-                      title: "Movie Related",
+                      title: AppLocalizations.of(context)!.relatedMovie,
                       movieList: movies,
                     ),
                     withNavBar: true,
@@ -409,7 +413,7 @@ class MovieRelatedHeader extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  "See All",
+                  AppLocalizations.of(context)!.seeAll,
                   style: TextStyle(
                     fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 14,
@@ -436,7 +440,7 @@ class RelatedActorList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Actors",
+          AppLocalizations.of(context)!.actor,
           style: TextStyle(
             fontFamily: StringConstants.setMediumPersionFont(),
             fontSize: 16,

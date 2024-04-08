@@ -1,5 +1,5 @@
 {
-    "enterNumber": "Enter your registered Phone Number to Sign Up",
+    "enterNumber": "Enter your email to Sign Up",
     "signUp": "Sign Up",
     "haveAccount": "I already have an account? ",
     "login": "Login",
@@ -124,5 +124,7 @@
     "noCommentHere": "No comments here.",
     "noCommentCap": "Feel free to share your experience of this movie or series with everybody.",
     "noCommentYet": "There is no comments yet.",
-    "noCommentsYetCap": "Post a comment so everyone could use your experience"
+    "noCommentsYetCap": "Post a comment so everyone could use your experience",
+    "actor": "Actors",
+    "relatedMovie": "Related Movies"
 }

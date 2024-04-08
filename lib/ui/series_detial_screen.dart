@@ -588,8 +588,10 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackBarUnlikeMessage(
-                            seriesName: widget.series.name,
+                          content: _SnackBarLikedMessage(
+                            message:
+                                "${widget.series.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
+                            color: SecondaryColors.redColor,
                           ),
                           duration: const Duration(seconds: 5),
                         ),
@@ -611,7 +613,9 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
                           content: _SnackBarLikedMessage(
-                            seriesName: widget.series.name,
+                            message:
+                                "${widget.series.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
+                            color: SecondaryColors.greenColor,
                           ),
                           duration: const Duration(seconds: 5),
                         ),
@@ -881,8 +885,9 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   // shareDialog(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: _ShareSnackBar(
+                      content: _SnackBarLikedMessage(
                         message: AppLocalizations.of(context)!.futureShare,
+                        color: SecondaryColors.greenColor,
                       ),
                       elevation: 0,
                       closeIconColor: Colors.transparent,
@@ -916,39 +921,6 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ShareSnackBar extends StatelessWidget {
-  const _ShareSnackBar({required this.message});
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQueryHandler.screenWidth(context),
-      height: 60,
-      decoration: const BoxDecoration(
-        color: SecondaryColors.greenColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Center(
-          child: Text(
-            message,
-            style: TextStyle(
-              color: TextColors.whiteText,
-              fontSize: 12,
-              fontFamily: StringConstants.setBoldPersianFont(),
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
       ),
     );
   }
@@ -1121,8 +1093,9 @@ class SeriesCastAndCrew extends StatelessWidget {
 }
 
 class _SnackBarLikedMessage extends StatelessWidget {
-  const _SnackBarLikedMessage({required this.seriesName});
-  final String seriesName;
+  const _SnackBarLikedMessage({required this.message, required this.color});
+  final String message;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -1132,65 +1105,22 @@ class _SnackBarLikedMessage extends StatelessWidget {
       child: Container(
         width: MediaQueryHandler.screenWidth(context),
         height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.greenColor,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "$seriesName ${AppLocalizations.of(context)!.isAddedToWishlist}",
-                style: TextStyle(
-                  color: TextColors.whiteText,
-                  fontSize: 12,
-                  fontFamily: StringConstants.setMediumPersionFont(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SnackBarUnlikeMessage extends StatelessWidget {
-  const _SnackBarUnlikeMessage({required this.seriesName});
-  final String seriesName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection:
-          AppManager.getLnag() == 'fa' ? TextDirection.rtl : TextDirection.ltr,
-      child: Container(
-        width: MediaQueryHandler.screenWidth(context),
-        height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.redColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "$seriesName ${AppLocalizations.of(context)!.removeFromWishlist}",
-                style: TextStyle(
-                  color: TextColors.whiteText,
-                  fontSize: 12,
-                  fontFamily: StringConstants.setBoldPersianFont(),
-                ),
-              ),
-            ],
+          child: Text(
+            message,
+            style: TextStyle(
+              color: TextColors.whiteText,
+              fontSize: 12,
+              fontFamily: StringConstants.setMediumPersionFont(),
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
