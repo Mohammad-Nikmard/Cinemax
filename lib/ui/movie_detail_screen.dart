@@ -970,14 +970,16 @@ class _SnackbarContent extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Text(
-            message,
-            style: TextStyle(
-              color: TextColors.whiteText,
-              fontSize: 12,
-              fontFamily: StringConstants.setBoldPersianFont(),
+          child: Center(
+            child: Text(
+              message,
+              style: TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 12,
+                fontFamily: StringConstants.setBoldPersianFont(),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
       ),

@@ -75,10 +75,15 @@ class SearchResultScreen extends StatelessWidget {
                                             child: TextField(
                                               onChanged: (value) {
                                                 if (value.isNotEmpty) {
-                                                  context
-                                                      .read<SearchBloc>()
-                                                      .add(SearchQueryEvent(
-                                                          value));
+                                                  Future.delayed(
+                                                    const Duration(seconds: 2),
+                                                    () {
+                                                      context
+                                                          .read<SearchBloc>()
+                                                          .add(SearchQueryEvent(
+                                                              value.trim()));
+                                                    },
+                                                  );
                                                 } else if (value.isEmpty) {
                                                   context.read<SearchBloc>().add(
                                                       SearchAllMoviesEvent());
@@ -179,9 +184,15 @@ class SearchResultScreen extends StatelessWidget {
                                         child: TextField(
                                           onChanged: (value) {
                                             if (value.isNotEmpty) {
-                                              context
-                                                  .read<SearchBloc>()
-                                                  .add(SearchQueryEvent(value));
+                                              Future.delayed(
+                                                const Duration(seconds: 2),
+                                                () {
+                                                  context
+                                                      .read<SearchBloc>()
+                                                      .add(SearchQueryEvent(
+                                                          value.trim()));
+                                                },
+                                              );
                                             } else if (value.isEmpty) {
                                               context
                                                   .read<SearchBloc>()
@@ -305,9 +316,15 @@ class SearchResultScreen extends StatelessWidget {
                                         child: TextField(
                                           onChanged: (value) {
                                             if (value.isNotEmpty) {
-                                              context
-                                                  .read<SearchBloc>()
-                                                  .add(SearchQueryEvent(value));
+                                              Future.delayed(
+                                                const Duration(seconds: 2),
+                                                () {
+                                                  context
+                                                      .read<SearchBloc>()
+                                                      .add(SearchQueryEvent(
+                                                          value.trim()));
+                                                },
+                                              );
                                             } else if (value.isEmpty) {
                                               context
                                                   .read<SearchBloc>()

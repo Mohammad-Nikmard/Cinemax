@@ -197,6 +197,7 @@ class _NewsWidget extends StatelessWidget {
                                 ),
                                 SizedBox(
                                   height: 10,
+                                  width: 15,
                                   child: FittedBox(
                                     fit: BoxFit.cover,
                                     child: CachedImage(

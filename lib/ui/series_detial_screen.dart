@@ -588,7 +588,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackBarLikedMessage(
+                          content: _SnackbarContent(
                             message:
                                 "${widget.series.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
                             color: SecondaryColors.redColor,
@@ -612,7 +612,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackBarLikedMessage(
+                          content: _SnackbarContent(
                             message:
                                 "${widget.series.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
                             color: SecondaryColors.greenColor,
@@ -885,7 +885,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   // shareDialog(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: _SnackBarLikedMessage(
+                      content: _SnackbarContent(
                         message: AppLocalizations.of(context)!.futureShare,
                         color: SecondaryColors.greenColor,
                       ),
@@ -1092,8 +1092,8 @@ class SeriesCastAndCrew extends StatelessWidget {
   }
 }
 
-class _SnackBarLikedMessage extends StatelessWidget {
-  const _SnackBarLikedMessage({required this.message, required this.color});
+class _SnackbarContent extends StatelessWidget {
+  const _SnackbarContent({required this.message, required this.color});
   final String message;
   final Color color;
 
@@ -1113,14 +1113,16 @@ class _SnackBarLikedMessage extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Text(
-            message,
-            style: TextStyle(
-              color: TextColors.whiteText,
-              fontSize: 12,
-              fontFamily: StringConstants.setMediumPersionFont(),
+          child: Center(
+            child: Text(
+              message,
+              style: TextStyle(
+                color: TextColors.whiteText,
+                fontSize: 12,
+                fontFamily: StringConstants.setMediumPersionFont(),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
       ),
