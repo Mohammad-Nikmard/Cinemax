@@ -31,7 +31,7 @@ class CommentRemoteDatasource extends CommentsDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 13);
+      throw ApiException("$ex", 8);
     }
   }
 
@@ -54,7 +54,7 @@ class CommentRemoteDatasource extends CommentsDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 14);
+      throw ApiException("$ex", 9);
     }
   }
 }

@@ -34,7 +34,7 @@ class SeriesRemoteDatasource extends SeriesDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 6);
+      throw ApiException("$ex", 22);
     }
   }
 
@@ -55,7 +55,7 @@ class SeriesRemoteDatasource extends SeriesDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 6);
+      throw ApiException("$ex", 23);
     }
   }
 
@@ -73,7 +73,7 @@ class SeriesRemoteDatasource extends SeriesDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 11);
+      throw ApiException("$ex", 24);
     }
   }
 
@@ -92,7 +92,7 @@ class SeriesRemoteDatasource extends SeriesDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 11);
+      throw ApiException("$ex", 25);
     }
   }
 
@@ -111,7 +111,7 @@ class SeriesRemoteDatasource extends SeriesDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 16);
+      throw ApiException("$ex", 26);
     }
   }
 }

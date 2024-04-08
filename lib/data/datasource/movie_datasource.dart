@@ -34,7 +34,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 1);
+      throw ApiException("$ex", 10);
     }
   }
 
@@ -53,7 +53,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 5);
+      throw ApiException("$ex", 11);
     }
   }
 
@@ -72,7 +72,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 7);
+      throw ApiException("$ex", 12);
     }
   }
 
@@ -90,7 +90,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 2);
+      throw ApiException("$ex", 13);
     }
   }
 
@@ -108,7 +108,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 2);
+      throw ApiException("$ex", 14);
     }
   }
 
@@ -126,7 +126,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 2);
+      throw ApiException("$ex", 15);
     }
   }
 
@@ -144,7 +144,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 3);
+      throw ApiException("$ex", 16);
     }
   }
 
@@ -162,7 +162,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 3);
+      throw ApiException("$ex", 17);
     }
   }
 
@@ -180,7 +180,7 @@ class MovieRemoteDatasource extends MovieDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 16);
+      throw ApiException("$ex", 18);
     }
   }
 }

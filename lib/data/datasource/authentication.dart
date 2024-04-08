@@ -38,7 +38,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode,
           response: ex.response);
     } catch (ex) {
-      throw ApiException("$ex", 9);
+      throw ApiException("$ex", 0);
     }
   }
 
@@ -65,7 +65,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode,
           response: ex.response);
     } catch (ex) {
-      throw ApiException("$ex", 9);
+      throw ApiException("$ex", 1);
     }
     return "";
   }
@@ -84,7 +84,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 12);
+      throw ApiException("$ex", 2);
     }
   }
 
@@ -103,7 +103,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 19);
+      throw ApiException("$ex", 3);
     }
   }
 
@@ -120,7 +120,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 15);
+      throw ApiException("$ex", 4);
     }
   }
 
@@ -137,7 +137,7 @@ class AuthenticationRemoteDatasource extends AuthenticationDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 18);
+      throw ApiException("$ex", 5);
     }
   }
 }

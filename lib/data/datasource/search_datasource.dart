@@ -23,7 +23,7 @@ class SearchRemoteDatasource extends SearchDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 11);
+      throw ApiException("$ex", 20);
     }
   }
 
@@ -41,7 +41,7 @@ class SearchRemoteDatasource extends SearchDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 2);
+      throw ApiException("$ex", 21);
     }
   }
 }

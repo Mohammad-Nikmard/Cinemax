@@ -21,7 +21,7 @@ class VideoRemoteDatasource extends VideoDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 17);
+      throw ApiException("$ex", 30);
     }
   }
 
@@ -37,7 +37,7 @@ class VideoRemoteDatasource extends VideoDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 20);
+      throw ApiException("$ex", 31);
     }
   }
 }

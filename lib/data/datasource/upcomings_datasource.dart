@@ -24,7 +24,7 @@ class UpcomingsRemoteDatasource extends UpcomingsDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 4);
+      throw ApiException("$ex", 27);
     }
   }
 
@@ -44,7 +44,7 @@ class UpcomingsRemoteDatasource extends UpcomingsDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 5);
+      throw ApiException("$ex", 28);
     }
   }
 
@@ -65,7 +65,7 @@ class UpcomingsRemoteDatasource extends UpcomingsDatasource {
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
-      throw ApiException("$ex", 8);
+      throw ApiException("$ex", 29);
     }
   }
 }
