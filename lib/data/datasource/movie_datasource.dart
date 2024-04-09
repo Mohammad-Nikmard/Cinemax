@@ -14,6 +14,7 @@ abstract class MovieDatasource {
   Future<List<Moviesgallery>> getPhotos(String movieId);
   Future<List<MovieCasts>> getCasts(String movieId);
   Future<List<Movie>> getShortSeries();
+  Future<List<Movie>> getRelateds(String movieID);
 }
 
 class MovieRemoteDatasource extends MovieDatasource {
@@ -181,6 +182,25 @@ class MovieRemoteDatasource extends MovieDatasource {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 18);
+    }
+  }
+
+  @override
+  Future<List<Movie>> getRelateds(String movieID) async {
+    Map<String, dynamic> qparams = {
+      'filter': 'name="$movieID"',
+      'expand': 'related_movie',
+    };
+    try {
+      var response = await _dio.get("/api/collections/movies/records",
+          queryParameters: qparams);
+      return response.data["items"][0]["expand"]["related_movie"]
+          .map<Movie>((jsonMapObject) => Movie.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
     }
   }
 }

@@ -173,7 +173,7 @@ class EmptyCommentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 20, left: 20, top: 15, bottom: 20),
+      padding: const EdgeInsets.only(right: 20, left: 20, top: 15),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(
           Radius.circular(15),

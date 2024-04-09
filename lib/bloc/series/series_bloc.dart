@@ -2,6 +2,7 @@ import 'package:cinemax/bloc/series/series_event.dart';
 import 'package:cinemax/bloc/series/series_state.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/data/repository/comment_repository.dart';
+import 'package:cinemax/data/repository/movie_repository.dart';
 import 'package:cinemax/data/repository/series_repository.dart';
 import 'package:cinemax/data/repository/wishlist_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +11,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
   final SeriesRepository _seriesRepository;
   final WishlistRepository _wishlistRepository;
   final CommentsRepository _commentsRepository;
+  final MovieRepository _movieRepository;
   SeriesBloc(this._seriesRepository, this._wishlistRepository,
-      this._commentsRepository)
+      this._commentsRepository, this._movieRepository)
       : super(SeriesInitState()) {
     on<SeriesDataRequestEvent>(
       (event, emit) async {
@@ -23,8 +25,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var isLiked = _wishlistRepository.likedOnList(event.seriesName);
         var comments = await _commentsRepository.getComments(event.seriesId);
         var photos = await _seriesRepository.getPhotos(event.seriesId);
-        emit(SeriesResponseState(
-            getSeasons, casts, firstSeasonEpisode, isLiked, comments, photos));
+        var relateds = await _movieRepository.getRelateds(event.seriesName);
+        emit(SeriesResponseState(getSeasons, casts, firstSeasonEpisode, isLiked,
+            comments, photos, relateds));
       },
     );
     on<WishlistAddToCartEvent>(
@@ -53,8 +56,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
         var isLiked = _wishlistRepository.likedOnList(event.seriesName);
         var comments = await _commentsRepository.getComments(event.seriesId);
         var photos = await _seriesRepository.getPhotos(event.seriesId);
+        var relateds = await _movieRepository.getRelateds(event.seriesName);
         emit(SeriesResponseState(
-            getSeasons, casts, episodes, isLiked, comments, photos));
+            getSeasons, casts, episodes, isLiked, comments, photos, relateds));
       },
     );
     ;

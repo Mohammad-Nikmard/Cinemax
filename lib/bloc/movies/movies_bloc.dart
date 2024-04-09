@@ -21,7 +21,9 @@ class MovieBloc extends Bloc<MoviesEvent, MoviesState> {
         var casts = await _movieRepository.getCastList(event.movieId);
         var isLiked = _wishlistrepository.likedOnList(event.movieName);
         var comments = await _commentsRepository.getComments(event.movieId);
-        emit(MoviesresponseState(photoList, casts, isLiked, comments));
+        var relateds = await _movieRepository.getRelateds(event.movieName);
+        emit(
+            MoviesresponseState(photoList, casts, isLiked, comments, relateds));
       },
     );
     on<WishlistAddToCartEvent>(

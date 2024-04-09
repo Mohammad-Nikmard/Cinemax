@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
@@ -16,6 +17,7 @@ import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/comments_screen.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
+import 'package:cinemax/ui/series_detial_screen.dart';
 import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -116,7 +118,7 @@ class MovieDetailScreen extends StatelessWidget {
                     },
                   ),
                   state.getComments.fold(
-                    (l) {
+                    (exceptionMessage) {
                       return const SliverToBoxAdapter(
                         child: Padding(
                           padding: EdgeInsets.only(left: 20),
@@ -150,8 +152,7 @@ class MovieDetailScreen extends StatelessWidget {
                               );
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 25, bottom: 20),
+                              padding: const EdgeInsets.only(top: 25),
                               child: CommentSection(
                                 comment: commentList.first,
                               ),
@@ -188,6 +189,66 @@ class MovieDetailScreen extends StatelessWidget {
                       }
                     },
                   ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, bottom: 15.0, top: 20.0),
+                      child: Text(
+                        AppLocalizations.of(context)!.relatedMovie,
+                        style: TextStyle(
+                          fontFamily: StringConstants.setBoldPersianFont(),
+                          fontSize: 16,
+                          color: TextColors.whiteText,
+                        ),
+                      ),
+                    ),
+                  ),
+                  state.getRelateds.fold(
+                    (exceptionMessage) {
+                      return const SliverToBoxAdapter();
+                    },
+                    (relatedList) {
+                      return SliverPadding(
+                        padding:
+                            const EdgeInsets.only(left: 20.0, bottom: 20.0),
+                        sliver: SliverGrid(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 15.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    routeCondition(context, relatedList[index]);
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    child: SizedBox(
+                                      width: 100,
+                                      child: FittedBox(
+                                        fit: BoxFit.cover,
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              relatedList[index].thumbnail,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            childCount: relatedList.length,
+                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisExtent: 200,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               );
             }
@@ -198,6 +259,30 @@ class MovieDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  routeCondition(BuildContext context, Movie relatedMovie) {
+    if (relatedMovie.category == "movie") {
+      PersistentNavBarNavigator.pushNewScreen(
+        context,
+        screen: BlocProvider<WishlistBloc>.value(
+          value: locator.get<WishlistBloc>(),
+          child: MovieDetailScreen(movie: relatedMovie),
+        ),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      );
+    } else if (relatedMovie.category == "series") {
+      PersistentNavBarNavigator.pushNewScreen(
+        context,
+        screen: BlocProvider<WishlistBloc>.value(
+          value: locator.get<WishlistBloc>(),
+          child: SeriesDetailScreen(series: relatedMovie),
+        ),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      );
+    }
   }
 }
 
@@ -228,7 +313,7 @@ class _Gallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15.0),
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {

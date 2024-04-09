@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
@@ -43,7 +44,7 @@ class SeriesDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          SeriesBloc(locator.get(), locator.get(), locator.get())
+          SeriesBloc(locator.get(), locator.get(), locator.get(), locator.get())
             ..add(SeriesDataRequestEvent(series.id, series.name)),
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -224,6 +225,70 @@ class SeriesDetailScreen extends StatelessWidget {
                         }
                       },
                     ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20.0,
+                          bottom: 15.0,
+                          top: 20.0,
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context)!.relatedMovie,
+                          style: TextStyle(
+                            fontFamily: StringConstants.setBoldPersianFont(),
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                    ),
+                    state.getRelateds.fold(
+                      (exceptionMessage) {
+                        return const SliverToBoxAdapter();
+                      },
+                      (relatedList) {
+                        return SliverPadding(
+                          padding:
+                              const EdgeInsets.only(left: 20.0, bottom: 20.0),
+                          sliver: SliverGrid(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 15.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      routeCondition(
+                                          context, relatedList[index]);
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                      child: SizedBox(
+                                        width: 100,
+                                        child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                relatedList[index].thumbnail,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              childCount: relatedList.length,
+                            ),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              mainAxisExtent: 200,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               );
@@ -235,6 +300,30 @@ class SeriesDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  routeCondition(BuildContext context, Movie relatedMovie) {
+    if (relatedMovie.category == "movie") {
+      PersistentNavBarNavigator.pushNewScreen(
+        context,
+        screen: BlocProvider<WishlistBloc>.value(
+          value: locator.get<WishlistBloc>(),
+          child: MovieDetailScreen(movie: relatedMovie),
+        ),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      );
+    } else if (relatedMovie.category == "series") {
+      PersistentNavBarNavigator.pushNewScreen(
+        context,
+        screen: BlocProvider<WishlistBloc>.value(
+          value: locator.get<WishlistBloc>(),
+          child: SeriesDetailScreen(series: relatedMovie),
+        ),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      );
+    }
   }
 }
 
@@ -265,7 +354,7 @@ class _Gallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15.0),
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
