@@ -25,6 +25,7 @@ class AuthManager {
     _preferences.remove("E-mail");
     _preferences.remove("RecordID");
     _preferences.remove("Name");
+    _preferences.remove("Image");
     notifier.value = null;
   }
 
@@ -66,5 +67,9 @@ class AuthManager {
 
   static String readImage() {
     return _preferences.getString("Image") ?? "";
+  }
+
+  static void clearImage() {
+    _preferences.remove("Image");
   }
 }

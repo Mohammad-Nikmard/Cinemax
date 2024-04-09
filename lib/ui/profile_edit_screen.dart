@@ -33,6 +33,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   late final TextEditingController phoneNumberController;
   late final TextEditingController nameController;
   File? imageFile;
+  bool isProfileDeleted = false;
+  String? newName;
 
   @override
   void initState() {
@@ -137,24 +139,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     width: 100,
                                     child: FittedBox(
                                       fit: BoxFit.cover,
-                                      child: (imageFile == null &&
-                                              widget.user.profile.isEmpty)
-                                          ? SvgPicture.asset(
-                                              'assets/images/icon_user.svg',
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                TextColors.whiteText,
-                                                BlendMode.srcIn,
-                                              ),
-                                            )
-                                          : (imageFile == null)
-                                              ? CachedImage(
-                                                  imageUrl:
-                                                      widget.user.imagePath,
-                                                  radius: 100)
-                                              : Image.file(
-                                                  imageFile!,
-                                                ),
+                                      child: profileCondition(),
                                     ),
                                   ),
                                 ),
@@ -174,6 +159,34 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       colorFilter: const ColorFilter.mode(
                                         PrimaryColors.blueAccentColor,
                                         BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: -8,
+                                  left: -8,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        imageFile = null;
+                                        isProfileDeleted = true;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 32,
+                                      width: 32,
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: PrimaryColors.softColor,
+                                      ),
+                                      child: SvgPicture.asset(
+                                        'assets/images/icon_bin.svg',
+                                        colorFilter: const ColorFilter.mode(
+                                          PrimaryColors.blueAccentColor,
+                                          BlendMode.srcIn,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -205,6 +218,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       const SizedBox(height: 25),
                       TextField(
                         controller: nameController,
+                        onChanged: (value) {
+                          setState(() {
+                            newName = value;
+                          });
+                        },
                         style: TextStyle(
                           color: TextColors.greyText,
                           fontFamily: StringConstants.setSmallPersionFont(),
@@ -377,6 +395,34 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     );
   }
 
+  Widget profileCondition() {
+    if (imageFile == null && widget.user.profile.isEmpty) {
+      return SvgPicture.asset(
+        'assets/images/icon_user.svg',
+        colorFilter: const ColorFilter.mode(
+          TextColors.whiteText,
+          BlendMode.srcIn,
+        ),
+      );
+    } else if (imageFile == null && !isProfileDeleted) {
+      return CachedImage(imageUrl: widget.user.imagePath, radius: 100);
+    } else if (imageFile != null) {
+      return Image.file(
+        imageFile!,
+      );
+    } else if (isProfileDeleted) {
+      return SvgPicture.asset(
+        'assets/images/icon_user.svg',
+        colorFilter: const ColorFilter.mode(
+          TextColors.whiteText,
+          BlendMode.srcIn,
+        ),
+      );
+    } else {
+      return const Text("");
+    }
+  }
+
   eventsCondition(BuildContext context) {
     if (imageFile != null) {
       AuthManager.saveNum(phoneNumberController.text);
@@ -384,14 +430,30 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             AuthManager.readRecordID(),
             imageFile,
           ));
-    } else if (nameController.text.isNotEmpty) {
+    } else if (nameController.text.trim() == newName) {
       AuthManager.saveNum(phoneNumberController.text);
-
       context.read<ProfileBloc>().add(SendNameEvent(
           AuthManager.readRecordID(), nameController.text.trim()));
-    } else if (imageFile != null && nameController.text.isNotEmpty) {
+    } else if (imageFile != null && nameController.text.trim() == newName) {
       AuthManager.saveNum(phoneNumberController.text);
-
+      context.read<ProfileBloc>().add(SendNameEvent(
+          AuthManager.readRecordID(), nameController.text.trim()));
+      context.read<ProfileBloc>().add(SendFileEvent(
+            AuthManager.readRecordID(),
+            imageFile,
+          ));
+    } else if (isProfileDeleted == true && imageFile == null) {
+      AuthManager.clearImage();
+      AuthManager.saveNum(phoneNumberController.text);
+      context.read<ProfileBloc>().add(SendFileEvent(
+            AuthManager.readRecordID(),
+            imageFile,
+          ));
+    } else if (isProfileDeleted &&
+        nameController.text.trim() == newName &&
+        imageFile == null) {
+      AuthManager.clearImage();
+      AuthManager.saveNum(phoneNumberController.text);
       context.read<ProfileBloc>().add(SendNameEvent(
           AuthManager.readRecordID(), nameController.text.trim()));
       context.read<ProfileBloc>().add(SendFileEvent(
