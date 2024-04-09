@@ -1,18 +1,13 @@
 import 'dart:ui';
-import 'package:cinemax/DI/service_locator.dart';
-import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
-import 'package:cinemax/ui/movie_detail_screen.dart';
-import 'package:cinemax/ui/series_detial_screen.dart';
+import 'package:cinemax/util/func_util.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class MovieWidget extends StatelessWidget {
   const MovieWidget({super.key, required this.showRate, required this.movie});
@@ -23,27 +18,7 @@ class MovieWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (movie.category == "movie") {
-          PersistentNavBarNavigator.pushNewScreen(
-            context,
-            screen: BlocProvider<WishlistBloc>.value(
-              value: locator.get<WishlistBloc>(),
-              child: MovieDetailScreen(movie: movie),
-            ),
-            withNavBar: true,
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
-        } else if (movie.category == "series") {
-          PersistentNavBarNavigator.pushNewScreen(
-            context,
-            screen: BlocProvider<WishlistBloc>.value(
-              value: locator.get<WishlistBloc>(),
-              child: SeriesDetailScreen(series: movie),
-            ),
-            withNavBar: true,
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
-        }
+        routeCondition(context, movie);
       },
       child: SizedBox(
         height: (MediaQueryHandler.screenWidth(context) < 350) ? 185 : 231,

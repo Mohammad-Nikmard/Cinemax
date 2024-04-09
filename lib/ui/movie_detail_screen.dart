@@ -16,8 +16,7 @@ import 'package:cinemax/data/model/movie_casts.dart';
 import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/comments_screen.dart';
-import 'package:cinemax/ui/gallery_full_screen.dart';
-import 'package:cinemax/ui/series_detial_screen.dart';
+import 'package:cinemax/util/func_util.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/comment_section.dart';
@@ -260,50 +259,6 @@ class MovieDetailScreen extends StatelessWidget {
       ),
     );
   }
-
-  routeCondition(BuildContext context, Movie relatedMovie) {
-    if (relatedMovie.category == "movie") {
-      PersistentNavBarNavigator.pushNewScreen(
-        context,
-        screen: BlocProvider<WishlistBloc>.value(
-          value: locator.get<WishlistBloc>(),
-          child: MovieDetailScreen(movie: relatedMovie),
-        ),
-        withNavBar: true,
-        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-      );
-    } else if (relatedMovie.category == "series") {
-      PersistentNavBarNavigator.pushNewScreen(
-        context,
-        screen: BlocProvider<WishlistBloc>.value(
-          value: locator.get<WishlistBloc>(),
-          child: SeriesDetailScreen(series: relatedMovie),
-        ),
-        withNavBar: true,
-        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-      );
-    }
-  }
-}
-
-Future<void> showFullScreenGallery(BuildContext context, String photo) async {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: AlertDialog(
-            surfaceTintColor: Colors.transparent,
-            backgroundColor: Colors.transparent,
-            content: GalleryFullScreen(
-              imageURL: photo,
-            ),
-          ),
-        ),
-      );
-    },
-  );
 }
 
 class _Gallery extends StatelessWidget {
@@ -503,51 +458,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (isLiked!) {
-                      context
-                          .read<MovieBloc>()
-                          .add(WishlistDeleteItemEvent(widget.movie.name));
-                      context
-                          .read<WishlistBloc>()
-                          .add(WishlistFetchCartsEvent());
-                      controller.reverse();
-                      isLiked = false;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          backgroundColor: Colors.transparent,
-                          content: SnackbarContent(
-                            message:
-                                "${widget.movie.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
-                            color: SecondaryColors.redColor,
-                          ),
-                          duration: const Duration(seconds: 5),
-                        ),
-                      );
-                    } else if (!isLiked!) {
-                      context.read<MovieBloc>().add(
-                            WishlistAddToCartEvent(widget.movie),
-                          );
-                      context
-                          .read<WishlistBloc>()
-                          .add(WishlistFetchCartsEvent());
-                      controller.forward();
-                      isLiked = true;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          backgroundColor: Colors.transparent,
-                          content: SnackbarContent(
-                            message:
-                                "${widget.movie.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
-                            color: SecondaryColors.greenColor,
-                          ),
-                          duration: const Duration(seconds: 5),
-                        ),
-                      );
-                    }
+                    headerLogics();
                   });
                 },
                 child: Container(
@@ -835,7 +746,6 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               const SizedBox(width: 15.0),
               GestureDetector(
                 onTap: () {
-                  // shareDialog(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: SnackbarContent(
@@ -883,85 +793,48 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
       ),
     );
   }
-}
 
-Future<void> shareDialog(BuildContext context) async {
-  await showDialog(
-    context: context,
-    builder: (context) {
-      return ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: AlertDialog(
-            backgroundColor: PrimaryColors.softColor,
-            content: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 32,
-                        width: 32,
-                        decoration: const BoxDecoration(
-                          color: Color(0xff252836),
-                          shape: BoxShape.circle,
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/images/icon_close.svg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.share,
-                        style: TextStyle(
-                          fontFamily: StringConstants.setBoldPersianFont(),
-                          fontSize: 20,
-                          color: TextColors.whiteText,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Divider(
-                      thickness: 1.33,
-                      color: PrimaryColors.darkColor,
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/images/telegram.svg",
-                          height: 70,
-                          width: 70,
-                        ),
-                        const SizedBox(width: 15),
-                        SvgPicture.asset(
-                          "assets/images/instagram.svg",
-                          height: 61.5,
-                          width: 61.5,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+  headerLogics() {
+    if (isLiked!) {
+      context.read<MovieBloc>().add(WishlistDeleteItemEvent(widget.movie.name));
+      context.read<WishlistBloc>().add(WishlistFetchCartsEvent());
+      controller.reverse();
+      isLiked = false;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          backgroundColor: Colors.transparent,
+          content: SnackbarContent(
+            message:
+                "${widget.movie.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
+            color: SecondaryColors.redColor,
           ),
+          duration: const Duration(seconds: 5),
         ),
       );
-    },
-  );
+    } else if (!isLiked!) {
+      context.read<MovieBloc>().add(
+            WishlistAddToCartEvent(widget.movie),
+          );
+      context.read<WishlistBloc>().add(WishlistFetchCartsEvent());
+      controller.forward();
+      isLiked = true;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          backgroundColor: Colors.transparent,
+          content: SnackbarContent(
+            message:
+                "${widget.movie.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
+            color: SecondaryColors.greenColor,
+          ),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    }
+  }
 }
 
 class MovieCastAndCrew extends StatelessWidget {

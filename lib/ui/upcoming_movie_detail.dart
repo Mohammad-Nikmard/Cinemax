@@ -12,7 +12,7 @@ import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/upcoming_cast.dart';
 import 'package:cinemax/data/model/upcoming_gallery.dart';
 import 'package:cinemax/data/model/upcomings.dart';
-import 'package:cinemax/ui/gallery_full_screen.dart';
+import 'package:cinemax/util/func_util.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -126,26 +126,6 @@ class UpcomingMovieDetail extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<void> showFullScreenGallery(BuildContext context, String photo) async {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: AlertDialog(
-            surfaceTintColor: Colors.transparent,
-            backgroundColor: Colors.transparent,
-            content: GalleryFullScreen(
-              imageURL: photo,
-            ),
-          ),
-        ),
-      );
-    },
-  );
 }
 
 class _Gallery extends StatelessWidget {
