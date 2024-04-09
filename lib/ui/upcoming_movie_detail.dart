@@ -13,12 +13,12 @@ import 'package:cinemax/data/model/upcoming_cast.dart';
 import 'package:cinemax/data/model/upcoming_gallery.dart';
 import 'package:cinemax/data/model/upcomings.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
-import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
+import 'package:cinemax/widgets/snackbar_content.dart';
 import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -476,8 +476,10 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             backgroundColor: Colors.transparent,
-                            content: _SnackBarUnlikeMessage(
-                              movieName: widget.upcomingItem.name,
+                            content: SnackbarContent(
+                              message:
+                                  "${widget.upcomingItem.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
+                              color: SecondaryColors.redColor,
                             ),
                             duration: const Duration(seconds: 5),
                           ),
@@ -496,8 +498,10 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             backgroundColor: Colors.transparent,
-                            content: _SnackBarLikedMessage(
-                              movieName: widget.upcomingItem.name,
+                            content: SnackbarContent(
+                              message:
+                                  "${widget.upcomingItem.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
+                              color: SecondaryColors.greenColor,
                             ),
                             duration: const Duration(seconds: 5),
                           ),
@@ -615,84 +619,6 @@ class UpcomingCastAndCrew extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SnackBarLikedMessage extends StatelessWidget {
-  const _SnackBarLikedMessage({required this.movieName});
-  final String movieName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection:
-          AppManager.getLnag() == 'fa' ? TextDirection.rtl : TextDirection.ltr,
-      child: Container(
-        width: MediaQueryHandler.screenWidth(context),
-        height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.greenColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "$movieName ${AppLocalizations.of(context)!.isAddedToWishlist}",
-                style: TextStyle(
-                  color: TextColors.whiteText,
-                  fontSize: 12,
-                  fontFamily: StringConstants.setBoldPersianFont(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SnackBarUnlikeMessage extends StatelessWidget {
-  const _SnackBarUnlikeMessage({required this.movieName});
-  final String movieName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection:
-          AppManager.getLnag() == 'fa' ? TextDirection.rtl : TextDirection.ltr,
-      child: Container(
-        width: MediaQueryHandler.screenWidth(context),
-        height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.redColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "$movieName ${AppLocalizations.of(context)!.removeFromWishlist}",
-                style: TextStyle(
-                  color: TextColors.whiteText,
-                  fontSize: 12,
-                  fontFamily: StringConstants.setBoldPersianFont(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

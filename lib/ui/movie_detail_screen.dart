@@ -18,13 +18,13 @@ import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/comments_screen.dart';
 import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/ui/series_detial_screen.dart';
-import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/comment_section.dart';
 import 'package:cinemax/widgets/downloader.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
+import 'package:cinemax/widgets/snackbar_content.dart';
 import 'package:cinemax/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -517,7 +517,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackbarContent(
+                          content: SnackbarContent(
                             message:
                                 "${widget.movie.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
                             color: SecondaryColors.redColor,
@@ -539,7 +539,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           backgroundColor: Colors.transparent,
-                          content: _SnackbarContent(
+                          content: SnackbarContent(
                             message:
                                 "${widget.movie.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
                             color: SecondaryColors.greenColor,
@@ -680,37 +680,39 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             ),
           ),
           const SizedBox(height: 15.0),
-          Container(
-            height: 24,
-            width: 55,
-            decoration: const BoxDecoration(
-              color: Color(0xff252836),
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
+          ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(8),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/images/icon_star.svg',
-                  height: 16,
-                  width: 16,
-                  colorFilter: const ColorFilter.mode(
-                    SecondaryColors.orangeColor,
-                    BlendMode.srcIn,
-                  ),
+            child: ColoredBox(
+              color: const Color(0xff252836),
+              child: SizedBox(
+                height: 24,
+                width: 55,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/icon_star.svg',
+                      height: 16,
+                      width: 16,
+                      colorFilter: const ColorFilter.mode(
+                        SecondaryColors.orangeColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      widget.movie.rate,
+                      style: TextStyle(
+                        fontFamily: StringConstants.setMediumPersionFont(),
+                        fontSize: 12,
+                        color: SecondaryColors.orangeColor,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 5),
-                Text(
-                  widget.movie.rate,
-                  style: TextStyle(
-                    fontFamily: StringConstants.setMediumPersionFont(),
-                    fontSize: 12,
-                    color: SecondaryColors.orangeColor,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           const SizedBox(height: 20.0),
@@ -730,48 +732,55 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: Container(
-                  height:
-                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                  width: (MediaQueryHandler.screenWidth(context) < 350)
-                      ? 100
-                      : 115,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(32),
-                    ),
-                    color: SecondaryColors.orangeColor,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(32),
                   ),
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 25, right: 10),
-                          child: SvgPicture.asset(
-                            'assets/images/icon_play.svg',
-                            height:
-                                (MediaQueryHandler.screenWidth(context) < 350)
+                  child: ColoredBox(
+                    color: SecondaryColors.orangeColor,
+                    child: SizedBox(
+                      height: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 32
+                          : 48,
+                      width: (MediaQueryHandler.screenWidth(context) < 350)
+                          ? 100
+                          : 115,
+                      child: Center(
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 25, right: 10),
+                              child: SvgPicture.asset(
+                                'assets/images/icon_play.svg',
+                                height:
+                                    (MediaQueryHandler.screenWidth(context) <
+                                            350)
+                                        ? 18
+                                        : 20,
+                                width: (MediaQueryHandler.screenWidth(context) <
+                                        350)
                                     ? 18
                                     : 20,
-                            width:
-                                (MediaQueryHandler.screenWidth(context) < 350)
-                                    ? 18
-                                    : 20,
-                          ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              AppLocalizations.of(context)!.play,
+                              style: TextStyle(
+                                fontFamily:
+                                    StringConstants.setMediumPersionFont(),
+                                fontSize:
+                                    (MediaQueryHandler.screenWidth(context) <
+                                            350)
+                                        ? 12
+                                        : 16,
+                                color: TextColors.whiteText,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 10),
-                        Text(
-                          AppLocalizations.of(context)!.play,
-                          style: TextStyle(
-                            fontFamily: StringConstants.setMediumPersionFont(),
-                            fontSize:
-                                (MediaQueryHandler.screenWidth(context) < 350)
-                                    ? 12
-                                    : 16,
-                            color: TextColors.whiteText,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -795,24 +804,30 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     },
                   );
                 },
-                child: Container(
-                  height:
-                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                  width:
-                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: PrimaryColors.softColor,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(100),
                   ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/images/icon_download.svg',
+                  child: ColoredBox(
+                    color: PrimaryColors.softColor,
+                    child: SizedBox(
                       height: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 18
-                          : 24,
+                          ? 32
+                          : 48,
                       width: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 18
-                          : 24,
+                          ? 32
+                          : 48,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/images/icon_download.svg',
+                          height: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 18
+                              : 24,
+                          width: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 18
+                              : 24,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -823,7 +838,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   // shareDialog(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: _SnackbarContent(
+                      content: SnackbarContent(
                         message: AppLocalizations.of(context)!.futureShare,
                         color: SecondaryColors.greenColor,
                       ),
@@ -834,24 +849,30 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     ),
                   );
                 },
-                child: Container(
-                  height:
-                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                  width:
-                      (MediaQueryHandler.screenWidth(context) < 350) ? 32 : 48,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: PrimaryColors.softColor,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(100),
                   ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/images/icon_share.svg',
+                  child: ColoredBox(
+                    color: PrimaryColors.softColor,
+                    child: SizedBox(
                       height: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 18
-                          : 24,
+                          ? 32
+                          : 48,
                       width: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 18
-                          : 24,
+                          ? 32
+                          : 48,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/images/icon_share.svg',
+                          height: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 18
+                              : 24,
+                          width: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 18
+                              : 24,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -1025,44 +1046,6 @@ class MovieCastAndCrew extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SnackbarContent extends StatelessWidget {
-  const _SnackbarContent({required this.message, required this.color});
-  final String message;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection:
-          AppManager.getLnag() == "fa" ? TextDirection.rtl : TextDirection.ltr,
-      child: Container(
-        width: MediaQueryHandler.screenWidth(context),
-        height: 60,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Center(
-            child: Text(
-              message,
-              style: TextStyle(
-                color: TextColors.whiteText,
-                fontSize: 12,
-                fontFamily: StringConstants.setBoldPersianFont(),
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
