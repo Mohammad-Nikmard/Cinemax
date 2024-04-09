@@ -453,7 +453,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "Capture",
+                            AppLocalizations.of(context)!.camera,
                             style: TextStyle(
                               fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,
@@ -497,7 +497,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "Gallery",
+                            AppLocalizations.of(context)!.gallery,
                             style: TextStyle(
                               fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,

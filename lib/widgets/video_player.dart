@@ -9,52 +9,76 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MainVideoBranch extends StatelessWidget {
+class MainVideoBranch extends StatefulWidget {
   const MainVideoBranch({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<VideoBloc, VideoState>(
-      builder: (context, state) {
-        if (state is VideoLoadingState) {
-          return const AppLoadingIndicator();
-        }
-        if (state is VideoResponseState) {
-          return state.trailer.fold(
-            (exceptionMessage) {
-              return const Text("");
-            },
-            (response) {
-              return AppVideoPlayer(
-                trailer: response.trailer,
-              );
-            },
-          );
-        }
+  State<MainVideoBranch> createState() => _MainVideoBranchState();
+}
 
-        return Center(
-          child: Text(AppLocalizations.of(context)!.state),
-        );
-      },
-      listener: (context, state) {
-        if (state is VideoResponseState) {
-          state.trailer.fold(
-            (exceptionMessage) {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: NoLinkSnackBar(),
-                  closeIconColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  duration: Duration(seconds: 3),
-                ),
+class _MainVideoBranchState extends State<MainVideoBranch> {
+  bool canPop = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PopScope(
+        canPop: canPop,
+        onPopInvoked: (bool didPop) {
+          setState(() {
+            canPop = !didPop;
+          });
+          if (canPop) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Click once more to go back"),
+                duration: Duration(milliseconds: 1500),
+              ),
+            );
+          }
+        },
+        child: BlocConsumer<VideoBloc, VideoState>(
+          builder: (context, state) {
+            if (state is VideoLoadingState) {
+              return const AppLoadingIndicator();
+            }
+            if (state is VideoResponseState) {
+              return state.trailer.fold(
+                (exceptionMessage) {
+                  return const Text("");
+                },
+                (response) {
+                  return AppVideoPlayer(
+                    trailer: response.trailer,
+                  );
+                },
               );
-            },
-            (response) {},
-          );
-        }
-      },
+            }
+
+            return Center(
+              child: Text(AppLocalizations.of(context)!.state),
+            );
+          },
+          listener: (context, state) {
+            if (state is VideoResponseState) {
+              state.trailer.fold(
+                (exceptionMessage) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: NoLinkSnackBar(),
+                      closeIconColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
+                },
+                (response) {},
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }
@@ -69,7 +93,6 @@ class AppVideoPlayer extends StatefulWidget {
 
 class _AppVideoPlayerState extends State<AppVideoPlayer> {
   late FlickManager flickManager;
-
   @override
   void initState() {
     super.initState();

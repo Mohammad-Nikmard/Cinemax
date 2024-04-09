@@ -634,20 +634,15 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             children: [
               GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ClipRRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                          child: BlocProvider(
-                            create: (context) => VideoBloc(locator.get())
-                              ..add(FetchTrailerEvent(widget.movie.id)),
-                            child: const MainVideoBranch(),
-                          ),
-                        ),
-                      );
-                    },
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: BlocProvider(
+                      create: (context) => VideoBloc(locator.get())
+                        ..add(FetchTrailerEvent(widget.movie.id)),
+                      child: const MainVideoBranch(),
+                    ),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
                 child: Container(
