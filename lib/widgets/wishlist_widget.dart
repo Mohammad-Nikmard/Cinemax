@@ -20,189 +20,197 @@ class WishlistWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 107,
-      decoration: const BoxDecoration(
-        color: PrimaryColors.softColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(17),
-        ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(17),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (cart.category == "Upcomings") {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ClipRRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                          child: BlocProvider(
-                            create: (context) => VideoBloc(locator.get())
-                              ..add(FetchUpcomingTrailerEvent(cart.movieId)),
-                            child: const MainVideoBranch(),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ClipRRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                          child: BlocProvider(
-                            create: (context) => VideoBloc(locator.get())
-                              ..add(FetchTrailerEvent(cart.movieId)),
-                            child: const MainVideoBranch(),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }
-              },
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        child: SizedBox(
-                          height: 83,
-                          width: (MediaQueryHandler.screenWidth(context) < 350)
-                              ? 100
-                              : 121,
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: CachedImage(
-                              imageUrl: cart.thumbnail,
-                              radius: 10,
-                            ),
-                          ),
-                        ),
-                      ),
-                      ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        child: SizedBox(
-                          height: 83,
-                          width: (MediaQueryHandler.screenWidth(context) < 350)
-                              ? 100
-                              : 121,
-                          child: ColoredBox(
-                            color: PrimaryColors.darkColor.withOpacity(0.3),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SvgPicture.asset('assets/images/icon_play_wishlist.svg'),
-                ],
-              ),
-            ),
-            const SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    cart.genre,
-                    style: TextStyle(
-                      fontFamily: "MM",
-                      fontSize: (MediaQueryHandler.screenWidth(context) < 380)
-                          ? 10
-                          : 12,
-                      color: TextColors.wihteGreyText,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Flexible(
-                    child: Text(
-                      cart.name,
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: (MediaQueryHandler.screenWidth(context) < 380)
-                            ? 12
-                            : 14,
-                        color: TextColors.whiteText,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            cart.category,
-                            style: TextStyle(
-                              fontFamily: "MM",
-                              fontSize:
-                                  (MediaQueryHandler.screenWidth(context) < 380)
-                                      ? 10
-                                      : 12,
-                              color: TextColors.greyText,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Visibility(
-                            visible: cart.rate.isNotEmpty,
-                            child: SvgPicture.asset(
-                              'assets/images/icon_star.svg',
-                              colorFilter: const ColorFilter.mode(
-                                SecondaryColors.orangeColor,
-                                BlendMode.srcIn,
+      child: ColoredBox(
+        color: PrimaryColors.softColor,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 107,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (cart.category == "Upcomings") {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ClipRRect(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                              child: BlocProvider(
+                                create: (context) => VideoBloc(locator.get())
+                                  ..add(
+                                      FetchUpcomingTrailerEvent(cart.movieId)),
+                                child: const MainVideoBranch(),
                               ),
-                              height: 16,
-                              width: 16,
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ClipRRect(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                              child: BlocProvider(
+                                create: (context) => VideoBloc(locator.get())
+                                  ..add(FetchTrailerEvent(cart.movieId)),
+                                child: const MainVideoBranch(),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            child: SizedBox(
+                              height: 83,
+                              width:
+                                  (MediaQueryHandler.screenWidth(context) < 350)
+                                      ? 100
+                                      : 121,
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: CachedImage(
+                                  imageUrl: cart.thumbnail,
+                                  radius: 10,
+                                ),
+                              ),
                             ),
                           ),
-                          const SizedBox(width: 5),
-                          Text(
-                            cart.rate,
-                            style: const TextStyle(
-                              fontFamily: "MM",
-                              fontSize: 12,
-                              color: SecondaryColors.orangeColor,
+                          ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            child: SizedBox(
+                              height: 83,
+                              width:
+                                  (MediaQueryHandler.screenWidth(context) < 350)
+                                      ? 100
+                                      : 121,
+                              child: ColoredBox(
+                                color: PrimaryColors.darkColor.withOpacity(0.3),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          context
-                              .read<WishlistBloc>()
-                              .add(WishlistCardDelete(index));
-                        },
-                        child: SvgPicture.asset(
-                          'assets/images/icon_heart.svg',
-                          colorFilter: const ColorFilter.mode(
-                            SecondaryColors.redColor,
-                            BlendMode.srcIn,
+                      SvgPicture.asset('assets/images/icon_play_wishlist.svg'),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        cart.genre,
+                        style: TextStyle(
+                          fontFamily: "MM",
+                          fontSize:
+                              (MediaQueryHandler.screenWidth(context) < 380)
+                                  ? 10
+                                  : 12,
+                          color: TextColors.wihteGreyText,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Flexible(
+                        child: Text(
+                          cart.name,
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 380)
+                                    ? 12
+                                    : 14,
+                            color: TextColors.whiteText,
                           ),
                         ),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                cart.category,
+                                style: TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize:
+                                      (MediaQueryHandler.screenWidth(context) <
+                                              380)
+                                          ? 10
+                                          : 12,
+                                  color: TextColors.greyText,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Visibility(
+                                visible: cart.rate.isNotEmpty,
+                                child: SvgPicture.asset(
+                                  'assets/images/icon_star.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                    SecondaryColors.orangeColor,
+                                    BlendMode.srcIn,
+                                  ),
+                                  height: 16,
+                                  width: 16,
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                cart.rate,
+                                style: const TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 12,
+                                  color: SecondaryColors.orangeColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<WishlistBloc>()
+                                  .add(WishlistCardDelete(index));
+                            },
+                            child: SvgPicture.asset(
+                              'assets/images/icon_heart.svg',
+                              colorFilter: const ColorFilter.mode(
+                                SecondaryColors.redColor,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

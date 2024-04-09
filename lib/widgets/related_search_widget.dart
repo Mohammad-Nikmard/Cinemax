@@ -75,37 +75,39 @@ class RelatedSeachWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child: Container(
-                            height: 24,
-                            width: 55,
-                            decoration: BoxDecoration(
-                              color: const Color(0xff252836).withOpacity(0.3),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
-                              ),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/icon_star.svg',
-                                  height: 16,
-                                  width: 16,
-                                  colorFilter: const ColorFilter.mode(
-                                    SecondaryColors.orangeColor,
-                                    BlendMode.srcIn,
-                                  ),
+                            child: ColoredBox(
+                              color: const Color(0xff252836).withOpacity(0.3),
+                              child: SizedBox(
+                                height: 24,
+                                width: 55,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/icon_star.svg',
+                                      height: 16,
+                                      width: 16,
+                                      colorFilter: const ColorFilter.mode(
+                                        SecondaryColors.orangeColor,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      movie.rate,
+                                      style: const TextStyle(
+                                        fontFamily: "MM",
+                                        fontSize: 12,
+                                        color: SecondaryColors.orangeColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  movie.rate,
-                                  style: const TextStyle(
-                                    fontFamily: "MM",
-                                    fontSize: 12,
-                                    color: SecondaryColors.orangeColor,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),

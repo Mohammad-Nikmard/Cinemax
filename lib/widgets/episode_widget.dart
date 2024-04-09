@@ -3,6 +3,7 @@ import 'package:cinemax/data/model/episode.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class EpisodeWidget extends StatelessWidget {
@@ -65,41 +66,43 @@ class EpisodeWidget extends StatelessWidget {
                       ],
                     ),
                     // const SizedBox(width: 15),
-                    Container(
-                      height: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 19.2
-                          : 24,
-                      width: (MediaQueryHandler.screenWidth(context) < 350)
-                          ? 44
-                          : 55,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff252836).withOpacity(0.3),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8),
-                        ),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/images/icon_star.svg',
-                            height: 24,
-                            width: 24,
-                            colorFilter: const ColorFilter.mode(
-                              SecondaryColors.orangeColor,
-                              BlendMode.srcIn,
-                            ),
+                      child: ColoredBox(
+                        color: const Color(0xff252836).withOpacity(0.3),
+                        child: SizedBox(
+                          height: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 19.2
+                              : 24,
+                          width: (MediaQueryHandler.screenWidth(context) < 350)
+                              ? 44
+                              : 55,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/icon_star.svg',
+                                height: 24,
+                                width: 24,
+                                colorFilter: const ColorFilter.mode(
+                                  SecondaryColors.orangeColor,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                episode.rate,
+                                style: const TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 16,
+                                  color: SecondaryColors.orangeColor,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 5),
-                          Text(
-                            episode.rate,
-                            style: const TextStyle(
-                              fontFamily: "MM",
-                              fontSize: 16,
-                              color: SecondaryColors.orangeColor,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ],

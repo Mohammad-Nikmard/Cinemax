@@ -7,6 +7,7 @@ import 'package:cinemax/ui/movie_detail_screen.dart';
 import 'package:cinemax/ui/series_detial_screen.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,41 +81,45 @@ class MovieWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                        child: Container(
-                          height: (MediaQueryHandler.screenWidth(context) < 350)
-                              ? 19.2
-                              : 24,
-                          width: (MediaQueryHandler.screenWidth(context) < 350)
-                              ? 44
-                              : 55,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff252836).withOpacity(0.3),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/icon_star.svg',
-                                height: 16,
-                                width: 16,
-                                colorFilter: const ColorFilter.mode(
-                                  SecondaryColors.orangeColor,
-                                  BlendMode.srcIn,
-                                ),
+                          child: ColoredBox(
+                            color: const Color(0xff252836).withOpacity(0.3),
+                            child: SizedBox(
+                              height:
+                                  (MediaQueryHandler.screenWidth(context) < 350)
+                                      ? 19.2
+                                      : 24,
+                              width:
+                                  (MediaQueryHandler.screenWidth(context) < 350)
+                                      ? 44
+                                      : 55,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/icon_star.svg',
+                                    height: 16,
+                                    width: 16,
+                                    colorFilter: const ColorFilter.mode(
+                                      SecondaryColors.orangeColor,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    movie.rate,
+                                    style: const TextStyle(
+                                      fontFamily: "MM",
+                                      fontSize: 12,
+                                      color: SecondaryColors.orangeColor,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 5),
-                              Text(
-                                movie.rate,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
-                                  fontSize: 12,
-                                  color: SecondaryColors.orangeColor,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -123,46 +128,53 @@ class MovieWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              width: (MediaQueryHandler.screenWidth(context) < 350) ? 115 : 145,
-              height: (MediaQueryHandler.screenWidth(context) < 350) ? 48 : 53,
-              decoration: const BoxDecoration(
-                color: PrimaryColors.softColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12),
-                ),
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
+              child: ColoredBox(
+                color: PrimaryColors.softColor,
+                child: SizedBox(
+                  width: (MediaQueryHandler.screenWidth(context) < 350)
+                      ? 115
+                      : 145,
+                  height:
+                      (MediaQueryHandler.screenWidth(context) < 350) ? 48 : 53,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          movie.name,
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 12
+                                    : 14,
+                            color: TextColors.whiteText,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          movie.genre,
+                          style: TextStyle(
+                            fontFamily: "MM",
+                            fontSize:
+                                (MediaQueryHandler.screenWidth(context) < 350)
+                                    ? 8
+                                    : 10,
+                            color: TextColors.greyText,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      movie.name,
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
-                            ? 12
-                            : 14,
-                        color: TextColors.whiteText,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      movie.genre,
-                      style: TextStyle(
-                        fontFamily: "MM",
-                        fontSize: (MediaQueryHandler.screenWidth(context) < 350)
-                            ? 8
-                            : 10,
-                        color: TextColors.greyText,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
