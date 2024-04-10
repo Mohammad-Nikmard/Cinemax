@@ -127,5 +127,11 @@
     "noCommentsYetCap": "Publica un comentario para que todos puedan aprovechar tu experiencia.",
     "actor": "actores",
     "relatedMovie": "Películas relacionadas",
-    "camera": "Cámara"
+    "camera": "Cámara",
+    "delete": "Borrar",
+    "noCommentPosted": "No has publicado ningún comentario",
+    "noCommentpostedCap": "Publica un comentario para poder gestionarlo manualmente aquí.",
+    "deleteCommentdialog": "tu comentario sobre esta película será eliminado",
+    "yourComments": "Tus comentarios",
+    "you": "Tú"
 }

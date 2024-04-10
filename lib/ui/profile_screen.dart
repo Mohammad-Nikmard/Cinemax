@@ -387,8 +387,8 @@ class _GeneralChip extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: const _OptionChip(
-                  title: "Your Comments",
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.yourComments,
                   image: "assets/images/icon_comment.svg",
                   color: TextColors.greyText,
                 ),
@@ -789,7 +789,6 @@ class _ProfileChipState extends State<_ProfileChip> {
               ),
             ),
           );
-
           if (result != null) {
             if (context.mounted) {
               context.read<ProfileBloc>().add(GetuserEvent());

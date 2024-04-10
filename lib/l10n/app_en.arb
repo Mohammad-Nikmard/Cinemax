@@ -127,5 +127,11 @@
     "noCommentsYetCap": "Post a comment so everyone could use your experience",
     "actor": "Actors",
     "relatedMovie": "Related Movies",
-    "camera": "Camera"
+    "camera": "Camera",
+    "delete": "Delete",
+    "noCommentPosted": "You haven't posted any comments",
+    "noCommentpostedCap": "Post a comment so you could manage it manually here",
+    "deleteCommentdialog": "your comment on this movie will be removed",
+    "yourComments": "Your Comments",
+    "you": "You"
 }

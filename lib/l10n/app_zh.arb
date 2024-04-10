@@ -127,5 +127,11 @@
     "noCommentsYetCap": "发表评论，以便每个人都可以使用您的经验",
     "actor": "演员",
     "relatedMovie": "相关电影",
-    "camera": "相机"
+    "camera": "相机",
+    "delete": "删除",
+    "noCommentPosted": "您还没有发表任何评论",
+    "noCommentpostedCap": "发表评论，以便您可以在此处手动管理",
+    "deleteCommentdialog": "您对这部电影的评论将被删除",
+    "yourComments": "你的评论",
+    "you": "你"
 }

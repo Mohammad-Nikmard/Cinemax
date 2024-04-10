@@ -127,5 +127,11 @@
     "noCommentsYetCap": "ضع تعليق ليستفيد الجميع من تجربتك",
     "actor": "ممثلين",
     "relatedMovie": "أفلام ذات صلة",
-    "camera": "آلة تصوير"
+    "camera": "آلة تصوير",
+    "delete": "يمسح",
+    "noCommentPosted": "لم تقم بنشر أي تعليقات",
+    "noCommentpostedCap": "انشر تعليقًا حتى تتمكن من إدارته يدويًا هنا",
+    "deleteCommentdialog": "ستتم إزالة تعليقك على هذا الفيلم",
+    "yourComments": "تعليقاتك",
+    "you": "أنت"
 }

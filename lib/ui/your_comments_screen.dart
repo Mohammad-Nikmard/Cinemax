@@ -46,7 +46,7 @@ class YourCommentsScreen extends StatelessWidget {
                               child: const BackLabel(),
                             ),
                             Text(
-                              "Your Comments",
+                              AppLocalizations.of(context)!.yourComments,
                               style: TextStyle(
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
@@ -84,7 +84,7 @@ class YourCommentsScreen extends StatelessWidget {
                           );
                         } else {
                           return const SliverToBoxAdapter(
-                            child: EmptyCommentSection(),
+                            child: _EmptyCommentSection(),
                           );
                         }
                       },
@@ -128,18 +128,18 @@ class _UserReview extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "You",
+                        Text(
+                          AppLocalizations.of(context)!.you,
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize: 18,
                             color: TextColors.whiteText,
                           ),
                         ),
                         Text(
                           comment.time,
-                          style: const TextStyle(
-                            fontFamily: "MR",
+                          style: TextStyle(
+                            fontFamily: StringConstants.setSmallPersionFont(),
                             fontSize: 12,
                             color: TextColors.whiteText,
                           ),
@@ -308,7 +308,7 @@ class _DeleteCommentDialog extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                "Are you sure?",
+                AppLocalizations.of(context)!.areSure,
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
@@ -318,7 +318,7 @@ class _DeleteCommentDialog extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                "Your comment on this movie will be removed",
+                AppLocalizations.of(context)!.deleteCommentdialog,
                 style: TextStyle(
                   fontFamily: StringConstants.setMediumPersionFont(),
                   fontSize: 12,
@@ -337,7 +337,7 @@ class _DeleteCommentDialog extends StatelessWidget {
                           Navigator.pop(context, "Success");
                         },
                         child: Text(
-                          "Delete",
+                          AppLocalizations.of(context)!.delete,
                           style: TextStyle(
                             fontFamily: StringConstants.setSmallPersionFont(),
                             fontSize: 16,
@@ -376,8 +376,8 @@ class _DeleteCommentDialog extends StatelessWidget {
   }
 }
 
-class EmptyCommentSection extends StatelessWidget {
-  const EmptyCommentSection({super.key});
+class _EmptyCommentSection extends StatelessWidget {
+  const _EmptyCommentSection();
 
   @override
   Widget build(BuildContext context) {
@@ -394,7 +394,7 @@ class EmptyCommentSection extends StatelessWidget {
                 'assets/images/box_image.svg',
               ),
               Text(
-                "You haven't posted any comments",
+                AppLocalizations.of(context)!.noCommentPosted,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
@@ -403,7 +403,7 @@ class EmptyCommentSection extends StatelessWidget {
                 ),
               ),
               Text(
-                "Post a comment so you could manage it manually here.",
+                AppLocalizations.of(context)!.noCommentpostedCap,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: StringConstants.setMediumPersionFont(),
