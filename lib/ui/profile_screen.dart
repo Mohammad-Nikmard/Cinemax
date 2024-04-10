@@ -16,6 +16,7 @@ import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/ui/privacy_screen.dart';
 import 'package:cinemax/ui/profile_edit_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
+import 'package:cinemax/ui/theme_screen.dart';
 import 'package:cinemax/ui/your_comments_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
@@ -294,7 +295,7 @@ class _GeneralChip extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 256,
+        height: 322,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
@@ -383,13 +384,38 @@ class _GeneralChip extends StatelessWidget {
                         ),
                       child: const YourCommentsScreen(),
                     ),
-                    withNavBar: false,
+                    withNavBar: true,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
                 child: _OptionChip(
                   title: AppLocalizations.of(context)!.yourComments,
                   image: "assets/images/icon_comment.svg",
+                  color: TextColors.greyText,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Divider(
+                thickness: 1.3,
+                color: Color(0xff252836),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const ThemeScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                child: const _OptionChip(
+                  title: "Themes",
+                  image: "assets/images/icon_theme.svg",
                   color: TextColors.greyText,
                 ),
               ),

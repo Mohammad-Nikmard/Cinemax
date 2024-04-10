@@ -22,6 +22,11 @@ ThemeData mainTheme = ThemeData(
   ),
   colorScheme: const ColorScheme.dark(
     background: PrimaryColors.darkColor,
+    primary: PrimaryColors.blueAccentColor,
+    primaryContainer: Color(0xff252836),
+    secondaryContainer: SecondaryColors.orangeColor,
+    secondary: PrimaryColors.softColor,
+    tertiary: TextColors.whiteText,
   ),
   textTheme: const TextTheme(
     bodySmall: TextStyle(
@@ -41,3 +46,11 @@ ThemeData mainTheme = ThemeData(
     ),
   ),
 );
+
+
+
+// primary container for dividers
+// secondary container for yellow buttons 
+// primary for most icons
+// tertiary for light texts
+// secondary for comment container 
