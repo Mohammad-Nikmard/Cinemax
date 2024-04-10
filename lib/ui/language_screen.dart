@@ -29,6 +29,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     "عربي",
     "Русский",
     "português",
+    "Deutsch",
   ];
   @override
   Widget build(BuildContext context) {
@@ -97,11 +98,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             ),
                             const SizedBox(height: 20),
                             SizedBox(
-                              height: 510,
+                              height: 550,
                               child: ListView.builder(
                                 itemCount: languages.length,
                                 itemBuilder: (context, index) {
-                                  if (index == 8) {
+                                  if (index == 9) {
                                     return GestureDetector(
                                       onTap: () {
                                         setState(

@@ -281,13 +281,13 @@ class __SearchEngineState extends State<_SearchEngine> {
                                 );
                               }
                             },
-                            child: const SizedBox(
+                            child: SizedBox(
                               height: 35,
                               width: 100,
                               child: Center(
                                 child: Text(
-                                  "Search",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.search,
+                                  style: const TextStyle(
                                     fontFamily: "MR",
                                     fontSize: 14,
                                     color: TextColors.whiteText,

@@ -36,6 +36,10 @@ enum Language {
   portuguese(
     Locale('pt', 'PT'),
     'Portuguese',
+  ),
+  german(
+    Locale('de', 'DE'),
+    'German',
   );
 
   const Language(
