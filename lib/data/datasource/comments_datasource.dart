@@ -10,6 +10,8 @@ abstract class CommentsDatasource {
       String movieID, text, headline, time, double rate, bool spoiler);
   Future<List<UserComment>> getUserComments(String userRecord);
   Future<void> deleteComment(String commentID);
+  Future<String> updateComment(String commentID, String text, String headline,
+      double rate, String time, bool spoiler);
 }
 
 class CommentRemoteDatasource extends CommentsDatasource {
@@ -92,5 +94,31 @@ class CommentRemoteDatasource extends CommentsDatasource {
     } catch (ex) {
       throw ApiException("$ex", 100);
     }
+  }
+
+  @override
+  Future<String> updateComment(String commentID, String text, String headline,
+      double rate, String time, bool spoiler) async {
+    FormData data = FormData.fromMap({
+      'headline': headline,
+      'text': text,
+      'rate': rate,
+      'time': time,
+      'spoiler': spoiler,
+    });
+    try {
+      var response = await _dio.patch(
+        "/api/collections/movies_comment/records/$commentID",
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return "Success";
+      }
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+    return "";
   }
 }

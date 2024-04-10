@@ -1,11 +1,13 @@
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/user_comment.dart';
+import 'package:cinemax/ui/edit_comment_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
@@ -224,31 +226,78 @@ class _UserReview extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 25),
-                        child: GestureDetector(
-                          onTap: () async {
-                            String? navResult;
-                            navResult = await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const _DeleteCommentDialog();
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 25),
+                            child: GestureDetector(
+                              onTap: () async {
+                                String? navResult;
+                                navResult = await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const _DeleteCommentDialog();
+                                  },
+                                );
+                                if (navResult!.isNotEmpty) {
+                                  if (context.mounted) {
+                                    context.read<CommentsBloc>().add(
+                                        DeleteCommentEvent(comment.id,
+                                            AuthManager.readRecordID()));
+                                  }
+                                }
                               },
-                            );
-                            if (navResult!.isNotEmpty) {
-                              if (context.mounted) {
-                                context.read<CommentsBloc>().add(
-                                    DeleteCommentEvent(comment.id,
-                                        AuthManager.readRecordID()));
-                              }
-                            }
-                          },
-                          child: SvgPicture.asset(
-                            'assets/images/icon_bin.svg',
-                            height: 24,
-                            width: 24,
+                              child: SvgPicture.asset(
+                                'assets/images/icon_bin.svg',
+                                height: 24,
+                                width: 24,
+                              ),
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 35),
+                            child: GestureDetector(
+                              onTap: () async {
+                                String? navResult;
+                                navResult = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BlocProvider(
+                                      create: (context) => CommentsBloc(
+                                        locator.get(),
+                                      ),
+                                      child: EditCommentScreen(
+                                        imageURL: comment.movieThumbnail,
+                                        movieName: comment.movieName,
+                                        year: comment.movieYear,
+                                        movieID: comment.movieID,
+                                        headline: comment.headline,
+                                        text: comment.text,
+                                        commentId: comment.id,
+                                        rate: double.parse(comment.rate),
+                                        hasSpoiler: comment.spoiler,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                                if (navResult!.isNotEmpty) {
+                                  if (context.mounted) {
+                                    context.read<CommentsBloc>().add(
+                                          FetchUserComments(
+                                            AuthManager.readRecordID(),
+                                          ),
+                                        );
+                                  }
+                                }
+                              },
+                              child: SvgPicture.asset(
+                                'assets/images/icon_edit_pen.svg',
+                                height: 24,
+                                width: 24,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

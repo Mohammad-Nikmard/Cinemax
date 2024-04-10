@@ -8,8 +8,10 @@ class UserComment {
   String headline;
   String text;
   String rate;
+  bool spoiler;
   String movieName;
   String movieGenre;
+  String movieYear;
   String movieThumbnail;
 
   UserComment(
@@ -20,8 +22,10 @@ class UserComment {
     this.headline,
     this.text,
     this.rate,
+    this.spoiler,
     this.movieName,
     this.movieGenre,
+    this.movieYear,
     this.movieThumbnail,
   );
 
@@ -34,8 +38,10 @@ class UserComment {
       jsonMapObject["headline"],
       jsonMapObject["text"],
       jsonMapObject["rate"].toString(),
+      jsonMapObject["spoiler"],
       jsonMapObject["expand"]["movie_id"]["name"],
       jsonMapObject["expand"]["movie_id"]["genre"],
+      jsonMapObject["expand"]["movie_id"]["year"].toString(),
       "${StringConstants.baseImage}/api/files/${jsonMapObject["expand"]["movie_id"]["collectionId"]}/${jsonMapObject["expand"]["movie_id"]["id"]}/${jsonMapObject["expand"]["movie_id"]["thumbnail"]}",
     );
   }

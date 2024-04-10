@@ -25,3 +25,9 @@ class UserCommentResponseState extends CommentsState {
 
   UserCommentResponseState(this.getComments);
 }
+
+class CommentUpdateResponseState extends CommentsState {
+  Either<String, String> response;
+
+  CommentUpdateResponseState(this.response);
+}

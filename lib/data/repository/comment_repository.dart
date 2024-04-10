@@ -12,6 +12,8 @@ abstract class CommentsRepository {
   Future<Either<String, List<UserComment>>> getUserComments(
       String userRecordID);
   Future<Either<String, String>> deleteComment(String commentID);
+  Future<Either<String, String>> updateComment(String commentID, String text,
+      String headline, double rate, String time, bool spoiler);
 }
 
 class CommentsRemoteRepository extends CommentsRepository {
@@ -57,6 +59,18 @@ class CommentsRemoteRepository extends CommentsRepository {
     try {
       await _datasource.deleteComment(commentID);
       return right("Success");
+    } on ApiException catch (ex) {
+      return left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, String>> updateComment(String commentID, String text,
+      String headline, double rate, String time, bool spoiler) async {
+    try {
+      var response = await _datasource.updateComment(
+          commentID, text, headline, rate, time, spoiler);
+      return right(response);
     } on ApiException catch (ex) {
       return left(ex.message);
     }

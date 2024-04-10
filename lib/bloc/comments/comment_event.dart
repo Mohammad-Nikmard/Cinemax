@@ -31,9 +31,21 @@ class FetchUserComments extends CommentsEvent {
   FetchUserComments(this.userID);
 }
 
-class DeleteCommentEvent extends CommentsEvent{
+class DeleteCommentEvent extends CommentsEvent {
   String commentID;
   String userID;
 
-  DeleteCommentEvent(this.commentID,this.userID);
+  DeleteCommentEvent(this.commentID, this.userID);
+}
+
+class EditCommentEvent extends CommentsEvent {
+  String commentID;
+  String text;
+  String headline;
+  String time;
+  double rate;
+  bool spoiler;
+
+  EditCommentEvent(this.commentID, this.text, this.headline, this.time,
+      this.rate, this.spoiler);
 }
