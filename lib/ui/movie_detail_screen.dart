@@ -12,6 +12,7 @@ import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
+import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/data/model/movie_casts.dart';
 import 'package:cinemax/data/model/moviegallery.dart';
 import 'package:cinemax/data/model/movie.dart';
@@ -126,7 +127,11 @@ class MovieDetailScreen extends StatelessWidget {
                       );
                     },
                     (commentList) {
-                      if (commentList.isNotEmpty) {
+                      List<Comment> verbose = commentList
+                          .where((element) => element.spoiler == false)
+                          .toList();
+                      if (verbose.isNotEmpty) {
+                        verbose.shuffle();
                         return SliverToBoxAdapter(
                           child: GestureDetector(
                             onTap: () {
@@ -153,7 +158,7 @@ class MovieDetailScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 25),
                               child: CommentSection(
-                                comment: commentList.first,
+                                comment: verbose[0],
                               ),
                             ),
                           ),
@@ -632,15 +637,20 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
             children: [
               GestureDetector(
                 onTap: () {
-                  PersistentNavBarNavigator.pushNewScreen(
-                    context,
-                    screen: BlocProvider(
-                      create: (context) => VideoBloc(locator.get())
-                        ..add(FetchTrailerEvent(widget.movie.id)),
-                      child: const MainVideoBranch(),
-                    ),
-                    withNavBar: false,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                          child: BlocProvider(
+                            create: (context) => VideoBloc(locator.get())
+                              ..add(FetchTrailerEvent(widget.movie.id)),
+                            child: const MainVideoBranch(),
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
                 child: ClipRRect(

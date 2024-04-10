@@ -1,8 +1,8 @@
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
-import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:cinemax/widgets/snackbar_content.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,64 +20,57 @@ class _MainVideoBranchState extends State<MainVideoBranch> {
   bool canPop = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PopScope(
-        canPop: canPop,
-        onPopInvoked: (bool didPop) {
-          setState(() {
-            canPop = !didPop;
-          });
-          if (canPop) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Click once more to go back"),
-                duration: Duration(milliseconds: 1500),
-              ),
+    return PopScope(
+      canPop: canPop,
+      onPopInvoked: (bool didPop) {
+        setState(() {
+          canPop = !didPop;
+        });
+      },
+      child: BlocConsumer<VideoBloc, VideoState>(
+        builder: (context, state) {
+          if (state is VideoLoadingState) {
+            return const AppLoadingIndicator();
+          }
+          if (state is VideoResponseState) {
+            return state.trailer.fold(
+              (exceptionMessage) {
+                return const Text("");
+              },
+              (response) {
+                return AppVideoPlayer(
+                  trailer: response.trailer,
+                );
+              },
+            );
+          }
+
+          return Center(
+            child: Text(AppLocalizations.of(context)!.state),
+          );
+        },
+        listener: (context, state) {
+          if (state is VideoResponseState) {
+            state.trailer.fold(
+              (exceptionMessage) {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: SnackbarContent(
+                      message: AppLocalizations.of(context)!.noDownloadLink,
+                      color: SecondaryColors.redColor,
+                    ),
+                    closeIconColor: Colors.transparent,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    duration: const Duration(seconds: 3),
+                  ),
+                );
+              },
+              (response) {},
             );
           }
         },
-        child: BlocConsumer<VideoBloc, VideoState>(
-          builder: (context, state) {
-            if (state is VideoLoadingState) {
-              return const AppLoadingIndicator();
-            }
-            if (state is VideoResponseState) {
-              return state.trailer.fold(
-                (exceptionMessage) {
-                  return const Text("");
-                },
-                (response) {
-                  return AppVideoPlayer(
-                    trailer: response.trailer,
-                  );
-                },
-              );
-            }
-
-            return Center(
-              child: Text(AppLocalizations.of(context)!.state),
-            );
-          },
-          listener: (context, state) {
-            if (state is VideoResponseState) {
-              state.trailer.fold(
-                (exceptionMessage) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: NoLinkSnackBar(),
-                      closeIconColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      duration: Duration(seconds: 3),
-                    ),
-                  );
-                },
-                (response) {},
-              );
-            }
-          },
-        ),
       ),
     );
   }
@@ -115,7 +108,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: AspectRatio(
-          aspectRatio: 16 / 7,
+          aspectRatio: 16 / 8,
           child: ClipRRect(
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
@@ -123,38 +116,6 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
             child: FlickVideoPlayer(
               flickManager: flickManager,
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class NoLinkSnackBar extends StatelessWidget {
-  const NoLinkSnackBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQueryHandler.screenWidth(context),
-      height: 60,
-      decoration: const BoxDecoration(
-        color: SecondaryColors.redColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Center(
-          child: Text(
-            AppLocalizations.of(context)!.noDownloadLink,
-            style: const TextStyle(
-              color: TextColors.whiteText,
-              fontSize: 12,
-              fontFamily: "MSB",
-            ),
-            textAlign: TextAlign.center,
           ),
         ),
       ),

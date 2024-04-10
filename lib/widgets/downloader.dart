@@ -4,7 +4,7 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
-import 'package:cinemax/widgets/video_player.dart';
+import 'package:cinemax/widgets/snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
@@ -39,12 +39,15 @@ class AppDownloader extends StatelessWidget {
             (exceptionMessage) {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: NoLinkSnackBar(),
+                SnackBar(
+                  content: SnackbarContent(
+                    message: AppLocalizations.of(context)!.noDownloadLink,
+                    color: SecondaryColors.redColor,
+                  ),
                   closeIconColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  duration: Duration(seconds: 3),
+                  duration: const Duration(seconds: 3),
                 ),
               );
             },
