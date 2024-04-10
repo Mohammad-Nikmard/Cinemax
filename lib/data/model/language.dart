@@ -40,6 +40,10 @@ enum Language {
   german(
     Locale('de', 'DE'),
     'German',
+  ),
+  italian(
+    Locale('it', 'IT'),
+    'Italian',
   );
 
   const Language(
