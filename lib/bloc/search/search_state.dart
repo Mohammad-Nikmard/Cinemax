@@ -15,13 +15,6 @@ class SearchResponseState extends SearchState {
   SearchResponseState(this.getMovies, this.getAllMovies);
 }
 
-class SearchAllMoviesResponse extends SearchState {
-  Either<String, List<Movie>> getAllMovies;
-  Either<String, List<Actors>> getActors;
-
-  SearchAllMoviesResponse(this.getAllMovies, this.getActors);
-}
-
 class SearchResultState extends SearchState {
   List<Movie> moviesearch;
   List<Actors> getActors;

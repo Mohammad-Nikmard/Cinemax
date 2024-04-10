@@ -1,12 +1,10 @@
 import 'package:cinemax/bloc/search/search_bloc.dart';
-import 'package:cinemax/bloc/search/search_event.dart';
 import 'package:cinemax/bloc/search/search_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/actors.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/ui/category_search_screen.dart';
-import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -18,132 +16,19 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchResultScreen extends StatelessWidget {
-  const SearchResultScreen({super.key});
+  const SearchResultScreen({super.key, required this.searchQuery});
+  final String searchQuery;
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController resultController =
+        TextEditingController(text: searchQuery);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchLoadingState) {
             return const AppLoadingIndicator();
-          } else if (state is SearchAllMoviesResponse) {
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    color: PrimaryColors.softColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(24),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/images/icon_search.svg',
-                                          height: 16,
-                                          width: 16,
-                                          colorFilter: const ColorFilter.mode(
-                                            TextColors.greyText,
-                                            BlendMode.srcIn,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10.0),
-                                        Expanded(
-                                          child: Directionality(
-                                            textDirection:
-                                                AppManager.getLnag() == 'fa'
-                                                    ? TextDirection.rtl
-                                                    : TextDirection.ltr,
-                                            child: TextField(
-                                              onChanged: (value) {
-                                                if (value.isNotEmpty) {
-                                                  Future.delayed(
-                                                    const Duration(seconds: 2),
-                                                    () {
-                                                      context
-                                                          .read<SearchBloc>()
-                                                          .add(SearchQueryEvent(
-                                                              value.trim()));
-                                                    },
-                                                  );
-                                                } else if (value.isEmpty) {
-                                                  context.read<SearchBloc>().add(
-                                                      SearchAllMoviesEvent());
-                                                }
-                                              },
-                                              style: TextStyle(
-                                                fontFamily: StringConstants
-                                                    .setMediumPersionFont(),
-                                                fontSize: 14,
-                                                color: TextColors.whiteText,
-                                              ),
-                                              decoration: InputDecoration(
-                                                contentPadding:
-                                                    const EdgeInsets.only(
-                                                        bottom: 10),
-                                                border: InputBorder.none,
-                                                hintText: AppLocalizations.of(
-                                                        context)!
-                                                    .typeSomething,
-                                                hintStyle: TextStyle(
-                                                  fontFamily: StringConstants
-                                                      .setMediumPersionFont(),
-                                                  fontSize: 14,
-                                                  color: TextColors.greyText,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    AppLocalizations.of(context)!.cancel,
-                                    style: TextStyle(
-                                      fontFamily: StringConstants
-                                          .setMediumPersionFont(),
-                                      fontSize: 12,
-                                      color: TextColors.whiteText,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
           } else if (state is SearchResultState) {
             return SafeArea(
               child: Padding(
@@ -182,23 +67,8 @@ class SearchResultScreen extends StatelessWidget {
                                       const SizedBox(width: 10.0),
                                       Expanded(
                                         child: TextField(
-                                          onChanged: (value) {
-                                            if (value.isNotEmpty) {
-                                              Future.delayed(
-                                                const Duration(seconds: 2),
-                                                () {
-                                                  context
-                                                      .read<SearchBloc>()
-                                                      .add(SearchQueryEvent(
-                                                          value.trim()));
-                                                },
-                                              );
-                                            } else if (value.isEmpty) {
-                                              context
-                                                  .read<SearchBloc>()
-                                                  .add(SearchAllMoviesEvent());
-                                            }
-                                          },
+                                          readOnly: true,
+                                          controller: resultController,
                                           style: TextStyle(
                                             fontFamily: StringConstants
                                                 .setMediumPersionFont(),
@@ -210,9 +80,6 @@ class SearchResultScreen extends StatelessWidget {
                                                 const EdgeInsets.only(
                                                     bottom: 10),
                                             border: InputBorder.none,
-                                            hintText:
-                                                AppLocalizations.of(context)!
-                                                    .typeSomething,
                                             hintStyle: TextStyle(
                                               fontFamily: StringConstants
                                                   .setMediumPersionFont(),
@@ -253,24 +120,28 @@ class SearchResultScreen extends StatelessWidget {
                         actorsList: state.getActors,
                       ),
                     ),
-                    SliverToBoxAdapter(
-                      child: MovieRelatedHeader(
-                        movies: state.moviesearch,
+                    if (state.moviesearch.isNotEmpty) ...{
+                      SliverToBoxAdapter(
+                        child: MovieRelatedHeader(
+                          movies: state.moviesearch,
+                        ),
                       ),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: RelatedSeachWidget(
-                              movie: state.moviesearch[index],
-                            ),
-                          );
-                        },
-                        childCount: state.moviesearch.length,
+                    },
+                    if (state.moviesearch.isNotEmpty) ...{
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: RelatedSeachWidget(
+                                movie: state.moviesearch[index],
+                              ),
+                            );
+                          },
+                          childCount: state.moviesearch.length,
+                        ),
                       ),
-                    ),
+                    }
                   ],
                 ),
               ),
@@ -314,23 +185,8 @@ class SearchResultScreen extends StatelessWidget {
                                       const SizedBox(width: 10.0),
                                       Expanded(
                                         child: TextField(
-                                          onChanged: (value) {
-                                            if (value.isNotEmpty) {
-                                              Future.delayed(
-                                                const Duration(seconds: 2),
-                                                () {
-                                                  context
-                                                      .read<SearchBloc>()
-                                                      .add(SearchQueryEvent(
-                                                          value.trim()));
-                                                },
-                                              );
-                                            } else if (value.isEmpty) {
-                                              context
-                                                  .read<SearchBloc>()
-                                                  .add(SearchAllMoviesEvent());
-                                            }
-                                          },
+                                          controller: resultController,
+                                          readOnly: true,
                                           style: TextStyle(
                                             fontFamily: StringConstants
                                                 .setMediumPersionFont(),
@@ -342,9 +198,6 @@ class SearchResultScreen extends StatelessWidget {
                                                 const EdgeInsets.only(
                                                     bottom: 10),
                                             border: InputBorder.none,
-                                            hintText:
-                                                AppLocalizations.of(context)!
-                                                    .typeSomething,
                                             hintStyle: TextStyle(
                                               fontFamily: StringConstants
                                                   .setMediumPersionFont(),
@@ -456,30 +309,32 @@ class RelatedActorList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          AppLocalizations.of(context)!.actor,
-          style: TextStyle(
-            fontFamily: StringConstants.setMediumPersionFont(),
-            fontSize: 16,
-            color: TextColors.whiteText,
+        if (actorsList.isNotEmpty) ...{
+          Text(
+            AppLocalizations.of(context)!.actor,
+            style: TextStyle(
+              fontFamily: StringConstants.setMediumPersionFont(),
+              fontSize: 16,
+              color: TextColors.whiteText,
+            ),
           ),
-        ),
-        const SizedBox(height: 20.0),
-        SizedBox(
-          height: 110,
-          child: ListView.builder(
-            itemCount: actorsList.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: RelatedActor(
-                  actors: actorsList[index],
-                ),
-              );
-            },
+          const SizedBox(height: 20.0),
+          SizedBox(
+            height: 110,
+            child: ListView.builder(
+              itemCount: actorsList.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: RelatedActor(
+                    actors: actorsList[index],
+                  ),
+                );
+              },
+            ),
           ),
-        ),
+        }
       ],
     );
   }

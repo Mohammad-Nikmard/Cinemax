@@ -19,14 +19,9 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
-  @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,94 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       children: [
                         Column(
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 25),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        color: PrimaryColors.softColor,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(24),
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/images/icon_search.svg',
-                                              height: 16,
-                                              width: 16,
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                TextColors.greyText,
-                                                BlendMode.srcIn,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10.0),
-                                            Expanded(
-                                              child: TextField(
-                                                readOnly: true,
-                                                onTap: () {
-                                                  PersistentNavBarNavigator
-                                                      .pushNewScreen(
-                                                    context,
-                                                    screen: BlocProvider(
-                                                      create: (context) {
-                                                        var bloc = SearchBloc(
-                                                            locator.get(),
-                                                            locator.get());
-                                                        bloc.add(
-                                                            SearchAllMoviesEvent());
-                                                        return bloc;
-                                                      },
-                                                      child:
-                                                          const SearchResultScreen(),
-                                                    ),
-                                                    withNavBar: false,
-                                                    pageTransitionAnimation:
-                                                        PageTransitionAnimation
-                                                            .cupertino,
-                                                  );
-                                                },
-                                                style: TextStyle(
-                                                  fontFamily: StringConstants
-                                                      .setMediumPersionFont(),
-                                                  fontSize: 14,
-                                                  color: TextColors.whiteText,
-                                                ),
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 10),
-                                                  border: InputBorder.none,
-                                                  hintText: AppLocalizations.of(
-                                                          context)!
-                                                      .recommendforYou,
-                                                  hintStyle: TextStyle(
-                                                    fontFamily: StringConstants
-                                                        .setMediumPersionFont(),
-                                                    fontSize: 14,
-                                                    color: TextColors.greyText,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            _SearchEngine(),
                             state.getAllMovies.fold(
                               (exceptionMessage) {
                                 return const ExceptionMessage();
@@ -269,6 +177,133 @@ class RecommendHeader extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20.0),
+        ],
+      ),
+    );
+  }
+}
+
+class _SearchEngine extends StatefulWidget {
+  const _SearchEngine({super.key});
+
+  @override
+  State<_SearchEngine> createState() => __SearchEngineState();
+}
+
+class __SearchEngineState extends State<_SearchEngine> {
+  TextEditingController searchController = TextEditingController();
+  String searchQuery = "";
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 25),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Container(
+              height: 40,
+              decoration: const BoxDecoration(
+                color: PrimaryColors.softColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(24),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/icon_search.svg',
+                      height: 16,
+                      width: 16,
+                      colorFilter: const ColorFilter.mode(
+                        TextColors.greyText,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    const SizedBox(width: 10.0),
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        onChanged: (value) {
+                          setState(() {
+                            searchQuery = value;
+                          });
+                        },
+                        style: TextStyle(
+                          fontFamily: StringConstants.setMediumPersionFont(),
+                          fontSize: 14,
+                          color: TextColors.whiteText,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(bottom: 10),
+                          border: InputBorder.none,
+                          hintText: AppLocalizations.of(context)!.typeSomething,
+                          hintStyle: TextStyle(
+                            fontFamily: StringConstants.setMediumPersionFont(),
+                            fontSize: 14,
+                            color: TextColors.greyText,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        child: ColoredBox(
+                          color: (searchQuery.isEmpty)
+                              ? PrimaryColors.blueAccentColor.withOpacity(0.4)
+                              : PrimaryColors.blueAccentColor,
+                          child: InkWell(
+                            onTap: () {
+                              if (searchQuery.isNotEmpty) {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: BlocProvider(
+                                    create: (context) {
+                                      var bloc = SearchBloc(
+                                          locator.get(), locator.get());
+                                      bloc.add(
+                                          SearchQueryEvent(searchQuery.trim()));
+                                      return bloc;
+                                    },
+                                    child: SearchResultScreen(
+                                      searchQuery: searchQuery,
+                                    ),
+                                  ),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              }
+                            },
+                            child: const SizedBox(
+                              height: 35,
+                              width: 100,
+                              child: Center(
+                                child: Text(
+                                  "Search",
+                                  style: TextStyle(
+                                    fontFamily: "MR",
+                                    fontSize: 14,
+                                    color: TextColors.whiteText,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

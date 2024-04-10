@@ -19,18 +19,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         emit(SearchResponseState(movies, allMovies));
       },
     );
-
-    on<SearchAllMoviesEvent>(
-      (event, emit) async {
-        emit(SearchLoadingState());
-        var allMovies = await _movieRemoteRpository.getAllMovies();
-        var actors = await _searchRepository.getActors();
-        emit(SearchAllMoviesResponse(allMovies, actors));
-      },
-    );
-
     on<SearchQueryEvent>(
       (event, emit) async {
+        emit(SearchLoadingState());
         List<Movie> searchResult = [];
         List<Actors> searchActors = [];
         var allMovies = await _movieRemoteRpository.getAllMovies();
@@ -59,7 +50,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         );
         if (searchActors.isEmpty && searchResult.isEmpty) {
           emit(EmptySearchState());
-        } else if (searchActors.isNotEmpty && searchResult.isNotEmpty) {
+        } else if (searchActors.isNotEmpty || searchResult.isNotEmpty) {
           emit(SearchResultState(searchResult, searchActors));
         }
       },
