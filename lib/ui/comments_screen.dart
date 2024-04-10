@@ -14,7 +14,6 @@ import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -557,22 +556,29 @@ class _CommentsHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 GestureDetector(
-                  onTap: () {
-                    PersistentNavBarNavigator.pushNewScreen(
+                  onTap: () async {
+                    String? navresult;
+                    navresult = await Navigator.push(
                       context,
-                      screen: BlocProvider(
-                        create: (context) => CommentsBloc(locator.get()),
-                        child: PostCommentScreen(
-                          movieName: movieName,
-                          year: year,
-                          imageURL: imageURL,
-                          movieID: movieID,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (context) => CommentsBloc(locator.get()),
+                          child: PostCommentScreen(
+                            movieName: movieName,
+                            year: year,
+                            imageURL: imageURL,
+                            movieID: movieID,
+                          ),
                         ),
                       ),
-                      withNavBar: false,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
                     );
+                    if (navresult!.isNotEmpty) {
+                      if (context.mounted) {
+                        context
+                            .read<CommentsBloc>()
+                            .add(CommentFetchEvent(movieID));
+                      }
+                    }
                   },
                   child: Text(
                     AppLocalizations.of(context)!.addReview,

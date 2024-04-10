@@ -363,7 +363,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                             );
                           },
                           (response) {
-                            Navigator.pop(context);
+                            Navigator.pop(context, "Success");
                           },
                         );
                       }
@@ -433,7 +433,7 @@ class _Header extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pop(context, "");
             },
             child: SvgPicture.asset(
               'assets/images/icon_arrow_back.svg',
