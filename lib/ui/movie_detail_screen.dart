@@ -119,11 +119,14 @@ class MovieDetailScreen extends StatelessWidget {
                   ),
                   state.getComments.fold(
                     (exceptionMessage) {
-                      return const SliverToBoxAdapter(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: ExceptionMessage(),
-                        ),
+                      // return const SliverToBoxAdapter(
+                      //   child: Padding(
+                      //     padding: EdgeInsets.only(left: 20),
+                      //     child: ExceptionMessage(),
+                      //   ),
+                      // );
+                      return SliverToBoxAdapter(
+                        child: Text(exceptionMessage),
                       );
                     },
                     (commentList) {

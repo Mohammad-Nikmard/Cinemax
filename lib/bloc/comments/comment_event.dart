@@ -24,3 +24,16 @@ class ShowMoreCommentsEvent extends CommentsEvent {
 
   ShowMoreCommentsEvent(this.page, this.movieID);
 }
+
+class FetchUserComments extends CommentsEvent {
+  String userID;
+
+  FetchUserComments(this.userID);
+}
+
+class DeleteCommentEvent extends CommentsEvent{
+  String commentID;
+  String userID;
+
+  DeleteCommentEvent(this.commentID,this.userID);
+}

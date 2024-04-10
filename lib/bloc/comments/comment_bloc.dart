@@ -35,5 +35,22 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(CommentsResponseState(getComments));
       },
     );
+    on<FetchUserComments>(
+      (event, emit) async {
+        emit(CommensLoadingState());
+        var userComments =
+            await _commentsRemoteRepository.getUserComments(event.userID);
+        emit(UserCommentResponseState(userComments));
+      },
+    );
+    on<DeleteCommentEvent>(
+      (event, emit) async {
+        emit(CommensLoadingState());
+        await _commentsRemoteRepository.deleteComment(event.commentID);
+        var userComments =
+            await _commentsRemoteRepository.getUserComments(event.userID);
+        emit(UserCommentResponseState(userComments));
+      },
+    );
   }
 }

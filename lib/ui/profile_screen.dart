@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/authentication/authentication_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/profile/profile_bloc.dart';
 import 'package:cinemax/bloc/profile/profile_event.dart';
 import 'package:cinemax/bloc/profile/profile_state.dart';
@@ -14,6 +16,7 @@ import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/ui/privacy_screen.dart';
 import 'package:cinemax/ui/profile_edit_screen.dart';
 import 'package:cinemax/ui/reset_password_screen.dart';
+import 'package:cinemax/ui/your_comments_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -90,11 +93,6 @@ class ProfileScreen extends StatelessWidget {
                     );
                   },
                 ),
-
-                // const SliverPadding(
-                //   padding: EdgeInsets.only(bottom: 25),
-                //   sliver: _AccountChip(),
-                // ),
                 const SliverPadding(
                   padding: EdgeInsets.only(bottom: 25),
                   sliver: _GeneralChip(),
@@ -296,7 +294,7 @@ class _GeneralChip extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 192,
+        height: 256,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
@@ -359,6 +357,39 @@ class _GeneralChip extends StatelessWidget {
                 child: _OptionChip(
                   title: AppLocalizations.of(context)!.language,
                   image: "assets/images/icon_globe.svg",
+                  color: TextColors.greyText,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Divider(
+                thickness: 1.3,
+                color: Color(0xff252836),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: BlocProvider(
+                      create: (context) => CommentsBloc(locator.get())
+                        ..add(
+                          FetchUserComments(
+                            AuthManager.readRecordID(),
+                          ),
+                        ),
+                      child: const YourCommentsScreen(),
+                    ),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                child: const _OptionChip(
+                  title: "Your Comments",
+                  image: "assets/images/icon_comment.svg",
                   color: TextColors.greyText,
                 ),
               ),
@@ -758,9 +789,11 @@ class _ProfileChipState extends State<_ProfileChip> {
               ),
             ),
           );
+
           if (result != null) {
-            // ignore: use_build_context_synchronously
-            context.read<ProfileBloc>().add(GetuserEvent());
+            if (context.mounted) {
+              context.read<ProfileBloc>().add(GetuserEvent());
+            }
           }
         },
         child: Container(

@@ -12,8 +12,18 @@ class Comment {
   String userThumbnail;
   String profile;
 
-  Comment(this.headline, this.text, this.time, this.movieID, this.userID,
-      this.rate, this.spoiler, this.username, this.userThumbnail, this.profile);
+  Comment(
+    this.headline,
+    this.text,
+    this.time,
+    this.movieID,
+    this.userID,
+    this.rate,
+    this.spoiler,
+    this.username,
+    this.userThumbnail,
+    this.profile,
+  );
 
   factory Comment.withJson(Map<String, dynamic> jsonMapObject) {
     return Comment(
