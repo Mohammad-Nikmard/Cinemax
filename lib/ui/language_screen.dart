@@ -103,7 +103,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                               child: ListView.builder(
                                 itemCount: languages.length,
                                 itemBuilder: (context, index) {
-                                  if (index == 10) {
+                                  if (index == 9) {
                                     return GestureDetector(
                                       onTap: () {
                                         setState(
