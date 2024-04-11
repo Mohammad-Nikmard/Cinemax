@@ -81,6 +81,7 @@ flutter:
   assets:
     - assets/images/
     - assets/
+    - assets/icon/
   fonts:
     - family: MR
       fonts:

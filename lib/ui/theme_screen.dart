@@ -3,6 +3,7 @@ import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -50,7 +51,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                 ),
               ),
               Container(
-                height: 140,
+                height: 137,
                 width: MediaQueryHandler.screenWidth(context),
                 margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
@@ -77,7 +78,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                       ),
                       const SizedBox(height: 20),
                       SizedBox(
-                        height: 155,
+                        height: 77,
                         child: ListView.builder(
                           itemBuilder: (context, index) {
                             return _ThemeChip(
@@ -124,13 +125,16 @@ class _ThemeChip extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: FittedBox(
+                        fit: BoxFit.cover,
+                        child: Image.asset('assets/icon/icon.png'),
                       ),
                     ),
                   ),
@@ -138,7 +142,7 @@ class _ThemeChip extends StatelessWidget {
                   Text(
                     themeName,
                     style: TextStyle(
-                      fontFamily: "MSB",
+                      fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 16,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
