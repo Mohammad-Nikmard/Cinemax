@@ -138,7 +138,7 @@ class SeriesDetailScreen extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -236,7 +236,7 @@ class SeriesDetailScreen extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -377,7 +377,7 @@ class __SeasonChipState extends State<_SeasonChip> {
           style: TextStyle(
             fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: 16,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         const SizedBox(height: 5),
@@ -392,7 +392,7 @@ class __SeasonChipState extends State<_SeasonChip> {
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: StringConstants.setBoldPersianFont(),
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ))
@@ -401,7 +401,7 @@ class __SeasonChipState extends State<_SeasonChip> {
               'Season 1',
               style: TextStyle(
                 fontSize: 14,
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
                 fontFamily: StringConstants.setBoldPersianFont(),
               ),
             ),
@@ -418,15 +418,15 @@ class __SeasonChipState extends State<_SeasonChip> {
                     ),
                   );
             },
-            buttonStyleData: const ButtonStyleData(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            buttonStyleData: ButtonStyleData(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               height: 40,
               width: 130,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
-                color: PrimaryColors.softColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               elevation: 2,
             ),
@@ -440,7 +440,7 @@ class __SeasonChipState extends State<_SeasonChip> {
             dropdownStyleData: DropdownStyleData(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: PrimaryColors.softColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             menuItemStyleData: const MenuItemStyleData(
@@ -466,7 +466,7 @@ class _StoryLine extends StatelessWidget {
           style: TextStyle(
             fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         const SizedBox(height: 10),
@@ -475,7 +475,7 @@ class _StoryLine extends StatelessWidget {
           style: TextStyle(
             fontFamily: StringConstants.setSmallPersionFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
       ],
@@ -592,7 +592,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 14
                         : 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -608,13 +608,13 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       (MediaQueryHandler.screenWidth(context) < 350) ? 28 : 32,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 28 : 32,
-                  decoration: const ShapeDecoration(
-                    shape: ContinuousRectangleBorder(
+                  decoration: ShapeDecoration(
+                    shape: const ContinuousRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(40),
                       ),
                     ),
-                    color: PrimaryColors.softColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   child: Transform.scale(
                     scale: 1.3,
@@ -738,7 +738,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
               Radius.circular(8),
             ),
             child: ColoredBox(
-              color: const Color(0xff252836),
+              color: Theme.of(context).colorScheme.primaryContainer,
               child: SizedBox(
                 height: 24,
                 width: 55,
@@ -749,8 +749,8 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       'assets/images/icon_star.svg',
                       height: 16,
                       width: 16,
-                      colorFilter: const ColorFilter.mode(
-                        SecondaryColors.orangeColor,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.secondaryContainer,
                         BlendMode.srcIn,
                       ),
                     ),
@@ -760,7 +760,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                       style: TextStyle(
                         fontFamily: StringConstants.setMediumPersionFont(),
                         fontSize: 12,
-                        color: SecondaryColors.orangeColor,
+                        color: Theme.of(context).colorScheme.secondaryContainer,
                       ),
                     ),
                   ],
@@ -795,7 +795,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     Radius.circular(32),
                   ),
                   child: ColoredBox(
-                    color: PrimaryColors.blueAccentColor,
+                    color: Theme.of(context).colorScheme.primary,
                     child: SizedBox(
                       height: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 32
@@ -833,7 +833,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                                             350)
                                         ? 12
                                         : 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ],
@@ -849,7 +849,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                   Radius.circular(100),
                 ),
                 child: ColoredBox(
-                  color: PrimaryColors.softColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   child: SizedBox(
                     height: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 32
@@ -866,8 +866,8 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                         width: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 18
                             : 24,
-                        colorFilter: const ColorFilter.mode(
-                          PrimaryColors.blueAccentColor,
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.primary,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -882,7 +882,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     SnackBar(
                       content: SnackbarContent(
                         message: AppLocalizations.of(context)!.futureShare,
-                        color: SecondaryColors.greenColor,
+                        color: Theme.of(context).colorScheme.surfaceVariant,
                       ),
                       elevation: 0,
                       closeIconColor: Colors.transparent,
@@ -896,7 +896,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
                     Radius.circular(100),
                   ),
                   child: ColoredBox(
-                    color: PrimaryColors.softColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: SizedBox(
                       height: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 32
@@ -940,7 +940,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
           content: SnackbarContent(
             message:
                 "${widget.series.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
-            color: SecondaryColors.redColor,
+            color: Theme.of(context).colorScheme.tertiaryContainer,
           ),
           duration: const Duration(seconds: 5),
         ),
@@ -962,7 +962,7 @@ class _MovieHeaderContentState extends State<_MovieHeaderContent>
           content: SnackbarContent(
             message:
                 "${widget.series.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
-            color: SecondaryColors.greenColor,
+            color: Theme.of(context).colorScheme.surfaceVariant,
           ),
           duration: const Duration(seconds: 5),
         ),
@@ -986,7 +986,7 @@ class SeriesCastAndCrew extends StatelessWidget {
           style: TextStyle(
             fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         const SizedBox(height: 10),
@@ -1030,7 +1030,7 @@ class SeriesCastAndCrew extends StatelessWidget {
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 12
                                     : 14,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                         Text(

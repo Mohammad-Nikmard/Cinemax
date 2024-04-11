@@ -47,10 +47,10 @@ class _PasswordVerificationScreenState
               ),
               Text(
                 AppLocalizations.of(context)!.verifyTitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: "MM",
                   fontSize: 24,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               const SizedBox(
@@ -77,10 +77,10 @@ class _PasswordVerificationScreenState
                   ),
                   Text(
                     " ${widget.email}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "MM",
                       fontSize: 14,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                 ],
@@ -94,49 +94,51 @@ class _PasswordVerificationScreenState
                 },
                 pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                 onCompleted: (pin) => print(pin),
-                defaultPinTheme: const PinTheme(
+                defaultPinTheme: PinTheme(
                   textStyle: TextStyle(
                     fontFamily: "MSB",
                     fontSize: 26,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   height: 64,
                   width: 64,
                   decoration: BoxDecoration(
-                    color: PrimaryColors.softColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
-                    ),
-                  ),
-                ),
-                submittedPinTheme: PinTheme(
-                  textStyle: const TextStyle(
-                    fontFamily: "MSB",
-                    fontSize: 26,
-                    color: TextColors.whiteText,
-                  ),
-                  height: 64,
-                  width: 64,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: PrimaryColors.blueAccentColor, width: 1),
-                    color: PrimaryColors.softColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: const BorderRadius.all(
                       Radius.circular(12),
                     ),
                   ),
                 ),
-                focusedPinTheme: const PinTheme(
+                submittedPinTheme: PinTheme(
                   textStyle: TextStyle(
                     fontFamily: "MSB",
                     fontSize: 26,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   height: 64,
                   width: 64,
                   decoration: BoxDecoration(
-                    color: PrimaryColors.softColor,
-                    borderRadius: BorderRadius.all(
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
+                ),
+                focusedPinTheme: PinTheme(
+                  textStyle: TextStyle(
+                    fontFamily: "MSB",
+                    fontSize: 26,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                  height: 64,
+                  width: 64,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(12),
                     ),
                   ),
@@ -152,10 +154,10 @@ class _PasswordVerificationScreenState
                   onPressed: () {},
                   child: Text(
                     AppLocalizations.of(context)!.continuee,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "MM",
                       fontSize: 16,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                 ),

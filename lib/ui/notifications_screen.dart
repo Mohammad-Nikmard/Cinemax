@@ -51,7 +51,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       style: TextStyle(
                         fontFamily: StringConstants.setBoldPersianFont(),
                         fontSize: 16,
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     const SizedBox(
@@ -68,7 +68,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 1.2,
-                      color: const Color(0xff252836),
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(15),
@@ -140,7 +140,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                               350)
                                           ? 12
                                           : 16,
-                                  color: TextColors.whiteText,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                               ),
                               Transform.scale(
@@ -149,7 +149,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     ? 0.6
                                     : 0.8,
                                 child: CupertinoSwitch(
-                                  activeColor: PrimaryColors.blueAccentColor,
+                                  activeColor:
+                                      Theme.of(context).colorScheme.primary,
                                   value: notifSwitch,
                                   onChanged: (value) {},
                                 ),
@@ -157,9 +158,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             ],
                           ),
                         ),
-                        const Divider(
+                        Divider(
                           thickness: 1.3,
-                          color: Color(0xff252836),
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         ),
                         const SizedBox(
                           height: 10,
@@ -172,7 +173,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 12
                                     : 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ],
@@ -199,9 +200,9 @@ class _NotifMessage extends StatelessWidget {
       child: Container(
         width: MediaQueryHandler.screenWidth(context),
         height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.orangeColor,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
         ),
@@ -211,7 +212,7 @@ class _NotifMessage extends StatelessWidget {
             child: Text(
               message,
               style: TextStyle(
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
                 fontSize: 12,
                 fontFamily: StringConstants.setBoldPersianFont(),
               ),

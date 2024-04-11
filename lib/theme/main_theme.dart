@@ -27,6 +27,8 @@ ThemeData mainTheme = ThemeData(
     secondaryContainer: SecondaryColors.orangeColor,
     secondary: PrimaryColors.softColor,
     tertiary: TextColors.whiteText,
+    tertiaryContainer: SecondaryColors.redColor,
+    surfaceVariant: SecondaryColors.greenColor,
   ),
   textTheme: const TextTheme(
     bodySmall: TextStyle(

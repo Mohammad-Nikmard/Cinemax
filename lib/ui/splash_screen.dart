@@ -1,7 +1,6 @@
 import 'package:cinemax/bloc/splash/splash_bloc.dart';
 import 'package:cinemax/bloc/splash/splash_event.dart';
 import 'package:cinemax/bloc/splash/splash_state.dart';
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/ui/dashobard_screen.dart';
 import 'package:cinemax/ui/onboarding_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
@@ -72,10 +71,10 @@ class SplashScreen extends StatelessWidget {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.noConnections,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: "MSB",
                               fontSize: 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                           const SizedBox(height: 15),
@@ -87,10 +86,10 @@ class SplashScreen extends StatelessWidget {
                             },
                             child: Text(
                               AppLocalizations.of(context)!.tryAgain,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: "MSB",
                                 fontSize: 14,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ),

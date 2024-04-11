@@ -57,7 +57,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
                                 fontSize: 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ],
@@ -111,7 +111,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                           style: TextStyle(
                             fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ],
@@ -151,7 +151,7 @@ class _EmptyWishlist extends StatelessWidget {
             style: TextStyle(
               fontFamily: StringConstants.setBoldPersianFont(),
               fontSize: 16,
-              color: TextColors.whiteText,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
             textDirection: StringConstants.setBoldPersianFont() == "SM"
                 ? TextDirection.rtl

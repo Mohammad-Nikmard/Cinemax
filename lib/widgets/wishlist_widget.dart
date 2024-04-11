@@ -4,6 +4,7 @@ import 'package:cinemax/bloc/video/video_event.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/bloc/wishlist/wishlist_event.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/wishlist_cart.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -25,7 +26,7 @@ class WishlistWidget extends StatelessWidget {
         Radius.circular(17),
       ),
       child: ColoredBox(
-        color: PrimaryColors.softColor,
+        color: Theme.of(context).colorScheme.secondary,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 107,
@@ -124,7 +125,7 @@ class WishlistWidget extends StatelessWidget {
                       Text(
                         cart.genre,
                         style: TextStyle(
-                          fontFamily: "MM",
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 380)
                                   ? 10
@@ -139,12 +140,12 @@ class WishlistWidget extends StatelessWidget {
                         child: Text(
                           cart.name,
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 380)
                                     ? 12
                                     : 14,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -156,7 +157,8 @@ class WishlistWidget extends StatelessWidget {
                               Text(
                                 cart.category,
                                 style: TextStyle(
-                                  fontFamily: "MM",
+                                  fontFamily:
+                                      StringConstants.setMediumPersionFont(),
                                   fontSize:
                                       (MediaQueryHandler.screenWidth(context) <
                                               380)
@@ -170,8 +172,10 @@ class WishlistWidget extends StatelessWidget {
                                 visible: cart.rate.isNotEmpty,
                                 child: SvgPicture.asset(
                                   'assets/images/icon_star.svg',
-                                  colorFilter: const ColorFilter.mode(
-                                    SecondaryColors.orangeColor,
+                                  colorFilter: ColorFilter.mode(
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
                                     BlendMode.srcIn,
                                   ),
                                   height: 16,
@@ -181,10 +185,13 @@ class WishlistWidget extends StatelessWidget {
                               const SizedBox(width: 5),
                               Text(
                                 cart.rate,
-                                style: const TextStyle(
-                                  fontFamily: "MM",
+                                style: TextStyle(
+                                  fontFamily:
+                                      StringConstants.setMediumPersionFont(),
                                   fontSize: 12,
-                                  color: SecondaryColors.orangeColor,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                 ),
                               ),
                             ],
@@ -197,8 +204,8 @@ class WishlistWidget extends StatelessWidget {
                             },
                             child: SvgPicture.asset(
                               'assets/images/icon_heart.svg',
-                              colorFilter: const ColorFilter.mode(
-                                SecondaryColors.redColor,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.tertiaryContainer,
                                 BlendMode.srcIn,
                               ),
                             ),

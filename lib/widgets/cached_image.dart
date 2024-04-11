@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class CachedImage extends StatelessWidget {
@@ -17,12 +16,12 @@ class CachedImage extends StatelessWidget {
         imageUrl: imageUrl,
         placeholder: (context, url) {
           return Container(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.tertiary,
           );
         },
         errorWidget: (context, url, error) {
           return Container(
-            color: SecondaryColors.redColor,
+            color: Theme.of(context).colorScheme.tertiaryContainer,
           );
         },
       ),

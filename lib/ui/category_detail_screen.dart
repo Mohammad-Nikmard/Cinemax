@@ -1,6 +1,5 @@
 import 'package:cinemax/bloc/home/categoryDetail/category_detail_bloc.dart';
 import 'package:cinemax/bloc/home/categoryDetail/category_state.dart';
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/related_search_widget.dart';
@@ -59,7 +58,8 @@ class CategoryDetialScreen extends StatelessWidget {
                                             350)
                                         ? 12
                                         : 16,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                                 const SizedBox(

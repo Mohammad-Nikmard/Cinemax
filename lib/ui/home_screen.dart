@@ -47,8 +47,8 @@ class HomeScreen extends StatelessWidget {
           if (state is HomeResponseState) {
             return SafeArea(
               child: RefreshIndicator(
-                backgroundColor: PrimaryColors.softColor,
-                color: PrimaryColors.blueAccentColor,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
                 onRefresh: () async {
                   context.read<HomeBloc>().add(HomeDataRequestEvent());
                 },
@@ -119,7 +119,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
@@ -143,7 +144,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: StringConstants
                                           .setMediumPersionFont(),
                                       fontSize: 14,
-                                      color: PrimaryColors.blueAccentColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -183,7 +185,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
@@ -207,7 +210,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: StringConstants
                                           .setMediumPersionFont(),
                                       fontSize: 14,
-                                      color: PrimaryColors.blueAccentColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -247,7 +251,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
@@ -271,7 +276,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: StringConstants
                                           .setMediumPersionFont(),
                                       fontSize: 14,
-                                      color: PrimaryColors.blueAccentColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -310,7 +316,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
@@ -334,7 +341,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: StringConstants
                                           .setMediumPersionFont(),
                                       fontSize: 14,
-                                      color: PrimaryColors.blueAccentColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -373,7 +381,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
@@ -397,7 +406,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: StringConstants
                                           .setMediumPersionFont(),
                                       fontSize: 14,
-                                      color: PrimaryColors.blueAccentColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -436,7 +446,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 16,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
@@ -460,7 +471,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: StringConstants
                                           .setMediumPersionFont(),
                                       fontSize: 14,
-                                      color: PrimaryColors.blueAccentColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -526,8 +538,8 @@ class _HomeHeaderState extends State<_HomeHeader> {
                       child: (widget.user.profile.isEmpty)
                           ? SvgPicture.asset(
                               'assets/images/icon_user.svg',
-                              colorFilter: const ColorFilter.mode(
-                                TextColors.whiteText,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.tertiary,
                                 BlendMode.srcIn,
                               ),
                             )
@@ -549,7 +561,7 @@ class _HomeHeaderState extends State<_HomeHeader> {
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     Text(
@@ -569,19 +581,19 @@ class _HomeHeaderState extends State<_HomeHeader> {
             Container(
               height: 32,
               width: 32,
-              decoration: const ShapeDecoration(
-                shape: ContinuousRectangleBorder(
+              decoration: ShapeDecoration(
+                shape: const ContinuousRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(40),
                   ),
                 ),
-                color: PrimaryColors.softColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               child: Center(
                 child: SvgPicture.asset(
                   'assets/images/icon_heart.svg',
-                  colorFilter: const ColorFilter.mode(
-                    SecondaryColors.redColor,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.tertiaryContainer,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -618,9 +630,9 @@ class SearchBox extends StatelessWidget {
           child: Container(
             height: 41,
             width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: PrimaryColors.softColor,
-              borderRadius: BorderRadius.all(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: const BorderRadius.all(
                 Radius.circular(24),
               ),
             ),
@@ -807,7 +819,7 @@ class Categories extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 18,
                               fontFamily: StringConstants.setBoldPersianFont(),
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),

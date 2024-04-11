@@ -94,7 +94,7 @@ class UpcomingMovieDetail extends StatelessWidget {
                                             350)
                                         ? 14
                                         : 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                             const SizedBox(height: 10.0),
@@ -191,7 +191,7 @@ class _Synopsis extends StatelessWidget {
                 fontFamily: StringConstants.setBoldPersianFont(),
                 fontSize:
                     (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ),
             const SizedBox(height: 10.0),
@@ -201,7 +201,7 @@ class _Synopsis extends StatelessWidget {
                 fontFamily: StringConstants.setSmallPersionFont(),
                 fontSize:
                     (MediaQueryHandler.screenWidth(context) < 350) ? 12 : 14,
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ),
           ],
@@ -294,7 +294,7 @@ class MovieHeadDetail extends StatelessWidget {
                     fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                         ? 14
                         : 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(height: 7),
@@ -335,7 +335,7 @@ class MovieHeadDetail extends StatelessWidget {
                               (MediaQueryHandler.screenWidth(context) < 350)
                                   ? 10
                                   : 12,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                       const VerticalDivider(
@@ -437,7 +437,7 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 GestureDetector(
@@ -459,7 +459,9 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                             content: SnackbarContent(
                               message:
                                   "${widget.upcomingItem.name} ${AppLocalizations.of(context)!.removeFromWishlist}",
-                              color: SecondaryColors.redColor,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .tertiaryContainer,
                             ),
                             duration: const Duration(seconds: 5),
                           ),
@@ -481,7 +483,8 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                             content: SnackbarContent(
                               message:
                                   "${widget.upcomingItem.name} ${AppLocalizations.of(context)!.isAddedToWishlist}",
-                              color: SecondaryColors.greenColor,
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
                             ),
                             duration: const Duration(seconds: 5),
                           ),
@@ -492,13 +495,13 @@ class _HeaderState extends State<_Header> with TickerProviderStateMixin {
                   child: Container(
                     height: 32,
                     width: 32,
-                    decoration: const ShapeDecoration(
-                      shape: ContinuousRectangleBorder(
+                    decoration: ShapeDecoration(
+                      shape: const ContinuousRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(40),
                         ),
                       ),
-                      color: PrimaryColors.softColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     child: Transform.scale(
                       scale: 1.3,
@@ -532,7 +535,7 @@ class UpcomingCastAndCrew extends StatelessWidget {
           style: TextStyle(
             fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 16,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         const SizedBox(height: 10),
@@ -576,7 +579,7 @@ class UpcomingCastAndCrew extends StatelessWidget {
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 12
                                     : 14,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                         Text(

@@ -62,7 +62,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           style: TextStyle(
                             fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                         const SizedBox(
@@ -76,7 +76,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 1.2,
-                          color: const Color(0xff252836),
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         ),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(15),
@@ -130,10 +130,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                             children: [
                                               Text(
                                                 languages[index],
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontFamily: "MSB",
                                                   fontSize: 16,
-                                                  color: TextColors.whiteText,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .tertiary,
                                                 ),
                                               ),
                                               Visibility(
@@ -177,11 +179,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                                 children: [
                                                   Text(
                                                     languages[index],
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       fontFamily: "MSB",
                                                       fontSize: 16,
-                                                      color:
-                                                          TextColors.whiteText,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .tertiary,
                                                     ),
                                                   ),
                                                   Visibility(
@@ -197,9 +200,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              const Divider(
+                                              Divider(
                                                 thickness: 1.3,
-                                                color: Color(0xff252836),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer,
                                               ),
                                             ],
                                           ),

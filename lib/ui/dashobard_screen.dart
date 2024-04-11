@@ -42,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         screens: _buildScreens(),
         items: _navBarsItems(),
         confineInSafeArea: true,
-        backgroundColor: PrimaryColors.darkColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         handleAndroidBackButtonPress: true,
         resizeToAvoidBottomInset: true,
         stateManagement: true,
@@ -102,13 +102,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_home.svg",
-          colorFilter: const ColorFilter.mode(
-              PrimaryColors.blueAccentColor, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.primary,
+            BlendMode.srcIn,
+          ),
         ),
         title: (AppLocalizations.of(context)!.home),
         textStyle: TextStyle(
-            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
-        activeColorPrimary: PrimaryColors.blueAccentColor,
+          fontFamily: StringConstants.setMediumPersionFont(),
+          fontSize: 12,
+        ),
+        activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
@@ -119,13 +123,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_film.svg",
-          colorFilter: const ColorFilter.mode(
-              PrimaryColors.blueAccentColor, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.primary,
+            BlendMode.srcIn,
+          ),
         ),
         title: (AppLocalizations.of(context)!.upcomings),
         textStyle: TextStyle(
-            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
-        activeColorPrimary: PrimaryColors.blueAccentColor,
+          fontFamily: StringConstants.setMediumPersionFont(),
+          fontSize: 12,
+        ),
+        activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
@@ -136,13 +144,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_search.svg",
-          colorFilter: const ColorFilter.mode(
-              PrimaryColors.blueAccentColor, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.primary,
+            BlendMode.srcIn,
+          ),
         ),
         title: (AppLocalizations.of(context)!.search),
         textStyle: TextStyle(
-            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
-        activeColorPrimary: PrimaryColors.blueAccentColor,
+          fontFamily: StringConstants.setMediumPersionFont(),
+          fontSize: 12,
+        ),
+        activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
@@ -153,13 +165,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_save_star.svg",
-          colorFilter: const ColorFilter.mode(
-              PrimaryColors.blueAccentColor, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.primary,
+            BlendMode.srcIn,
+          ),
         ),
         title: (AppLocalizations.of(context)!.wishlist),
         textStyle: TextStyle(
-            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
-        activeColorPrimary: PrimaryColors.blueAccentColor,
+          fontFamily: StringConstants.setMediumPersionFont(),
+          fontSize: 12,
+        ),
+        activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: TextColors.greyText,
       ),
       PersistentBottomNavBarItem(
@@ -170,13 +186,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         icon: SvgPicture.asset(
           "assets/images/icon_profile.svg",
-          colorFilter: const ColorFilter.mode(
-              PrimaryColors.blueAccentColor, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.primary,
+            BlendMode.srcIn,
+          ),
         ),
         title: (AppLocalizations.of(context)!.profile),
         textStyle: TextStyle(
-            fontFamily: StringConstants.setMediumPersionFont(), fontSize: 12),
-        activeColorPrimary: PrimaryColors.blueAccentColor,
+          fontFamily: StringConstants.setMediumPersionFont(),
+          fontSize: 12,
+        ),
+        activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: TextColors.greyText,
       ),
     ];

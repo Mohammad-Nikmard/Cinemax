@@ -42,7 +42,7 @@ class AppDownloader extends StatelessWidget {
                 SnackBar(
                   content: SnackbarContent(
                     message: AppLocalizations.of(context)!.noDownloadLink,
-                    color: SecondaryColors.redColor,
+                    color: Theme.of(context).colorScheme.tertiaryContainer,
                   ),
                   closeIconColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
@@ -77,7 +77,7 @@ class AppDownloader extends StatelessWidget {
                 SnackBar(
                   content: DownloadingMessage(
                     message: AppLocalizations.of(context)!.downloadMessage,
-                    color: SecondaryColors.greenColor,
+                    color: Theme.of(context).colorScheme.surfaceVariant,
                   ),
                   closeIconColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
@@ -115,8 +115,8 @@ class DownloadingMessage extends StatelessWidget {
         child: Center(
           child: Text(
             message,
-            style: const TextStyle(
-              color: TextColors.whiteText,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.tertiary,
               fontSize: 12,
               fontFamily: "MSB",
             ),

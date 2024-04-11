@@ -1,16 +1,12 @@
 import 'dart:ui';
-import 'package:cinemax/DI/service_locator.dart';
-import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
-import 'package:cinemax/ui/movie_detail_screen.dart';
-import 'package:cinemax/ui/series_detial_screen.dart';
+import 'package:cinemax/util/func_util.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class RelatedSeachWidget extends StatelessWidget {
   const RelatedSeachWidget({super.key, required this.movie});
@@ -20,27 +16,7 @@ class RelatedSeachWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (movie.category == "movie") {
-          PersistentNavBarNavigator.pushNewScreen(
-            context,
-            screen: BlocProvider<WishlistBloc>.value(
-              value: locator.get<WishlistBloc>(),
-              child: MovieDetailScreen(movie: movie),
-            ),
-            withNavBar: true,
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
-        } else if (movie.category == "series") {
-          PersistentNavBarNavigator.pushNewScreen(
-            context,
-            screen: BlocProvider<WishlistBloc>.value(
-              value: locator.get<WishlistBloc>(),
-              child: SeriesDetailScreen(series: movie),
-            ),
-            withNavBar: true,
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
-        }
+        routeCondition(context, movie);
       },
       child: SizedBox(
         height: 147,
@@ -80,7 +56,10 @@ class RelatedSeachWidget extends StatelessWidget {
                               Radius.circular(8),
                             ),
                             child: ColoredBox(
-                              color: const Color(0xff252836).withOpacity(0.3),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer
+                                  .withOpacity(0.3),
                               child: SizedBox(
                                 height: 24,
                                 width: 55,
@@ -91,18 +70,23 @@ class RelatedSeachWidget extends StatelessWidget {
                                       'assets/images/icon_star.svg',
                                       height: 16,
                                       width: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        SecondaryColors.orangeColor,
+                                      colorFilter: ColorFilter.mode(
+                                        Theme.of(context)
+                                            .colorScheme
+                                            .secondaryContainer,
                                         BlendMode.srcIn,
                                       ),
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
                                       movie.rate,
-                                      style: const TextStyle(
-                                        fontFamily: "MM",
+                                      style: TextStyle(
+                                        fontFamily: StringConstants
+                                            .setMediumPersionFont(),
                                         fontSize: 12,
-                                        color: SecondaryColors.orangeColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondaryContainer,
                                       ),
                                     ),
                                   ],
@@ -127,11 +111,11 @@ class RelatedSeachWidget extends StatelessWidget {
                   child: Text(
                     movie.name,
                     style: TextStyle(
-                      fontFamily: "MM",
+                      fontFamily: StringConstants.setMediumPersionFont(),
                       fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                           ? 12
                           : 16,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -156,7 +140,7 @@ class RelatedSeachWidget extends StatelessWidget {
                     Text(
                       movie.year,
                       style: TextStyle(
-                        fontFamily: "MM",
+                        fontFamily: StringConstants.setMediumPersionFont(),
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 10
                             : 12,
@@ -185,7 +169,7 @@ class RelatedSeachWidget extends StatelessWidget {
                     Text(
                       "${movie.timeLength} Minutes",
                       style: TextStyle(
-                        fontFamily: "MM",
+                        fontFamily: StringConstants.setMediumPersionFont(),
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 10
                             : 12,
@@ -206,7 +190,7 @@ class RelatedSeachWidget extends StatelessWidget {
                           : 43,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: PrimaryColors.blueAccentColor,
+                          color: Theme.of(context).colorScheme.primary,
                           width: 1.4,
                         ),
                         borderRadius: const BorderRadius.all(
@@ -217,12 +201,12 @@ class RelatedSeachWidget extends StatelessWidget {
                         child: Text(
                           "PG-${movie.pg}",
                           style: TextStyle(
-                            color: PrimaryColors.blueAccentColor,
+                            color: Theme.of(context).colorScheme.primary,
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 6
                                     : 12,
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                           ),
                         ),
                       ),
@@ -251,7 +235,7 @@ class RelatedSeachWidget extends StatelessWidget {
                       Text(
                         movie.genre,
                         style: TextStyle(
-                          fontFamily: "MM",
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 350)
                                   ? 10
@@ -268,12 +252,12 @@ class RelatedSeachWidget extends StatelessWidget {
                       Text(
                         movie.category.toUpperCase(),
                         style: TextStyle(
-                          fontFamily: "MM",
+                          fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize:
                               (MediaQueryHandler.screenWidth(context) < 350)
                                   ? 10
                                   : 12,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ],

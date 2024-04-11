@@ -44,9 +44,10 @@ class SearchResultScreen extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 height: 40,
-                                decoration: const BoxDecoration(
-                                  color: PrimaryColors.softColor,
-                                  borderRadius: BorderRadius.all(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(24),
                                   ),
                                 ),
@@ -73,7 +74,9 @@ class SearchResultScreen extends StatelessWidget {
                                             fontFamily: StringConstants
                                                 .setMediumPersionFont(),
                                             fontSize: 14,
-                                            color: TextColors.whiteText,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
                                           ),
                                           decoration: InputDecoration(
                                             contentPadding:
@@ -106,7 +109,8 @@ class SearchResultScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 12,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                               ),
@@ -162,9 +166,10 @@ class SearchResultScreen extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 height: 40,
-                                decoration: const BoxDecoration(
-                                  color: PrimaryColors.softColor,
-                                  borderRadius: BorderRadius.all(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(24),
                                   ),
                                 ),
@@ -191,7 +196,9 @@ class SearchResultScreen extends StatelessWidget {
                                             fontFamily: StringConstants
                                                 .setMediumPersionFont(),
                                             fontSize: 14,
-                                            color: TextColors.whiteText,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
                                           ),
                                           decoration: InputDecoration(
                                             contentPadding:
@@ -224,7 +231,8 @@ class SearchResultScreen extends StatelessWidget {
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
                                     fontSize: 12,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                               ),
@@ -267,7 +275,7 @@ class MovieRelatedHeader extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               GestureDetector(
@@ -287,7 +295,7 @@ class MovieRelatedHeader extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 14,
-                    color: PrimaryColors.blueAccentColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -315,7 +323,7 @@ class RelatedActorList extends StatelessWidget {
             style: TextStyle(
               fontFamily: StringConstants.setMediumPersionFont(),
               fontSize: 16,
-              color: TextColors.whiteText,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
           const SizedBox(height: 20.0),
@@ -370,7 +378,7 @@ class RelatedActor extends StatelessWidget {
           style: TextStyle(
             fontFamily: StringConstants.setBoldPersianFont(),
             fontSize: 12,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
       ],
@@ -401,7 +409,7 @@ class _EmptySearch extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
               ),

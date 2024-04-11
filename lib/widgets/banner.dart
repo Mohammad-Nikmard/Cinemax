@@ -80,7 +80,7 @@ class _BannerContainerState extends State<BannerContainer> {
                                   (MediaQueryHandler.screenWidth(context) < 350)
                                       ? 12
                                       : 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),
@@ -96,7 +96,7 @@ class _BannerContainerState extends State<BannerContainer> {
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 8
                                     : 12,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -119,8 +119,8 @@ class _BannerContainerState extends State<BannerContainer> {
             dotWidth: 10.0,
             dotHeight: 8.0,
             strokeWidth: 1.5,
-            dotColor: PrimaryColors.blueAccentColor.withOpacity(0.2),
-            activeDotColor: PrimaryColors.blueAccentColor,
+            dotColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            activeDotColor: Theme.of(context).colorScheme.primary,
           ),
         ),
       ],

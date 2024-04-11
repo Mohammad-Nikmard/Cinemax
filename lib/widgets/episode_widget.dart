@@ -3,7 +3,6 @@ import 'package:cinemax/data/model/episode.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class EpisodeWidget extends StatelessWidget {
@@ -19,7 +18,7 @@ class EpisodeWidget extends StatelessWidget {
       child: SizedBox(
         width: MediaQueryHandler.screenWidth(context),
         child: ColoredBox(
-          color: PrimaryColors.softColor,
+          color: Theme.of(context).colorScheme.secondary,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
@@ -49,10 +48,10 @@ class EpisodeWidget extends StatelessWidget {
                       children: [
                         Text(
                           "Episode ${episode.episodeNum}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "MSB",
                             fontSize: 14,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                         Text(
@@ -71,7 +70,10 @@ class EpisodeWidget extends StatelessWidget {
                         Radius.circular(8),
                       ),
                       child: ColoredBox(
-                        color: const Color(0xff252836).withOpacity(0.3),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primaryContainer
+                            .withOpacity(0.3),
                         child: SizedBox(
                           height: (MediaQueryHandler.screenWidth(context) < 350)
                               ? 19.2
@@ -86,18 +88,22 @@ class EpisodeWidget extends StatelessWidget {
                                 'assets/images/icon_star.svg',
                                 height: 24,
                                 width: 24,
-                                colorFilter: const ColorFilter.mode(
-                                  SecondaryColors.orangeColor,
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                   BlendMode.srcIn,
                                 ),
                               ),
                               const SizedBox(width: 5),
                               Text(
                                 episode.rate,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: "MM",
                                   fontSize: 16,
-                                  color: SecondaryColors.orangeColor,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                 ),
                               ),
                             ],
@@ -110,10 +116,10 @@ class EpisodeWidget extends StatelessWidget {
                 const SizedBox(height: 15),
                 Text(
                   episode.description,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "MR",
                     fontSize: 14,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   textAlign: TextAlign.start,
                 ),

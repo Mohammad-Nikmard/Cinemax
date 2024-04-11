@@ -102,7 +102,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             style: TextStyle(
                               fontFamily: StringConstants.setBoldPersianFont(),
                               fontSize: 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                           const SizedBox(
@@ -139,7 +139,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     width: 100,
                                     child: FittedBox(
                                       fit: BoxFit.cover,
-                                      child: profileCondition(),
+                                      child: profileCondition(context),
                                     ),
                                   ),
                                 ),
@@ -150,14 +150,16 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     height: 32,
                                     width: 32,
                                     padding: const EdgeInsets.all(7.0),
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: PrimaryColors.softColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                     child: SvgPicture.asset(
                                       'assets/images/icon_edit_pen.svg',
-                                      colorFilter: const ColorFilter.mode(
-                                        PrimaryColors.blueAccentColor,
+                                      colorFilter: ColorFilter.mode(
+                                        Theme.of(context).colorScheme.primary,
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -177,14 +179,16 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       height: 32,
                                       width: 32,
                                       padding: const EdgeInsets.all(8.0),
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: PrimaryColors.softColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                       ),
                                       child: SvgPicture.asset(
                                         'assets/images/icon_bin.svg',
-                                        colorFilter: const ColorFilter.mode(
-                                          PrimaryColors.blueAccentColor,
+                                        colorFilter: ColorFilter.mode(
+                                          Theme.of(context).colorScheme.primary,
                                           BlendMode.srcIn,
                                         ),
                                       ),
@@ -200,7 +204,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             style: TextStyle(
                               fontFamily: StringConstants.setBoldPersianFont(),
                               fontSize: 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -231,7 +235,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.fullName,
                           labelStyle: TextStyle(
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 15,
                             fontFamily: StringConstants.setMediumPersionFont(),
                           ),
@@ -266,7 +270,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.email,
                           labelStyle: TextStyle(
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                               fontSize: 15,
                               fontFamily:
                                   StringConstants.setMediumPersionFont()),
@@ -300,7 +304,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.phoneNumber,
                           labelStyle: TextStyle(
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 15,
                             fontFamily: StringConstants.setMediumPersionFont(),
                           ),
@@ -344,7 +348,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   fontFamily:
                                       StringConstants.setMediumPersionFont(),
                                   fontSize: 16,
-                                  color: TextColors.whiteText,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                               ),
                             ),
@@ -366,7 +370,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   fontFamily:
                                       StringConstants.setMediumPersionFont(),
                                   fontSize: 16,
-                                  color: TextColors.whiteText,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                               ),
                             ),
@@ -395,12 +399,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     );
   }
 
-  Widget profileCondition() {
+  Widget profileCondition(BuildContext context) {
     if (imageFile == null && widget.user.profile.isEmpty) {
       return SvgPicture.asset(
         'assets/images/icon_user.svg',
-        colorFilter: const ColorFilter.mode(
-          TextColors.whiteText,
+        colorFilter: ColorFilter.mode(
+          Theme.of(context).colorScheme.tertiary,
           BlendMode.srcIn,
         ),
       );
@@ -413,8 +417,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     } else if (isProfileDeleted) {
       return SvgPicture.asset(
         'assets/images/icon_user.svg',
-        colorFilter: const ColorFilter.mode(
-          TextColors.whiteText,
+        colorFilter: ColorFilter.mode(
+          Theme.of(context).colorScheme.tertiary,
           BlendMode.srcIn,
         ),
       );
@@ -507,8 +511,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               'assets/images/icon_camera.svg',
                               height: 40,
                               width: 40,
-                              colorFilter: const ColorFilter.mode(
-                                TextColors.whiteText,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.tertiary,
                                 BlendMode.srcIn,
                               ),
                             ),
@@ -519,7 +523,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             style: TextStyle(
                               fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ],
@@ -551,8 +555,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               'assets/images/icon_gallery.svg',
                               height: 40,
                               width: 40,
-                              colorFilter: const ColorFilter.mode(
-                                TextColors.whiteText,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.tertiary,
                                 BlendMode.srcIn,
                               ),
                             ),
@@ -563,7 +567,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             style: TextStyle(
                               fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ],

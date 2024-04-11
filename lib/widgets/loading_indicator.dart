@@ -1,4 +1,3 @@
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -7,13 +6,13 @@ class AppLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: SizedBox(
         height: 120,
         width: 120,
         child: LoadingIndicator(
           indicatorType: Indicator.pacman,
-          colors: [PrimaryColors.blueAccentColor],
+          colors: [Theme.of(context).colorScheme.primary],
           backgroundColor: Colors.transparent,
         ),
       ),

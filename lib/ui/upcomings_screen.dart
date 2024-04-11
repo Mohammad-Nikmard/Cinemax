@@ -46,8 +46,8 @@ class UpcomingsScreen extends StatelessWidget {
                         .read<UpcomingsBloc>()
                         .add(UpcomingsDataRequestEvent());
                   },
-                  backgroundColor: PrimaryColors.softColor,
-                  color: PrimaryColors.blueAccentColor,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                   child: Directionality(
                     textDirection: TextDirection.ltr,
                     child: CustomScrollView(
@@ -150,10 +150,10 @@ class _UpcomingChip extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   upcomingsItem.name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "MSB",
                     fontSize: 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(height: 7),
@@ -173,10 +173,10 @@ class _UpcomingChip extends StatelessWidget {
                       const SizedBox(width: 3),
                       Text(
                         "${upcomingsItem.releaseMonth} ${upcomingsItem.releaseDate}, ${upcomingsItem.releaseYear}",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: "MM",
                           fontSize: 12,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(width: 5),
@@ -251,7 +251,7 @@ class _CategoryListState extends State<CategoryList> {
                     height: 31,
                     decoration: ShapeDecoration(
                       color: (selectedIndex == index)
-                          ? PrimaryColors.softColor
+                          ? Theme.of(context).colorScheme.secondary
                           : Colors.transparent,
                       shape: const ContinuousRectangleBorder(
                         borderRadius: BorderRadius.all(
@@ -268,8 +268,8 @@ class _CategoryListState extends State<CategoryList> {
                             fontFamily: "MM",
                             fontSize: 12,
                             color: (selectedIndex == index)
-                                ? PrimaryColors.blueAccentColor
-                                : TextColors.whiteText,
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -332,7 +332,7 @@ class _Header extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(

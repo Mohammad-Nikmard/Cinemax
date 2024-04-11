@@ -37,7 +37,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 16,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(
@@ -48,12 +48,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Privacy Policy",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 14,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -63,42 +63,42 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Interpretation and Definitions",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 20,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  interpretationAndDef(),
+                  interpretationAndDef(context),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Collecting and Using Your Personal Data",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 20,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  collectAnduseData(),
+                  collectAnduseData(context),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Retention of Your Personal Data",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 14,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -108,12 +108,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Transfer of Your Personal Data",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 14,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -123,12 +123,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Delete Your Personal Data",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 14,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -138,27 +138,27 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Disclosure of Your Personal Data",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 20,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  disclosureOfPersonalData(),
+                  disclosureOfPersonalData(context),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Security of Your Personal Data",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 14,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -168,12 +168,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Children's Privacy",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -183,12 +183,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Links to Other Websites",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -198,12 +198,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Changes to this Privacy Policy",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -213,12 +213,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Contact Us",
                     style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(
@@ -307,21 +307,21 @@ The security of Your Personal Data is important to Us, but remember that no meth
     );
   }
 
-  Widget disclosureOfPersonalData() {
-    return const Column(
+  Widget disclosureOfPersonalData(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Business Transactions",
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.""",
           style: TextStyle(
@@ -330,17 +330,17 @@ If the Company is involved in a merger, acquisition or asset sale, Your Personal
             color: TextColors.greyText,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Law enforcement",
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency).""",
           style: TextStyle(
@@ -349,17 +349,17 @@ Under certain circumstances, the Company may be required to disclose Your Person
             color: TextColors.greyText,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Other legal requirements",
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:
 
@@ -427,8 +427,8 @@ The Company will also retain Usage Data for internal analysis purposes. Usage Da
     );
   }
 
-  Widget interpretationAndDef() {
-    return const Column(
+  Widget interpretationAndDef(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -436,11 +436,11 @@ The Company will also retain Usage Data for internal analysis purposes. Usage Da
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.""",
           style: TextStyle(
@@ -449,8 +449,8 @@ The words of which the initial letter is capitalized have meanings defined under
             color: TextColors.greyText,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           "Definitions",
           style: TextStyle(
             fontFamily: "MSB",
@@ -458,7 +458,7 @@ The words of which the initial letter is capitalized have meanings defined under
             color: TextColors.whiteText,
           ),
         ),
-        Text(
+        const Text(
           """
 For the purposes of this Privacy Policy:
 
@@ -493,8 +493,8 @@ For the purposes of this Privacy Policy:
     );
   }
 
-  Widget collectAnduseData() {
-    return const Column(
+  Widget collectAnduseData(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -502,20 +502,20 @@ For the purposes of this Privacy Policy:
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 18,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Personal Data",
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:
 
@@ -532,17 +532,17 @@ While using Our Service, We may ask You to provide Us with certain personally id
             color: TextColors.greyText,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Usage Data",
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 Usage Data is collected automatically when using the Service.
 
@@ -557,17 +557,17 @@ We may also collect information that Your browser sends whenever You visit our S
             color: TextColors.greyText,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Information Collected while Using the Application",
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 While using Our Application, in order to provide features of Our Application, We may collect, with Your prior permission:
 
@@ -581,17 +581,17 @@ You can enable or disable access to this information at any time, through Your D
             color: TextColors.greyText,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Use of Your Personal Data",
           style: TextStyle(
             fontFamily: "MSB",
             fontSize: 18,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           """
 The Company may use Personal Data for the following purposes:
 

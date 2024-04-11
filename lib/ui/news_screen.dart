@@ -39,8 +39,8 @@ class NewsScreen extends StatelessWidget {
                 return RefreshIndicator(
                   onRefresh: () async =>
                       context.read<NewsBloc>().add(FetchNewsEvent()),
-                  color: PrimaryColors.blueAccentColor,
-                  backgroundColor: PrimaryColors.softColor,
+                  color: Theme.of(context).colorScheme.primary,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
                   child: Directionality(
                     textDirection: TextDirection.ltr,
                     child: CustomScrollView(
@@ -96,7 +96,7 @@ class _Header extends StatelessWidget {
               style: TextStyle(
                 fontFamily: StringConstants.setBoldPersianFont(),
                 fontSize: 16,
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ),
             const SizedBox(
@@ -139,7 +139,7 @@ class _NewsWidget extends StatelessWidget {
                     Radius.circular(15),
                   ),
                   child: ColoredBox(
-                    color: PrimaryColors.softColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: SizedBox(
                       width: MediaQueryHandler.screenWidth(context),
                       child: Column(
@@ -218,7 +218,7 @@ class _NewsWidget extends StatelessWidget {
                                 fontSize: 20,
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ),

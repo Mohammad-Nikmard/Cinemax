@@ -41,7 +41,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                       style: TextStyle(
                         fontFamily: StringConstants.setBoldPersianFont(),
                         fontSize: 16,
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     const SizedBox(
@@ -60,7 +60,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                   ),
                   border: Border.all(
                     width: 1.2,
-                    color: const Color(0xff252836),
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
                 child: Padding(
@@ -161,10 +161,10 @@ class _ThemeChip extends StatelessWidget {
                   const SizedBox(width: 10),
                   Text(
                     themeName,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "MSB",
                       fontSize: 16,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                 ],
@@ -180,9 +180,9 @@ class _ThemeChip extends StatelessWidget {
           const SizedBox(height: 10),
           Visibility(
             visible: dividerVisible,
-            child: const Divider(
+            child: Divider(
               thickness: 1.3,
-              color: Color(0xff252836),
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
           ),
         ],

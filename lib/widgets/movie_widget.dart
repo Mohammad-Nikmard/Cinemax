@@ -1,12 +1,11 @@
 import 'dart:ui';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/func_util.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MovieWidget extends StatelessWidget {
@@ -61,7 +60,10 @@ class MovieWidget extends StatelessWidget {
                             Radius.circular(8),
                           ),
                           child: ColoredBox(
-                            color: const Color(0xff252836).withOpacity(0.3),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primaryContainer
+                                .withOpacity(0.3),
                             child: SizedBox(
                               height:
                                   (MediaQueryHandler.screenWidth(context) < 350)
@@ -78,18 +80,23 @@ class MovieWidget extends StatelessWidget {
                                     'assets/images/icon_star.svg',
                                     height: 16,
                                     width: 16,
-                                    colorFilter: const ColorFilter.mode(
-                                      SecondaryColors.orangeColor,
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context)
+                                          .colorScheme
+                                          .secondaryContainer,
                                       BlendMode.srcIn,
                                     ),
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
                                     movie.rate,
-                                    style: const TextStyle(
-                                      fontFamily: "MM",
+                                    style: TextStyle(
+                                      fontFamily: StringConstants
+                                          .setMediumPersionFont(),
                                       fontSize: 12,
-                                      color: SecondaryColors.orangeColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryContainer,
                                     ),
                                   ),
                                 ],
@@ -109,7 +116,7 @@ class MovieWidget extends StatelessWidget {
                 bottomRight: Radius.circular(12),
               ),
               child: ColoredBox(
-                color: PrimaryColors.softColor,
+                color: Theme.of(context).colorScheme.secondary,
                 child: SizedBox(
                   width: (MediaQueryHandler.screenWidth(context) < 350)
                       ? 115
@@ -127,19 +134,19 @@ class MovieWidget extends StatelessWidget {
                         Text(
                           movie.name,
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 12
                                     : 14,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           movie.genre,
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 8

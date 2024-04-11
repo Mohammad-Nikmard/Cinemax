@@ -35,9 +35,9 @@ class _CommentSectionState extends State<CommentSection> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       width: MediaQueryHandler.screenWidth(context),
       height: containerHeight,
-      decoration: const BoxDecoration(
-        color: PrimaryColors.softColor,
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondary,
+        borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),
       ),
@@ -47,14 +47,16 @@ class _CommentSectionState extends State<CommentSection> {
         children: [
           Row(
             children: [
-              const ClipRRect(
-                borderRadius: BorderRadius.all(
+              ClipRRect(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(3),
                 ),
                 child: SizedBox(
                   height: 25,
                   width: 2,
-                  child: ColoredBox(color: PrimaryColors.blueAccentColor),
+                  child: ColoredBox(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -63,7 +65,7 @@ class _CommentSectionState extends State<CommentSection> {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 20,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               const SizedBox(width: 15),
@@ -85,7 +87,7 @@ class _CommentSectionState extends State<CommentSection> {
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: StringConstants.setBoldPersianFont(),
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
               ),
@@ -93,8 +95,8 @@ class _CommentSectionState extends State<CommentSection> {
                 children: [
                   SvgPicture.asset(
                     'assets/images/icon_star.svg',
-                    colorFilter: const ColorFilter.mode(
-                      SecondaryColors.orangeColor,
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).colorScheme.secondaryContainer,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -118,7 +120,7 @@ class _CommentSectionState extends State<CommentSection> {
               style: TextStyle(
                 fontSize: 14,
                 fontFamily: StringConstants.setMediumPersionFont(),
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
               overflow: TextOverflow.fade,
             ),
@@ -141,8 +143,8 @@ class _CommentSectionState extends State<CommentSection> {
                 'assets/images/icon_more-horizontal.svg',
                 height: 30,
                 width: 30,
-                colorFilter: const ColorFilter.mode(
-                  SecondaryColors.orangeColor,
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.secondaryContainer,
                   BlendMode.srcIn,
                 ),
               ),
@@ -184,7 +186,7 @@ class EmptyCommentSection extends StatelessWidget {
           Radius.circular(15),
         ),
         child: ColoredBox(
-          color: PrimaryColors.softColor,
+          color: Theme.of(context).colorScheme.secondary,
           child: SizedBox(
             width: MediaQueryHandler.screenWidth(context),
             child: Padding(
@@ -194,15 +196,16 @@ class EmptyCommentSection extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const ClipRRect(
-                        borderRadius: BorderRadius.all(
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(3),
                         ),
                         child: SizedBox(
                           height: 25,
                           width: 2,
-                          child:
-                              ColoredBox(color: PrimaryColors.blueAccentColor),
+                          child: ColoredBox(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -211,7 +214,7 @@ class EmptyCommentSection extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 20,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(width: 15),
@@ -228,7 +231,7 @@ class EmptyCommentSection extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 20,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -237,7 +240,7 @@ class EmptyCommentSection extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: StringConstants.setSmallPersionFont(),
                       fontSize: 16,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                 ],

@@ -79,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 16,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(
@@ -95,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: TextStyle(
                       fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 24,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   SizedBox(
@@ -301,7 +301,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         StringConstants.setMediumPersionFont(),
                                     fontSize:
                                         (screenSize.width < 350) ? 10 : 12,
-                                    color: PrimaryColors.blueAccentColor,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -335,7 +336,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         StringConstants.setMediumPersionFont(),
                                     fontSize:
                                         (screenSize.width < 350) ? 10 : 12,
-                                    color: PrimaryColors.blueAccentColor,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -365,7 +367,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontFamily:
                                     StringConstants.setMediumPersionFont(),
                                 fontSize: 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ),
@@ -387,7 +389,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontFamily:
                                     StringConstants.setMediumPersionFont(),
                                 fontSize: 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ),
@@ -443,9 +445,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Container(
         width: MediaQueryHandler.screenWidth(context),
         height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.redColor,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
         ),
@@ -459,7 +461,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ? AppLocalizations.of(context)!.pwNotMatch
                     : AppLocalizations.of(context)!.agreement,
                 style: TextStyle(
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                   fontSize: 12,
                   fontFamily: StringConstants.setBoldPersianFont(),
                 ),
@@ -511,9 +513,9 @@ class _SnackFailMessage extends StatelessWidget {
         child: Container(
           width: MediaQueryHandler.screenWidth(context),
           height: 60,
-          decoration: const BoxDecoration(
-            color: SecondaryColors.redColor,
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            borderRadius: const BorderRadius.all(
               Radius.circular(15),
             ),
           ),
@@ -523,7 +525,7 @@ class _SnackFailMessage extends StatelessWidget {
               child: Text(
                 error,
                 style: TextStyle(
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                   fontSize: 12,
                   fontFamily: StringConstants.setBoldPersianFont(),
                 ),

@@ -77,7 +77,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                     AppLocalizations.of(context)!.addRating,
                     style: TextStyle(
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setBoldPersianFont(),
                     ),
                   ),
@@ -89,9 +89,9 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                     allowHalfRating: true,
                     itemCount: 10,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => const Icon(
+                    itemBuilder: (context, _) => Icon(
                       Icons.star,
-                      color: SecondaryColors.orangeColor,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                     ),
                     onRatingUpdate: (rating) {
                       setState(() {
@@ -99,7 +99,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                       });
                     },
                     itemSize: 25,
-                    glowColor: SecondaryColors.orangeColor,
+                    glowColor: Theme.of(context).colorScheme.secondaryContainer,
                     glowRadius: 0.5,
                   ),
                   const SizedBox(height: 20),
@@ -107,8 +107,8 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                     children: [
                       SvgPicture.asset(
                         "assets/images/tick_image.svg",
-                        colorFilter: const ColorFilter.mode(
-                          SecondaryColors.orangeColor,
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.secondaryContainer,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -118,7 +118,8 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                         style: TextStyle(
                           fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize: 14,
-                          color: SecondaryColors.orangeColor,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                         ),
                       ),
                     ],
@@ -128,14 +129,14 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                     AppLocalizations.of(context)!.yourReview,
                     style: TextStyle(
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setBoldPersianFont(),
                     ),
                   ),
                   const SizedBox(height: 10),
                   TextField(
                     style: TextStyle(
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 14,
                     ),
@@ -168,7 +169,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                   TextField(
                     maxLines: 10,
                     style: TextStyle(
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setSmallPersionFont(),
                       fontSize: 14,
                     ),
@@ -208,7 +209,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                           style: TextStyle(
                             fontFamily: StringConstants.setSmallPersionFont(),
                             fontSize: 14,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -217,8 +218,10 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                           Row(
                             children: [
                               Checkbox(
-                                side: const BorderSide(
-                                    width: 1.5, color: TextColors.whiteText),
+                                side: BorderSide(
+                                  width: 1.5,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
                                 shape: const CircleBorder(),
                                 checkColor: Colors.transparent,
                                 activeColor: TextColors.greyText,
@@ -235,7 +238,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                                   fontSize: 14,
                                   fontFamily:
                                       StringConstants.setSmallPersionFont(),
-                                  color: TextColors.whiteText,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                               ),
                             ],
@@ -244,8 +247,10 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                           Row(
                             children: [
                               Checkbox(
-                                side: const BorderSide(
-                                    width: 1.5, color: TextColors.whiteText),
+                                side: BorderSide(
+                                  width: 1.5,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
                                 shape: const CircleBorder(),
                                 checkColor: Colors.transparent,
                                 activeColor: TextColors.greyText,
@@ -262,7 +267,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                                   fontSize: 14,
                                   fontFamily:
                                       StringConstants.setSmallPersionFont(),
-                                  color: TextColors.whiteText,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                               ),
                             ],
@@ -286,7 +291,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                             child: Text(
                               AppLocalizations.of(context)!.submit,
                               style: TextStyle(
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 fontSize: 16,
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
@@ -308,7 +313,7 @@ class _EditCommentScreenState extends State<EditCommentScreen> {
                             child: Text(
                               AppLocalizations.of(context)!.submit,
                               style: TextStyle(
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 fontSize: 16,
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
@@ -402,8 +407,8 @@ class _Header extends StatelessWidget {
               'assets/images/icon_arrow_back.svg',
               height: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
               width: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
-              colorFilter: const ColorFilter.mode(
-                TextColors.whiteText,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.tertiary,
                 BlendMode.srcIn,
               ),
             ),
@@ -436,7 +441,7 @@ class _Header extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 18,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
               ),
@@ -479,7 +484,7 @@ class _SnackFailPostMessage extends StatelessWidget {
             child: Text(
               error,
               style: TextStyle(
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
                 fontSize: 12,
                 fontFamily: StringConstants.setBoldPersianFont(),
               ),

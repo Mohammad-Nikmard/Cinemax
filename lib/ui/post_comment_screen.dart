@@ -58,7 +58,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     AppLocalizations.of(context)!.addRating,
                     style: TextStyle(
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setBoldPersianFont(),
                     ),
                   ),
@@ -70,9 +70,9 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     allowHalfRating: true,
                     itemCount: 10,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => const Icon(
+                    itemBuilder: (context, _) => Icon(
                       Icons.star,
-                      color: SecondaryColors.orangeColor,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                     ),
                     onRatingUpdate: (rating) {
                       setState(() {
@@ -80,7 +80,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                       });
                     },
                     itemSize: 25,
-                    glowColor: SecondaryColors.orangeColor,
+                    glowColor: Theme.of(context).colorScheme.secondaryContainer,
                     glowRadius: 0.5,
                   ),
                   const SizedBox(height: 20),
@@ -88,8 +88,8 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     children: [
                       SvgPicture.asset(
                         "assets/images/tick_image.svg",
-                        colorFilter: const ColorFilter.mode(
-                          SecondaryColors.orangeColor,
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.secondaryContainer,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -99,7 +99,8 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                         style: TextStyle(
                           fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize: 14,
-                          color: SecondaryColors.orangeColor,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                         ),
                       ),
                     ],
@@ -109,14 +110,14 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                     AppLocalizations.of(context)!.yourReview,
                     style: TextStyle(
                       fontSize: 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setBoldPersianFont(),
                     ),
                   ),
                   const SizedBox(height: 10),
                   TextField(
                     style: TextStyle(
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 14,
                     ),
@@ -149,7 +150,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                   TextField(
                     maxLines: 10,
                     style: TextStyle(
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setSmallPersionFont(),
                       fontSize: 14,
                     ),
@@ -189,7 +190,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                           style: TextStyle(
                             fontFamily: StringConstants.setSmallPersionFont(),
                             fontSize: 14,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -198,8 +199,10 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                           Row(
                             children: [
                               Checkbox(
-                                side: const BorderSide(
-                                    width: 1.5, color: TextColors.whiteText),
+                                side: BorderSide(
+                                  width: 1.5,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
                                 shape: const CircleBorder(),
                                 checkColor: Colors.transparent,
                                 activeColor: TextColors.greyText,
@@ -216,7 +219,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                                   fontSize: 14,
                                   fontFamily:
                                       StringConstants.setSmallPersionFont(),
-                                  color: TextColors.whiteText,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                               ),
                             ],
@@ -225,8 +228,10 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                           Row(
                             children: [
                               Checkbox(
-                                side: const BorderSide(
-                                    width: 1.5, color: TextColors.whiteText),
+                                side: BorderSide(
+                                  width: 1.5,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
                                 shape: const CircleBorder(),
                                 checkColor: Colors.transparent,
                                 activeColor: TextColors.greyText,
@@ -243,7 +248,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                                   fontSize: 14,
                                   fontFamily:
                                       StringConstants.setSmallPersionFont(),
-                                  color: TextColors.whiteText,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                               ),
                             ],
@@ -290,7 +295,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                             child: Text(
                               AppLocalizations.of(context)!.submit,
                               style: TextStyle(
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 fontSize: 16,
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
@@ -335,7 +340,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                             child: Text(
                               AppLocalizations.of(context)!.submit,
                               style: TextStyle(
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 fontSize: 16,
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
@@ -380,7 +385,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                             Text(
                               AppLocalizations.of(context)!.agree,
                               style: TextStyle(
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 fontSize: 14,
                                 fontFamily:
                                     StringConstants.setSmallPersionFont(),
@@ -389,7 +394,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                             Text(
                               AppLocalizations.of(context)!.conditionOfUse,
                               style: TextStyle(
-                                color: PrimaryColors.blueAccentColor,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontSize: 14,
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
@@ -400,7 +405,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                         Text(
                           AppLocalizations.of(context)!.couCaption,
                           style: TextStyle(
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 14,
                             fontFamily: StringConstants.setSmallPersionFont(),
                           ),
@@ -439,8 +444,8 @@ class _Header extends StatelessWidget {
               'assets/images/icon_arrow_back.svg',
               height: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
               width: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
-              colorFilter: const ColorFilter.mode(
-                TextColors.whiteText,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.tertiary,
                 BlendMode.srcIn,
               ),
             ),
@@ -473,7 +478,7 @@ class _Header extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 18,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
               ),
@@ -504,9 +509,9 @@ class _SnackFailPostMessage extends StatelessWidget {
       child: Container(
         width: MediaQueryHandler.screenWidth(context),
         height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.redColor,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.tertiaryContainer,
+          borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
         ),
@@ -516,7 +521,7 @@ class _SnackFailPostMessage extends StatelessWidget {
             child: Text(
               error,
               style: TextStyle(
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
                 fontSize: 12,
                 fontFamily: StringConstants.setBoldPersianFont(),
               ),

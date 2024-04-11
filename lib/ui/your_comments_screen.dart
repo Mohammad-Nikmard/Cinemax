@@ -53,7 +53,7 @@ class YourCommentsScreen extends StatelessWidget {
                                 fontFamily:
                                     StringConstants.setBoldPersianFont(),
                                 fontSize: 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                             const SizedBox(
@@ -118,7 +118,7 @@ class _UserReview extends StatelessWidget {
       child: SizedBox(
         width: MediaQueryHandler.screenWidth(context),
         child: ColoredBox(
-          color: PrimaryColors.softColor,
+          color: Theme.of(context).colorScheme.secondary,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
@@ -135,7 +135,7 @@ class _UserReview extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize: 18,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                         Text(
@@ -143,7 +143,7 @@ class _UserReview extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: StringConstants.setSmallPersionFont(),
                             fontSize: 12,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ],
@@ -158,8 +158,8 @@ class _UserReview extends StatelessWidget {
                           width: (MediaQueryHandler.screenWidth(context) < 290)
                               ? 18
                               : 30,
-                          colorFilter: const ColorFilter.mode(
-                            SecondaryColors.orangeColor,
+                          colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.secondaryContainer,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -215,7 +215,8 @@ class _UserReview extends StatelessWidget {
                                     fontSize: 16,
                                     fontFamily:
                                         StringConstants.setBoldPersianFont(),
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                                 Text(
@@ -313,7 +314,7 @@ class _UserReview extends StatelessWidget {
                             ? 16
                             : 20,
                         fontFamily: StringConstants.setBoldPersianFont(),
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -324,7 +325,7 @@ class _UserReview extends StatelessWidget {
                             ? 12
                             : 14,
                         fontFamily: StringConstants.setMediumPersionFont(),
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                   ],
@@ -361,7 +362,7 @@ class _DeleteCommentDialog extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -390,7 +391,7 @@ class _DeleteCommentDialog extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: StringConstants.setSmallPersionFont(),
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -407,7 +408,7 @@ class _DeleteCommentDialog extends StatelessWidget {
                         child: Text(
                           AppLocalizations.of(context)!.cancel,
                           style: TextStyle(
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 16,
                             fontFamily: StringConstants.setSmallPersionFont(),
                           ),
@@ -448,7 +449,7 @@ class _EmptyCommentSection extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               Text(

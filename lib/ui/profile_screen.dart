@@ -52,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 16,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ),
@@ -115,7 +115,7 @@ class ProfileScreen extends StatelessWidget {
                         child: Text(
                           AppLocalizations.of(context)!.logout,
                           style: TextStyle(
-                            color: PrimaryColors.blueAccentColor,
+                            color: Theme.of(context).colorScheme.primary,
                             fontSize: 16,
                             fontFamily: StringConstants.setBoldPersianFont(),
                           ),
@@ -160,7 +160,7 @@ Future<void> signoutDialog(BuildContext context) async {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 18,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(
@@ -196,7 +196,7 @@ Future<void> signoutDialog(BuildContext context) async {
                           child: Text(
                             AppLocalizations.of(context)!.logout,
                             style: TextStyle(
-                              color: PrimaryColors.blueAccentColor,
+                              color: Theme.of(context).colorScheme.primary,
                               fontSize: 16,
                               fontFamily: StringConstants.setSmallPersionFont(),
                             ),
@@ -219,7 +219,7 @@ Future<void> signoutDialog(BuildContext context) async {
                             style: TextStyle(
                               fontFamily: StringConstants.setSmallPersionFont(),
                               fontSize: 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),
@@ -249,9 +249,9 @@ class _OptionChip extends StatelessWidget {
         Container(
           height: 30,
           width: 30,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: PrimaryColors.softColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
           child: Center(
             child: SvgPicture.asset(
@@ -271,14 +271,14 @@ class _OptionChip extends StatelessWidget {
           style: TextStyle(
             fontFamily: StringConstants.setMediumPersionFont(),
             fontSize: 14,
-            color: TextColors.whiteText,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         const Spacer(),
         SvgPicture.asset(
           'assets/images/icon_arrow_right.svg',
-          colorFilter: const ColorFilter.mode(
-            PrimaryColors.blueAccentColor,
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.primary,
             BlendMode.srcIn,
           ),
         ),
@@ -299,7 +299,7 @@ class _GeneralChip extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
-            color: const Color(0xff252836),
+            color: Theme.of(context).colorScheme.primaryContainer,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
@@ -315,7 +315,7 @@ class _GeneralChip extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 18,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               const SizedBox(
@@ -339,9 +339,9 @@ class _GeneralChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Divider(
+              Divider(
                 thickness: 1.3,
-                color: Color(0xff252836),
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
               const SizedBox(
                 height: 10,
@@ -364,9 +364,9 @@ class _GeneralChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Divider(
+              Divider(
                 thickness: 1.3,
-                color: Color(0xff252836),
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
               const SizedBox(
                 height: 10,
@@ -397,9 +397,9 @@ class _GeneralChip extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Divider(
+              Divider(
                 thickness: 1.3,
-                color: Color(0xff252836),
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
               const SizedBox(
                 height: 10,
@@ -456,7 +456,7 @@ class _MoreChipState extends State<_MoreChip> {
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
-            color: const Color(0xff252836),
+            color: Theme.of(context).colorScheme.primaryContainer,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
@@ -472,7 +472,7 @@ class _MoreChipState extends State<_MoreChip> {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 18,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               const SizedBox(height: 15),
@@ -494,9 +494,9 @@ class _MoreChipState extends State<_MoreChip> {
               const SizedBox(
                 height: 10,
               ),
-              const Divider(
+              Divider(
                 thickness: 1.3,
-                color: Color(0xff252836),
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
               const SizedBox(
                 height: 10,
@@ -522,9 +522,9 @@ class _MoreChipState extends State<_MoreChip> {
               const SizedBox(
                 height: 10,
               ),
-              const Divider(
+              Divider(
                 thickness: 1.3,
-                color: Color(0xff252836),
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
               const SizedBox(
                 height: 10,
@@ -557,9 +557,9 @@ class _MoreChipState extends State<_MoreChip> {
       child: Container(
         height: 500,
         width: MediaQueryHandler.screenWidth(context),
-        decoration: const BoxDecoration(
-          color: PrimaryColors.softColor,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(25),
             topRight: Radius.circular(25),
           ),
@@ -572,7 +572,7 @@ class _MoreChipState extends State<_MoreChip> {
                 AppLocalizations.of(context)!.help,
                 style: TextStyle(
                   fontSize: 20,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                   fontFamily: StringConstants.setBoldPersianFont(),
                 ),
               ),
@@ -581,7 +581,7 @@ class _MoreChipState extends State<_MoreChip> {
                 AppLocalizations.of(context)!.yourOpinion,
                 style: TextStyle(
                   fontFamily: StringConstants.setSmallPersionFont(),
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -592,13 +592,13 @@ class _MoreChipState extends State<_MoreChip> {
                 direction: Axis.horizontal,
                 allowHalfRating: true,
                 glow: true,
-                glowColor: SecondaryColors.orangeColor,
+                glowColor: Theme.of(context).colorScheme.secondaryContainer,
                 glowRadius: 0.3,
                 itemCount: 5,
                 itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(
+                itemBuilder: (context, _) => Icon(
                   Icons.star,
-                  color: SecondaryColors.orangeColor,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
                 ),
                 onRatingUpdate: (rating) {
                   setState(() {
@@ -613,7 +613,7 @@ class _MoreChipState extends State<_MoreChip> {
                 style: TextStyle(
                   fontFamily: StringConstants.setMediumPersionFont(),
                   fontSize: 14,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
                 decoration: InputDecoration(
                   hintText: AppLocalizations.of(context)!.infromText,
@@ -660,20 +660,20 @@ class _MoreChipState extends State<_MoreChip> {
                           AppLocalizations.of(context)!.submit,
                           style: TextStyle(
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                             fontFamily: StringConstants.setMediumPersionFont(),
                           ),
                         ),
                       ),
                     );
                   } else if (state is ProfileLoadingState) {
-                    return const Center(
+                    return Center(
                       child: SizedBox(
                         height: 55,
                         width: 55,
                         child: LoadingIndicator(
                           indicatorType: Indicator.pacman,
-                          colors: [PrimaryColors.blueAccentColor],
+                          colors: [Theme.of(context).colorScheme.primary],
                           backgroundColor: Colors.transparent,
                         ),
                       ),
@@ -693,7 +693,7 @@ class _MoreChipState extends State<_MoreChip> {
                           AppLocalizations.of(context)!.submit,
                           style: TextStyle(
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                             fontFamily: StringConstants.setMediumPersionFont(),
                           ),
                         ),
@@ -731,7 +731,7 @@ class _AccountChip extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.2,
-            color: const Color(0xff252836),
+            color: Theme.of(context).colorScheme.primaryContainer,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
@@ -747,15 +747,15 @@ class _AccountChip extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 18,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Divider(
+              Divider(
                 thickness: 1.3,
-                color: Color(0xff252836),
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
               const SizedBox(
                 height: 10,
@@ -827,7 +827,7 @@ class _ProfileChipState extends State<_ProfileChip> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1.2,
-              color: const Color(0xff252836),
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
@@ -849,8 +849,8 @@ class _ProfileChipState extends State<_ProfileChip> {
                       child: (widget.user.profile.isEmpty)
                           ? SvgPicture.asset(
                               'assets/images/icon_user.svg',
-                              colorFilter: const ColorFilter.mode(
-                                TextColors.whiteText,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).colorScheme.tertiary,
                                 BlendMode.srcIn,
                               ),
                             )
@@ -875,7 +875,7 @@ class _ProfileChipState extends State<_ProfileChip> {
                         fontSize: (MediaQueryHandler.screenWidth(context) < 350)
                             ? 12
                             : 16,
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     SizedBox(
@@ -901,8 +901,8 @@ class _ProfileChipState extends State<_ProfileChip> {
                       (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
                   width:
                       (MediaQueryHandler.screenWidth(context) < 350) ? 14 : 24,
-                  colorFilter: const ColorFilter.mode(
-                    PrimaryColors.blueAccentColor,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.primary,
                     BlendMode.srcIn,
                   ),
                 ),

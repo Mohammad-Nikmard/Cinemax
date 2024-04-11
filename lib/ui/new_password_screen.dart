@@ -34,12 +34,12 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
             const SizedBox(
               height: 35,
             ),
-            const Text(
+            Text(
               "Create New Password",
               style: TextStyle(
                 fontFamily: "MM",
                 fontSize: 28,
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ),
             const SizedBox(
@@ -183,12 +183,12 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   "Reset",
                   style: TextStyle(
                     fontFamily: "MM",
                     fontSize: 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
               ),

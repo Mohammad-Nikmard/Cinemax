@@ -1,4 +1,4 @@
-import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -9,10 +9,10 @@ class ExceptionMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       AppLocalizations.of(context)!.exception,
-      style: const TextStyle(
-        fontFamily: "MSB",
+      style: TextStyle(
+        fontFamily: StringConstants.setBoldPersianFont(),
         fontSize: 16,
-        color: TextColors.whiteText,
+        color: Theme.of(context).colorScheme.tertiary,
       ),
     );
   }

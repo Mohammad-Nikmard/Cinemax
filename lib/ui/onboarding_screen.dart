@@ -65,7 +65,7 @@ class OnBoardingScreen extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: StringConstants.setMediumPersionFont(),
                       fontSize: 16,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                 ),
@@ -102,7 +102,7 @@ class OnBoardingScreen extends StatelessWidget {
                   child: Text(
                     AppLocalizations.of(context)!.login,
                     style: TextStyle(
-                      color: PrimaryColors.blueAccentColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontFamily: StringConstants.setMediumPersionFont(),
                       fontSize: (MediaQueryHandler.screenWidth(context) < 325)
                           ? 12

@@ -113,7 +113,7 @@ class NewsDetailScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontFamily: StringConstants.setBoldPersianFont(),
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),
@@ -124,7 +124,7 @@ class NewsDetailScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: StringConstants.setSmallPersionFont(),
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),

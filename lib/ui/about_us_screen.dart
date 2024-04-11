@@ -39,7 +39,7 @@ class AboutUsScreen extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: StringConstants.setBoldPersianFont(),
                         fontSize: 16,
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     const SizedBox(
@@ -53,7 +53,7 @@ class AboutUsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 20,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -62,7 +62,7 @@ class AboutUsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -71,7 +71,7 @@ class AboutUsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setBoldPersianFont(),
                     fontSize: 20,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -80,7 +80,7 @@ class AboutUsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 16,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -93,7 +93,7 @@ class AboutUsScreen extends StatelessWidget {
                         fontSize: (MediaQueryHandler.screenWidth(context) < 290)
                             ? 10
                             : 12,
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     Text(
@@ -117,7 +117,7 @@ class AboutUsScreen extends StatelessWidget {
                         fontSize: (MediaQueryHandler.screenWidth(context) < 290)
                             ? 10
                             : 12,
-                        color: TextColors.whiteText,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                     Text(

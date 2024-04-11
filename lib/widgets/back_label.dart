@@ -1,4 +1,3 @@
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -10,13 +9,13 @@ class BackLabel extends StatelessWidget {
     return Container(
       height: 32,
       width: 32,
-      decoration: const ShapeDecoration(
-        shape: ContinuousRectangleBorder(
+      decoration: ShapeDecoration(
+        shape: const ContinuousRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(40),
           ),
         ),
-        color: PrimaryColors.softColor,
+        color: Theme.of(context).colorScheme.secondary,
       ),
       child: Center(
         child: SvgPicture.asset(

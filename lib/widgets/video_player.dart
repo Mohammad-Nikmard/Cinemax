@@ -1,6 +1,5 @@
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_state.dart';
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/snackbar_content.dart';
 import 'package:flick_video_player/flick_video_player.dart';
@@ -58,7 +57,7 @@ class _MainVideoBranchState extends State<MainVideoBranch> {
                   SnackBar(
                     content: SnackbarContent(
                       message: AppLocalizations.of(context)!.noDownloadLink,
-                      color: SecondaryColors.redColor,
+                      color: Theme.of(context).colorScheme.tertiaryContainer,
                     ),
                     closeIconColor: Colors.transparent,
                     backgroundColor: Colors.transparent,

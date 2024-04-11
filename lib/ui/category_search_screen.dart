@@ -1,4 +1,3 @@
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
 import 'package:cinemax/util/query_handler.dart';
@@ -46,7 +45,7 @@ class CategorySearchScreen extends StatelessWidget {
                                   (MediaQueryHandler.screenWidth(context) < 350)
                                       ? 12
                                       : 16,
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                           const SizedBox(

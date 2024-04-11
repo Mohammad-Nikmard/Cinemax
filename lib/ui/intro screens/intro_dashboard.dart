@@ -85,10 +85,10 @@ class _IntroDashboardState extends State<IntroDashboard> {
                     Column(
                       children: [
                         AnimatedDefaultTextStyle(
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "MSB",
                             fontSize: 18,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                           duration: const Duration(milliseconds: 300),
                           child: Text(
@@ -122,9 +122,12 @@ class _IntroDashboardState extends State<IntroDashboard> {
                             dotWidth: 10.0,
                             dotHeight: 10.0,
                             strokeWidth: 1.5,
-                            dotColor:
-                                PrimaryColors.blueAccentColor.withOpacity(0.2),
-                            activeDotColor: PrimaryColors.blueAccentColor,
+                            dotColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.2),
+                            activeDotColor:
+                                Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         GestureDetector(
@@ -151,9 +154,9 @@ class _IntroDashboardState extends State<IntroDashboard> {
                           child: Container(
                             height: 60,
                             width: 60,
-                            decoration: const BoxDecoration(
-                              color: PrimaryColors.blueAccentColor,
-                              borderRadius: BorderRadius.all(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(12),
                               ),
                             ),

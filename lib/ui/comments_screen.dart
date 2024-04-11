@@ -52,7 +52,7 @@ class CommentsScreen extends StatelessWidget {
                         .add(CommentFetchEvent(movieID));
                   },
                   triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                  color: PrimaryColors.blueAccentColor,
+                  color: Theme.of(context).colorScheme.primary,
                   child: CustomScrollView(
                     slivers: [
                       SliverPadding(
@@ -113,7 +113,9 @@ class CommentsScreen extends StatelessWidget {
                                           fontFamily: StringConstants
                                               .setBoldPersianFont(),
                                           fontSize: 16,
-                                          color: TextColors.whiteText,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
                                         ),
                                         textDirection:
                                             AppManager.getLnag() == 'fa'
@@ -204,7 +206,7 @@ class _MoreCommentWidgetState extends State<MoreCommentWidget> {
                 style: TextStyle(
                   fontFamily: StringConstants.setMediumPersionFont(),
                   fontSize: 16,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
             ),
@@ -234,7 +236,7 @@ class _UserReviewState extends State<_UserReview> {
       child: SizedBox(
         width: MediaQueryHandler.screenWidth(context),
         child: ColoredBox(
-          color: PrimaryColors.softColor,
+          color: Theme.of(context).colorScheme.secondary,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
@@ -269,8 +271,8 @@ class _UserReviewState extends State<_UserReview> {
                                 : SvgPicture.asset(
                                     'assets/images/icon_user.svg',
                                     fit: BoxFit.cover,
-                                    colorFilter: const ColorFilter.mode(
-                                      TextColors.whiteText,
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).colorScheme.tertiary,
                                       BlendMode.srcIn,
                                     ),
                                   ),
@@ -292,7 +294,7 @@ class _UserReviewState extends State<_UserReview> {
                                             380)
                                         ? 12
                                         : 18,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 fontFamily:
                                     StringConstants.setMediumPersionFont(),
                               ),
@@ -307,7 +309,7 @@ class _UserReviewState extends State<_UserReview> {
                                             290)
                                         ? 10
                                         : 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ],
@@ -324,8 +326,8 @@ class _UserReviewState extends State<_UserReview> {
                           width: (MediaQueryHandler.screenWidth(context) < 290)
                               ? 18
                               : 30,
-                          colorFilter: const ColorFilter.mode(
-                            SecondaryColors.orangeColor,
+                          colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.secondaryContainer,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -364,7 +366,8 @@ class _UserReviewState extends State<_UserReview> {
                                         : 20,
                                     fontFamily:
                                         StringConstants.setBoldPersianFont(),
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                                 const SizedBox(height: 15),
@@ -378,7 +381,8 @@ class _UserReviewState extends State<_UserReview> {
                                         : 14,
                                     fontFamily:
                                         StringConstants.setMediumPersionFont(),
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                               ],
@@ -411,8 +415,8 @@ class _UserReviewState extends State<_UserReview> {
                                       'assets/images/icon_arrow_down.svg',
                                       height: 30,
                                       width: 30,
-                                      colorFilter: const ColorFilter.mode(
-                                        TextColors.whiteText,
+                                      colorFilter: ColorFilter.mode(
+                                        Theme.of(context).colorScheme.tertiary,
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -434,7 +438,7 @@ class _UserReviewState extends State<_UserReview> {
                                       ? 16
                                       : 20,
                               fontFamily: StringConstants.setBoldPersianFont(),
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                           const SizedBox(height: 15),
@@ -447,7 +451,7 @@ class _UserReviewState extends State<_UserReview> {
                                       : 14,
                               fontFamily:
                                   StringConstants.setMediumPersionFont(),
-                              color: TextColors.whiteText,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ],
@@ -489,8 +493,8 @@ class _CommentsHeader extends StatelessWidget {
                 height:
                     (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
                 width: (MediaQueryHandler.screenWidth(context) < 380) ? 24 : 30,
-                colorFilter: const ColorFilter.mode(
-                  TextColors.whiteText,
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.tertiary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -528,7 +532,7 @@ class _CommentsHeader extends StatelessWidget {
                       fontSize: (MediaQueryHandler.screenWidth(context) < 290)
                           ? 12
                           : 18,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontFamily: StringConstants.setMediumPersionFont(),
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -550,7 +554,7 @@ class _CommentsHeader extends StatelessWidget {
                     fontSize: (MediaQueryHandler.screenWidth(context) < 290)
                         ? 14
                         : 22,
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                     fontFamily: StringConstants.setBoldPersianFont(),
                   ),
                 ),
@@ -586,7 +590,7 @@ class _CommentsHeader extends StatelessWidget {
                       fontSize: (MediaQueryHandler.screenWidth(context) < 290)
                           ? 10
                           : 14,
-                      color: PrimaryColors.blueAccentColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontFamily: StringConstants.setBoldPersianFont(),
                     ),
                   ),

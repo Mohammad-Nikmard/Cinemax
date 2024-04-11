@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 16,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(
@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontFamily: StringConstants.setBoldPersianFont(),
                       fontSize: 24,
-                      color: TextColors.whiteText,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   SizedBox(
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       //       style:  TextStyle(
                       //         fontFamily:StringConstants.setMediumPersionFont(),
                       //         fontSize: 12,
-                      //         color: PrimaryColors.blueAccentColor,
+                      //         color: Theme.of(context).colorScheme.primary,
                       //       ),
                       //     ),
                       //   ),
@@ -228,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontFamily:
                                     StringConstants.setMediumPersionFont(),
                                 fontSize: 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ),
@@ -256,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontFamily:
                                     StringConstants.setMediumPersionFont(),
                                 fontSize: 16,
-                                color: TextColors.whiteText,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ),
@@ -319,9 +319,9 @@ class _SnackFailMessage extends StatelessWidget {
       child: Container(
         width: MediaQueryHandler.screenWidth(context),
         height: 60,
-        decoration: const BoxDecoration(
-          color: SecondaryColors.redColor,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.tertiaryContainer,
+          borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
         ),
@@ -331,7 +331,7 @@ class _SnackFailMessage extends StatelessWidget {
             child: Text(
               error,
               style: TextStyle(
-                color: TextColors.whiteText,
+                color: Theme.of(context).colorScheme.tertiary,
                 fontSize: 12,
                 fontFamily: StringConstants.setBoldPersianFont(),
               ),

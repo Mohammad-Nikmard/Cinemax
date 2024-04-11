@@ -65,7 +65,9 @@ class SearchScreen extends StatelessWidget {
                                           fontFamily: StringConstants
                                               .setBoldPersianFont(),
                                           fontSize: 16,
-                                          color: TextColors.whiteText,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
                                         ),
                                       ),
                                       const SizedBox(height: 20),
@@ -150,7 +152,7 @@ class RecommendHeader extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: StringConstants.setBoldPersianFont(),
                   fontSize: 16,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               GestureDetector(
@@ -170,7 +172,7 @@ class RecommendHeader extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: StringConstants.setMediumPersionFont(),
                     fontSize: 14,
-                    color: PrimaryColors.blueAccentColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -210,9 +212,9 @@ class __SearchEngineState extends State<_SearchEngine> {
           Expanded(
             child: Container(
               height: 40,
-              decoration: const BoxDecoration(
-                color: PrimaryColors.softColor,
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(24),
                 ),
               ),
@@ -241,7 +243,7 @@ class __SearchEngineState extends State<_SearchEngine> {
                         style: TextStyle(
                           fontFamily: StringConstants.setMediumPersionFont(),
                           fontSize: 14,
-                          color: TextColors.whiteText,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.only(bottom: 10),
@@ -263,8 +265,11 @@ class __SearchEngineState extends State<_SearchEngine> {
                         ),
                         child: ColoredBox(
                           color: (searchQuery.isEmpty)
-                              ? PrimaryColors.blueAccentColor.withOpacity(0.4)
-                              : PrimaryColors.blueAccentColor,
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.4)
+                              : Theme.of(context).colorScheme.primary,
                           child: InkWell(
                             onTap: () {
                               if (searchQuery.isNotEmpty) {
@@ -294,10 +299,11 @@ class __SearchEngineState extends State<_SearchEngine> {
                               child: Center(
                                 child: Text(
                                   AppLocalizations.of(context)!.search,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontFamily: "MR",
                                     fontSize: 14,
-                                    color: TextColors.whiteText,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                               ),

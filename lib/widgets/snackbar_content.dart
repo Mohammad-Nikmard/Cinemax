@@ -1,4 +1,3 @@
-import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
@@ -30,7 +29,7 @@ class SnackbarContent extends StatelessWidget {
                 child: Text(
                   message,
                   style: TextStyle(
-                    color: TextColors.whiteText,
+                    color: Theme.of(context).colorScheme.tertiary,
                     fontSize: 12,
                     fontFamily: StringConstants.setMediumPersionFont(),
                   ),

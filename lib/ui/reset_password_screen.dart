@@ -42,10 +42,10 @@ class ResetPasswordScreen extends StatelessWidget {
               ),
               Text(
                 AppLocalizations.of(context)!.resetPassword,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: "MM",
                   fontSize: 28,
-                  color: TextColors.whiteText,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -77,10 +77,10 @@ class ResetPasswordScreen extends StatelessWidget {
                         onPressed: () {},
                         child: Text(
                           AppLocalizations.of(context)!.next,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "MM",
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -95,10 +95,10 @@ class ResetPasswordScreen extends StatelessWidget {
                         onPressed: () {},
                         child: Text(
                           AppLocalizations.of(context)!.next,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "MM",
                             fontSize: 16,
-                            color: TextColors.whiteText,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -168,8 +168,8 @@ class _SnackFailMessage extends StatelessWidget {
           child: Center(
             child: Text(
               error,
-              style: const TextStyle(
-                color: TextColors.whiteText,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.tertiary,
                 fontSize: 12,
                 fontFamily: "MSB",
               ),
