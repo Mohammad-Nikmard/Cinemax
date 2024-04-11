@@ -719,8 +719,8 @@ class _MoreChipState extends State<_MoreChip> {
   }
 }
 
-class _AccountChip extends StatelessWidget {
-  const _AccountChip();
+class AccountChip extends StatelessWidget {
+  const AccountChip({super.key});
 
   @override
   Widget build(BuildContext context) {

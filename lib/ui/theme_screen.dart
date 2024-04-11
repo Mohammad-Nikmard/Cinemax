@@ -2,10 +2,9 @@ import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ThemeScreen extends StatefulWidget {
   const ThemeScreen({super.key});
@@ -37,7 +36,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                       child: const BackLabel(),
                     ),
                     Text(
-                      "Themes",
+                      AppLocalizations.of(context)!.themes,
                       style: TextStyle(
                         fontFamily: StringConstants.setBoldPersianFont(),
                         fontSize: 16,
@@ -51,7 +50,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                 ),
               ),
               Container(
-                height: 215,
+                height: 140,
                 width: MediaQueryHandler.screenWidth(context),
                 margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
@@ -69,7 +68,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Available Themes",
+                        AppLocalizations.of(context)!.availableThemes,
                         style: TextStyle(
                           fontFamily: StringConstants.setBoldPersianFont(),
                           fontSize: 12,
@@ -81,37 +80,14 @@ class _ThemeScreenState extends State<ThemeScreen> {
                         height: 155,
                         child: ListView.builder(
                           itemBuilder: (context, index) {
-                            if (index == 1) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedIndex = index;
-                                  });
-                                },
-                                child: _ThemeChip(
-                                  themeName: "Dracula",
-                                  selectedIndex: selectedIndex,
-                                  index: index,
-                                  dividerVisible: false,
-                                ),
-                              );
-                            } else {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedIndex = index;
-                                  });
-                                },
-                                child: _ThemeChip(
-                                  themeName: "Cinemax",
-                                  selectedIndex: selectedIndex,
-                                  index: index,
-                                  dividerVisible: true,
-                                ),
-                              );
-                            }
+                            return _ThemeChip(
+                              themeName: AppLocalizations.of(context)!.cinemax,
+                              selectedIndex: selectedIndex,
+                              index: index,
+                              dividerVisible: false,
+                            );
                           },
-                          itemCount: 2,
+                          itemCount: 1,
                         ),
                       ),
                     ],

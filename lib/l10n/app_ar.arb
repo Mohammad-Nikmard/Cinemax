@@ -133,5 +133,8 @@
     "noCommentpostedCap": "انشر تعليقًا حتى تتمكن من إدارته يدويًا هنا",
     "deleteCommentdialog": "ستتم إزالة تعليقك على هذا الفيلم",
     "yourComments": "تعليقاتك",
-    "you": "أنت"
+    "you": "أنت",
+    "themes": "المواضيع",
+    "availableThemes": "السمات المتاحة",
+    "cinemax": "سينماكس"
 }

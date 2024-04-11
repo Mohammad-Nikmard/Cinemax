@@ -133,5 +133,8 @@
     "noCommentpostedCap": "发表评论，以便您可以在此处手动管理",
     "deleteCommentdialog": "您对这部电影的评论将被删除",
     "yourComments": "你的评论",
-    "you": "你"
+    "you": "你",
+    "themes": "主题",
+    "availableThemes": "可用主题",
+    "cinemax": "电影院"
 }

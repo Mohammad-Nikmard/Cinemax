@@ -133,5 +133,8 @@
     "noCommentpostedCap": "Postez un commentaire pour pouvoir le gérer manuellement ici",
     "deleteCommentdialog": "votre commentaire sur ce film sera supprimé",
     "yourComments": "Your Comments",
-    "you": "Toi"
+    "you": "Toi",
+    "themes": "thèmes",
+    "availableThemes": "Thèmes disponibles",
+    "cinemax": "Cinémax"
 }

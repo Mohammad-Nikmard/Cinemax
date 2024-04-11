@@ -93,7 +93,7 @@ class _PasswordVerificationScreenState
                   return s == '2222' ? null : 'Pin is incorrect';
                 },
                 pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                onCompleted: (pin) => print(pin),
+                onCompleted: (pin) {},
                 defaultPinTheme: PinTheme(
                   textStyle: TextStyle(
                     fontFamily: "MSB",

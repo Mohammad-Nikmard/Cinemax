@@ -1,10 +1,9 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/banner.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BannerContainer extends StatefulWidget {
@@ -75,7 +74,7 @@ class _BannerContainerState extends State<BannerContainer> {
                           child: Text(
                             widget.bannerList[index].title,
                             style: TextStyle(
-                              fontFamily: "MSB",
+                              fontFamily: StringConstants.setBoldPersianFont(),
                               fontSize:
                                   (MediaQueryHandler.screenWidth(context) < 350)
                                       ? 12
@@ -91,7 +90,7 @@ class _BannerContainerState extends State<BannerContainer> {
                         child: Text(
                           "On ${widget.bannerList[index].relaseMonth} ${widget.bannerList[index].releaseDate}, ${widget.bannerList[index].relaseYear}",
                           style: TextStyle(
-                            fontFamily: "MM",
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize:
                                 (MediaQueryHandler.screenWidth(context) < 350)
                                     ? 8

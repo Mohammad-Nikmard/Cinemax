@@ -1,4 +1,5 @@
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/episode.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -49,15 +50,15 @@ class EpisodeWidget extends StatelessWidget {
                         Text(
                           "Episode ${episode.episodeNum}",
                           style: TextStyle(
-                            fontFamily: "MSB",
+                            fontFamily: StringConstants.setBoldPersianFont(),
                             fontSize: 14,
                             color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                         Text(
                           episode.timeLength,
-                          style: const TextStyle(
-                            fontFamily: "MM",
+                          style: TextStyle(
+                            fontFamily: StringConstants.setMediumPersionFont(),
                             fontSize: 12,
                             color: TextColors.greyText,
                           ),
@@ -99,7 +100,8 @@ class EpisodeWidget extends StatelessWidget {
                               Text(
                                 episode.rate,
                                 style: TextStyle(
-                                  fontFamily: "MM",
+                                  fontFamily:
+                                      StringConstants.setMediumPersionFont(),
                                   fontSize: 16,
                                   color: Theme.of(context)
                                       .colorScheme
@@ -117,7 +119,7 @@ class EpisodeWidget extends StatelessWidget {
                 Text(
                   episode.description,
                   style: TextStyle(
-                    fontFamily: "MR",
+                    fontFamily: StringConstants.setSmallPersionFont(),
                     fontSize: 14,
                     color: Theme.of(context).colorScheme.tertiary,
                   ),

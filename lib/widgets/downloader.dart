@@ -1,6 +1,7 @@
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
+import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/app_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
@@ -118,7 +119,7 @@ class DownloadingMessage extends StatelessWidget {
             style: TextStyle(
               color: Theme.of(context).colorScheme.tertiary,
               fontSize: 12,
-              fontFamily: "MSB",
+              fontFamily: StringConstants.setBoldPersianFont(),
             ),
             textAlign: TextAlign.center,
           ),

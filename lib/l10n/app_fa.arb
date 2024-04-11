@@ -133,5 +133,8 @@
     "noCommentpostedCap": "نظری ارسال کنید تا بتوانید آن را به صورت دستی در اینجا مدیریت کنید",
     "deleteCommentdialog": "نظر شما در مورد این فیلم حذف خواهد شد",
     "yourComments": "نظرات شما",
-    "you": "شما"
+    "you": "شما",
+    "themes": "تم ها",
+    "availableThemes": "تم های دردسترس",
+    "cinemax": "سینماکس"
 }

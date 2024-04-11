@@ -160,7 +160,7 @@ class RecommendHeader extends StatelessWidget {
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: CategorySearchScreen(
-                      title: "Recommend for you",
+                      title: AppLocalizations.of(context)!.recommendforYou,
                       movieList: movies,
                     ),
                     withNavBar: false,
