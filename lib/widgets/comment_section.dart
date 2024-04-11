@@ -15,8 +15,18 @@ class CommentSection extends StatefulWidget {
 }
 
 class _CommentSectionState extends State<CommentSection> {
-  double containerHeight = 300;
-  bool onMoreTapped = false;
+  double? numLines;
+  double? containerHeight;
+  bool? onMoreTapped;
+
+  @override
+  void initState() {
+    super.initState();
+    numLines = (widget.comment.text.length) / 20;
+    containerHeight = setContainerHeight();
+    onMoreTapped = visibleCondition();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -31,138 +41,133 @@ class _CommentSectionState extends State<CommentSection> {
           Radius.circular(15),
         ),
       ),
-      child: LayoutBuilder(
-        builder: ((context, constraints) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  const ClipRRect(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(3),
-                    ),
-                    child: SizedBox(
-                      height: 25,
-                      width: 2,
-                      child: ColoredBox(color: PrimaryColors.blueAccentColor),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    AppLocalizations.of(context)!.comments,
-                    style: TextStyle(
-                      fontFamily: StringConstants.setBoldPersianFont(),
-                      fontSize: 20,
-                      color: TextColors.whiteText,
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                  SvgPicture.asset(
-                    'assets/images/icon_arrow_right.svg',
-                    height: 30,
-                    width: 30,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: MediaQueryHandler.screenWidth(context) - 180,
-                    child: Text(
-                      widget.comment.headline,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: StringConstants.setBoldPersianFont(),
-                        color: TextColors.whiteText,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/images/icon_star.svg',
-                        colorFilter: const ColorFilter.mode(
-                          SecondaryColors.orangeColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        "${widget.comment.rate} / 10",
-                        style: TextStyle(
-                          fontFamily: StringConstants.setSmallPersionFont(),
-                          color: TextColors.greyText,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              Flexible(
-                child: Text(
-                  widget.comment.text,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: StringConstants.setMediumPersionFont(),
-                    color: TextColors.whiteText,
-                  ),
-                  overflow: TextOverflow.fade,
+              const ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(3),
+                ),
+                child: SizedBox(
+                  height: 25,
+                  width: 2,
+                  child: ColoredBox(color: PrimaryColors.blueAccentColor),
                 ),
               ),
-              Visibility(
-                visible: visibleCondition(constraints),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      if (calHeight(constraints) == 300) {
-                        containerHeight = 500;
-                        onMoreTapped = true;
-                      }
-                    });
-                  },
-                  child: SvgPicture.asset(
-                    'assets/images/icon_more-horizontal.svg',
-                    height: 30,
-                    width: 30,
+              const SizedBox(width: 10),
+              Text(
+                AppLocalizations.of(context)!.comments,
+                style: TextStyle(
+                  fontFamily: StringConstants.setBoldPersianFont(),
+                  fontSize: 20,
+                  color: TextColors.whiteText,
+                ),
+              ),
+              const SizedBox(width: 15),
+              SvgPicture.asset(
+                'assets/images/icon_arrow_right.svg',
+                height: 30,
+                width: 30,
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQueryHandler.screenWidth(context) - 180,
+                child: Text(
+                  widget.comment.headline,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: StringConstants.setBoldPersianFont(),
+                    color: TextColors.whiteText,
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/icon_star.svg',
                     colorFilter: const ColorFilter.mode(
                       SecondaryColors.orangeColor,
                       BlendMode.srcIn,
                     ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Text(
+                    "${widget.comment.rate} / 10",
+                    style: TextStyle(
+                      fontFamily: StringConstants.setSmallPersionFont(),
+                      color: TextColors.greyText,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
             ],
-          );
-        }),
+          ),
+          const SizedBox(height: 15),
+          Flexible(
+            child: Text(
+              widget.comment.text,
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: StringConstants.setMediumPersionFont(),
+                color: TextColors.whiteText,
+              ),
+              overflow: TextOverflow.fade,
+            ),
+          ),
+          Visibility(
+            visible: onMoreTapped!,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (setContainerHeight() == 180) {
+                    containerHeight = 230;
+                    onMoreTapped = false;
+                  } else if (setContainerHeight() == 300) {
+                    containerHeight = 400;
+                    onMoreTapped = false;
+                  }
+                });
+              },
+              child: SvgPicture.asset(
+                'assets/images/icon_more-horizontal.svg',
+                height: 30,
+                width: 30,
+                colorFilter: const ColorFilter.mode(
+                  SecondaryColors.orangeColor,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  double calHeight(BoxConstraints constraints) {
-    if (constraints.maxHeight == 270) {
-      return 300;
-    } else if (constraints.maxHeight < 270) {
-      return constraints.maxHeight + 30;
+  bool visibleCondition() {
+    if (containerHeight! > 150) {
+      return true;
     } else {
-      return 1000;
+      return false;
     }
   }
 
-  bool visibleCondition(BoxConstraints constraints) {
-    if (constraints.maxHeight < 270) {
-      return false;
+  double setContainerHeight() {
+    if (numLines! < 1.5) {
+      return 150;
+    } else if (numLines! >= 1.5 && numLines! <= 5) {
+      return 180;
     } else {
-      if (onMoreTapped == true) {
-        return false;
-      } else {
-        return true;
-      }
+      return 300;
     }
   }
 }

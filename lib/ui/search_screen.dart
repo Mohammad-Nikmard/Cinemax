@@ -46,7 +46,7 @@ class SearchScreen extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            _SearchEngine(),
+                            const _SearchEngine(),
                             state.getAllMovies.fold(
                               (exceptionMessage) {
                                 return const ExceptionMessage();
@@ -184,7 +184,7 @@ class RecommendHeader extends StatelessWidget {
 }
 
 class _SearchEngine extends StatefulWidget {
-  const _SearchEngine({super.key});
+  const _SearchEngine();
 
   @override
   State<_SearchEngine> createState() => __SearchEngineState();
@@ -193,6 +193,13 @@ class _SearchEngine extends StatefulWidget {
 class __SearchEngineState extends State<_SearchEngine> {
   TextEditingController searchController = TextEditingController();
   String searchQuery = "";
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
