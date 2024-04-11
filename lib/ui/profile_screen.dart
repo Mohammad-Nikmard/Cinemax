@@ -413,8 +413,8 @@ class _GeneralChip extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: const _OptionChip(
-                  title: "Themes",
+                child: _OptionChip(
+                  title: AppLocalizations.of(context)!.themes,
                   image: "assets/images/icon_theme.svg",
                   color: TextColors.greyText,
                 ),

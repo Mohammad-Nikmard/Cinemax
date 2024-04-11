@@ -1,9 +1,7 @@
 import 'package:cinemax/bloc/video/video_bloc.dart';
 import 'package:cinemax/bloc/video/video_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
-import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/util/app_manager.dart';
-import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/snackbar_content.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +60,7 @@ class AppDownloader extends StatelessWidget {
                 name: response.name,
                 onDownloadError: (String error) {
                   SnackBar(
-                    content: DownloadingMessage(
+                    content: SnackbarContent(
                       message:
                           '${AppLocalizations.of(context)!.downloadError} $error',
                       color: SecondaryColors.orangeColor,
@@ -76,7 +74,7 @@ class AppDownloader extends StatelessWidget {
               );
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: DownloadingMessage(
+                  content: SnackbarContent(
                     message: AppLocalizations.of(context)!.downloadMessage,
                     color: Theme.of(context).colorScheme.surfaceVariant,
                   ),
@@ -90,41 +88,6 @@ class AppDownloader extends StatelessWidget {
           );
         }
       },
-    );
-  }
-}
-
-class DownloadingMessage extends StatelessWidget {
-  const DownloadingMessage(
-      {super.key, required this.color, required this.message});
-  final String message;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQueryHandler.screenWidth(context),
-      height: 60,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Center(
-          child: Text(
-            message,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.tertiary,
-              fontSize: 12,
-              fontFamily: StringConstants.setBoldPersianFont(),
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
     );
   }
 }
