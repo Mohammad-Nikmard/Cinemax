@@ -117,36 +117,40 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                           },
                                         );
                                       },
-                                      child: SizedBox(
-                                        height: 25,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                languages[index],
-                                                style: TextStyle(
-                                                  fontFamily: "MSB",
-                                                  fontSize: 16,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .tertiary,
+                                      child: ColoredBox(
+                                        color: Colors.transparent,
+                                        child: SizedBox(
+                                          height: 25,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  languages[index],
+                                                  style: TextStyle(
+                                                    fontFamily: "MSB",
+                                                    fontSize: 16,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .tertiary,
+                                                  ),
                                                 ),
-                                              ),
-                                              Visibility(
-                                                visible:
-                                                    Language.values[index] ==
-                                                        state.selectedLanguage,
-                                                child: SvgPicture.asset(
-                                                  'assets/images/tick_image.svg',
+                                                Visibility(
+                                                  visible: Language
+                                                          .values[index] ==
+                                                      state.selectedLanguage,
+                                                  child: SvgPicture.asset(
+                                                    'assets/images/tick_image.svg',
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -163,50 +167,54 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                               );
                                         });
                                       },
-                                      child: SizedBox(
-                                        height: 60,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    languages[index],
-                                                    style: TextStyle(
-                                                      fontFamily: "MSB",
-                                                      fontSize: 16,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .tertiary,
+                                      child: ColoredBox(
+                                        color: Colors.transparent,
+                                        child: SizedBox(
+                                          height: 60,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      languages[index],
+                                                      style: TextStyle(
+                                                        fontFamily: "MSB",
+                                                        fontSize: 16,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .tertiary,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Visibility(
-                                                    visible: Language
-                                                            .values[index] ==
-                                                        state.selectedLanguage,
-                                                    child: SvgPicture.asset(
-                                                      'assets/images/tick_image.svg',
+                                                    Visibility(
+                                                      visible: Language
+                                                              .values[index] ==
+                                                          state
+                                                              .selectedLanguage,
+                                                      child: SvgPicture.asset(
+                                                        'assets/images/tick_image.svg',
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Divider(
-                                                thickness: 1.3,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primaryContainer,
-                                              ),
-                                            ],
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Divider(
+                                                  thickness: 1.3,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),

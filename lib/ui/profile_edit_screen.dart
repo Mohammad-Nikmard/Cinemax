@@ -132,7 +132,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               children: [
                                 ClipRRect(
                                   borderRadius: const BorderRadius.all(
-                                    Radius.circular(100),
+                                    Radius.circular(50),
                                   ),
                                   child: SizedBox(
                                     height: 100,

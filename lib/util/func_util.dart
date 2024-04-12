@@ -4,7 +4,6 @@ import 'package:cinemax/bloc/wishlist/wishlist_bloc.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/movie.dart';
-import 'package:cinemax/ui/gallery_full_screen.dart';
 import 'package:cinemax/ui/movie_detail_screen.dart';
 import 'package:cinemax/ui/series_detial_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,26 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-Future<void> showFullScreenGallery(BuildContext context, String photo) async {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: AlertDialog(
-            surfaceTintColor: Colors.transparent,
-            backgroundColor: Colors.transparent,
-            content: GalleryFullScreen(
-              imageURL: photo,
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
 
 routeCondition(BuildContext context, Movie relatedMovie) {
   if (relatedMovie.category == "movie") {

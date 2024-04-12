@@ -34,6 +34,7 @@ import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SeriesDetailScreen extends StatelessWidget {
   const SeriesDetailScreen({super.key, required this.series});
@@ -150,8 +151,10 @@ class SeriesDetailScreen extends StatelessWidget {
                         );
                       },
                       (photoList) {
-                        return _Gallery(
-                          gallery: photoList,
+                        return SliverToBoxAdapter(
+                          child: Gallery(
+                            gallery: photoList,
+                          ),
                         );
                       },
                     ),
@@ -302,47 +305,84 @@ class SeriesDetailScreen extends StatelessWidget {
   }
 }
 
-class _Gallery extends StatelessWidget {
-  const _Gallery({required this.gallery});
+class Gallery extends StatefulWidget {
+  const Gallery({super.key, required this.gallery});
   final List<Moviesgallery> gallery;
 
   @override
+  State<Gallery> createState() => _GalleryState();
+}
+
+class _GalleryState extends State<Gallery> {
+  final PageController controller = PageController(initialPage: 0);
+
+  @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15.0),
-      sliver: SliverGrid(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return GestureDetector(
-              onTap: () {
-                showFullScreenGallery(context, gallery[index].thumbnail);
-              },
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(15),
-                ),
-                child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: CachedImage(
-                      imageUrl: gallery[index].thumbnail,
-                      radius: 15,
+    widget.gallery.shuffle();
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SizedBox(
+            height: 155,
+            child: PageView.builder(
+              itemCount: widget.gallery.length,
+              controller: controller,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  height: 154,
+                  width: 315,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(16),
+                      ),
+                      child: SizedBox(
+                        height: 154,
+                        width: 305,
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: CachedImage(
+                            imageUrl: widget.gallery[index].thumbnail,
+                            radius: 16,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                );
+              },
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SmoothPageIndicator(
+          controller: controller,
+          count: widget.gallery.length,
+          effect: CustomizableEffect(
+            spacing: 8.0,
+            dotDecoration: DotDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(5),
               ),
-            );
-          },
-          childCount: gallery.length,
+              rotationAngle: 0.0,
+              width: 15.0,
+            ),
+            activeDotDecoration: DotDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(5),
+              ),
+              rotationAngle: 160.0,
+              width: 15.0,
+            ),
+          ),
         ),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-        ),
-      ),
+      ],
     );
   }
 }

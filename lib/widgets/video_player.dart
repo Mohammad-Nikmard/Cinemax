@@ -103,17 +103,20 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        child: AspectRatio(
-          aspectRatio: 16 / 8,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(15),
-            ),
-            child: FlickVideoPlayer(
-              flickManager: flickManager,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: AspectRatio(
+            aspectRatio: 16 / 8,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
+              child: FlickVideoPlayer(
+                flickManager: flickManager,
+              ),
             ),
           ),
         ),
