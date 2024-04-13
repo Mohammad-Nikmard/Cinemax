@@ -6,19 +6,19 @@ This is a massive movie app written with flutter and dart language. The app is w
 
 # Features
 
-- Main Activity: This app is designed in a way that user can look for differnt movies or series, watch their trailers and can post comment on them is he/she wishes to. This helps them find specific movie or series they are looking for.
-- Movie Detail: Each movie is desgined to have 1 trailer, User can download that trailer, Can read about storyline, checkout the gallery of that movie, Cast and crew, Rate, Category, Timelength, Release Date, Comments and can add it to wishlist.
-- Series Detail: Series detail is also frought with all movie detail ablities and also has a section that showcases each season episodes, thier synopsis, their rate and their picture too.
-- Download ablity: User is able to download each movie or series trailer with their head name on it.
-- Share ablity: This feature will be added in the furthur realses.
-- Search ablity: User can search for different movie or series and also actors. Note that actor page will be added in the future.
-- Upcomings and Upcoming Detail: this section will show what movies are on demand and upcoming. Each upcoming movie contains trailer, Synopsis, Cast, Gallery, Release Date, Category and can be added to wishlist.
-- News: Movie news from all over the world is also covered. Each news has a release date, Title, Description and thier publisher.
-- Comments: Users are able to post comment and can rate, Add title, description, Say if the comment has spoiler or not, Delete and Modify their comments in the settings screen.
-- Theme: App also supports 1 theme which is the main theme and other visual themes will be added in the future release.
-- Language: App supports 11 languages with flutter localization and user can choose one.
-- Credentials: User has to sign up or login to app, Can pic a profile picture, Register phone number, can Delete that profile and modify the name.
-- Wishlist: User's liked movie, series or upcoming will be added here with rate, name , trailer and can be removed.
+- **Main Activity**: This app is designed in a way that user can look for differnt movies or series, watch their trailers and can post comment on them is he/she wishes to. This helps them find specific movie or series they are looking for.
+- **Movie Detail**: Each movie is desgined to have 1 trailer, User can download that trailer, Can read about storyline, checkout the gallery of that movie, Cast and crew, Rate, Category, Timelength, Release Date, Comments and can add it to wishlist.
+- **Series Detail**: Series detail is also frought with all movie detail ablities and also has a section that showcases each season episodes, thier synopsis, their rate and their picture too.
+- **Download ablity**: User is able to download each movie or series trailer with their head name on it.
+- **Share ablity**: This feature will be added in the furthur realses.
+- **Search ablity**: User can search for different movie or series and also actors. Note that actor page will be added in the future.
+- **Upcomings and Upcoming Detail**: this section will show what movies are on demand and upcoming. Each upcoming movie contains trailer, Synopsis, Cast, Gallery, Release Date, Category and can be added to wishlist.
+- **News**: Movie news from all over the world is also covered. Each news has a release date, Title, Description and thier publisher.
+- **Comments**: Users are able to post comment and can rate, Add title, description, Say if the comment has spoiler or not, Delete and Modify their comments in the settings screen.
+- **Theme**: App also supports 1 theme which is the main theme and other visual themes will be added in the future release.
+- **Language**: App supports 11 languages with flutter localization and user can choose one.
+- **Credentials**: User has to sign up or login to app, Can pic a profile picture, Register phone number, can Delete that profile and modify the name.
+- **Wishlist**: User's liked movie, series or upcoming will be added here with rate, name , trailer and can be removed.
 
 
 # Dependancies
