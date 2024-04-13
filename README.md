@@ -53,3 +53,10 @@ This is a massive movie app written with flutter and dart language. The app is w
   - flutter_file_downloader
   - firebase_core
   - firebase_messaging
+
+# Project Setup
+To run the application do the following :
+
+ 1. Clone the repository or download it.
+ 2. Open the project in Android Studio / VScode.
+ 3. Build and run the app on an Android emulator or physical device by your choice.
