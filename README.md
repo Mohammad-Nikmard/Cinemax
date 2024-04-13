@@ -19,6 +19,7 @@ This is a massive movie app written with flutter and dart language. The app is w
 - **Language**: App supports 11 languages with flutter localization and user can choose one.
 - **Credentials**: User has to sign up or login to app, Can pic a profile picture, Register phone number, can Delete that profile and modify the name.
 - **Wishlist**: User's liked movie, series or upcoming will be added here with rate, name , trailer and can be removed.
+- **App Start**: App will automatically check whether if user has internet or not and will launch it when they have internet.
 
 
 # Dependancies
