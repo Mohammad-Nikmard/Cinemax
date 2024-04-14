@@ -23,14 +23,14 @@ This is a massive movie app written with flutter and dart language. The app is w
 
 # Project Structure
 
-- Bloc: Which takes acoount for logic management across the app. Bloc handles multiple states when working with pocketbase API.
-- Data: Which devides to 3 sections it self:
-   - Model: Works just like an entity. This app contains multiple models to keep everything separate from each other.
-   - Datasource: Works just like a usecase. An important layer to recive all the data from API and shape it based on the model's requirements.
-   - Repository: Works just like an adapter. The main functionality of this layer is to make a connection between datasource and bloc. Plus it will maintain codes more clear.
-- UI: The infrastructure of the app which can that user is in touch with.
-- Firebase services: This is just one class responsible for all firebase extentions. Main functionality of this class is to handle messages that are pushed to the user.
-- Hive: Local database of the application which is a NoSQL database.
+- **Bloc** : Which takes acoount for logic management across the app. Bloc handles multiple states when working with pocketbase API.
+- **Data** : Which devides to 3 sections it self:
+   - **Model** : Works just like an entity. This app contains multiple models to keep everything separate from each other.
+   - **Datasource** : Works just like a usecase. An important layer to recive all the data from API and shape it based on the model's requirements.
+   - **Repository** : Works just like an adapter. The main functionality of this layer is to make a connection between datasource and bloc. Plus it will maintain codes more clear.
+- **UI** : The infrastructure of the app which can that user is in touch with.
+- **Firebase services** : This is just one class responsible for all firebase extentions. Main functionality of this class is to handle messages that are pushed to the user.
+- **Hive** : Local database of the application which is a NoSQL database.
 
 # Dependancies
   - flutter_localizations
