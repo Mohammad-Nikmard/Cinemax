@@ -14,6 +14,8 @@ abstract class CommentsDatasource {
   Future<String> updateComment(String commentID, String text, String headline,
       double rate, String time, bool spoiler);
   Future<List<UserReply>> getReplies(String commentId);
+  Future<void> postReply(
+      String commentID, String userId, String text, String date);
 }
 
 class CommentRemoteDatasource extends CommentsDatasource {
@@ -138,6 +140,23 @@ class CommentRemoteDatasource extends CommentsDatasource {
           .toList();
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> postReply(
+      String commentID, String userId, String text, String date) async {
+    try {
+      await _dio.post("/api/collections/replies/records", data: {
+        "text": text,
+        'date': date,
+        'user_id': userId,
+        'comment_id': commentID,
+      });
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {
       throw ApiException("$ex", 100);
     }

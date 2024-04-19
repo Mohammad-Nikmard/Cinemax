@@ -1,9 +1,11 @@
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/data/model/user_reply.dart';
+import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
@@ -16,10 +18,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ReplyScreen extends StatelessWidget {
+class ReplyScreen extends StatefulWidget {
   const ReplyScreen({super.key, required this.comment, required this.onFocus});
   final Comment comment;
   final bool onFocus;
+
+  @override
+  State<ReplyScreen> createState() => _ReplyScreenState();
+}
+
+class _ReplyScreenState extends State<ReplyScreen> {
+  TextEditingController commentController = TextEditingController();
+  DateTime now = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +72,7 @@ class ReplyScreen extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 15.0),
-                    child: _UserReview(comment: comment),
+                    child: _UserReview(comment: widget.comment),
                   ),
                 ),
                 BlocBuilder<CommentsBloc, CommentsState>(
@@ -130,7 +140,8 @@ class ReplyScreen extends StatelessWidget {
                             left: 20,
                           ),
                           child: TextField(
-                            autofocus: onFocus,
+                            controller: commentController,
+                            autofocus: widget.onFocus,
                             decoration: const InputDecoration(
                               contentPadding:
                                   EdgeInsets.only(top: 25, left: 15),
@@ -165,11 +176,28 @@ class ReplyScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20),
-                      child: SvgPicture.asset(
-                        "assets/images/icon_arrow_right.svg",
-                        colorFilter: const ColorFilter.mode(
-                          TextColors.greyText,
-                          BlendMode.srcIn,
+                      child: GestureDetector(
+                        onTap: () {
+                          String finalTime =
+                              "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
+                          context.read<CommentsBloc>().add(
+                                PostReplyEvent(
+                                    commentController.text,
+                                    finalTime,
+                                    AuthManager.readRecordID(),
+                                    widget.comment.id),
+                              );
+
+                          setState(() {
+                            commentController.text = "";
+                          });
+                        },
+                        child: SvgPicture.asset(
+                          "assets/images/icon_arrow_right.svg",
+                          colorFilter: const ColorFilter.mode(
+                            TextColors.greyText,
+                            BlendMode.srcIn,
+                          ),
                         ),
                       ),
                     ),

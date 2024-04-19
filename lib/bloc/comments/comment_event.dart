@@ -55,3 +55,12 @@ class FetchRepliesEvent extends CommentsEvent {
 
   FetchRepliesEvent(this.commentID);
 }
+
+class PostReplyEvent extends CommentsEvent {
+  String text;
+  String date;
+  String userId;
+  String commentId;
+
+  PostReplyEvent(this.text, this.date, this.userId, this.commentId);
+}

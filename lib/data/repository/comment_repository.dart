@@ -16,6 +16,8 @@ abstract class CommentsRepository {
   Future<Either<String, String>> updateComment(String commentID, String text,
       String headline, double rate, String time, bool spoiler);
   Future<Either<String, List<UserReply>>> getReplies(String commentId);
+  Future<Either<String, String>> postReply(
+      String commentID, String userId, String text, String date);
 }
 
 class CommentsRemoteRepository extends CommentsRepository {
@@ -83,6 +85,17 @@ class CommentsRemoteRepository extends CommentsRepository {
     try {
       var response = await _datasource.getReplies(commentId);
       return right(response);
+    } on ApiException catch (ex) {
+      return left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, String>> postReply(
+      String commentID, String userId, String text, String date) async {
+    try {
+      await _datasource.postReply(commentID, userId, text, date);
+      return right("Successfuly posted reply");
     } on ApiException catch (ex) {
       return left(ex.message);
     }
