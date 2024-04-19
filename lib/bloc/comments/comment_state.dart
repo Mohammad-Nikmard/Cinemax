@@ -1,5 +1,6 @@
 import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/data/model/user_comment.dart';
+import 'package:cinemax/data/model/user_reply.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class CommentsState {}
@@ -30,4 +31,10 @@ class CommentUpdateResponseState extends CommentsState {
   Either<String, String> response;
 
   CommentUpdateResponseState(this.response);
+}
+
+class ReplyresponseState extends CommentsState {
+  Either<String, List<UserReply>> getreplies;
+
+  ReplyresponseState(this.getreplies);
 }

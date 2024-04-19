@@ -49,3 +49,9 @@ class EditCommentEvent extends CommentsEvent {
   EditCommentEvent(this.commentID, this.text, this.headline, this.time,
       this.rate, this.spoiler);
 }
+
+class FetchRepliesEvent extends CommentsEvent {
+  String commentID;
+
+  FetchRepliesEvent(this.commentID);
+}

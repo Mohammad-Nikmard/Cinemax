@@ -471,9 +471,16 @@ class _UserReviewState extends State<_UserReview> {
                             onTap: () {
                               PersistentNavBarNavigator.pushNewScreen(
                                 context,
-                                screen: ReplyScreen(
-                                  comment: widget.comment,
-                                  onFocus: true,
+                                screen: BlocProvider(
+                                  create: (context) => CommentsBloc(
+                                    locator.get(),
+                                  )..add(
+                                      FetchRepliesEvent(widget.comment.id),
+                                    ),
+                                  child: ReplyScreen(
+                                    comment: widget.comment,
+                                    onFocus: true,
+                                  ),
                                 ),
                                 withNavBar: false,
                                 pageTransitionAnimation:

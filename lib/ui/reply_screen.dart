@@ -1,12 +1,19 @@
+import 'package:cinemax/bloc/comments/comment_bloc.dart';
+import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/comment.dart';
+import 'package:cinemax/data/model/user_reply.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
+import 'package:cinemax/widgets/exception_message.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReplyScreen extends StatelessWidget {
   const ReplyScreen({super.key, required this.comment, required this.onFocus});
@@ -57,20 +64,50 @@ class ReplyScreen extends StatelessWidget {
                     child: _UserReview(comment: comment),
                   ),
                 ),
-                SliverPadding(
-                  padding: const EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 20.0, bottom: 60.0),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(top: 12),
-                          child: _UserReply(),
-                        );
-                      },
-                      childCount: 3,
-                    ),
-                  ),
+                BlocBuilder<CommentsBloc, CommentsState>(
+                  builder: (context, state) {
+                    if (state is CommensLoadingState) {
+                      return const SliverToBoxAdapter(
+                        child: AppLoadingIndicator(),
+                      );
+                    }
+                    if (state is ReplyresponseState) {
+                      return state.getreplies.fold(
+                        (exceptionMessage) {
+                          return const SliverToBoxAdapter(
+                            child: ExceptionMessage(),
+                          );
+                        },
+                        (replyList) {
+                          return SliverPadding(
+                            padding: const EdgeInsets.only(
+                                left: 15.0,
+                                right: 15.0,
+                                top: 20.0,
+                                bottom: 60.0),
+                            sliver: SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: _UserReply(
+                                      reply: replyList[index],
+                                    ),
+                                  );
+                                },
+                                childCount: replyList.length,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return SliverToBoxAdapter(
+                      child: Center(
+                        child: Text(AppLocalizations.of(context)!.state),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -126,7 +163,9 @@ class ReplyScreen extends StatelessWidget {
                       child: SvgPicture.asset(
                         "assets/images/icon_arrow_right.svg",
                         colorFilter: const ColorFilter.mode(
-                            TextColors.greyText, BlendMode.srcIn),
+                          TextColors.greyText,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   ],
@@ -141,7 +180,8 @@ class ReplyScreen extends StatelessWidget {
 }
 
 class _UserReply extends StatelessWidget {
-  const _UserReply();
+  const _UserReply({required this.reply});
+  final UserReply reply;
 
   @override
   Widget build(BuildContext context) {
@@ -157,22 +197,50 @@ class _UserReply extends StatelessWidget {
             padding:
                 const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const CircleAvatar(
-                          radius: 25,
-                          backgroundColor: PrimaryColors.blueAccentColor,
+                        ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(100),
+                          ),
+                          child: SizedBox(
+                            height:
+                                (MediaQueryHandler.screenWidth(context) < 290)
+                                    ? 30
+                                    : 40,
+                            width:
+                                (MediaQueryHandler.screenWidth(context) < 290)
+                                    ? 30
+                                    : 40,
+                            child: (reply.thumbnail.isNotEmpty)
+                                ? FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: CachedImage(
+                                      imageUrl: reply.userThumbnail,
+                                      radius: 100,
+                                    ),
+                                  )
+                                : SvgPicture.asset(
+                                    'assets/images/icon_user.svg',
+                                    fit: BoxFit.cover,
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).colorScheme.tertiary,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                          ),
                         ),
                         const SizedBox(width: 10.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Name",
+                              reply.userName,
                               style: TextStyle(
                                 fontSize:
                                     (MediaQueryHandler.screenWidth(context) <
@@ -185,7 +253,7 @@ class _UserReply extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Jan 15, 2024",
+                              reply.date,
                               style: TextStyle(
                                 fontFamily:
                                     StringConstants.setSmallPersionFont(),
@@ -212,12 +280,13 @@ class _UserReply extends StatelessWidget {
                 const SizedBox(
                   height: 15.0,
                 ),
-                const Text(
-                  """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.""",
-                  style: TextStyle(
+                Text(
+                  reply.text,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontFamily: "MM",
                   ),
+                  textAlign: TextAlign.start,
                 )
               ],
             ),

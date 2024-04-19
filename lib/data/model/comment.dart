@@ -1,6 +1,7 @@
 import 'package:cinemax/constants/string_constants.dart';
 
 class Comment {
+  String id;
   String headline;
   String text;
   String time;
@@ -13,6 +14,7 @@ class Comment {
   String profile;
 
   Comment(
+    this.id,
     this.headline,
     this.text,
     this.time,
@@ -27,6 +29,7 @@ class Comment {
 
   factory Comment.withJson(Map<String, dynamic> jsonMapObject) {
     return Comment(
+      jsonMapObject["id"],
       jsonMapObject["headline"],
       jsonMapObject["text"],
       jsonMapObject["time"],

@@ -1,6 +1,7 @@
 import 'package:cinemax/data/datasource/comments_datasource.dart';
 import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/data/model/user_comment.dart';
+import 'package:cinemax/data/model/user_reply.dart';
 import 'package:cinemax/util/api_exception.dart';
 import 'package:dartz/dartz.dart';
 
@@ -14,6 +15,7 @@ abstract class CommentsRepository {
   Future<Either<String, String>> deleteComment(String commentID);
   Future<Either<String, String>> updateComment(String commentID, String text,
       String headline, double rate, String time, bool spoiler);
+  Future<Either<String, List<UserReply>>> getReplies(String commentId);
 }
 
 class CommentsRemoteRepository extends CommentsRepository {
@@ -70,6 +72,16 @@ class CommentsRemoteRepository extends CommentsRepository {
     try {
       var response = await _datasource.updateComment(
           commentID, text, headline, rate, time, spoiler);
+      return right(response);
+    } on ApiException catch (ex) {
+      return left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, List<UserReply>>> getReplies(String commentId) async {
+    try {
+      var response = await _datasource.getReplies(commentId);
       return right(response);
     } on ApiException catch (ex) {
       return left(ex.message);
