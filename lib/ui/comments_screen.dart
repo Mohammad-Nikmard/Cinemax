@@ -13,7 +13,6 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -462,10 +461,10 @@ class _UserReviewState extends State<_UserReview> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 25),
+                        padding: const EdgeInsets.only(left: 25),
                         child: Transform.flip(
                           flipX: true,
                           child: GestureDetector(
@@ -474,6 +473,7 @@ class _UserReviewState extends State<_UserReview> {
                                 context,
                                 screen: ReplyScreen(
                                   comment: widget.comment,
+                                  onFocus: true,
                                 ),
                                 withNavBar: false,
                                 pageTransitionAnimation:
@@ -482,8 +482,8 @@ class _UserReviewState extends State<_UserReview> {
                             },
                             child: SvgPicture.asset(
                               'assets/images/icon_reply.svg',
-                              height: 24,
-                              width: 24,
+                              height: 20,
+                              width: 20,
                               colorFilter: const ColorFilter.mode(
                                 TextColors.greyText,
                                 BlendMode.srcIn,

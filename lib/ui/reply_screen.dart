@@ -4,15 +4,14 @@ import 'package:cinemax/data/model/comment.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ReplyScreen extends StatelessWidget {
-  const ReplyScreen({super.key, required this.comment});
+  const ReplyScreen({super.key, required this.comment, required this.onFocus});
   final Comment comment;
+  final bool onFocus;
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +80,16 @@ class ReplyScreen extends StatelessWidget {
                 height: 50.0,
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: SizedBox(
                         height: 55.0,
                         child: Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             left: 20,
                           ),
                           child: TextField(
-                            decoration: InputDecoration(
+                            autofocus: onFocus,
+                            decoration: const InputDecoration(
                               contentPadding:
                                   EdgeInsets.only(top: 25, left: 15),
                               hintText: "Type your reply...",
