@@ -8,12 +8,13 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
-import 'package:cinemax/widgets/loading_indicator.dart';
+import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ReplyScreen extends StatelessWidget {
   const ReplyScreen({super.key, required this.comment, required this.onFocus});
@@ -67,8 +68,12 @@ class ReplyScreen extends StatelessWidget {
                 BlocBuilder<CommentsBloc, CommentsState>(
                   builder: (context, state) {
                     if (state is CommensLoadingState) {
-                      return const SliverToBoxAdapter(
-                        child: AppLoadingIndicator(),
+                      return SliverToBoxAdapter(
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[400]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: const ReplyLoading(),
+                        ),
                       );
                     }
                     if (state is ReplyresponseState) {
@@ -448,6 +453,38 @@ class _UserReview extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ReplyLoading extends StatelessWidget {
+  const ReplyLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 60),
+      child: Column(
+        children: [
+          ShimmerSkelton(
+            height: 150,
+            width: MediaQueryHandler.screenWidth(context),
+            radius: 15,
+          ),
+          const SizedBox(height: 12),
+          ShimmerSkelton(
+            height: 150,
+            width: MediaQueryHandler.screenWidth(context),
+            radius: 15,
+          ),
+          const SizedBox(height: 12),
+          ShimmerSkelton(
+            height: 150,
+            width: MediaQueryHandler.screenWidth(context),
+            radius: 15,
+          ),
+        ],
       ),
     );
   }
