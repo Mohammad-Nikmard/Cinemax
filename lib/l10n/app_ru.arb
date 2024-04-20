@@ -136,5 +136,7 @@
     "you": "Ты",
     "themes": "Темы",
     "availableThemes": "Доступные темы",
-    "cinemax": "Синемакс"
+    "cinemax": "Синемакс",
+    "replies": "Ответы",
+    "typeYourReply": "Введите ответ..."
 }

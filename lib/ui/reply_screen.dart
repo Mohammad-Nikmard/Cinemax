@@ -34,6 +34,7 @@ class ReplyScreen extends StatefulWidget {
 class _ReplyScreenState extends State<ReplyScreen> {
   TextEditingController commentController = TextEditingController();
   DateTime now = DateTime.now();
+  String controllerText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class _ReplyScreenState extends State<ReplyScreen> {
                             child: const BackLabel(),
                           ),
                           Text(
-                            "Replies",
+                            AppLocalizations.of(context)!.replies,
                             style: TextStyle(
                               fontFamily: StringConstants.setBoldPersianFont(),
                               fontSize: 16,
@@ -153,18 +154,25 @@ class _ReplyScreenState extends State<ReplyScreen> {
                             left: 20,
                           ),
                           child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                controllerText = value;
+                              });
+                            },
                             controller: commentController,
                             autofocus: widget.onFocus,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.only(top: 25, left: 15),
-                              hintText: "Type your reply...",
+                                  const EdgeInsets.only(top: 25, left: 15),
+                              hintText:
+                                  AppLocalizations.of(context)!.typeYourReply,
                               hintStyle: TextStyle(
-                                fontFamily: "MR",
+                                fontFamily:
+                                    StringConstants.setSmallPersionFont(),
                                 fontSize: 14,
                                 color: TextColors.greyText,
                               ),
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(15),
                                 ),
@@ -173,7 +181,7 @@ class _ReplyScreenState extends State<ReplyScreen> {
                                   color: TextColors.greyText,
                                 ),
                               ),
-                              focusedBorder: OutlineInputBorder(
+                              focusedBorder: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(15),
                                 ),
@@ -208,8 +216,10 @@ class _ReplyScreenState extends State<ReplyScreen> {
                         },
                         child: SvgPicture.asset(
                           "assets/images/icon_arrow_right.svg",
-                          colorFilter: const ColorFilter.mode(
-                            TextColors.greyText,
+                          colorFilter: ColorFilter.mode(
+                            (controllerText.isEmpty)
+                                ? TextColors.greyText
+                                : PrimaryColors.blueAccentColor,
                             BlendMode.srcIn,
                           ),
                         ),

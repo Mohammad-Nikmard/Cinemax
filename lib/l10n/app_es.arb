@@ -136,5 +136,7 @@
     "you": "Tú",
     "themes": "Temas",
     "availableThemes": "Temas disponibles",
-    "cinemax": "cinex"
+    "cinemax": "cinex",
+    "replies": "Respuestas",
+    "typeYourReply": "Escribe tu respuesta..."
 }

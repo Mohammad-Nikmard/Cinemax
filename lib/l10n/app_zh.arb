@@ -136,5 +136,7 @@
     "you": "你",
     "themes": "主题",
     "availableThemes": "可用主题",
-    "cinemax": "电影院"
+    "cinemax": "电影院",
+    "replies": "回复",
+    "typeYourReply": "输入您的回复..."
 }
