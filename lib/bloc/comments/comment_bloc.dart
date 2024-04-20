@@ -11,7 +11,9 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(CommensLoadingState());
         var comments =
             await _commentsRemoteRepository.getComments(event.movieID);
-        emit(CommentsResponseState(comments));
+        var replies =
+            await _commentsRemoteRepository.getCommentReplies(event.movieID);
+        emit(CommentsResponseState(comments, replies));
       },
     );
 
@@ -32,7 +34,9 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
       (event, emit) async {
         var getComments = await _commentsRemoteRepository
             .getComments(event.movieID, numbers: event.page);
-        emit(CommentsResponseState(getComments));
+        var replies =
+            await _commentsRemoteRepository.getCommentReplies(event.movieID);
+        emit(CommentsResponseState(getComments, replies));
       },
     );
     on<FetchUserComments>(

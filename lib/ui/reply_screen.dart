@@ -19,7 +19,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ReplyScreen extends StatefulWidget {
-  const ReplyScreen({super.key, required this.comment, required this.onFocus});
+  const ReplyScreen({
+    super.key,
+    required this.comment,
+    required this.onFocus,
+  });
   final Comment comment;
   final bool onFocus;
 
@@ -39,92 +43,101 @@ class _ReplyScreenState extends State<ReplyScreen> {
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
-            CustomScrollView(
-              slivers: [
-                SliverPadding(
-                  padding:
-                      const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-                  sliver: SliverToBoxAdapter(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const BackLabel(),
-                        ),
-                        Text(
-                          "Replies",
-                          style: TextStyle(
-                            fontFamily: StringConstants.setBoldPersianFont(),
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.tertiary,
+            RefreshIndicator(
+              onRefresh: () async {
+                context.read<CommentsBloc>().add(
+                      FetchRepliesEvent(widget.comment.id),
+                    );
+              },
+              backgroundColor: PrimaryColors.softColor,
+              color: PrimaryColors.blueAccentColor,
+              child: CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 20.0, right: 20.0),
+                    sliver: SliverToBoxAdapter(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context, "Success");
+                            },
+                            child: const BackLabel(),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 32,
-                        ),
-                      ],
+                          Text(
+                            "Replies",
+                            style: TextStyle(
+                              fontFamily: StringConstants.setBoldPersianFont(),
+                              fontSize: 16,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 32,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: _UserReview(comment: widget.comment),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: _UserReview(comment: widget.comment),
+                    ),
                   ),
-                ),
-                BlocBuilder<CommentsBloc, CommentsState>(
-                  builder: (context, state) {
-                    if (state is CommensLoadingState) {
+                  BlocBuilder<CommentsBloc, CommentsState>(
+                    builder: (context, state) {
+                      if (state is CommensLoadingState) {
+                        return SliverToBoxAdapter(
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey[400]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: const ReplyLoading(),
+                          ),
+                        );
+                      }
+                      if (state is ReplyresponseState) {
+                        return state.getreplies.fold(
+                          (exceptionMessage) {
+                            return const SliverToBoxAdapter(
+                              child: ExceptionMessage(),
+                            );
+                          },
+                          (replyList) {
+                            return SliverPadding(
+                              padding: const EdgeInsets.only(
+                                  left: 15.0,
+                                  right: 15.0,
+                                  top: 20.0,
+                                  bottom: 60.0),
+                              sliver: SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(top: 12),
+                                      child: _UserReply(
+                                        reply: replyList[index],
+                                      ),
+                                    );
+                                  },
+                                  childCount: replyList.length,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
                       return SliverToBoxAdapter(
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey[400]!,
-                          highlightColor: Colors.grey[100]!,
-                          child: const ReplyLoading(),
+                        child: Center(
+                          child: Text(AppLocalizations.of(context)!.state),
                         ),
                       );
-                    }
-                    if (state is ReplyresponseState) {
-                      return state.getreplies.fold(
-                        (exceptionMessage) {
-                          return const SliverToBoxAdapter(
-                            child: ExceptionMessage(),
-                          );
-                        },
-                        (replyList) {
-                          return SliverPadding(
-                            padding: const EdgeInsets.only(
-                                left: 15.0,
-                                right: 15.0,
-                                top: 20.0,
-                                bottom: 60.0),
-                            sliver: SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(top: 12),
-                                    child: _UserReply(
-                                      reply: replyList[index],
-                                    ),
-                                  );
-                                },
-                                childCount: replyList.length,
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                    return SliverToBoxAdapter(
-                      child: Center(
-                        child: Text(AppLocalizations.of(context)!.state),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                    },
+                  ),
+                ],
+              ),
             ),
             ColoredBox(
               color: PrimaryColors.darkColor,
@@ -182,10 +195,11 @@ class _ReplyScreenState extends State<ReplyScreen> {
                               "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
                           context.read<CommentsBloc>().add(
                                 PostReplyEvent(
-                                    commentController.text,
-                                    finalTime,
-                                    AuthManager.readRecordID(),
-                                    widget.comment.id),
+                                  commentController.text,
+                                  finalTime,
+                                  AuthManager.readRecordID(),
+                                  widget.comment.id,
+                                ),
                               );
 
                           setState(() {

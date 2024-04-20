@@ -1,4 +1,5 @@
 import 'package:cinemax/data/model/comment.dart';
+import 'package:cinemax/data/model/comment_reply.dart';
 import 'package:cinemax/data/model/user_comment.dart';
 import 'package:cinemax/data/model/user_reply.dart';
 import 'package:dartz/dartz.dart';
@@ -11,8 +12,9 @@ class CommensLoadingState extends CommentsState {}
 
 class CommentsResponseState extends CommentsState {
   Either<String, List<Comment>> getComments;
+  List<CommentReply> getReplies;
 
-  CommentsResponseState(this.getComments);
+  CommentsResponseState(this.getComments, this.getReplies);
 }
 
 class PostCommentResponse extends CommentsState {

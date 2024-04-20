@@ -1,4 +1,5 @@
 import 'package:cinemax/data/model/comment.dart';
+import 'package:cinemax/data/model/comment_reply.dart';
 import 'package:cinemax/data/model/user_comment.dart';
 import 'package:cinemax/data/model/user_reply.dart';
 import 'package:cinemax/util/api_exception.dart';
@@ -16,6 +17,9 @@ abstract class CommentsDatasource {
   Future<List<UserReply>> getReplies(String commentId);
   Future<void> postReply(
       String commentID, String userId, String text, String date);
+
+  Future<List<UserReply>> getALLReplies();
+  Future<List<CommentReply>> getCommentReplies(String movieID, int numbers);
 }
 
 class CommentRemoteDatasource extends CommentsDatasource {
@@ -160,5 +164,42 @@ class CommentRemoteDatasource extends CommentsDatasource {
     } catch (ex) {
       throw ApiException("$ex", 100);
     }
+  }
+
+  @override
+  Future<List<UserReply>> getALLReplies() async {
+    Map<String, dynamic> qparams = {
+      'expand': 'user_id',
+    };
+    try {
+      var response = await _dio.get("/api/collections/replies/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<UserReply>((jsonMapObject) => UserReply.withJson(jsonMapObject))
+          .toList();
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<List<CommentReply>> getCommentReplies(
+      String movieID, int numbers) async {
+    List<Comment> comments = await getComments(movieID, numbers);
+    List<UserReply> replies = await getALLReplies();
+
+    List<CommentReply> finalReply = [];
+
+    for (var commentItem in comments) {
+      var test = replies
+          .where((element) => element.commentId == commentItem.id)
+          .toList();
+
+      finalReply.add(CommentReply(commentItem, test));
+    }
+
+    return finalReply;
   }
 }

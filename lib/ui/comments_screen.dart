@@ -5,6 +5,7 @@ import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/comment.dart';
+import 'package:cinemax/data/model/comment_reply.dart';
 import 'package:cinemax/ui/post_comment_screen.dart';
 import 'package:cinemax/ui/reply_screen.dart';
 import 'package:cinemax/util/app_manager.dart';
@@ -16,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CommentsScreen extends StatelessWidget {
@@ -85,6 +85,8 @@ class CommentsScreen extends StatelessWidget {
                                           const EdgeInsets.only(bottom: 15),
                                       child: _UserReview(
                                         comment: commentsList[index],
+                                        movieID: movieID,
+                                        reply: state.getReplies[index],
                                       ),
                                     );
                                   },
@@ -220,8 +222,11 @@ class _MoreCommentWidgetState extends State<MoreCommentWidget> {
 }
 
 class _UserReview extends StatefulWidget {
-  const _UserReview({required this.comment});
+  const _UserReview(
+      {required this.comment, required this.movieID, required this.reply});
   final Comment comment;
+  final String movieID;
+  final CommentReply reply;
 
   @override
   State<_UserReview> createState() => _UserReviewState();
@@ -463,15 +468,14 @@ class _UserReviewState extends State<_UserReview> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25),
-                        child: Transform.flip(
-                          flipX: true,
-                          child: GestureDetector(
-                            onTap: () {
-                              PersistentNavBarNavigator.pushNewScreen(
-                                context,
-                                screen: BlocProvider(
+                      if (widget.reply.replies.isNotEmpty) ...{
+                        GestureDetector(
+                          onTap: () async {
+                            String? navresult;
+                            navresult = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
                                   create: (context) => CommentsBloc(
                                     locator.get(),
                                   )..add(
@@ -479,13 +483,70 @@ class _UserReviewState extends State<_UserReview> {
                                     ),
                                   child: ReplyScreen(
                                     comment: widget.comment,
-                                    onFocus: true,
+                                    onFocus: false,
                                   ),
                                 ),
-                                withNavBar: false,
-                                pageTransitionAnimation:
-                                    PageTransitionAnimation.cupertino,
+                              ),
+                            );
+
+                            if (navresult!.isNotEmpty) {
+                              if (context.mounted) {
+                                context
+                                    .read<CommentsBloc>()
+                                    .add(CommentFetchEvent(widget.movieID));
+                              }
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 3,
+                                backgroundColor: PrimaryColors.blueAccentColor,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                "${widget.reply.replies.length} reply",
+                                style: const TextStyle(
+                                  color: PrimaryColors.blueAccentColor,
+                                  fontSize: 16,
+                                  fontFamily: "MM",
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      },
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25),
+                        child: Transform.flip(
+                          flipX: true,
+                          child: GestureDetector(
+                            onTap: () async {
+                              String? navresult;
+                              navresult = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BlocProvider(
+                                    create: (context) => CommentsBloc(
+                                      locator.get(),
+                                    )..add(
+                                        FetchRepliesEvent(widget.comment.id),
+                                      ),
+                                    child: ReplyScreen(
+                                      comment: widget.comment,
+                                      onFocus: false,
+                                    ),
+                                  ),
+                                ),
                               );
+
+                              if (navresult!.isNotEmpty) {
+                                if (context.mounted) {
+                                  context
+                                      .read<CommentsBloc>()
+                                      .add(CommentFetchEvent(widget.movieID));
+                                }
+                              }
                             },
                             child: SvgPicture.asset(
                               'assets/images/icon_reply.svg',

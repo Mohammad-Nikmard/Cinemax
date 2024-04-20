@@ -62,5 +62,6 @@ class PostReplyEvent extends CommentsEvent {
   String userId;
   String commentId;
 
-  PostReplyEvent(this.text, this.date, this.userId, this.commentId);
+  PostReplyEvent(
+      this.text, this.date, this.userId, this.commentId);
 }
