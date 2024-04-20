@@ -7,6 +7,11 @@ abstract class ReplyRepository {
   Future<Either<String, List<UserReply>>> getReplies(String commentId);
   Future<Either<String, String>> postReply(
       String commentID, String userId, String text, String date);
+
+  Future<void> replyONlike(String replyId, String userId);
+  Future<void> replyOFFlike(String replyId, String userId);
+  Future<void> replyONdislike(String replyId, String userId);
+  Future<void> replyOFFdislike(String replyId, String userId);
 }
 
 class ReplyRemoteRepository extends ReplyRepository {
@@ -33,5 +38,25 @@ class ReplyRemoteRepository extends ReplyRepository {
     } on ApiException catch (ex) {
       return left(ex.message);
     }
+  }
+
+  @override
+  Future<void> replyOFFdislike(String replyId, String userId) async {
+    await _datasource.replyOFFdislike(replyId, userId);
+  }
+
+  @override
+  Future<void> replyOFFlike(String replyId, String userId) async {
+    await _datasource.replyOFFlike(replyId, userId);
+  }
+
+  @override
+  Future<void> replyONdislike(String replyId, String userId) async {
+    await _datasource.replyONdislike(replyId, userId);
+  }
+
+  @override
+  Future<void> replyONlike(String replyId, String userId) async {
+    await _datasource.replyONlike(replyId, userId);
   }
 }

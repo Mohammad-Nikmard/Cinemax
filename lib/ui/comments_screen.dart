@@ -691,6 +691,8 @@ class _UserReviewState extends State<_UserReview>
         dislikedController.forward();
 
         if (disliked == true && isLiked == true) {
+          context.read<CommentsBloc>().add(
+              LikeEvent(false, widget.comment.id, AuthManager.readRecordID()));
           isLiked = false;
           likeNumber -= 1;
           likedController.reverse();
@@ -714,6 +716,8 @@ class _UserReviewState extends State<_UserReview>
         likeNumber += 1;
         likedController.forward();
         if (isLiked == true && disliked == true) {
+          context.read<CommentsBloc>().add(DislikeEvent(
+              false, widget.comment.id, AuthManager.readRecordID()));
           disliked = false;
           dislikeNumber -= 1;
           dislikedController.reverse();

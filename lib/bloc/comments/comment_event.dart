@@ -80,3 +80,19 @@ class DislikeEvent extends CommentsEvent {
 
   DislikeEvent(this.condition, this.commentId, this.userId);
 }
+
+class ReplyLikeEvent extends CommentsEvent {
+  String replyId;
+  String userId;
+  bool condition;
+
+  ReplyLikeEvent(this.replyId, this.userId, this.condition);
+}
+
+class ReplyDislikeEvent extends CommentsEvent {
+  String replyId;
+  String userId;
+  bool condition;
+
+  ReplyDislikeEvent(this.replyId, this.userId, this.condition);
+}

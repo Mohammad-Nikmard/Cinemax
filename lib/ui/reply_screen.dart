@@ -272,6 +272,18 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
+
+    if (!liked) {
+      likecontroller.value = 0.0;
+    } else if (liked) {
+      likecontroller.value = 1.0;
+    }
+
+    if (!disliked) {
+      dislikecontroller.value = 0.0;
+    } else if (disliked) {
+      dislikecontroller.value = 1.0;
+    }
   }
 
   @override
@@ -442,36 +454,50 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
   }
 
   dislikeEvent() {
-    if (!disliked) {
-      disliked = true;
-      dislikeNumber += 1;
-      dislikecontroller.forward();
+    setState(() {
+      if (!disliked) {
+        context.read<CommentsBloc>().add(ReplyDislikeEvent(
+            widget.reply.id, AuthManager.readRecordID(), true));
+        disliked = true;
+        dislikeNumber += 1;
+        dislikecontroller.forward();
 
-      if (disliked == true && liked == true) {
-        liked = false;
-        likeNumber -= 1;
-        likecontroller.reverse();
+        if (disliked == true && liked == true) {
+          context.read<CommentsBloc>().add(ReplyLikeEvent(
+              widget.reply.id, AuthManager.readRecordID(), false));
+          liked = false;
+          likeNumber -= 1;
+          likecontroller.reverse();
+        }
+      } else if (disliked) {
+        context.read<CommentsBloc>().add(ReplyDislikeEvent(
+            widget.reply.id, AuthManager.readRecordID(), false));
+        disliked = false;
+        dislikeNumber -= 1;
+        dislikecontroller.reverse();
       }
-    } else if (disliked) {
-      disliked = false;
-      dislikeNumber -= 1;
-      dislikecontroller.reverse();
-    }
+    });
   }
 
   likeEvent() {
     setState(() {
       if (!liked) {
+        context.read<CommentsBloc>().add(
+            ReplyLikeEvent(widget.reply.id, AuthManager.readRecordID(), true));
         liked = true;
         likeNumber += 1;
         likecontroller.forward();
 
         if (liked == true && disliked == true) {
+          context.read<CommentsBloc>().add(ReplyDislikeEvent(
+              widget.reply.id, AuthManager.readRecordID(), false));
           disliked = false;
           dislikeNumber -= 1;
           dislikecontroller.reverse();
         }
       } else if (liked) {
+        context.read<CommentsBloc>().add(
+            ReplyLikeEvent(widget.reply.id, AuthManager.readRecordID(), false));
         liked = false;
         likeNumber -= 1;
         likecontroller.reverse();

@@ -6,6 +6,11 @@ abstract class ReplyDatasource {
   Future<List<UserReply>> getReplies(String commentId);
   Future<void> postReply(
       String commentID, String userId, String text, String date);
+
+  Future<void> replyONlike(String replyId, String userId);
+  Future<void> replyOFFlike(String replyId, String userId);
+  Future<void> replyONdislike(String replyId, String userId);
+  Future<void> replyOFFdislike(String replyId, String userId);
 }
 
 class ReplyRemoteDatasource extends ReplyDatasource {
@@ -41,6 +46,54 @@ class ReplyRemoteDatasource extends ReplyDatasource {
         'user_id': userId,
         'comment_id': commentID,
       });
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> replyOFFlike(String replyId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/replies/records/$replyId",
+          data: {'like-': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> replyONdislike(String replyId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/replies/records/$replyId",
+          data: {'dislike+': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> replyONlike(String replyId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/replies/records/$replyId",
+          data: {'like+': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> replyOFFdislike(String replyId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/replies/records/$replyId",
+          data: {'dislike-': userId});
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {
