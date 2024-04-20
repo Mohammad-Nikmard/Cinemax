@@ -76,6 +76,13 @@ class CommentsScreen extends StatelessWidget {
                         },
                         (commentsList) {
                           if (commentsList.isNotEmpty) {
+                            commentsList.sort((a, b) =>
+                                b.likes.length.compareTo(a.likes.length));
+
+                            state.getReplies.sort((a, b) => b
+                                .comment.likes.length
+                                .compareTo(a.comment.likes.length));
+
                             return SliverPadding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20),
