@@ -62,6 +62,21 @@ class PostReplyEvent extends CommentsEvent {
   String userId;
   String commentId;
 
-  PostReplyEvent(
-      this.text, this.date, this.userId, this.commentId);
+  PostReplyEvent(this.text, this.date, this.userId, this.commentId);
+}
+
+class LikeEvent extends CommentsEvent {
+  bool condition;
+  String commentId;
+  String userId;
+
+  LikeEvent(this.condition, this.commentId, this.userId);
+}
+
+class DislikeEvent extends CommentsEvent {
+  bool condition;
+  String commentId;
+  String userId;
+
+  DislikeEvent(this.condition, this.commentId, this.userId);
 }

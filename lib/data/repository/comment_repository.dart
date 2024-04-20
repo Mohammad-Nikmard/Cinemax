@@ -22,6 +22,11 @@ abstract class CommentsRepository {
 
   Future<List<CommentReply>> getCommentReplies(String movieID,
       {int numbers = 30});
+
+  Future<void> commentOnlike(String commentId, String userId);
+  Future<void> commentOFFlike(String commentId, String userId);
+  Future<void> commentONdislike(String commentId, String userId);
+  Future<void> commentOFFdislike(String commentId, String userId);
 }
 
 class CommentsRemoteRepository extends CommentsRepository {
@@ -111,5 +116,25 @@ class CommentsRemoteRepository extends CommentsRepository {
     var response = await _datasource.getCommentReplies(movieID, numbers);
 
     return response;
+  }
+
+  @override
+  Future<void> commentOFFdislike(String commentId, String userId) async {
+    await _datasource.commentOFFdislike(commentId, userId);
+  }
+
+  @override
+  Future<void> commentOFFlike(String commentId, String userId) async {
+    await _datasource.commnetOFFlike(commentId, userId);
+  }
+
+  @override
+  Future<void> commentONdislike(String commentId, String userId) async {
+    await _datasource.commentONdislike(commentId, userId);
+  }
+
+  @override
+  Future<void> commentOnlike(String commentId, String userId) async {
+    await _datasource.commentOnlike(commentId, userId);
   }
 }

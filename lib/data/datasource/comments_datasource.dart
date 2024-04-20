@@ -20,6 +20,11 @@ abstract class CommentsDatasource {
 
   Future<List<UserReply>> getALLReplies();
   Future<List<CommentReply>> getCommentReplies(String movieID, int numbers);
+
+  Future<void> commentOnlike(String commentId, String userId);
+  Future<void> commnetOFFlike(String commentId, String userId);
+  Future<void> commentONdislike(String commentId, String userId);
+  Future<void> commentOFFdislike(String commentId, String userId);
 }
 
 class CommentRemoteDatasource extends CommentsDatasource {
@@ -201,5 +206,53 @@ class CommentRemoteDatasource extends CommentsDatasource {
     }
 
     return finalReply;
+  }
+
+  @override
+  Future<void> commentOnlike(String commentId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/movies_comment/records/$commentId",
+          data: {'like+': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> commnetOFFlike(String commentId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/movies_comment/records/$commentId",
+          data: {'like-': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> commentOFFdislike(String commentId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/movies_comment/records/$commentId",
+          data: {'dislike-': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> commentONdislike(String commentId, String userId) async {
+    try {
+      await _dio.patch("/api/collections/movies_comment/records/$commentId",
+          data: {'dislike+': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
   }
 }

@@ -9,6 +9,8 @@ class Comment {
   String userID;
   String rate;
   bool spoiler;
+  List<dynamic> likes;
+  List<dynamic> dislikes;
   String username;
   String userThumbnail;
   String profile;
@@ -22,6 +24,8 @@ class Comment {
     this.userID,
     this.rate,
     this.spoiler,
+    this.likes,
+    this.dislikes,
     this.username,
     this.userThumbnail,
     this.profile,
@@ -37,6 +41,8 @@ class Comment {
       jsonMapObject["user_id"],
       jsonMapObject["rate"].toString(),
       jsonMapObject["spoiler"],
+      jsonMapObject["like"],
+      jsonMapObject["dislike"],
       jsonMapObject["expand"]["user_id"]["username"],
       "${StringConstants.baseImage}/api/files/${jsonMapObject["expand"]["user_id"]["collectionId"]}/${jsonMapObject["expand"]["user_id"]["id"]}/${jsonMapObject["expand"]["user_id"]["profile_pic"]}",
       jsonMapObject["expand"]["user_id"]["profile_pic"],

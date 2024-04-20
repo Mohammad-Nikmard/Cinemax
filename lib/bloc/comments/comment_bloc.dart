@@ -87,5 +87,28 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(ReplyresponseState(replies));
       },
     );
+
+    on<LikeEvent>(
+      (event, emit) async {
+        if (event.condition == true) {
+          await _commentsRemoteRepository.commentOnlike(
+              event.commentId, event.userId);
+        } else if (event.condition == false) {
+          await _commentsRemoteRepository.commentOFFlike(
+              event.commentId, event.userId);
+        }
+      },
+    );
+    on<DislikeEvent>(
+      (event, emit) async {
+        if (event.condition == true) {
+          await _commentsRemoteRepository.commentONdislike(
+              event.commentId, event.userId);
+        } else if (event.condition == false) {
+          await _commentsRemoteRepository.commentOFFdislike(
+              event.commentId, event.userId);
+        }
+      },
+    );
   }
 }

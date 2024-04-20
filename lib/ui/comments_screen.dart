@@ -9,13 +9,12 @@ import 'package:cinemax/data/model/comment_reply.dart';
 import 'package:cinemax/ui/post_comment_screen.dart';
 import 'package:cinemax/ui/reply_screen.dart';
 import 'package:cinemax/util/app_manager.dart';
+import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -239,13 +238,23 @@ class _UserReviewState extends State<_UserReview>
     with TickerProviderStateMixin {
   late AnimationController likedController;
   late AnimationController dislikedController;
+
+  late int likeNumber;
+  late int dislikeNumber;
+
   bool spoilerCheck = false;
-  bool isLiked = false;
-  bool disliked = false;
+  late bool isLiked;
+  late bool disliked;
 
   @override
   void initState() {
     super.initState();
+    isLiked = (widget.comment.likes.contains(AuthManager.readRecordID()));
+    disliked = (widget.comment.dislikes.contains(AuthManager.readRecordID()));
+
+    likeNumber = widget.comment.likes.length;
+    dislikeNumber = widget.comment.dislikes.length;
+
     likedController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -560,17 +569,7 @@ class _UserReviewState extends State<_UserReview>
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (!isLiked) {
-                                  isLiked = true;
-                                  likedController.forward();
-                                } else if (isLiked) {
-                                  isLiked = false;
-                                  likedController.reverse();
-                                }
-                              });
-                            },
+                            onTap: () => likeEvents(),
                             child: LottieBuilder.asset(
                               'assets/Animation - 1713544475861.json',
                               repeat: false,
@@ -579,30 +578,22 @@ class _UserReviewState extends State<_UserReview>
                               width: 50,
                             ),
                           ),
-                          const Text(
-                            "1.5k",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: TextColors.greyText,
-                              fontFamily: "MM",
+                          if (likeNumber != 0) ...{
+                            Text(
+                              "$likeNumber",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: TextColors.greyText,
+                                fontFamily: "MM",
+                              ),
                             ),
-                          ),
+                          }
                         ],
                       ),
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (!isLiked) {
-                                  isLiked = true;
-                                  dislikedController.forward();
-                                } else if (isLiked) {
-                                  isLiked = false;
-                                  dislikedController.reverse();
-                                }
-                              });
-                            },
+                            onTap: () => dislikeEvents(),
                             child: Transform.flip(
                               flipY: true,
                               child: LottieBuilder.asset(
@@ -614,14 +605,16 @@ class _UserReviewState extends State<_UserReview>
                               ),
                             ),
                           ),
-                          const Text(
-                            "1.5k",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: TextColors.greyText,
-                              fontFamily: "MM",
+                          if (dislikeNumber != 0) ...{
+                            Text(
+                              "$dislikeNumber",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: TextColors.greyText,
+                                fontFamily: "MM",
+                              ),
                             ),
-                          ),
+                          }
                         ],
                       ),
                       Padding(
@@ -677,6 +670,53 @@ class _UserReviewState extends State<_UserReview>
         ),
       ),
     );
+  }
+
+  dislikeEvents() {
+    setState(() {
+      if (!disliked) {
+        context.read<CommentsBloc>().add(
+            DislikeEvent(true, widget.comment.id, AuthManager.readRecordID()));
+        disliked = true;
+        dislikeNumber += 1;
+        dislikedController.forward();
+
+        if (disliked == true && isLiked == true) {
+          isLiked = false;
+          likeNumber -= 1;
+          likedController.reverse();
+        }
+      } else if (disliked) {
+        context.read<CommentsBloc>().add(
+            DislikeEvent(false, widget.comment.id, AuthManager.readRecordID()));
+        disliked = false;
+        dislikeNumber -= 1;
+        dislikedController.reverse();
+      }
+    });
+  }
+
+  likeEvents() {
+    setState(() {
+      if (!isLiked) {
+        context.read<CommentsBloc>().add(
+            LikeEvent(true, widget.comment.id, AuthManager.readRecordID()));
+        isLiked = true;
+        likeNumber += 1;
+        likedController.forward();
+        if (isLiked == true && disliked == true) {
+          disliked = false;
+          dislikeNumber -= 1;
+          dislikedController.reverse();
+        }
+      } else if (isLiked) {
+        context.read<CommentsBloc>().add(
+            LikeEvent(false, widget.comment.id, AuthManager.readRecordID()));
+        isLiked = false;
+        likeNumber -= 1;
+        likedController.reverse();
+      }
+    });
   }
 }
 
