@@ -172,11 +172,12 @@ class SeriesDetailScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: BlocProvider(
-                                    create: (context) =>
-                                        CommentsBloc(locator.get())
-                                          ..add(
-                                            CommentFetchEvent(series.id),
-                                          ),
+                                    create: (context) => CommentsBloc(
+                                      locator.get(),
+                                      locator.get(),
+                                    )..add(
+                                        CommentFetchEvent(series.id),
+                                      ),
                                     child: CommentsScreen(
                                       movieName: series.name,
                                       year: series.year,
@@ -204,11 +205,12 @@ class SeriesDetailScreen extends StatelessWidget {
                                 PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen: BlocProvider(
-                                    create: (context) =>
-                                        CommentsBloc(locator.get())
-                                          ..add(
-                                            CommentFetchEvent(series.id),
-                                          ),
+                                    create: (context) => CommentsBloc(
+                                      locator.get(),
+                                      locator.get(),
+                                    )..add(
+                                        CommentFetchEvent(series.id),
+                                      ),
                                     child: CommentsScreen(
                                       movieName: series.name,
                                       year: series.year,

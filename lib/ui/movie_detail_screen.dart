@@ -147,7 +147,7 @@ class MovieDetailScreen extends StatelessWidget {
                                 context,
                                 screen: BlocProvider(
                                   create: (context) =>
-                                      CommentsBloc(locator.get())
+                                      CommentsBloc(locator.get(), locator.get())
                                         ..add(
                                           CommentFetchEvent(movie.id),
                                         ),
@@ -179,7 +179,7 @@ class MovieDetailScreen extends StatelessWidget {
                                 context,
                                 screen: BlocProvider(
                                   create: (context) =>
-                                      CommentsBloc(locator.get())
+                                      CommentsBloc(locator.get(), locator.get())
                                         ..add(
                                           CommentFetchEvent(movie.id),
                                         ),

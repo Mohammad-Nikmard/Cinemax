@@ -376,12 +376,13 @@ class _GeneralChip extends StatelessWidget {
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: BlocProvider(
-                      create: (context) => CommentsBloc(locator.get())
-                        ..add(
-                          FetchUserComments(
-                            AuthManager.readRecordID(),
-                          ),
-                        ),
+                      create: (context) =>
+                          CommentsBloc(locator.get(), locator.get())
+                            ..add(
+                              FetchUserComments(
+                                AuthManager.readRecordID(),
+                              ),
+                            ),
                       child: const YourCommentsScreen(),
                     ),
                     withNavBar: true,

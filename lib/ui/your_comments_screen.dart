@@ -265,8 +265,7 @@ class _UserReview extends StatelessWidget {
                                   MaterialPageRoute(
                                     builder: (context) => BlocProvider(
                                       create: (context) => CommentsBloc(
-                                        locator.get(),
-                                      ),
+                                          locator.get(), locator.get()),
                                       child: EditCommentScreen(
                                         imageURL: comment.movieThumbnail,
                                         movieName: comment.movieName,

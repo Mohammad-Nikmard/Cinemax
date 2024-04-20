@@ -535,6 +535,7 @@ class _UserReviewState extends State<_UserReview>
                                 builder: (context) => BlocProvider(
                                   create: (context) => CommentsBloc(
                                     locator.get(),
+                                    locator.get(),
                                   )..add(
                                       FetchRepliesEvent(widget.comment.id),
                                     ),
@@ -636,6 +637,7 @@ class _UserReviewState extends State<_UserReview>
                                 MaterialPageRoute(
                                   builder: (context) => BlocProvider(
                                     create: (context) => CommentsBloc(
+                                      locator.get(),
                                       locator.get(),
                                     )..add(
                                         FetchRepliesEvent(widget.comment.id),
@@ -828,7 +830,8 @@ class _CommentsHeader extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => BlocProvider(
-                          create: (context) => CommentsBloc(locator.get()),
+                          create: (context) =>
+                              CommentsBloc(locator.get(), locator.get()),
                           child: PostCommentScreen(
                             movieName: movieName,
                             year: year,

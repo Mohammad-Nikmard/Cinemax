@@ -14,9 +14,6 @@ abstract class CommentsDatasource {
   Future<void> deleteComment(String commentID);
   Future<String> updateComment(String commentID, String text, String headline,
       double rate, String time, bool spoiler);
-  Future<List<UserReply>> getReplies(String commentId);
-  Future<void> postReply(
-      String commentID, String userId, String text, String date);
 
   Future<List<UserReply>> getALLReplies();
   Future<List<CommentReply>> getCommentReplies(String movieID, int numbers);
@@ -133,42 +130,6 @@ class CommentRemoteDatasource extends CommentsDatasource {
       throw ApiException("$ex", 100);
     }
     return "";
-  }
-
-  @override
-  Future<List<UserReply>> getReplies(String commentId) async {
-    Map<String, dynamic> qparams = {
-      'filter': 'comment_id= "$commentId"',
-      'expand': 'user_id',
-    };
-    try {
-      var response = await _dio.get("/api/collections/replies/records",
-          queryParameters: qparams);
-      return response.data['items']
-          .map<UserReply>((jsonMapObject) => UserReply.withJson(jsonMapObject))
-          .toList();
-    } on DioException catch (ex) {
-      throw ApiException(ex.response?.data["message"], ex.response?.statusCode);
-    } catch (ex) {
-      throw ApiException("$ex", 100);
-    }
-  }
-
-  @override
-  Future<void> postReply(
-      String commentID, String userId, String text, String date) async {
-    try {
-      await _dio.post("/api/collections/replies/records", data: {
-        "text": text,
-        'date': date,
-        'user_id': userId,
-        'comment_id': commentID,
-      });
-    } on DioException catch (ex) {
-      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
-    } catch (ex) {
-      throw ApiException("$ex", 100);
-    }
   }
 
   @override

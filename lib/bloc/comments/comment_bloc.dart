@@ -1,11 +1,14 @@
 import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/data/repository/comment_repository.dart';
+import 'package:cinemax/data/repository/reply_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   final CommentsRepository _commentsRemoteRepository;
-  CommentsBloc(this._commentsRemoteRepository) : super(CommentsInitState()) {
+  final ReplyRepository _replyRepository;
+  CommentsBloc(this._commentsRemoteRepository, this._replyRepository)
+      : super(CommentsInitState()) {
     on<CommentFetchEvent>(
       (event, emit) async {
         emit(CommensLoadingState());
@@ -72,18 +75,16 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     on<FetchRepliesEvent>(
       (event, emit) async {
         emit(CommensLoadingState());
-        var replies =
-            await _commentsRemoteRepository.getReplies(event.commentID);
+        var replies = await _replyRepository.getReplies(event.commentID);
         emit(ReplyresponseState(replies));
       },
     );
     on<PostReplyEvent>(
       (event, emit) async {
         emit(CommensLoadingState());
-        await _commentsRemoteRepository.postReply(
+        await _replyRepository.postReply(
             event.commentId, event.userId, event.text, event.date);
-        var replies =
-            await _commentsRemoteRepository.getReplies(event.commentId);
+        var replies = await _replyRepository.getReplies(event.commentId);
         emit(ReplyresponseState(replies));
       },
     );

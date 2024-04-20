@@ -5,6 +5,7 @@ import 'package:cinemax/data/datasource/category_datasource.dart';
 import 'package:cinemax/data/datasource/comments_datasource.dart';
 import 'package:cinemax/data/datasource/movie_datasource.dart';
 import 'package:cinemax/data/datasource/news_datasource.dart';
+import 'package:cinemax/data/datasource/reply_datasource.dart';
 import 'package:cinemax/data/datasource/search_datasource.dart';
 import 'package:cinemax/data/datasource/series_datasource.dart';
 import 'package:cinemax/data/datasource/upcomings_datasource.dart';
@@ -16,6 +17,7 @@ import 'package:cinemax/data/repository/category_repository.dart';
 import 'package:cinemax/data/repository/comment_repository.dart';
 import 'package:cinemax/data/repository/movie_repository.dart';
 import 'package:cinemax/data/repository/news_repository.dart';
+import 'package:cinemax/data/repository/reply_repository.dart';
 import 'package:cinemax/data/repository/search_repository.dart';
 import 'package:cinemax/data/repository/series_repository.dart';
 import 'package:cinemax/data/repository/upcomings_repository.dart';
@@ -73,6 +75,9 @@ void getDatasources() {
 
   locator
       .registerSingleton<NewsDatasource>(NewsRemoteDatasource(locator.get()));
+
+  locator
+      .registerSingleton<ReplyDatasource>(ReplyRemoteDatasource(locator.get()));
 }
 
 void getRepositories() {
@@ -107,4 +112,7 @@ void getRepositories() {
       CategoryRemoteRepositry(locator.get()));
 
   locator.registerSingleton<NewsRepository>(NewsRemoteRpositry(locator.get()));
+
+  locator
+      .registerSingleton<ReplyRepository>(ReplyRemoteRepository(locator.get()));
 }
