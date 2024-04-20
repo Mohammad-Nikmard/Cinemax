@@ -13,10 +13,13 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CommentsScreen extends StatelessWidget {
@@ -232,8 +235,46 @@ class _UserReview extends StatefulWidget {
   State<_UserReview> createState() => _UserReviewState();
 }
 
-class _UserReviewState extends State<_UserReview> {
+class _UserReviewState extends State<_UserReview>
+    with TickerProviderStateMixin {
+  late AnimationController likedController;
+  late AnimationController dislikedController;
   bool spoilerCheck = false;
+  bool isLiked = false;
+  bool disliked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    likedController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    dislikedController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    if (!isLiked) {
+      likedController.value = 0.0;
+    } else if (isLiked) {
+      likedController.value = 1.0;
+    }
+
+    if (!disliked) {
+      dislikedController.value = 0.0;
+    } else if (disliked) {
+      dislikedController.value = 1.0;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    likedController.dispose();
+    dislikedController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -516,6 +557,73 @@ class _UserReviewState extends State<_UserReview> {
                           ),
                         )
                       },
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (!isLiked) {
+                                  isLiked = true;
+                                  likedController.forward();
+                                } else if (isLiked) {
+                                  isLiked = false;
+                                  likedController.reverse();
+                                }
+                              });
+                            },
+                            child: LottieBuilder.asset(
+                              'assets/Animation - 1713544475861.json',
+                              repeat: false,
+                              controller: likedController,
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                          const Text(
+                            "1.5k",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: TextColors.greyText,
+                              fontFamily: "MM",
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (!isLiked) {
+                                  isLiked = true;
+                                  dislikedController.forward();
+                                } else if (isLiked) {
+                                  isLiked = false;
+                                  dislikedController.reverse();
+                                }
+                              });
+                            },
+                            child: Transform.flip(
+                              flipY: true,
+                              child: LottieBuilder.asset(
+                                'assets/Animation - 1713544475861.json',
+                                repeat: false,
+                                controller: dislikedController,
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                          ),
+                          const Text(
+                            "1.5k",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: TextColors.greyText,
+                              fontFamily: "MM",
+                            ),
+                          ),
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 25),
                         child: Transform.flip(
@@ -550,8 +658,8 @@ class _UserReviewState extends State<_UserReview> {
                             },
                             child: SvgPicture.asset(
                               'assets/images/icon_reply.svg',
-                              height: 20,
-                              width: 20,
+                              height: 16,
+                              width: 16,
                               colorFilter: const ColorFilter.mode(
                                 TextColors.greyText,
                                 BlendMode.srcIn,
