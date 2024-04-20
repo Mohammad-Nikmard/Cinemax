@@ -12,10 +12,12 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ReplyScreen extends StatefulWidget {
@@ -236,9 +238,41 @@ class _ReplyScreenState extends State<ReplyScreen> {
   }
 }
 
-class _UserReply extends StatelessWidget {
+class _UserReply extends StatefulWidget {
   const _UserReply({required this.reply});
   final UserReply reply;
+
+  @override
+  State<_UserReply> createState() => _UserReplyState();
+}
+
+class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
+  late AnimationController likecontroller;
+  late AnimationController dislikecontroller;
+  late bool liked;
+  late bool disliked;
+
+  late int likeNumber;
+  late int dislikeNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    likeNumber = widget.reply.likes.length;
+    dislikeNumber = widget.reply.dislikes.length;
+
+    liked = (widget.reply.likes.contains(AuthManager.readRecordID()));
+    disliked = (widget.reply.dislikes.contains(AuthManager.readRecordID()));
+
+    likecontroller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    dislikecontroller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -251,8 +285,7 @@ class _UserReply extends StatelessWidget {
         child: SizedBox(
           width: MediaQueryHandler.screenWidth(context),
           child: Padding(
-            padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -274,11 +307,11 @@ class _UserReply extends StatelessWidget {
                                 (MediaQueryHandler.screenWidth(context) < 290)
                                     ? 30
                                     : 40,
-                            child: (reply.thumbnail.isNotEmpty)
+                            child: (widget.reply.thumbnail.isNotEmpty)
                                 ? FittedBox(
                                     fit: BoxFit.cover,
                                     child: CachedImage(
-                                      imageUrl: reply.userThumbnail,
+                                      imageUrl: widget.reply.userThumbnail,
                                       radius: 100,
                                     ),
                                   )
@@ -297,7 +330,7 @@ class _UserReply extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              reply.userName,
+                              widget.reply.userName,
                               style: TextStyle(
                                 fontSize:
                                     (MediaQueryHandler.screenWidth(context) <
@@ -310,7 +343,7 @@ class _UserReply extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              reply.date,
+                              widget.reply.date,
                               style: TextStyle(
                                 fontFamily:
                                     StringConstants.setSmallPersionFont(),
@@ -338,19 +371,112 @@ class _UserReply extends StatelessWidget {
                   height: 15.0,
                 ),
                 Text(
-                  reply.text,
+                  widget.reply.text,
                   style: const TextStyle(
                     fontSize: 14,
                     fontFamily: "MM",
                   ),
                   textAlign: TextAlign.start,
-                )
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => likeEvent(),
+                          child: LottieBuilder.asset(
+                            'assets/Animation - 1713544475861.json',
+                            height: 50,
+                            width: 50,
+                            controller: likecontroller,
+                            repeat: false,
+                          ),
+                        ),
+                        if (likeNumber != 0) ...{
+                          Text(
+                            "$likeNumber",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: TextColors.greyText,
+                              fontFamily: "MM",
+                            ),
+                          ),
+                        }
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Transform.flip(
+                          flipY: true,
+                          child: GestureDetector(
+                            onTap: () => dislikeEvent(),
+                            child: LottieBuilder.asset(
+                              'assets/Animation - 1713544475861.json',
+                              height: 50,
+                              width: 50,
+                              controller: dislikecontroller,
+                              repeat: false,
+                            ),
+                          ),
+                        ),
+                        if (dislikeNumber != 0) ...{
+                          Text(
+                            "$dislikeNumber",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: TextColors.greyText,
+                              fontFamily: "MM",
+                            ),
+                          ),
+                        }
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  dislikeEvent() {
+    if (!disliked) {
+      disliked = true;
+      dislikeNumber += 1;
+      dislikecontroller.forward();
+
+      if (disliked == true && liked == true) {
+        liked = false;
+        likeNumber -= 1;
+        likecontroller.reverse();
+      }
+    } else if (disliked) {
+      disliked = false;
+      dislikeNumber -= 1;
+      dislikecontroller.reverse();
+    }
+  }
+
+  likeEvent() {
+    setState(() {
+      if (!liked) {
+        liked = true;
+        likeNumber += 1;
+        likecontroller.forward();
+
+        if (liked == true && disliked == true) {
+          disliked = false;
+          dislikeNumber -= 1;
+          dislikecontroller.reverse();
+        }
+      } else if (liked) {
+        liked = false;
+        likeNumber -= 1;
+        likecontroller.reverse();
+      }
+    });
   }
 }
 
