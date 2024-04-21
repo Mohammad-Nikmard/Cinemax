@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
@@ -12,6 +13,7 @@ import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -379,17 +381,6 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
                       ],
                     ),
                     const Spacer(),
-                    // GestureDetector(
-                    //   onTap: () {
-
-                    //   },
-                    //   child: const Icon(
-                    //     Icons.more_vert,
-                    //     color: TextColors.greyText,
-                    //     size: 24.0,
-                    //   ),
-                    // ),
-
                     PopupMenuButton(
                       surfaceTintColor: PrimaryColors.darkColor,
                       color: PrimaryColors.softColor,
@@ -400,7 +391,13 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
                           backgroundColor: Colors.transparent,
                           context: context,
                           builder: (context) {
-                            return reportSheet();
+                            return BlocProvider(
+                              create: (context) => CommentsBloc(
+                                locator.get(),
+                                locator.get(),
+                              ),
+                              child: reportSheet(),
+                            );
                           },
                         );
                       },
@@ -552,7 +549,7 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
       child: Container(
-        height: 350,
+        height: 450,
         width: MediaQueryHandler.screenWidth(context),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
@@ -585,7 +582,7 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
               const SizedBox(height: 10),
               const SizedBox(height: 10),
               TextField(
-                maxLines: 5,
+                maxLines: 8,
                 controller: reportController,
                 style: TextStyle(
                   fontFamily: StringConstants.setMediumPersionFont(),
@@ -619,21 +616,64 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 50,
-                width: MediaQueryHandler.screenWidth(context),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.submit,
-                    style: TextStyle(
-                      fontFamily: StringConstants.setMediumPersionFont(),
-                      fontSize: 16,
-                      color: TextColors.whiteText,
-                    ),
-                  ),
-                ),
+              const SizedBox(height: 50),
+              BlocConsumer<CommentsBloc, CommentsState>(
+                builder: (context, state) {
+                  if (state is CommentsInitState) {
+                    return SizedBox(
+                      height: 50,
+                      width: MediaQueryHandler.screenWidth(context),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.read<CommentsBloc>().add(ReportCommentEvent(
+                              reportController.text.trim(),
+                              commentId: null,
+                              replyId: widget.reply.id));
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.submit,
+                          style: TextStyle(
+                            fontFamily: StringConstants.setMediumPersionFont(),
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else if (state is CommensLoadingState) {
+                    return const AppLoadingIndicator();
+                  } else if (state is ReportResponseState) {
+                    return SizedBox(
+                      height: 50,
+                      width: MediaQueryHandler.screenWidth(context),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.read<CommentsBloc>().add(ReportCommentEvent(
+                              reportController.text.trim(),
+                              commentId: null,
+                              replyId: widget.reply.id));
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.submit,
+                          style: TextStyle(
+                            fontFamily: StringConstants.setMediumPersionFont(),
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Center(
+                    child: Text(AppLocalizations.of(context)!.state),
+                  );
+                },
+                listener: (context, state) {
+                  if (state is ReportResponseState) {
+                    reportController.text = "";
+                    Navigator.pop(context);
+                  }
+                },
               ),
             ],
           ),

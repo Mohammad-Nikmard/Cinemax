@@ -22,6 +22,8 @@ abstract class CommentsDatasource {
   Future<void> commnetOFFlike(String commentId, String userId);
   Future<void> commentONdislike(String commentId, String userId);
   Future<void> commentOFFdislike(String commentId, String userId);
+
+  Future<void> reportComment(String text, String commentId, String replyId);
 }
 
 class CommentRemoteDatasource extends CommentsDatasource {
@@ -210,6 +212,25 @@ class CommentRemoteDatasource extends CommentsDatasource {
     try {
       await _dio.patch("/api/collections/movies_comment/records/$commentId",
           data: {'dislike+': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<void> reportComment(
+      String text, String commentId, String replyId) async {
+    try {
+      await _dio.post(
+        "/api/collections/reports/records",
+        data: {
+          'text': text,
+          'comment_id': commentId,
+          'reply_id': replyId,
+        },
+      );
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {

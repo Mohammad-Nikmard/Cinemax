@@ -23,6 +23,9 @@ abstract class CommentsRepository {
   Future<void> commentOFFlike(String commentId, String userId);
   Future<void> commentONdislike(String commentId, String userId);
   Future<void> commentOFFdislike(String commentId, String userId);
+
+  Future<void> reportComment(String text,
+      {String commentId = "", String replyId = ""});
 }
 
 class CommentsRemoteRepository extends CommentsRepository {
@@ -111,5 +114,11 @@ class CommentsRemoteRepository extends CommentsRepository {
   @override
   Future<void> commentOnlike(String commentId, String userId) async {
     await _datasource.commentOnlike(commentId, userId);
+  }
+
+  @override
+  Future<void> reportComment(String text,
+      {String commentId = "", String replyId = ""}) async {
+    await _datasource.reportComment(text, commentId, replyId);
   }
 }

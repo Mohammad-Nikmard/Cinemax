@@ -109,3 +109,11 @@ class DeleteReplyEvent extends CommentsEvent {
 
   DeleteReplyEvent(this.replyId, this.userId);
 }
+
+class ReportCommentEvent extends CommentsEvent {
+  String text;
+  String? commentId;
+  String? replyId;
+
+  ReportCommentEvent(this.text, {this.commentId, this.replyId});
+}

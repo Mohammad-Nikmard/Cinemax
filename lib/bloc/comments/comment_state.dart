@@ -40,3 +40,5 @@ class ReplyresponseState extends CommentsState {
 
   ReplyresponseState(this.getreplies);
 }
+
+class ReportResponseState extends CommentsState {}
