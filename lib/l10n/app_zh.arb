@@ -138,5 +138,7 @@
     "availableThemes": "可用主题",
     "cinemax": "电影院",
     "replies": "回复",
-    "typeYourReply": "输入您的回复..."
+    "typeYourReply": "输入您的回复...",
+    "report": "报告",
+    "reportCap": "告诉我们您为什么要举报此评论。"
 }

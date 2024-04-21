@@ -138,5 +138,7 @@
     "availableThemes": "Available Themes",
     "cinemax": "Cinemax",
     "replies": "Replies",
-    "typeYourReply": "Type your reply..."
+    "typeYourReply": "Type your reply...",
+    "report": "Report",
+    "reportCap": "Tell us why you want to report this comment."
 }

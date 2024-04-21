@@ -563,7 +563,7 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
           child: Column(
             children: [
               Text(
-                "Report",
+                AppLocalizations.of(context)!.report,
                 style: TextStyle(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.tertiary,
@@ -572,7 +572,7 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
               ),
               const SizedBox(height: 5),
               Text(
-                "Tell us why you are reporting this comment.",
+                AppLocalizations.of(context)!.reportCap,
                 style: TextStyle(
                   fontFamily: StringConstants.setSmallPersionFont(),
                   color: Theme.of(context).colorScheme.tertiary,
@@ -590,7 +590,7 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
                 decoration: InputDecoration(
-                  hintText: "Type here...",
+                  hintText: AppLocalizations.of(context)!.typeSomething,
                   hintStyle: TextStyle(
                     fontSize: 12,
                     color: TextColors.greyText,

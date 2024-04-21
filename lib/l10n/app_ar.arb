@@ -138,5 +138,7 @@
     "availableThemes": "السمات المتاحة",
     "cinemax": "سينماكس",
     "replies": "الردود",
-    "typeYourReply": "اكتب ردك..."
+    "typeYourReply": "اكتب ردك...",
+    "report": "تقرير",
+    "reportCap": "أخبرنا لماذا تريد الإبلاغ عن هذا التعليق."
 }

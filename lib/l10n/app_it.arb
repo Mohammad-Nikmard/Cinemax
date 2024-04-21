@@ -138,5 +138,7 @@
     "availableThemes": "Temi disponibili",
     "cinemax": "Cinemax",
     "replies": "Risposte",
-    "typeYourReply": "Scrivi la tua risposta..."
+    "typeYourReply": "Scrivi la tua risposta...",
+    "report": "Rapporto",
+    "reportCap": "Spiegaci perché vuoi segnalare questo commento."
 }
