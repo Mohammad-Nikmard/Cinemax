@@ -12,7 +12,6 @@ import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -201,16 +200,18 @@ class _ReplyScreenState extends State<ReplyScreen> {
                       padding: const EdgeInsets.only(left: 20.0, right: 20),
                       child: GestureDetector(
                         onTap: () {
-                          String finalTime =
-                              "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
-                          context.read<CommentsBloc>().add(
-                                PostReplyEvent(
-                                  commentController.text,
-                                  finalTime,
-                                  AuthManager.readRecordID(),
-                                  widget.comment.id,
-                                ),
-                              );
+                          if (commentController.text.trim().isNotEmpty) {
+                            String finalTime =
+                                "${StringConstants.months[now.month]} ${now.day}, ${now.year}";
+                            context.read<CommentsBloc>().add(
+                                  PostReplyEvent(
+                                    commentController.text,
+                                    finalTime,
+                                    AuthManager.readRecordID(),
+                                    widget.comment.id,
+                                  ),
+                                );
+                          }
 
                           setState(() {
                             commentController.text = "";

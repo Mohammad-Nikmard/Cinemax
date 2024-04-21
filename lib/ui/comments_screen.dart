@@ -644,7 +644,7 @@ class _UserReviewState extends State<_UserReview>
                                       ),
                                     child: ReplyScreen(
                                       comment: widget.comment,
-                                      onFocus: false,
+                                      onFocus: true,
                                     ),
                                   ),
                                 ),
