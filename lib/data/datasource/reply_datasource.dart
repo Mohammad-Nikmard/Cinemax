@@ -11,6 +11,8 @@ abstract class ReplyDatasource {
   Future<void> replyOFFlike(String replyId, String userId);
   Future<void> replyONdislike(String replyId, String userId);
   Future<void> replyOFFdislike(String replyId, String userId);
+
+  Future<List<UserReply>> getUserReplies(String userId);
 }
 
 class ReplyRemoteDatasource extends ReplyDatasource {
@@ -94,6 +96,25 @@ class ReplyRemoteDatasource extends ReplyDatasource {
     try {
       await _dio.patch("/api/collections/replies/records/$replyId",
           data: {'dislike-': userId});
+    } on DioException catch (ex) {
+      throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiException("$ex", 100);
+    }
+  }
+
+  @override
+  Future<List<UserReply>> getUserReplies(String userId) async {
+    Map<String, dynamic> qparams = {
+      'filter': 'user_id= "$userId"',
+      'expand': 'user_id',
+    };
+    try {
+      var response = await _dio.get("/api/collections/replies/records",
+          queryParameters: qparams);
+      return response.data["items"]
+          .map<UserReply>((jsonMapObject) => UserReply.withJson(jsonMapObject))
+          .toList();
     } on DioException catch (ex) {
       throw ApiException(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {

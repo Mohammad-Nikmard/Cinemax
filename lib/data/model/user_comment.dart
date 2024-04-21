@@ -9,6 +9,8 @@ class UserComment {
   String text;
   String rate;
   bool spoiler;
+  List<dynamic> like;
+  List<dynamic> dislike;
   String movieName;
   String movieGenre;
   String movieYear;
@@ -23,6 +25,8 @@ class UserComment {
     this.text,
     this.rate,
     this.spoiler,
+    this.like,
+    this.dislike,
     this.movieName,
     this.movieGenre,
     this.movieYear,
@@ -39,6 +43,8 @@ class UserComment {
       jsonMapObject["text"],
       jsonMapObject["rate"].toString(),
       jsonMapObject["spoiler"],
+      jsonMapObject["like"],
+      jsonMapObject["dislike"],
       jsonMapObject["expand"]["movie_id"]["name"],
       jsonMapObject["expand"]["movie_id"]["genre"],
       jsonMapObject["expand"]["movie_id"]["year"].toString(),

@@ -129,5 +129,12 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         }
       },
     );
+    on<YourRepliesFetchEvent>(
+      (event, emit) async {
+        emit(CommensLoadingState());
+        var replies = await _replyRepository.getUserReplies(event.userID);
+        emit(ReplyresponseState(replies));
+      },
+    );
   }
 }

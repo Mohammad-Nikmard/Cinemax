@@ -7,16 +7,17 @@ import 'package:cinemax/bloc/comments/comment_state.dart';
 import 'package:cinemax/constants/color_constants.dart';
 import 'package:cinemax/constants/string_constants.dart';
 import 'package:cinemax/data/model/user_comment.dart';
+import 'package:cinemax/data/model/user_reply.dart';
 import 'package:cinemax/ui/edit_comment_screen.dart';
 import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
-import 'package:cinemax/widgets/back_label.dart';
 import 'package:cinemax/widgets/exception_message.dart';
 import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 
 class YourCommentsScreen extends StatelessWidget {
   const YourCommentsScreen({super.key});
@@ -25,82 +26,308 @@ class YourCommentsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: PrimaryColors.darkColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: BlocBuilder<CommentsBloc, CommentsState>(
-            builder: (context, state) {
-              if (state is CommensLoadingState) {
-                return const AppLoadingIndicator();
-              } else if (state is UserCommentResponseState) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: const BackLabel(),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.yourComments,
-                              style: TextStyle(
-                                fontFamily:
-                                    StringConstants.setBoldPersianFont(),
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.tertiary,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 32,
-                            ),
-                          ],
-                        ),
+      body: DefaultTabController(
+        length: 2,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                  child: TabBar(
+                    indicator: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
                       ),
+                      color: PrimaryColors.blueAccentColor,
                     ),
-                    state.getComments.fold(
-                      (exceptionMessage) {
-                        return const SliverToBoxAdapter(
-                          child: ExceptionMessage(),
-                        );
-                      },
-                      (commentList) {
-                        if (commentList.isNotEmpty) {
-                          return SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: _UserReview(
-                                    comment: commentList[index],
-                                  ),
-                                );
-                              },
-                              childCount: commentList.length,
+                    indicatorColor: PrimaryColors.blueAccentColor,
+                    dividerColor: Colors.transparent,
+                    padding: const EdgeInsets.only(left: 8),
+                    indicatorPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    dividerHeight: 0,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    labelStyle: TextStyle(
+                      fontFamily: StringConstants.setMediumPersionFont(),
+                      fontSize: 14,
+                    ),
+                    labelColor: TextColors.whiteText,
+                    unselectedLabelColor: TextColors.greyText,
+                    unselectedLabelStyle: TextStyle(
+                      fontFamily: StringConstants.setMediumPersionFont(),
+                      fontSize: 14,
+                    ),
+                    tabs: [
+                      Tab(
+                        text: AppLocalizations.of(context)!.comments,
+                      ),
+                      Tab(
+                        text: AppLocalizations.of(context)!.replies,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      const _CommentSection(),
+                      BlocProvider(
+                        create: (context) => CommentsBloc(
+                          locator.get(),
+                          locator.get(),
+                        )..add(
+                            YourRepliesFetchEvent(
+                              AuthManager.readRecordID(),
                             ),
-                          );
-                        } else {
-                          return const SliverToBoxAdapter(
-                            child: _EmptyCommentSection(),
-                          );
-                        }
-                      },
-                    ),
-                  ],
-                );
-              }
-              return Center(
-                child: Text(AppLocalizations.of(context)!.state),
-              );
-            },
+                          ),
+                        child: const _ReplySection(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ReplySection extends StatelessWidget {
+  const _ReplySection();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CommentsBloc, CommentsState>(
+      builder: (context, state) {
+        if (state is CommensLoadingState) {
+          return const AppLoadingIndicator();
+        } else if (state is ReplyresponseState) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: CustomScrollView(
+              slivers: [
+                state.getreplies.fold(
+                  (exceptionMessage) {
+                    return const SliverToBoxAdapter(
+                      child: ExceptionMessage(),
+                    );
+                  },
+                  (replyList) {
+                    if (replyList.isNotEmpty) {
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: _UserReply(reply: replyList[index]),
+                            );
+                          },
+                          childCount: replyList.length,
+                        ),
+                      );
+                    } else {
+                      return const SliverToBoxAdapter(
+                        child: _EmptyCommentSection(),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+        return Center(
+          child: Text(AppLocalizations.of(context)!.state),
+        );
+      },
+    );
+  }
+}
+
+class _UserReply extends StatefulWidget {
+  const _UserReply({required this.reply});
+  final UserReply reply;
+
+  @override
+  State<_UserReply> createState() => _UserReplyState();
+}
+
+class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
+  late AnimationController likeController;
+  late AnimationController dislikeController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    likeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    dislikeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    likeController.value = 0;
+    dislikeController.value = 0;
+  }
+
+  @override
+  void dispose() {
+    likeController.dispose();
+    dislikeController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(15),
+      ),
+      child: ColoredBox(
+        color: PrimaryColors.softColor,
+        child: SizedBox(
+          width: MediaQueryHandler.screenWidth(context),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.you,
+                  style: TextStyle(
+                    fontFamily: StringConstants.setMediumPersionFont(),
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                ),
+                Text(
+                  widget.reply.date,
+                  style: TextStyle(
+                    fontFamily: StringConstants.setSmallPersionFont(),
+                    fontSize: 12,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    widget.reply.text,
+                    style: TextStyle(
+                      fontSize: (MediaQueryHandler.screenWidth(context) < 380)
+                          ? 12
+                          : 14,
+                      fontFamily: StringConstants.setMediumPersionFont(),
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        LottieBuilder.asset(
+                          'assets/Animation - 1713544475861.json',
+                          height: 50,
+                          width: 50,
+                          repeat: false,
+                          controller: likeController,
+                        ),
+                        Text(
+                          "${widget.reply.likes.length}",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: TextColors.greyText,
+                            fontFamily: "MM",
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Transform.flip(
+                          flipY: true,
+                          child: LottieBuilder.asset(
+                            'assets/Animation - 1713544475861.json',
+                            height: 50,
+                            width: 50,
+                            repeat: false,
+                            controller: dislikeController,
+                          ),
+                        ),
+                        Text(
+                          "${widget.reply.dislikes.length}",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: TextColors.greyText,
+                            fontFamily: "MM",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CommentSection extends StatelessWidget {
+  const _CommentSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CommentsBloc, CommentsState>(
+      builder: (context, state) {
+        if (state is CommensLoadingState) {
+          return const AppLoadingIndicator();
+        } else if (state is UserCommentResponseState) {
+          return CustomScrollView(
+            slivers: [
+              state.getComments.fold(
+                (exceptionMessage) {
+                  return const SliverToBoxAdapter(
+                    child: ExceptionMessage(),
+                  );
+                },
+                (commentList) {
+                  if (commentList.isNotEmpty) {
+                    return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: _UserReview(
+                              comment: commentList[index],
+                            ),
+                          );
+                        },
+                        childCount: commentList.length,
+                      ),
+                    );
+                  } else {
+                    return const SliverToBoxAdapter(
+                      child: _EmptyCommentSection(),
+                    );
+                  }
+                },
+              ),
+            ],
+          );
+        }
+        return Center(
+          child: Text(AppLocalizations.of(context)!.state),
+        );
+      },
     );
   }
 }

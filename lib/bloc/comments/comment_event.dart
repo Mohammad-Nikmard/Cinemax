@@ -96,3 +96,9 @@ class ReplyDislikeEvent extends CommentsEvent {
 
   ReplyDislikeEvent(this.replyId, this.userId, this.condition);
 }
+
+class YourRepliesFetchEvent extends CommentsEvent {
+  String userID;
+
+  YourRepliesFetchEvent(this.userID);
+}
