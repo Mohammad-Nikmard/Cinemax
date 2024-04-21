@@ -616,7 +616,7 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 25),
               BlocConsumer<CommentsBloc, CommentsState>(
                 builder: (context, state) {
                   if (state is CommentsInitState) {

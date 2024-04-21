@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:cinemax/DI/service_locator.dart';
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
@@ -13,6 +14,7 @@ import 'package:cinemax/util/auth_manager.dart';
 import 'package:cinemax/util/query_handler.dart';
 import 'package:cinemax/widgets/cached_image.dart';
 import 'package:cinemax/widgets/exception_message.dart';
+import 'package:cinemax/widgets/loading_indicator.dart';
 import 'package:cinemax/widgets/shimmer_skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -253,6 +255,10 @@ class _UserReviewState extends State<_UserReview>
   late bool isLiked;
   late bool disliked;
 
+  String menuVal = "Report";
+
+  TextEditingController reportController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -289,6 +295,7 @@ class _UserReviewState extends State<_UserReview>
     super.dispose();
     likedController.dispose();
     dislikedController.dispose();
+    reportController.dispose();
   }
 
   @override
@@ -670,6 +677,45 @@ class _UserReviewState extends State<_UserReview>
                           ),
                         ),
                       ),
+                      const Spacer(),
+                      PopupMenuButton(
+                        surfaceTintColor: PrimaryColors.darkColor,
+                        color: PrimaryColors.softColor,
+                        padding: const EdgeInsets.all(2),
+                        onSelected: (value) {
+                          showModalBottomSheet(
+                            barrierColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return BlocProvider(
+                                create: (context) => CommentsBloc(
+                                  locator.get(),
+                                  locator.get(),
+                                ),
+                                child: reportSheet(),
+                              );
+                            },
+                          );
+                        },
+                        iconSize: 22,
+                        iconColor: TextColors.greyText,
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem(
+                              value: menuVal,
+                              child: Text(
+                                menuVal,
+                                style: const TextStyle(
+                                  fontFamily: "MM",
+                                  fontSize: 16,
+                                  color: TextColors.whiteText,
+                                ),
+                              ),
+                            ),
+                          ];
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -730,6 +776,143 @@ class _UserReviewState extends State<_UserReview>
         likedController.reverse();
       }
     });
+  }
+
+  Widget reportSheet() {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+      child: Container(
+        height: 475,
+        width: MediaQueryHandler.screenWidth(context),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 25, right: 15, left: 15),
+          child: Column(
+            children: [
+              Text(
+                AppLocalizations.of(context)!.report,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontFamily: StringConstants.setBoldPersianFont(),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                AppLocalizations.of(context)!.reportCap,
+                style: TextStyle(
+                  fontFamily: StringConstants.setSmallPersionFont(),
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              const SizedBox(height: 10),
+              TextField(
+                maxLines: 9,
+                controller: reportController,
+                style: TextStyle(
+                  fontFamily: StringConstants.setMediumPersionFont(),
+                  fontSize: 14,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.typeSomething,
+                  hintStyle: TextStyle(
+                    fontSize: 12,
+                    color: TextColors.greyText,
+                    fontFamily: StringConstants.setSmallPersionFont(),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    borderSide: BorderSide(
+                      width: 1.5,
+                      color: TextColors.greyText,
+                    ),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    borderSide: BorderSide(
+                      width: 1.5,
+                      color: TextColors.darkGreyText,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              BlocConsumer<CommentsBloc, CommentsState>(
+                builder: (context, state) {
+                  if (state is CommentsInitState) {
+                    return SizedBox(
+                      height: 50,
+                      width: MediaQueryHandler.screenWidth(context),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.read<CommentsBloc>().add(ReportCommentEvent(
+                              reportController.text.trim(),
+                              replyId: null,
+                              commentId: widget.comment.id));
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.submit,
+                          style: TextStyle(
+                            fontFamily: StringConstants.setMediumPersionFont(),
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else if (state is CommensLoadingState) {
+                    return const AppLoadingIndicator();
+                  } else if (state is ReportResponseState) {
+                    return SizedBox(
+                      height: 50,
+                      width: MediaQueryHandler.screenWidth(context),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.read<CommentsBloc>().add(ReportCommentEvent(
+                              reportController.text.trim(),
+                              replyId: null,
+                              commentId: widget.comment.id));
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.submit,
+                          style: TextStyle(
+                            fontFamily: StringConstants.setMediumPersionFont(),
+                            fontSize: 16,
+                            color: TextColors.whiteText,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Center(
+                    child: Text(AppLocalizations.of(context)!.state),
+                  );
+                },
+                listener: (context, state) {
+                  if (state is ReportResponseState) {
+                    reportController.text = "";
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
