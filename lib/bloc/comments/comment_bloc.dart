@@ -136,5 +136,13 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(ReplyresponseState(replies));
       },
     );
+    on<DeleteReplyEvent>(
+      (event, emit) async {
+        emit(CommensLoadingState());
+        await _replyRepository.deleteReply(event.replyId);
+        var replies = await _replyRepository.getUserReplies(event.userId);
+        emit(ReplyresponseState(replies));
+      },
+    );
   }
 }

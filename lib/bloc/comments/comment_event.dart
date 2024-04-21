@@ -102,3 +102,10 @@ class YourRepliesFetchEvent extends CommentsEvent {
 
   YourRepliesFetchEvent(this.userID);
 }
+
+class DeleteReplyEvent extends CommentsEvent {
+  String replyId;
+  String userId;
+
+  DeleteReplyEvent(this.replyId, this.userId);
+}

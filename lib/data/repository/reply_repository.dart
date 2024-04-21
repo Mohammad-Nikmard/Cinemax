@@ -14,6 +14,8 @@ abstract class ReplyRepository {
   Future<void> replyOFFdislike(String replyId, String userId);
 
   Future<Either<String, List<UserReply>>> getUserReplies(String userId);
+
+  Future<void> deleteReply(String replyId);
 }
 
 class ReplyRemoteRepository extends ReplyRepository {
@@ -70,5 +72,10 @@ class ReplyRemoteRepository extends ReplyRepository {
     } on ApiException catch (ex) {
       return left(ex.message);
     }
+  }
+
+  @override
+  Future<void> deleteReply(String replyId) async {
+    await _datasource.deleteReply(replyId);
   }
 }

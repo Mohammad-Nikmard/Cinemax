@@ -198,13 +198,40 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  AppLocalizations.of(context)!.you,
-                  style: TextStyle(
-                    fontFamily: StringConstants.setMediumPersionFont(),
-                    fontSize: 18,
-                    color: Theme.of(context).colorScheme.tertiary,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.you,
+                      style: TextStyle(
+                        fontFamily: StringConstants.setMediumPersionFont(),
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.tertiary,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        String? navResult;
+                        navResult = await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const _DeleteCommentDialog();
+                          },
+                        );
+                        if (context.mounted) {
+                          if (navResult!.isNotEmpty) {
+                            context.read<CommentsBloc>().add(DeleteReplyEvent(
+                                widget.reply.id, AuthManager.readRecordID()));
+                          }
+                        }
+                      },
+                      child: SvgPicture.asset(
+                        'assets/images/icon_bin.svg',
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                  ],
                 ),
                 Text(
                   widget.reply.date,
