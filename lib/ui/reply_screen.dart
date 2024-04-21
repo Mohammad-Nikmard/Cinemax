@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cinemax/bloc/comments/comment_bloc.dart';
 import 'package:cinemax/bloc/comments/comment_event.dart';
 import 'package:cinemax/bloc/comments/comment_state.dart';
@@ -256,6 +258,10 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
   late int likeNumber;
   late int dislikeNumber;
 
+  String menuVal = "Report";
+
+  TextEditingController reportController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -373,10 +379,46 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
                       ],
                     ),
                     const Spacer(),
-                    const Icon(
-                      Icons.more_vert,
-                      color: TextColors.greyText,
-                      size: 24.0,
+                    // GestureDetector(
+                    //   onTap: () {
+
+                    //   },
+                    //   child: const Icon(
+                    //     Icons.more_vert,
+                    //     color: TextColors.greyText,
+                    //     size: 24.0,
+                    //   ),
+                    // ),
+
+                    PopupMenuButton(
+                      surfaceTintColor: PrimaryColors.darkColor,
+                      color: PrimaryColors.softColor,
+                      padding: const EdgeInsets.all(2),
+                      onSelected: (value) {
+                        showModalBottomSheet(
+                          barrierColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return reportSheet();
+                          },
+                        );
+                      },
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            value: menuVal,
+                            child: Text(
+                              menuVal,
+                              style: const TextStyle(
+                                fontFamily: "MM",
+                                fontSize: 16,
+                                color: TextColors.whiteText,
+                              ),
+                            ),
+                          ),
+                        ];
+                      },
                     ),
                   ],
                 ),
@@ -504,6 +546,100 @@ class _UserReplyState extends State<_UserReply> with TickerProviderStateMixin {
         likecontroller.reverse();
       }
     });
+  }
+
+  Widget reportSheet() {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+      child: Container(
+        height: 350,
+        width: MediaQueryHandler.screenWidth(context),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 25, right: 15, left: 15),
+          child: Column(
+            children: [
+              Text(
+                "Report",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontFamily: StringConstants.setBoldPersianFont(),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                "Tell us why you are reporting this comment.",
+                style: TextStyle(
+                  fontFamily: StringConstants.setSmallPersionFont(),
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              const SizedBox(height: 10),
+              TextField(
+                maxLines: 5,
+                controller: reportController,
+                style: TextStyle(
+                  fontFamily: StringConstants.setMediumPersionFont(),
+                  fontSize: 14,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+                decoration: InputDecoration(
+                  hintText: "Type here...",
+                  hintStyle: TextStyle(
+                    fontSize: 12,
+                    color: TextColors.greyText,
+                    fontFamily: StringConstants.setSmallPersionFont(),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    borderSide: BorderSide(
+                      width: 1.5,
+                      color: TextColors.greyText,
+                    ),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    borderSide: BorderSide(
+                      width: 1.5,
+                      color: TextColors.darkGreyText,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                width: MediaQueryHandler.screenWidth(context),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    AppLocalizations.of(context)!.submit,
+                    style: TextStyle(
+                      fontFamily: StringConstants.setMediumPersionFont(),
+                      fontSize: 16,
+                      color: TextColors.whiteText,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
